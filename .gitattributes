@@ -1,0 +1,21 @@
+# Normaliza line endings: LF no repositório, checkout conforme o SO.
+* text=auto
+
+# Força LF para scripts e arquivos de texto do tema.
+*.php      text eol=lf
+*.css      text eol=lf
+*.js       text eol=lf
+*.json     text eol=lf
+*.md       text eol=lf
+*.sh       text eol=lf
+*.txt      text eol=lf
+*.svg      text eol=lf
+*.hbs      text eol=lf
+
+# Binários — sem conversão de line ending.
+*.woff2    binary
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.ico      binary

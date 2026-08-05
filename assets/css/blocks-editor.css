@@ -1,0 +1,17 @@
+/*
+ * Ajustes exclusivos do canvas do editor (não carrega no front).
+ * Complementa assets/css/blocks.css via add_editor_style().
+ */
+
+/* O hero no editor não tem o contexto do header do site; garante altura. */
+.editor-styles-wrapper .cliconnect-bl-hero--editor {
+	min-height: 420px;
+	display: flex;
+	align-items: center;
+}
+
+/* Placeholders do RichText legíveis sobre fundos escuros. */
+.editor-styles-wrapper .cliconnect-bl-hero [data-rich-text-placeholder]::after,
+.editor-styles-wrapper .cliconnect-bl-stats [data-rich-text-placeholder]::after {
+	color: rgba(255, 255, 255, 0.55);
+}

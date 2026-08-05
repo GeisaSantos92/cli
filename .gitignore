@@ -1,0 +1,31 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editores
+.idea/
+*.sublime-*
+*.swp
+
+# Logs / debug
+*.log
+debug.log
+
+# Dependências (não usadas no runtime do tema, mas por segurança)
+node_modules/
+vendor/
+
+# WP-CLI wrapper (bin/wp): config sensível à máquina + phar baixado sob demanda
+bin/wp.config.sh
+bin/wp-cli.phar
+
+# Assets de seed (imagens grandes, não fazem parte do tema em produção)
+assets/seed/
+
+# Referências e capturas de tela da raiz (arquivos de trabalho, não do tema)
+*.png
+*.jpg
+*.jpeg
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg

@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cliconnect/stats",
+	"title": "Seção: Faixa de estatísticas",
+	"category": "cliconnect-secoes",
+	"icon": "chart-bar",
+	"description": "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks.",
+	"textdomain": "cli",
+	"attributes": {
+		"badge": { "type": "string", "default": "" },
+		"titulo": { "type": "string", "default": "" }
+	},
+	"supports": { "html": false, "customClassName": false },
+	"editorScript": "cliconnect-block-stats",
+	"render": "file:./render.php"
+}

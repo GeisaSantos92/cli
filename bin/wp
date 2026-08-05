@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+#
+# bin/wp — roda o WP-CLI direto do terminal externo usando o PHP e o socket
+# MySQL do Local (by Flywheel), sem precisar abrir o "site shell" interativo.
+#
+# No Local, `wp` e `php` NÃO estão no PATH. Este wrapper invoca o PHP empacotado
+# pelo Local + o wp-cli.phar, apontando --path para a instalação e o socket
+# correto do MySQL (via mysqli/pdo_mysql.default_socket).
+#
+# Uso: ./bin/wp <comando wp-cli> [args...]
+#   ./bin/wp core version
+#   ./bin/wp db check
+#   ./bin/wp option get blogname
+#
+# Config sensível à máquina (versão do PHP, ID do socket) fica em bin/wp.config.sh
+# (NÃO versionado). Copie de bin/wp.config.example.sh e ajuste. Ver docs/wp-cli.md.
+
+set -euo pipefail
+
+# Diretório deste script (resolve mesmo se chamado de outro cwd).
+BIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+CONFIG_FILE="$BIN_DIR/wp.config.sh"
+EXAMPLE_FILE="$BIN_DIR/wp.config.example.sh"
+PHAR_FILE="$BIN_DIR/wp-cli.phar"
+PHAR_URL="https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+
+# 1) Carrega a config local (ignorada pelo git).
+if [[ ! -f "$CONFIG_FILE" ]]; then
+  echo "ERRO: config local ausente: $CONFIG_FILE" >&2
+  echo "Copie o exemplo e ajuste os caminhos desta máquina:" >&2
+  echo "  cp \"$EXAMPLE_FILE\" \"$CONFIG_FILE\"" >&2
+  echo "Descubra o socket do Local com:" >&2
+  echo "  ls \"\$HOME/Library/Application Support/Local/run/\"*/mysql/mysqld.sock" >&2
+  exit 1
+fi
+
+# shellcheck source=/dev/null
+source "$CONFIG_FILE"
+
+# 2) Valida as variáveis obrigatórias.
+: "${PHP_BIN:?ERRO: PHP_BIN não definido em wp.config.sh}"
+: "${WP_PATH:?ERRO: WP_PATH não definido em wp.config.sh}"
+
+# DB_SOCKET (macOS/Linux) ou DB_HOST com porta (Windows) — pelo menos um obrigatório.
+if [[ -z "${DB_SOCKET:-}" && -z "${DB_HOST:-}" ]]; then
+  echo "ERRO: defina DB_SOCKET (Unix socket) ou DB_HOST (TCP, ex: 127.0.0.1:10455) em $CONFIG_FILE." >&2
+  exit 1
+fi
+
+# 3) Valida o binário PHP.
+if [[ ! -x "$PHP_BIN" ]]; then
+  echo "ERRO: PHP do Local não encontrado ou não executável:" >&2
+  echo "  $PHP_BIN" >&2
+  echo "Ajuste PHP_BIN em $CONFIG_FILE (a versão do PHP muda por máquina)." >&2
+  exit 1
+fi
+
+# 4) Modo Unix socket (macOS/Linux) vs TCP (Windows).
+PHP_DB_ARGS=()
+
+if [[ -n "${DB_SOCKET:-}" ]]; then
+  # macOS/Linux: valida que o socket existe (site precisa estar rodando no Local).
+  if [[ ! -S "$DB_SOCKET" ]]; then
+    echo "ERRO: socket MySQL do Local não encontrado:" >&2
+    echo "  $DB_SOCKET" >&2
+    echo "O site provavelmente NÃO está rodando. Abra o app do Local e inicie o site." >&2
+    exit 1
+  fi
+  export MYSQL_UNIX_PORT="$DB_SOCKET"
+  PHP_DB_ARGS+=( -d mysqli.default_socket="$DB_SOCKET" -d pdo_mysql.default_socket="$DB_SOCKET" )
+else
+  # Windows: DB_HOST = "127.0.0.1:porta". WP-CLI lê DB_HOST do wp-config.php;
+  # aqui apenas garantimos que o wp-config.php veja o host correto se WP_DB_HOST
+  # ainda estiver como "localhost" sem porta.
+  export WP_DB_HOST="$DB_HOST"
+fi
+
+# 4b) (Opcional) Coloca os binários do MySQL do Local no PATH. Comandos como
+# `wp db check`/`db export`/`db query` NÃO usam mysqli — eles chamam os
+# executáveis externos (mysqlcheck, mysql, mysqldump). O Local não os expõe no
+# PATH, então apontamos via MYSQL_BIN_DIR (definido na config local, opcional).
+if [[ -n "${MYSQL_BIN_DIR:-}" ]]; then
+  if [[ -d "$MYSQL_BIN_DIR" ]]; then
+    export PATH="$MYSQL_BIN_DIR:$PATH"
+  else
+    echo "AVISO: MYSQL_BIN_DIR não é um diretório: $MYSQL_BIN_DIR" >&2
+  fi
+fi
+
+# 5) (Opcional) php.ini do Local para esta máquina (ativa extensões como mysqli).
+PHP_INI_ARG=()
+if [[ -n "${PHP_INI:-}" && -f "$PHP_INI" ]]; then
+  PHP_INI_ARG+=( -c "$PHP_INI" )
+fi
+
+# 6) Baixa o wp-cli.phar sob demanda se ausente (não é versionado).
+if [[ ! -f "$PHAR_FILE" ]]; then
+  echo "wp-cli.phar ausente — baixando da URL oficial..." >&2
+  if ! curl -fsSL "$PHAR_URL" -o "$PHAR_FILE"; then
+    echo "ERRO: falha ao baixar o wp-cli.phar de $PHAR_URL" >&2
+    rm -f "$PHAR_FILE"
+    exit 1
+  fi
+  echo "wp-cli.phar baixado em $PHAR_FILE" >&2
+fi
+
+# 7) Executa o WP-CLI.
+exec "$PHP_BIN" \
+  "${PHP_INI_ARG[@]}" \
+  "${PHP_DB_ARGS[@]}" \
+  "$PHAR_FILE" \
+  --path="$WP_PATH" \
+  "$@"

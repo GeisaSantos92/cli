@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__figma__get_design_context",
+      "Bash(curl -s -o \"assets/img/cases-hero-bg.png\" \"https://www.figma.com/api/mcp/asset/a5301960-0972-4e04-a9cd-93418aa4a3fa.png\")",
+      "Bash(curl -s -o \"assets/img/cases-hero-bg2.png\" \"https://www.figma.com/api/mcp/asset/9ffa4e04-9ec4-4ae8-a4f5-c9c38130f7c4.png\")",
+      "Bash(php -l \"C:\\\\Users\\\\geisa\\\\Local Sites\\\\cli\\\\app\\\\public\\\\wp-content\\\\themes\\\\cli\\\\archive-cli_case.php\")",
+      "Bash(php -l \"C:\\\\Users\\\\geisa\\\\Local Sites\\\\cli\\\\app\\\\public\\\\wp-content\\\\themes\\\\cli\\\\inc\\\\acf-fields-cpt.php\")",
+      "Bash(php -l \"C:\\\\Users\\\\geisa\\\\Local Sites\\\\cli\\\\app\\\\public\\\\wp-content\\\\themes\\\\cli\\\\inc\\\\enqueue.php\")",
+      "Bash(curl:*)",
+      "Bash(python3 -c \" import sys, json data = json.load\\(sys.stdin\\) for k, v in data.items\\(\\): name = v.get\\('name', ''\\) path = v.get\\('path', ''\\) if 'cli' in name.lower\\(\\) or 'cli' in path.lower\\(\\): print\\(k, name, path\\) \")",
+      "Bash($PHP_BIN:*)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "Bash(git config:*)"
+    ]
+  }
+}

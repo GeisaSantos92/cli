@@ -1,0 +1,13 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cliconnect/secao-texto",
+	"title": "Seção: Texto livre",
+	"category": "cliconnect-secoes",
+	"icon": "text-page",
+	"description": "Wrapper com container e tipografia do tema para conteúdo livre (parágrafos, listas, imagens) dentro da landing.",
+	"textdomain": "cli",
+	"supports": { "html": false, "customClassName": false },
+	"editorScript": "cliconnect-block-secao-texto",
+	"render": "file:./render.php"
+}

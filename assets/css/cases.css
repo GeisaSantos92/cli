@@ -1,0 +1,335 @@
+/* ==========================================================================
+   CLI Connect — estilos do arquivo de cases (/cases).
+
+   Enfileirado só em is_post_type_archive('cli_case') (inc/enqueue.php).
+   Depende dos tokens declarados em theme.css.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. HERO — "Conheça os resultados alcançados por nossos clientes"
+   ========================================================================== */
+
+.cases-hero {
+	position: relative;
+	overflow: hidden;
+	padding-block: 80px;
+	background: var(--cor-marca-profunda);
+}
+
+/* Imagens de fundo: empilhadas exatamente como no Figma. A primeira (ribbons)
+   cobre o fundo; a segunda (cristais) adiciona os elementos decorativos.
+   Ambas usam object-fit: cover para preencher o espaço. */
+.cases-hero__bg {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.cases-hero__bg img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: right center;
+	max-width: none;
+	display: block;
+}
+
+/* A segunda imagem (cristais) fica só na metade direita. */
+.cases-hero__bg img:last-child {
+	object-position: right center;
+	left: 40%;
+	width: 60%;
+}
+
+.cases-hero .container {
+	position: relative;
+	z-index: 1;
+}
+
+/*
+ * Chamada: caixa de texto com efeito glass (gradiente branco semi-transparente
+ * de cima para baixo), padding generoso e bordas arredondadas — idêntico ao
+ * Figma (bg-gradient-to-b from-white/30 to-transparent, rounded-[24px],
+ * px-[64px] py-[80px]).
+ */
+.cases-hero__chamada {
+	max-width: 868px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 80px 64px;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+	border-radius: 24px;
+}
+
+.cases-hero__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.03em;
+	color: var(--cor-texto-clara);
+	text-wrap: balance;
+	margin: 0;
+}
+
+.cases-hero__subtitulo {
+	font-family: var(--fonte-base);
+	font-size: 1.25rem; /* 20px — igual ao Figma */
+	font-weight: 400;
+	line-height: 1.6;
+	color: #cfdeff; /* azul claro do Figma: ondark/secundary */
+	margin: 0;
+}
+
+/* ==========================================================================
+   2. LISTA DE CASES
+   ========================================================================== */
+
+.cases-lista {
+	background: var(--cor-fundo);
+	padding-block: 120px 220px;
+}
+
+.cases-lista__cards {
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
+}
+
+/* ==========================================================================
+   3. CASE COMPLETO (case-container)
+   ========================================================================== */
+
+.case-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 80px;
+	text-decoration: none;
+	color: inherit;
+}
+
+/*
+ * Wrapper da imagem: gradiente + listras verticais fiéis à referência.
+ *
+ * Camadas (de frente para trás):
+ *   1. repeating-linear-gradient — listras verticais sutis (~18 px de passo)
+ *   2. radial-gradient           — brilho elíptico no centro-superior
+ *   3. linear-gradient           — base azul médio (#2530d8) → navy escuro (#050826)
+ */
+.case-container__imagem-wrapper {
+	aspect-ratio: 1 / 1;
+	border-radius: var(--raio-card);
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background:
+		repeating-linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0.05) 0px,
+			rgba(255, 255, 255, 0.05) 2px,
+			transparent                2px,
+			transparent                18px
+		),
+		radial-gradient(ellipse at 48% 28%, rgba(90, 105, 255, 0.55) 0%, transparent 62%),
+		linear-gradient(170deg, #2530d8 0%, #101888 45%, #050826 100%);
+}
+
+/* Logo invertido para branco, centralizado, sem sangrar o container. */
+.case-container__imagem-wrapper img {
+	width: auto;
+	height: auto;
+	max-width: 58%;
+	max-height: 42%;
+	object-fit: contain;
+	display: block;
+	filter: brightness(0) invert(1);
+}
+
+/* Chamada: ocupa a coluna direita. Sem métricas → centraliza verticalmente;
+   com métricas → distribui espaço entre header e métricas (justify-between). */
+.case-container__chamada {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 40px;
+}
+
+.case-container__chamada--metricas {
+	justify-content: space-between;
+}
+
+.case-container__header {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.case-container__chamada--metricas .case-container__header {
+	flex: 1;
+}
+
+.case-container__headline {
+	padding-bottom: 24px;
+}
+
+.case-container__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.03em;
+	color: var(--cor-texto);
+	text-wrap: balance;
+	margin: 0;
+}
+
+/* Efeito hover sutil no título. */
+.case-container:hover .case-container__titulo {
+	color: var(--cor-texto-marca);
+}
+
+.case-container__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+/* ==========================================================================
+   4. CARDS DE MÉTRICAS
+   ========================================================================== */
+
+.case-container__metricas {
+	display: flex;
+	gap: 12px;
+	align-items: stretch;
+}
+
+.case-metrica-card {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 20px;
+	background: var(--cor-fundo-suave);
+	border-radius: var(--raio);
+}
+
+.case-metrica-card__numero {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	color: var(--cor-texto-marca-escura);
+	margin: 0;
+}
+
+.case-metrica-card__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm); /* 14px */
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: 0;
+}
+
+/* ==========================================================================
+   5. SEPARADOR ENTRE CASES
+   ========================================================================== */
+
+.cases-separador {
+	border: none;
+	border-top: 1px solid var(--cor-borda);
+	margin: 0;
+}
+
+/* ==========================================================================
+   6. CASES EM ANDAMENTO
+   ========================================================================== */
+
+.cases-andamento {
+	display: flex;
+	flex-direction: column;
+}
+
+.case-andamento {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-block: 24px;
+	border-bottom: 1px solid var(--cor-borda);
+}
+
+.case-andamento__logo {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+.case-andamento__logo img {
+	max-height: 87px;
+	width: auto;
+	max-width: 290px;
+	display: block;
+}
+
+.case-andamento__status {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+	white-space: nowrap;
+}
+
+/* ==========================================================================
+   7. RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 900px) {
+	.case-container {
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+
+	.case-container__imagem-wrapper {
+		aspect-ratio: 4 / 3;
+	}
+
+	.cases-lista {
+		padding-block: 64px 80px;
+	}
+
+	.cases-lista__cards {
+		gap: 40px;
+	}
+}
+
+@media (max-width: 600px) {
+	.cases-hero__chamada {
+		max-width: 100%;
+		padding: 40px 24px;
+	}
+
+	.cases-hero__subtitulo {
+		font-size: 1rem;
+	}
+
+	.case-container__metricas {
+		flex-direction: column;
+	}
+
+	.case-andamento {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+}

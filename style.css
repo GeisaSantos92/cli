@@ -1,0 +1,24 @@
+/*
+Theme Name: CLI Connect
+Theme URI: https://cliconnect.com.br/
+Description: Tema clássico do WordPress do site CLI Connect — plataforma de integrações e agentes de IA. Construído sobre o starter da Agência R8: performance, segurança e baixa dependência de plugins/build. Assets estáticos e fontes auto-hospedadas, enfileirados via wp_enqueue_*.
+Author: Agência R8
+Author URI: https://agenciar8.com.br/
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 7.0
+Requires PHP: 8.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cli
+*/
+
+/*
+Desenvolvimento: Danilo Mello — Agência R8.
+
+Este arquivo contém apenas os metadados obrigatórios do tema.
+O CSS de fato é entregue por assets enfileirados (ver inc/enqueue.php):
+- assets/css/fonts.css       (@font-face das fontes auto-hospedadas)
+- assets/css/theme.css       (tokens + chrome + componentes globais)
+- assets/css/front-page.css  (seções da home, só em is_front_page())
+*/

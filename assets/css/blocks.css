@@ -1,0 +1,140 @@
+/* ==========================================================================
+   CLI Connect — estilos dos blocos de seção (front + editor).
+
+   Carregado no front por inc/blocks.php e dentro do canvas do editor via
+   add_editor_style() — as mesmas classes valem nos dois contextos. Usa as
+   custom properties de theme.css: trocar a paleta lá re-tematiza os blocos.
+   ========================================================================== */
+
+/* --- Canvas (template landing) -------------------------------------------- */
+
+/* O canvas é full-bleed: cada seção controla a própria largura e fundo. */
+.site-main--canvas {
+	max-width: none;
+	padding: 0;
+}
+
+/* Container padrão das seções (espelha o .site-main). */
+.cliconnect-bl-container {
+	width: 100%;
+	max-width: var(--largura-conteudo);
+	margin: 0 auto;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Kicker/badge compartilhado entre seções. */
+.cliconnect-bl-kicker {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	border-radius: 999px;
+	padding: 4px 14px;
+}
+
+.cliconnect-bl-kicker--claro {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* --- cliconnect/hero ----------------------------------------------------------- */
+
+.cliconnect-bl-hero {
+	position: relative;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	min-height: 420px;
+	background: var(--cor-primaria-escura);
+}
+
+.cliconnect-bl-hero-bg {
+	position: absolute;
+	inset: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.cliconnect-bl-hero-overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 70%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+.cliconnect-bl-hero-conteudo {
+	position: relative;
+	z-index: 1;
+	padding-top: 48px;
+	padding-bottom: 48px;
+}
+
+.cliconnect-bl-hero-conteudo > * {
+	max-width: 720px;
+}
+
+.cliconnect-bl-hero-titulo {
+	color: #fff;
+	font-size: clamp(2rem, 5vw, 3.25rem);
+	line-height: 1.15;
+	margin: 16px 0 0;
+}
+
+.cliconnect-bl-hero-subtitulo {
+	color: rgba(255, 255, 255, 0.85);
+	font-size: clamp(1rem, 2vw, 1.2rem);
+	line-height: 1.6;
+	margin: 16px 0 0;
+}
+
+/* --- cliconnect/stats ----------------------------------------------------------- */
+
+.cliconnect-bl-stats {
+	background: var(--cor-primaria);
+	color: #fff;
+	padding: clamp(48px, 7vw, 80px) 0;
+}
+
+.cliconnect-bl-stats-header {
+	text-align: center;
+	margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.cliconnect-bl-stats-titulo {
+	color: #fff;
+	font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+	line-height: 1.2;
+	margin: 12px 0 0;
+}
+
+.cliconnect-bl-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: clamp(20px, 3vw, 40px);
+	text-align: center;
+}
+
+.cliconnect-bl-stat {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.cliconnect-bl-stat-numero {
+	font-size: clamp(2rem, 4.5vw, 3rem);
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.cliconnect-bl-stat-rotulo {
+	font-size: 15px;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- cliconnect/secao-texto ----------------------------------------------------- */
+
+.cliconnect-bl-texto {
+	padding: clamp(40px, 6vw, 64px) 0;
+}

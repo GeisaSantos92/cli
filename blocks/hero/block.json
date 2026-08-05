@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cliconnect/hero",
+	"title": "Seção: Hero de landing",
+	"category": "cliconnect-secoes",
+	"icon": "cover-image",
+	"description": "Seção de abertura full-bleed com badge, título, subtítulo e imagem de fundo.",
+	"textdomain": "cli",
+	"attributes": {
+		"badge": { "type": "string", "default": "" },
+		"titulo": { "type": "string", "default": "" },
+		"subtitulo": { "type": "string", "default": "" },
+		"imagemId": { "type": "number", "default": 0 },
+		"imagemUrl": { "type": "string", "default": "" }
+	},
+	"supports": { "html": false, "customClassName": false },
+	"editorScript": "cliconnect-block-hero",
+	"render": "file:./render.php"
+}
