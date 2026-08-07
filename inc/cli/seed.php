@@ -77,6 +77,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo a home…' );
 		$this->preencher_home( $paginas['home'], $cases );
 
+		WP_CLI::log( '— Preenchendo Trabalhe Conosco…' );
+		$this->preencher_trabalhe_conosco( $paginas['trabalhe-conosco'] );
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas );
 
@@ -1308,6 +1311,124 @@ class Cliconnect_Seed {
 	/* =====================================================================
 	   UTILITÁRIOS
 	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF da página Trabalhe Conosco.
+	 *
+	 * Fotos da equipe (sobre_foto_*) e foto do depoimento (dep_foto) precisam
+	 * de imagens reais do cliente — os campos ficam vazios no seed.
+	 *
+	 * @param int $page_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_trabalhe_conosco( $page_id ) {
+		if ( ! $page_id ) {
+			return;
+		}
+
+		$campos = array(
+			// 1. Hero.
+			'hero_eyebrow' => 'TRABALHE CONOSCO',
+			'hero_titulo'  => 'Construa soluções que movem grandes empresas.',
+			'hero_texto'   => 'Na CLI, você faz parte de um time que conecta tecnologias, simplifica operações e ajuda empresas a evoluírem todos os dias. Trabalhe remotamente, participe de projetos desafiadores e cresça ao lado de profissionais apaixonados por inovação.',
+			'hero_botao'   => $this->link( 'Veja nossas vagas', '/trabalhe-conosco/#vagas' ),
+
+			// 2. Somos a CLI.
+			'sobre_titulo'  => 'Somos a CLI',
+			'sobre_texto_1' => 'Com 13 anos de história, somos uma empresa de tecnologia e parceria que conecta cultura, pessoas e soluções. Nossa proposta é transformar continuamente técnico em capacidade humana, gerando impacto real para clientes, parceiros e para o mundo.',
+			'sobre_texto_2' => 'Temos uma trajetória sólida, com mais de 75 clientes ativos e mais de 500 integrações prontas para uso. Acreditamos que grandes soluções são construídas por equipes que colaboram, aprendem constantemente e têm autonomia para fazer acontecer.',
+
+			// 3. Métricas.
+			'tc_metrica_1_numero' => '13',
+			'tc_metrica_1_rotulo' => 'anos de história',
+			'tc_metrica_2_numero' => '+80',
+			'tc_metrica_2_rotulo' => 'clientes ativos',
+			'tc_metrica_3_numero' => '30 mil',
+			'tc_metrica_3_rotulo' => 'Integrações já prontas para uso',
+
+			// 4. Frase.
+			'tc_frase_parte_1' => 'A tecnologia conecta sistemas.',
+			'tc_frase_parte_2' => 'Mas são as pessoas que transformam negócios.',
+
+			// 5. Valores.
+			'valores_eyebrow' => 'VALORES',
+			'valores_titulo'  => 'Mais do que integrar tecnologia, nós integramos pessoas',
+			'valores_cta'     => $this->link( 'Confira nossas vagas', '/trabalhe-conosco/#vagas' ),
+
+			'valor_1_icone'  => 'escudo',
+			'valor_1_titulo' => 'Confiança',
+			'valor_1_texto'  => 'Agimos com transparência, segurança e respeito. Cumprimos o que prometemos e construímos relações de confiança duradouras com clientes e equipes.',
+
+			'valor_2_icone'  => 'verificado',
+			'valor_2_titulo' => 'Igualdade',
+			'valor_2_texto'  => 'Damos oportunidade a quem deseja crescer, valorizando o talento e o desenvolvimento de cada pessoa independentemente de sua origem.',
+
+			'valor_3_icone'  => 'grupo',
+			'valor_3_titulo' => 'Sucesso do Cliente',
+			'valor_3_texto'  => 'O problema do cliente é nosso. Resolvemos com conhecimento de negócio e nos orgulhamos de cada entrega bem-sucedida.',
+
+			'valor_4_icone'  => 'lampada',
+			'valor_4_titulo' => 'Inovação',
+			'valor_4_texto'  => 'Estimulamos novas ideias e a criatividade para antecipar tendências e gerar soluções inovadoras com responsabilidade.',
+
+			'valor_5_icone'  => 'grupo',
+			'valor_5_titulo' => 'Colaboração',
+			'valor_5_texto'  => 'Somos uma equipe unida. Compartilhamos conhecimento, conquistas e aprendizados com espírito de parceria e harmonia.',
+
+			// 6. Depoimento.
+			'dep_nome'  => 'Vitória Nunes',
+			'dep_cargo' => 'Tech Lead',
+			'dep_texto' => 'O trabalho em equipe na CLI é real e acontece no dia a dia. Contar com um time que se ajuda para resolver problemas complexos e que está em total sintonia com ferramentas inovadoras torna a nossa rotina leve e realizadora. No final das contas, o sucesso das nossas entregas é fruto desse ecossistema, onde recebemos apoio de todas as áreas da empresa.',
+
+			// 7. Benefícios.
+			'beneficios_eyebrow'   => 'BENEFÍCIOS',
+			'beneficios_titulo'    => 'Tudo para que você possa fazer o seu melhor trabalho.',
+			'beneficios_subtitulo' => 'Sabemos que você precisa de estrutura para dar o seu melhor. Por isso oferecemos benefícios que fazem diferença no dia a dia.',
+
+			'beneficio_1_icone'  => 'coracao',
+			'beneficio_1_titulo' => 'Saúde e Bem-estar',
+			'beneficio_1_texto'  => 'Plano de saúde Bradesco e plano odontológico Odontomais, com cobertura ampla para você e seus dependentes.',
+
+			'beneficio_2_icone'  => 'casa',
+			'beneficio_2_titulo' => 'Trabalho Remoto',
+			'beneficio_2_texto'  => 'Auxílio mensal para pagar os custos do home office e manter sua rotina de trabalho remoto confortável.',
+
+			'beneficio_3_icone'  => 'refeicao',
+			'beneficio_3_titulo' => 'Alimentação',
+			'beneficio_3_texto'  => 'Auxílio mensal em pix, que você pode usar como quiser para sua alimentação ao longo do mês.',
+
+			'beneficio_4_icone'  => 'grupo',
+			'beneficio_4_titulo' => 'Apoio à Família',
+			'beneficio_4_texto'  => 'Auxílio-creche para filhos de até 5 anos, porque sabemos que a família também faz parte do sucesso de cada um.',
+
+			'beneficio_5_icone'  => 'verificado',
+			'beneficio_5_titulo' => 'Qualidade de vida',
+			'beneficio_5_texto'  => 'Acesso ao TotalPass: academias, esportes e atividades de bem-estar para manter a saúde física em dia.',
+
+			'beneficio_6_icone'  => 'bolo',
+			'beneficio_6_titulo' => 'Day Off de aniversário',
+			'beneficio_6_texto'  => 'No dia que você fizer anos, tire uma folga. Você merece celebrar do jeito que quiser.',
+
+			// 8. Jeito CLI.
+			'jeito_titulo'      => 'O jeito CLI de ser',
+			'jeito_item_1_titulo' => 'Transparência primeiro',
+			'jeito_item_2_titulo' => 'Protagonismo',
+			'jeito_item_3_titulo' => 'Escuta aberta',
+			'jeito_item_4_titulo' => 'Profundidade técnica',
+			'jeito_item_5_titulo' => 'Compartilhamento',
+			'jeito_texto'       => 'Mais do que regras, esses princípios orientam a forma como trabalhamos todos os dias. Mesmo quando é difícil, escolhemos falar com clareza. Encaramos o problema do cliente e da empresa como nosso. Pedimos ajuda, recebemos feedback e mudamos o rumo quando faz sentido. Celebramos, documentamos, registramos. Aprender é parte do trabalho. Compartilhamos conhecimento, tempo e oportunidades.',
+			'jeito_botao'       => $this->link( 'Ver vagas', '/trabalhe-conosco/#vagas' ),
+
+			// 9. Blog.
+			'tc_blog_titulo' => 'Conheça mais sobre a CLI',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $page_id );
+		}
+
+		WP_CLI::log( sprintf( '  trabalhe-conosco: %d campos preenchidos.', count( $campos ) ) );
+	}
 
 	/**
 	 * Define a imagem destacada a partir do nome base de um asset do seed.
