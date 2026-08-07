@@ -13,34 +13,28 @@
 	position: relative;
 	overflow: hidden;
 	padding-block: 80px;
-	background: var(--cor-marca-profunda);
+	/* Fallback enquanto as imagens carregam; o Figma usa azul primário, não navy. */
+	background: var(--cor-primaria);
 }
 
-/* Imagens de fundo: empilhadas exatamente como no Figma. A primeira (ribbons)
-   cobre o fundo; a segunda (cristais) adiciona os elementos decorativos.
-   Ambas usam object-fit: cover para preencher o espaço. */
 .cases-hero__bg {
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
 }
 
+/* Ambas as imagens cobrem toda a área do hero (inset: 0, object-fit: cover),
+   exatamente como no Figma (node 15510:40181). Nenhuma tem posicionamento
+   especial — cada PNG já carrega os elementos visuais na posição correta. */
 .cases-hero__bg img {
 	position: absolute;
 	inset: 0;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	object-position: right center;
+	object-position: center;
 	max-width: none;
 	display: block;
-}
-
-/* A segunda imagem (cristais) fica só na metade direita. */
-.cases-hero__bg img:last-child {
-	object-position: right center;
-	left: 40%;
-	width: 60%;
 }
 
 .cases-hero .container {

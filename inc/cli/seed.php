@@ -645,14 +645,20 @@ class Cliconnect_Seed {
 
 		update_field( 'logo', $this->img( 'case-logo-panasonic' ), $panasonic );
 		update_field( 'citacao', 'Com a CLI Connect, nós reestruturamos nossa governança e nossos processos financeiros.', $panasonic );
-		update_field( 'autor', 'João Carvalho', $panasonic );
-		update_field( 'cargo', 'Gerente de Vendas', $panasonic );
+		update_field( 'autor', 'João da Silva', $panasonic );
+		update_field( 'cargo', 'Head de operações na Panasonic', $panasonic );
 		update_field( 'retrato', $this->img( 'case-retrato' ), $panasonic );
 		update_field( 'video', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', $panasonic );
 		update_field( 'metrica_numero', '+85%', $panasonic );
 		update_field( 'metrica_texto', 'Redução no tempo de implementação de novas integrações', $panasonic );
 		update_field( 'metrica_numero_2', '+60%', $panasonic );
 		update_field( 'metrica_texto_2', 'Menos intervenções operacionais manuais', $panasonic );
+		update_field( 'desafio_titulo', 'Sistemas desconectados dificultavam a operação', $panasonic );
+		update_field( 'desafio_texto', '<p>Com o crescimento da empresa, novas plataformas passaram a fazer parte da operação, incluindo ERP, e-commerce, CRM e sistemas logísticos. No entanto, a troca de informações entre essas aplicações dependia de integrações pontuais e processos pouco padronizados.</p><p>A equipe precisava lidar constantemente com dados inconsistentes, atualizações manuais e dificuldades para acompanhar eventos críticos do negócio em tempo real. Cada nova demanda exigia desenvolvimento adicional, aumentando a complexidade operacional e o tempo de resposta às áreas de negócio.</p>', $panasonic );
+		update_field( 'solucao_titulo', 'Uma operação conectada e preparada para evoluir', $panasonic );
+		update_field( 'solucao_texto', '<p>A CLI implementou uma arquitetura centralizada de integrações utilizando o CLI Connect, conectando os principais sistemas da operação em uma única estrutura governada.</p><p>Além das integrações, foram criados eventos automáticos para sincronização de informações, notificações operacionais e atualização de processos críticos. A empresa também passou a utilizar uma biblioteca de automações prontas, acelerando a implementação de novas demandas e reduzindo a necessidade de projetos isolados para cada integração.</p>', $panasonic );
+		update_field( 'impacto_titulo', 'Mais agilidade, previsibilidade e controle', $panasonic );
+		update_field( 'impacto_texto', '<p>Com a nova arquitetura de integrações, a Panasonic reduziu drasticamente o tempo de implementação de novos conectores e eliminou grande parte das intervenções manuais no processo operacional, ganhando visibilidade em tempo real sobre toda a cadeia de dados.</p>', $panasonic );
 		$this->definir_thumb( $panasonic, 'case-panasonic' );
 
 		// 2. Moura — sem métricas.
@@ -685,12 +691,46 @@ class Cliconnect_Seed {
 		update_field( 'metrica_texto', 'Redução de tempo gasto na triagem', $petro );
 		$this->definir_thumb( $petro, 'case-petroreconcavo' );
 
-		WP_CLI::log( '  cases: 3.' );
+		// 4. Moura clone — "Evitou perda de 15% das vendas mensais".
+		$moura2 = $this->upsert(
+			'case:moura-vendas',
+			array(
+				'post_type'    => 'cli_case',
+				'post_title'   => 'Evitou perda de 15% das vendas mensais',
+				'post_excerpt' => 'A integração entre CRM, ERP e plataforma de e-commerce eliminou gargalos no processo de vendas e garantiu continuidade operacional mesmo em picos de demanda.',
+				'menu_order'   => 3,
+			)
+		);
+
+		update_field( 'logo', $this->img( 'case-logo-moura' ), $moura2 );
+		update_field( 'metrica_numero', '15%', $moura2 );
+		update_field( 'metrica_texto', 'De vendas mensais preservadas com integração em tempo real', $moura2 );
+		$this->definir_thumb( $moura2, 'case-moura' );
+
+		// 5. PetroRecôncavo clone — "Otimizou operações com dados unificados".
+		$petro2 = $this->upsert(
+			'case:petroreconcavo-dados',
+			array(
+				'post_type'    => 'cli_case',
+				'post_title'   => 'Otimizou operações com dados unificados',
+				'post_excerpt' => 'A unificação dos dados operacionais em uma única arquitetura de integrações reduziu retrabalho, eliminou inconsistências e acelerou a tomada de decisão.',
+				'menu_order'   => 4,
+			)
+		);
+
+		update_field( 'logo', $this->img( 'case-logo-petroreconcavo' ), $petro2 );
+		update_field( 'metrica_numero', '+40%', $petro2 );
+		update_field( 'metrica_texto', 'De ganho em velocidade de análise operacional', $petro2 );
+		$this->definir_thumb( $petro2, 'case-petroreconcavo' );
+
+		WP_CLI::log( '  cases: 5.' );
 
 		return array(
 			'panasonic' => $panasonic,
 			'moura'     => $moura,
 			'petro'     => $petro,
+			'moura2'    => $moura2,
+			'petro2'    => $petro2,
 		);
 	}
 

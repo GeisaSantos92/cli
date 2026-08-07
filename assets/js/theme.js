@@ -21,6 +21,7 @@
 		initVoltarAoTopo();
 		initFaq();
 		initMetricasCounters();
+		initCaseScrollSpy();
 	});
 
 	/* ----- Seletor de idiomas (globo do header) ---------------------------- */
@@ -225,4 +226,43 @@
 			});
 		});
 	}
+
+	/* ----- Scroll spy da página de case (sidebar âncora) ------------------- */
+
+	function initCaseScrollSpy() {
+		var links = document.querySelectorAll('.case-topicos__link');
+		var sections = document.querySelectorAll('[data-scroll-spy-section]');
+
+		if (!links.length || !sections.length) return;
+
+		var activeClass = 'case-topicos__link--active';
+
+		function setActive(id) {
+			Array.prototype.forEach.call(links, function (link) {
+				var href = link.getAttribute('href');
+				link.classList.toggle(activeClass, href === '#' + id);
+			});
+		}
+
+		// Define a primeira seção como ativa ao carregar.
+		if (sections[0]) {
+			setActive(sections[0].id);
+		}
+
+		var observer = new IntersectionObserver(
+			function (entries) {
+				Array.prototype.forEach.call(entries, function (entry) {
+					if (entry.isIntersecting) {
+						setActive(entry.target.id);
+					}
+				});
+			},
+			{ rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+		);
+
+		Array.prototype.forEach.call(sections, function (section) {
+			observer.observe(section);
+		});
+	}
+
 })();

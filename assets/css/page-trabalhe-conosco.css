@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Trabalhe Conosco — estilos específicos da página.
+
+   Tokens de theme.css: var(--cor-*), var(--tam-*), var(--raio*).
+   Componentes globais (.container, .secao, .botao, .eyebrow, .metricas__grid,
+   .blog__grid, .card) vêm de theme.css e não são redefinidos aqui.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Hero
+   ========================================================================== */
+
+.tc-hero {
+	background: linear-gradient(180deg, var(--cor-fundo-azul) 0%, var(--cor-fundo) 100%);
+	padding-block: var(--secao-espacamento);
+	text-align: center;
+}
+
+.tc-hero__inner {
+	max-width: 760px;
+}
+
+.tc-hero__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h1);
+	color: var(--cor-texto);
+	margin-block: 0.5rem 1.25rem;
+	line-height: 1.1;
+}
+
+.tc-hero__texto {
+	font-size: var(--tam-body-lg);
+	color: var(--cor-texto-suave);
+	max-width: 600px;
+	margin-inline: auto;
+	margin-bottom: 2rem;
+	line-height: 1.6;
+}
+
+.tc-hero__acoes {
+	display: flex;
+	justify-content: center;
+}
+
+/* ==========================================================================
+   2. Sobre (fundo azul escuro)
+   ========================================================================== */
+
+.tc-sobre {
+	background-color: var(--cor-marca-profunda);
+	padding-block: var(--secao-espacamento);
+	color: var(--cor-texto-clara);
+}
+
+.tc-sobre__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: clamp(2rem, 5vw, 4rem);
+	align-items: center;
+}
+
+.tc-sobre__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	margin-block: 0 1.5rem;
+	line-height: 1.15;
+}
+
+.tc-sobre__paragrafo {
+	font-size: var(--tam-body);
+	color: var(--cor-texto-clara-suave);
+	line-height: 1.7;
+	margin-block: 0 1rem;
+}
+
+.tc-sobre__grade {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem;
+	border-radius: var(--raio-card);
+	overflow: hidden;
+}
+
+.tc-sobre__foto {
+	aspect-ratio: 1;
+	overflow: hidden;
+}
+
+.tc-sobre__foto img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* ==========================================================================
+   3. Métricas
+   Reutiliza .metricas__grid e .metrica de theme.css.
+   ========================================================================== */
+
+.tc-metricas {
+	padding-block: var(--secao-espacamento);
+}
+
+/* ==========================================================================
+   4. Frase de impacto
+   ========================================================================== */
+
+.tc-frase {
+	padding-block: clamp(3rem, 5vw, 5rem);
+	text-align: center;
+}
+
+.tc-frase__texto {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	color: var(--cor-texto);
+	line-height: 1.2;
+	max-width: 800px;
+	margin-inline: auto;
+}
+
+.tc-frase__destaque {
+	display: block;
+	color: var(--cor-primaria);
+}
+
+/* ==========================================================================
+   5. Valores
+   ========================================================================== */
+
+.tc-valores {
+	padding-block: var(--secao-espacamento);
+}
+
+.tc-valores__grade {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.25rem;
+	margin-top: 3rem;
+}
+
+.tc-valor {
+	padding: 1.5rem;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-card);
+	background: var(--cor-fundo);
+}
+
+.tc-valor__icone {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--cor-fundo-azul);
+	border-radius: var(--raio);
+	color: var(--cor-primaria);
+	margin-bottom: 1rem;
+}
+
+.tc-valor__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h6);
+	color: var(--cor-texto);
+	margin-block: 0 0.5rem;
+}
+
+.tc-valor__texto {
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* Card CTA azul (último item da grade) */
+.tc-valores__cta {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	background: var(--cor-primaria);
+	border-radius: var(--raio-card);
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h5);
+	text-decoration: none;
+	line-height: 1.2;
+	transition: background 0.2s;
+}
+
+.tc-valores__cta:hover {
+	background: var(--cor-primaria-escura);
+}
+
+.tc-valores__cta svg {
+	align-self: flex-end;
+}
+
+/* ==========================================================================
+   6. Depoimento
+   ========================================================================== */
+
+.tc-depoimento {
+	background: var(--cor-fundo-azul);
+	padding-block: var(--secao-espacamento);
+}
+
+.tc-depoimento__inner {
+	display: flex;
+	gap: clamp(2rem, 5vw, 4rem);
+	align-items: center;
+}
+
+.tc-depoimento__foto {
+	flex-shrink: 0;
+}
+
+.tc-depoimento__foto img {
+	width: clamp(80px, 12vw, 120px);
+	height: clamp(80px, 12vw, 120px);
+	border-radius: 50%;
+	object-fit: cover;
+	display: block;
+}
+
+.tc-depoimento__bloco {
+	margin: 0;
+}
+
+.tc-depoimento__citacao {
+	font-size: var(--tam-body-lg);
+	color: var(--cor-texto);
+	line-height: 1.7;
+	margin: 0 0 1.5rem;
+}
+
+.tc-depoimento__nome {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h6);
+	color: var(--cor-texto);
+	margin: 0 0 0.25rem;
+}
+
+.tc-depoimento__cargo {
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	margin: 0;
+}
+
+/* ==========================================================================
+   7. Benefícios
+   ========================================================================== */
+
+.tc-beneficios {
+	padding-block: var(--secao-espacamento);
+}
+
+.tc-beneficios__grade {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.25rem;
+	margin-top: 3rem;
+}
+
+.tc-beneficio {
+	padding: 1.5rem;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-card);
+	background: var(--cor-fundo);
+}
+
+.tc-beneficio__icone {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background: var(--cor-fundo-azul);
+	border-radius: var(--raio);
+	color: var(--cor-primaria);
+	margin-bottom: 1rem;
+}
+
+.tc-beneficio__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h6);
+	color: var(--cor-texto);
+	margin-block: 0 0.5rem;
+}
+
+.tc-beneficio__texto {
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* ==========================================================================
+   8. Jeito CLI de ser
+   ========================================================================== */
+
+.tc-jeito {
+	background: var(--cor-fundo-suave);
+	padding-block: var(--secao-espacamento);
+}
+
+.tc-jeito__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: clamp(2rem, 6vw, 5rem);
+	align-items: start;
+}
+
+.tc-jeito__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	color: var(--cor-texto);
+	margin-block: 0 2rem;
+	line-height: 1.15;
+}
+
+.tc-jeito__lista {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.tc-jeito__item {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-size: var(--tam-body-lg);
+	color: var(--cor-texto);
+	font-weight: 500;
+	padding: 1rem 1.25rem;
+	background: var(--cor-fundo);
+	border-radius: var(--raio);
+	border: 1px solid var(--cor-borda-sutil);
+}
+
+.tc-jeito__marcador {
+	color: var(--cor-primaria);
+	flex-shrink: 0;
+}
+
+.tc-jeito__texto {
+	font-size: var(--tam-body);
+	color: var(--cor-texto-suave);
+	line-height: 1.7;
+	margin-block: 0 2rem;
+}
+
+/* ==========================================================================
+   9. Blog
+   Reutiliza .blog__grid e .card de theme.css.
+   ========================================================================== */
+
+.tc-blog {
+	padding-block: var(--secao-espacamento);
+}
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+	.tc-valores__grade,
+	.tc-beneficios__grade {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.tc-sobre__inner,
+	.tc-jeito__inner,
+	.tc-depoimento__inner {
+		grid-template-columns: 1fr;
+	}
+
+	.tc-sobre__grade {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.tc-valores__grade,
+	.tc-beneficios__grade {
+		grid-template-columns: 1fr;
+	}
+
+	.tc-frase__texto {
+		font-size: var(--tam-h4);
+	}
+}
+
+@media (max-width: 480px) {
+	.tc-sobre__grade {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

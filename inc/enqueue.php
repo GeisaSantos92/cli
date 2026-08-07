@@ -76,6 +76,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página individual de case.
+	if ( is_singular( 'cli_case' ) ) {
+		wp_enqueue_style(
+			'cliconnect-case-single',
+			get_theme_file_uri( '/assets/css/case-single.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/case-single.css' )
+		);
+	}
+
 	// Comportamentos vanilla (menu, submenus, acordeão do FAQ).
 	wp_enqueue_script(
 		'cliconnect-theme',

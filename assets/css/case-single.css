@@ -1,0 +1,598 @@
+/* ==========================================================================
+   CLI Connect — estilos da página individual de case (single-cli_case.php).
+
+   Enfileirado só em is_singular('cli_case') (inc/enqueue.php).
+   Depende dos tokens declarados em theme.css.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. INTRO — Imagem + Título
+   ========================================================================== */
+
+.case-intro {
+	background:
+		linear-gradient(180deg, rgba(130, 178, 255, 0.2) 0%, rgba(199, 220, 255, 0) 24%),
+		var(--cor-fundo-suave);
+	padding-block: 80px;
+}
+
+.case-intro__grid {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 80px;
+	align-items: center;
+}
+
+/* Imagem quadrada com object-fit: cover e bordas arredondadas. */
+.case-intro__imagem {
+	aspect-ratio: 1 / 1;
+	border-radius: var(--raio-card);
+	overflow: hidden;
+}
+
+.case-intro__foto {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.case-intro__chamada {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.case-intro__headline {
+	padding-bottom: 0;
+}
+
+.case-intro__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.03em;
+	color: var(--cor-texto);
+	text-wrap: balance;
+	margin: 0;
+}
+
+.case-intro__subtitulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--cor-texto-alt); /* #566f9d */
+	margin: 0;
+}
+
+/* ==========================================================================
+   2. BODY — Grid com sidebar e conteúdo
+   ========================================================================== */
+
+.case-body {
+	background: var(--cor-fundo);
+	padding-top: 80px;
+	padding-bottom: 160px;
+}
+
+.case-body__grid {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 80px;
+	align-items: start;
+}
+
+/* --- Sidebar -------------------------------------------------------------- */
+
+.case-topicos {
+	position: sticky;
+	top: 80px; /* Fica abaixo do header fixo. */
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding-right: 48px;
+}
+
+/* Bloco "Tecnologias Utilizadas". */
+.case-topicos__tecnologias {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-bottom: 24px;
+	border-bottom: 1px solid var(--cor-borda);
+}
+
+.case-topicos__label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm); /* 14px */
+	font-weight: 500;
+	line-height: 1.6;
+	color: #9a9c9f; /* muted, conforme Figma */
+	margin: 0;
+}
+
+/* Grade de logos de integração. */
+.case-topicos__logos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.case-topicos__logo-box {
+	width: 64px;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;
+	background: var(--cor-fundo);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	/* overflow: hidden removido — era a causa raiz do corte dos logos.
+	   Com object-fit: contain o logo nunca extrapola o box; overflow hidden
+	   era desnecessário e cortava logos em proporções incomuns. */
+}
+
+.case-topicos__logo-box img {
+	/* width/height explícitos ativam object-fit: contain de verdade.
+	   Com width/height: auto o object-fit não tem caixa de referência e
+	   a imagem escapava para fora do padding box. */
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+/* Links de navegação âncora. */
+.case-topicos__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.case-topicos__link {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	font-weight: 600;
+	line-height: 1.6;
+	color: #9a9c9f; /* inativo */
+	text-decoration: none;
+	white-space: nowrap;
+	transition: color 0.15s ease;
+}
+
+.case-topicos__link:hover,
+.case-topicos__link--active {
+	color: var(--cor-primaria); /* #3551f2 */
+}
+
+/* --- Coluna de conteúdo --------------------------------------------------- */
+
+.case-body__content {
+	display: flex;
+	flex-direction: column;
+	gap: 120px;
+}
+
+/* ==========================================================================
+   3. VÍDEO
+   ========================================================================== */
+
+.case-video {
+	position: relative;
+	aspect-ratio: 194 / 110; /* 1940/1100 do Figma */
+	border-radius: 24px;
+	overflow: hidden;
+	background: var(--cor-fundo);
+}
+
+.case-video__thumb {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.case-video__play {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100px;
+	height: 100px;
+	display: block;
+	text-decoration: none;
+	transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.case-video__play:hover {
+	transform: translate(-50%, -50%) scale(1.08);
+	opacity: 0.9;
+}
+
+.case-video__play-icon {
+	width: 100px;
+	height: 100px;
+	display: block;
+}
+
+/* ==========================================================================
+   4. SEÇÃO (Desafio / Solução / Impacto)
+   ========================================================================== */
+
+.case-secao {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+/* Heading: eyebrow + título. */
+.case-secao__heading {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.case-secao__eyebrow-wrapper {
+	padding-bottom: 12px;
+}
+
+.case-secao__eyebrow {
+	font-family: var(--fonte-eyebrow);
+	font-size: 0.75rem; /* 12px */
+	font-weight: 600;
+	line-height: 1.6;
+	letter-spacing: 0.14em; /* 1.68px */
+	text-transform: uppercase;
+	color: var(--cor-primaria);
+	font-variation-settings: "wdth" 125;
+}
+
+.case-secao__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em; /* -1.92px @ 48px */
+	color: var(--cor-texto-marca-escura); /* #003187 */
+	text-wrap: balance;
+	margin: 0;
+}
+
+/* Texto do corpo (wysiwyg). */
+.case-secao__body {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--cor-texto-suave); /* #4a5364 */
+}
+
+.case-secao__body p {
+	margin: 0 0 1em;
+}
+
+.case-secao__body p:last-child {
+	margin-bottom: 0;
+}
+
+/* ==========================================================================
+   5. CITAÇÃO (blockquote)
+   ========================================================================== */
+
+/*
+ * Layout: aspas grandes à esquerda + texto à direita.
+ * padding-left: 120px para dar espaço à aspa decorativa.
+ * Fundo: gradiente branco semi-transparente sobre #f5f9ff (Figma).
+ */
+.case-citacao {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	padding: 40px 40px 40px 40px;
+	background:
+		linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%),
+		var(--cor-fundo-suave);
+	border-radius: var(--raio);
+	margin: 0;
+	position: relative;
+}
+
+/* Grande aspa decorativa. */
+.case-citacao__aspas {
+	font-family: "Instrument Sans", var(--fonte-base);
+	font-size: var(--tam-h3); /* 48px */
+	font-style: italic;
+	font-weight: 500;
+	line-height: 1;
+	color: var(--cor-texto-marca-escura); /* #003187 */
+	flex-shrink: 0;
+	user-select: none;
+}
+
+.case-citacao__conteudo {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	flex: 1;
+	min-width: 0;
+}
+
+.case-citacao__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h5); /* 28px */
+	font-style: italic;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--cor-texto-marca-escura); /* #003187 */
+	margin: 0;
+}
+
+.case-citacao__autor {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	font-weight: 500;
+	font-style: normal;
+	line-height: 1.6;
+	color: var(--cor-texto-alt); /* #566f9d */
+	margin: 0;
+}
+
+/* ==========================================================================
+   6. CARDS DE MÉTRICAS (Impacto)
+   ========================================================================== */
+
+.case-metricas-single {
+	display: flex;
+	gap: 16px;
+	align-items: stretch;
+	padding-top: 24px;
+}
+
+.case-metrica-single {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 32px;
+	background: var(--cor-fundo-suave); /* #f5f9ff */
+	border-radius: var(--raio);
+}
+
+.case-metrica-single__numero {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h1); /* 80px */
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.03em; /* -2.4px @ 80px */
+	color: var(--cor-primaria); /* #3551f2 */
+	margin: 0 0 24px;
+}
+
+.case-metrica-single__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h5); /* 28px */
+	font-weight: 500;
+	line-height: 1.3;
+	letter-spacing: -0.02em; /* -0.56px @ 28px */
+	color: var(--cor-texto-suave); /* #4a5364 */
+	margin: 0;
+	flex: 1;
+	display: flex;
+	align-items: flex-end;
+}
+
+/* ==========================================================================
+   7. OUTROS CASES
+   ========================================================================== */
+
+.cases-outros {
+	background: var(--cor-fundo-suave); /* #f5f9ff */
+	padding-block: 120px;
+	overflow: hidden;
+}
+
+.cases-outros__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h3); /* 48px */
+	font-weight: 500;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+	color: var(--cor-texto-marca-escura); /* #003187 */
+	text-align: center;
+	margin: 0 0 64px;
+}
+
+.cases-outros__cards {
+	display: flex;
+	gap: 24px;
+	align-items: stretch;
+}
+
+/*
+ * Cada card: fundo branco, borda sutil, padding 24px, border-radius 8px.
+ * Layout interno: título (ocupa o topo, min-height de 252px) + linha divisória
+ * + rodapé (logo à esq. + "Ver case" à dir.).
+ */
+.case-outro-card {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 24px;
+	background: var(--cor-fundo);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	text-decoration: none;
+	color: inherit;
+	transition: box-shadow 0.2s ease;
+}
+
+.case-outro-card:hover {
+	box-shadow: var(--sombra-flutuante);
+}
+
+.case-outro-card__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h5); /* 28px */
+	font-weight: 500;
+	line-height: 1.3;
+	letter-spacing: -0.02em;
+	color: var(--cor-texto);
+	margin: 0 0 auto;
+	min-height: 252px; /* Alinha o rodapé de todos os cards. */
+	flex: 1;
+}
+
+/* Rodapé do card: linha divisória + logo + link. */
+.case-outro-card__rodape {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	padding-top: 24px;
+	border-top: 1px solid var(--cor-borda);
+	margin-top: 24px;
+}
+
+.case-outro-card__logo {
+	height: 48px;
+	display: flex;
+	align-items: center;
+}
+
+.case-outro-card__logo img {
+	/* max-height: 100% limita a altura ao container (48px) sem fixar o valor.
+	   height/width: auto mantêm a proporção. max-width evita logos muito largos.
+	   Com height fixo em 48px e width: auto, o max-width quebrava a proporção
+	   (largura clampada, altura mantida) — object-fit: contain era ineficaz
+	   pois precisa de ambas as dimensões explícitas para criar a caixa de
+	   contenção. */
+	max-height: 100%;
+	max-width: 160px;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	display: block;
+}
+
+/*
+ * "Ver case": 14px semibold, azul, underline estilo link brand.
+ * Oculto por padrão (opacity: 0); aparece no hover do card.
+ */
+.case-outro-card__link {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm); /* 14px */
+	font-weight: 600;
+	line-height: 1;
+	color: var(--cor-primaria);
+	border-bottom: 1px solid var(--cor-primaria);
+	padding-bottom: 2px;
+	white-space: nowrap;
+	flex-shrink: 0;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.case-outro-card:hover .case-outro-card__link,
+.case-outro-card:focus-within .case-outro-card__link {
+	opacity: 1;
+}
+
+/* Botão "Confira nossos cases". */
+.cases-outros__botao-wrapper {
+	display: flex;
+	justify-content: flex-end;
+	padding-top: 40px;
+}
+
+/* ==========================================================================
+   8. RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+	.case-intro__grid,
+	.case-body__grid {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	.case-topicos {
+		position: static;
+		padding-right: 0;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px;
+	}
+
+	.case-topicos__tecnologias {
+		width: 100%;
+	}
+
+	.case-topicos__nav {
+		flex-direction: row;
+		gap: 24px;
+	}
+
+	.case-intro__imagem {
+		aspect-ratio: 4 / 3;
+	}
+
+	.case-body {
+		padding-bottom: 80px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cases-outros__cards {
+		flex-direction: column;
+	}
+
+	.case-outro-card__titulo {
+		min-height: auto;
+	}
+
+	.case-metricas-single {
+		flex-direction: column;
+	}
+
+	.cases-outros {
+		padding-block: 64px;
+	}
+
+	.cases-outros__botao-wrapper {
+		justify-content: center;
+	}
+}
+
+@media (max-width: 600px) {
+	.case-intro {
+		padding-block: 48px;
+	}
+
+	.case-body {
+		padding-top: 48px;
+		padding-bottom: 64px;
+	}
+
+	.case-body__content {
+		gap: 64px;
+	}
+
+	.case-citacao {
+		padding: 24px;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.case-citacao__aspas {
+		font-size: 2rem;
+	}
+
+	.case-citacao__texto {
+		font-size: 1.25rem;
+	}
+}
