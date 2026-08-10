@@ -536,7 +536,7 @@
 /* Coluna direita: descrição. */
 .tc-jeito__descricao {
 	font-size: var(--tam-body);
-	color: var(--cor-texto);
+	color: var(--cor-texto-alt);
 	line-height: 1.6;
 }
 
