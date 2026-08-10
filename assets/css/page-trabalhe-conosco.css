@@ -414,6 +414,8 @@
 	text-align: center;
 	gap: 12px;
 	margin-bottom: clamp(2rem, 5vw, 3.5rem);
+	max-width: 500px;
+	margin-inline: auto;
 }
 
 .tc-beneficios__grade {
@@ -424,10 +426,11 @@
 }
 
 .tc-beneficio {
-	padding: 1.5rem;
+	padding: 2rem;
 	border: 1px solid var(--cor-borda);
 	border-radius: var(--raio);
 	background: var(--cor-fundo);
+	min-height: 200px;
 }
 
 .tc-beneficio__icone {
@@ -509,12 +512,17 @@
 	border-bottom: 1px solid var(--cor-borda-sutil);
 }
 
-/* Número e nome ficam na coluna esquerda via .tc-jeito__nome com ::before. */
+/* Coluna esquerda: número + nome em flex. */
+.tc-jeito__esquerda {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
 .tc-jeito__numero {
 	font-size: var(--tam-body-sm);
 	color: var(--cor-texto-suave);
 	font-weight: 400;
-	margin-right: 0.75rem;
 	flex-shrink: 0;
 }
 
@@ -523,9 +531,6 @@
 	font-size: var(--tam-body-lg);
 	font-weight: 700;
 	color: var(--cor-primaria);
-	display: flex;
-	align-items: center;
-	gap: 0;
 }
 
 /* Coluna direita: descrição. */
