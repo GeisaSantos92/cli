@@ -1410,14 +1410,19 @@ class Cliconnect_Seed {
 			'beneficio_6_texto'  => 'No dia que você fizer anos, tire uma folga. Você merece celebrar do jeito que quiser.',
 
 			// 8. Jeito CLI.
-			'jeito_titulo'      => 'O jeito CLI de ser',
-			'jeito_item_1_titulo' => 'Transparência primeiro',
-			'jeito_item_2_titulo' => 'Protagonismo',
-			'jeito_item_3_titulo' => 'Escuta aberta',
-			'jeito_item_4_titulo' => 'Profundidade técnica',
-			'jeito_item_5_titulo' => 'Compartilhamento',
-			'jeito_texto'       => 'Mais do que regras, esses princípios orientam a forma como trabalhamos todos os dias. Mesmo quando é difícil, escolhemos falar com clareza. Encaramos o problema do cliente e da empresa como nosso. Pedimos ajuda, recebemos feedback e mudamos o rumo quando faz sentido. Celebramos, documentamos, registramos. Aprender é parte do trabalho. Compartilhamos conhecimento, tempo e oportunidades.',
-			'jeito_botao'       => $this->link( 'Ver vagas', '/trabalhe-conosco/#vagas' ),
+			'jeito_titulo'         => 'O jeito CLI de ser',
+			'jeito_texto'          => 'Mais do que regras, estes princípios orientam a forma como trabalhamos todos os dias.',
+			'jeito_item_1_titulo'  => 'Transparência primeiro',
+			'jeito_item_1_texto'   => 'Mesmo quando é difícil, escolhemos dizer e ouvir com clareza.',
+			'jeito_item_2_titulo'  => 'Protagonismo',
+			'jeito_item_2_texto'   => 'Encaramos o problema do cliente, e da empresa, como nosso.',
+			'jeito_item_3_titulo'  => 'Escuta atenta',
+			'jeito_item_3_texto'   => 'Pedimos ajuda, recebemos feedback e mudamos a rota quando faz sentido.',
+			'jeito_item_4_titulo'  => 'Profundidade técnica',
+			'jeito_item_4_texto'   => 'Estudamos, documentamos, registramos. Aprender é parte do trabalho.',
+			'jeito_item_5_titulo'  => 'Compartilhamento',
+			'jeito_item_5_texto'   => 'Compartilhamos conhecimento, tempo e oportunidades.',
+			'jeito_botao'          => $this->link( 'Ver vagas', '/trabalhe-conosco/#vagas' ),
 
 			// 9. Blog.
 			'tc_blog_titulo' => 'Conheça mais sobre a CLI',

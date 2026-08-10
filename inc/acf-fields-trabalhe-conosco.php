@@ -150,11 +150,12 @@ function cliconnect_acf_fields_trabalhe_conosco() {
 
 	/* --- 8. JEITO CLI ---------------------------------------------------- */
 	$fields[] = $tc_tab( 'jeito', '8 · O jeito CLI de ser' );
-	$fields[] = $tc_text( 'jeito_titulo', 'Título (coluna esquerda)', 'jeito_titulo' );
+	$fields[] = $tc_text( 'jeito_titulo', 'Título', 'jeito_titulo' );
+	$fields[] = $tc_textarea( 'jeito_texto', 'Texto introdutório (topo direita)', 'jeito_texto', 2 );
 	for ( $i = 1; $i <= 5; $i++ ) {
-		$fields[] = $tc_text( "jeito_item_{$i}_titulo", "Item {$i}", "jeito_item_{$i}_titulo" );
+		$fields[] = $tc_text( "jeito_item_{$i}_titulo", "Item {$i} — título", "jeito_item_{$i}_titulo" );
+		$fields[] = $tc_textarea( "jeito_item_{$i}_texto", "Item {$i} — descrição", "jeito_item_{$i}_texto", 2 );
 	}
-	$fields[] = $tc_textarea( 'jeito_texto', 'Texto explicativo (coluna direita)', 'jeito_texto', 4 );
 	$fields[] = $tc_link( 'jeito_botao', 'Botão', 'jeito_botao' );
 
 	/* --- 9. BLOG --------------------------------------------------------- */
