@@ -393,10 +393,11 @@
 	padding-block: var(--secao-espacamento);
 	position: relative;
 	overflow: hidden;
+	background-color: var(--cor-fundo);
 	background-image: url('../img/fundo-beneficios.png');
 	background-repeat: no-repeat;
 	background-position: bottom left;
-	background-size: auto;
+	background-size: 380px auto;
 }
 
 .tc-beneficios .secao__cabecalho {
