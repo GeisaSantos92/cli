@@ -407,7 +407,7 @@
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 	pointer-events: none;
-	z-index: 0;
+	z-index: -1;
 }
 
 .tc-beneficios .secao__cabecalho {

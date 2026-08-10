@@ -40,7 +40,15 @@
       "Bash(bash .claude/skills/implementar-issue/scripts/issue.sh 9 --repo GeisaSantos92/cli --destino /tmp/issue-9)",
       "Bash(file /tmp/issue-9/*.png)",
       "Bash(cygpath -w /tmp/issue-9/b42ab69c-eaf5-4a8e-b8c2-500d9d204aa3.png)",
-      "Bash(wslpath -w /tmp/issue-9/b42ab69c-eaf5-4a8e-b8c2-500d9d204aa3.png)"
+      "Bash(wslpath -w /tmp/issue-9/b42ab69c-eaf5-4a8e-b8c2-500d9d204aa3.png)",
+      "Bash(php:*)",
+      "Bash(bash .claude/skills/implementar-issue/scripts/issue.sh 13 --repo GeisaSantos92/cli --destino /tmp/issue-13)",
+      "Bash(gh api:*)",
+      "Bash(bash:*)",
+      "Bash(xargs -I{} curl -sL -H \"Authorization: token {}\" \"https://github.com/user-attachments/assets/325d760f-cb2f-4f45-a78b-0f1eff6da7f4\" -o jeito.png)",
+      "Bash(./bin/wp cliconnect:*)",
+      "Bash(xargs -I{} curl -sL -H \"Authorization: token {}\" \"https://github.com/user-attachments/assets/2fe85571-7511-4472-9980-4715c764888b\" -o blog.png)",
+      "Bash(xargs -I{} curl -sL -H \"Authorization: token {}\" \"https://github.com/user-attachments/assets/557838e9-1031-4065-948c-f2977909eb26\" -o cta.png)"
     ]
   }
 }
