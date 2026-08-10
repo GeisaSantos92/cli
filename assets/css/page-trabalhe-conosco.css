@@ -391,6 +391,29 @@
 
 .tc-beneficios {
 	padding-block: var(--secao-espacamento);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Blob decorativo no canto inferior esquerdo. */
+.tc-beneficios::before {
+	content: '';
+	position: absolute;
+	bottom: -120px;
+	left: -120px;
+	width: 480px;
+	height: 480px;
+	background: radial-gradient(ellipse 70% 70% at 30% 70%, rgba(104, 127, 244, 0.18) 0%, transparent 70%);
+	pointer-events: none;
+}
+
+.tc-beneficios .secao__cabecalho {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 12px;
+	margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 .tc-beneficios__grade {
@@ -403,7 +426,7 @@
 .tc-beneficio {
 	padding: 1.5rem;
 	border: 1px solid var(--cor-borda);
-	border-radius: var(--raio-card);
+	border-radius: var(--raio);
 	background: var(--cor-fundo);
 }
 
@@ -442,53 +465,81 @@
 	padding-block: var(--secao-espacamento);
 }
 
-.tc-jeito__inner {
+/* Linha de cabeçalho: título à esquerda, intro à direita. */
+.tc-jeito__cabecalho {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: clamp(2rem, 6vw, 5rem);
 	align-items: start;
+	margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .tc-jeito__titulo {
 	font-family: var(--fonte-titulo);
 	font-size: var(--tam-h3);
 	color: var(--cor-texto);
-	margin-block: 0 2rem;
+	margin: 0;
 	line-height: 1.15;
 }
 
+.tc-jeito__intro {
+	font-size: var(--tam-body);
+	color: var(--cor-texto-suave);
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* Lista numerada: cada item ocupa uma linha com 2 colunas. */
 .tc-jeito__lista {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
 }
 
 .tc-jeito__item {
-	display: flex;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: clamp(2rem, 6vw, 5rem);
 	align-items: center;
-	gap: 0.75rem;
-	font-size: var(--tam-body-lg);
-	color: var(--cor-texto);
-	font-weight: 500;
-	padding: 1rem 1.25rem;
-	background: var(--cor-fundo);
-	border-radius: var(--raio);
-	border: 1px solid var(--cor-borda-sutil);
+	padding-block: 1.25rem;
+	border-top: 1px solid var(--cor-borda-sutil);
 }
 
-.tc-jeito__marcador {
-	color: var(--cor-primaria);
+.tc-jeito__item:last-child {
+	border-bottom: 1px solid var(--cor-borda-sutil);
+}
+
+/* Número e nome ficam na coluna esquerda via .tc-jeito__nome com ::before. */
+.tc-jeito__numero {
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	font-weight: 400;
+	margin-right: 0.75rem;
 	flex-shrink: 0;
 }
 
-.tc-jeito__texto {
+.tc-jeito__nome {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-body-lg);
+	font-weight: 700;
+	color: var(--cor-primaria);
+	display: flex;
+	align-items: center;
+	gap: 0;
+}
+
+/* Coluna direita: descrição. */
+.tc-jeito__descricao {
 	font-size: var(--tam-body);
 	color: var(--cor-texto-suave);
-	line-height: 1.7;
-	margin-block: 0 2rem;
+	line-height: 1.6;
+}
+
+/* Botão centralizado abaixo da lista. */
+.tc-jeito__rodape {
+	display: flex;
+	justify-content: center;
+	margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 /* ==========================================================================
@@ -513,9 +564,14 @@
 
 @media (max-width: 768px) {
 	.tc-sobre__inner,
-	.tc-jeito__inner,
 	.tc-depoimento__inner {
 		grid-template-columns: 1fr;
+	}
+
+	.tc-jeito__cabecalho,
+	.tc-jeito__item {
+		grid-template-columns: 1fr;
+		gap: 0.5rem;
 	}
 
 	.tc-sobre__grade {
