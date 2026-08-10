@@ -23,7 +23,7 @@ $cta_url    = get_theme_mod( 'cliconnect_cta_botao_url' ) ?? '';
 $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
 ?>
 
-<?php if ( $cta_titulo ) : ?>
+<?php if ( $cta_titulo && ! is_page_template( 'page-trabalhe-conosco.php' ) ) : ?>
 <section class="footer-cta">
 	<div class="footer-cta__inner">
 		<div class="footer-cta__caixa">
