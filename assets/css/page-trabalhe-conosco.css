@@ -530,7 +530,7 @@
 	font-family: var(--fonte-titulo);
 	font-size: var(--tam-body-lg);
 	font-weight: 700;
-	color: var(--cor-primaria);
+	color: var(--cor-texto-marca-escura);
 }
 
 /* Coluna direita: descrição. */
