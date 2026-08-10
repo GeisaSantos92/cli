@@ -262,6 +262,82 @@ function cliconnect_lista_numerada( $molde, $total, $callback = null ) {
 }
 
 /**
+ * Verifica se a página atual é identificada pelo slug informado.
+ *
+ * @param string $slug Post name da página.
+ * @return bool
+ */
+function cliconnect_e_pagina( $slug ) {
+	return is_page( $slug );
+}
+
+/**
+ * Lê um campo ACF da página atualmente renderizada.
+ *
+ * Equivalente de cliconnect_campo() para páginas internas: lê do objeto
+ * consultado (get_queried_object_id) em vez da página inicial.
+ *
+ * @param string $nome   Nome do campo.
+ * @param mixed  $padrao Valor devolvido quando o campo está vazio.
+ * @return mixed
+ */
+function cliconnect_campo_pagina( $nome, $padrao = '' ) {
+	if ( ! function_exists( 'get_field' ) ) {
+		return $padrao;
+	}
+
+	$page_id = get_queried_object_id();
+
+	if ( ! $page_id ) {
+		return $padrao;
+	}
+
+	$valor = get_field( $nome, $page_id ) ?? '';
+
+	if ( '' === $valor || null === $valor || array() === $valor ) {
+		return $padrao;
+	}
+
+	return $valor;
+}
+
+/**
+ * Renderiza um botão a partir de um campo ACF do tipo Link da página atual.
+ *
+ * @param string $campo   Nome do campo Link.
+ * @param string $classes Classes CSS do botão.
+ * @param string $icone   Ícone após o texto.
+ * @return void
+ */
+function cliconnect_botao_pagina( $campo, $classes = 'botao botao--primario', $icone = 'seta-direita' ) {
+	cliconnect_botao( cliconnect_campo_pagina( $campo, array() ), $classes, $icone );
+}
+
+/**
+ * Lista numerada de campos ACF da página atual.
+ *
+ * @param string   $molde    Molde com %d.
+ * @param int      $total    Quantidade de posições.
+ * @param callable $callback Recebe o índice e o valor.
+ * @return array
+ */
+function cliconnect_lista_numerada_pagina( $molde, $total, $callback = null ) {
+	$itens = array();
+
+	for ( $i = 1; $i <= $total; $i++ ) {
+		$valor = cliconnect_campo_pagina( sprintf( $molde, $i ), '' );
+
+		if ( '' === $valor ) {
+			continue;
+		}
+
+		$itens[] = is_callable( $callback ) ? $callback( $i, $valor ) : $valor;
+	}
+
+	return $itens;
+}
+
+/**
  * Aplica ênfase (*trecho*) num texto simples, escapando o resto.
  *
  * Permite o cliente destacar parte de uma frase sem abrir um editor completo.

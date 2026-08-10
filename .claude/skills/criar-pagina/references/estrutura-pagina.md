@@ -153,6 +153,14 @@ add_filter( 'template_include', 'cliconnect_template_pagina_traduzida' );
 Padrão idêntico ao de `inc/acf-fields-home.php`: helpers locais de campo, abas
 numeradas por seção, `message` documentando o que vem de CPT ou de asset do tema.
 
+> **⚠️ `post_name` NÃO existe no ACF 6.x.**
+> Os tipos de localização válidos são: `post_type`, `post_template`, `post_status`,
+> `post`, `page_template`, `page_type`, `page_parent`, `page`, `current_user`,
+> `current_user_role`, `user_form`, `user_role`, `taxonomy`, `attachment`, `comment`,
+> `widget`, `nav_menu`, `nav_menu_item`.
+> Use sempre `cliconnect_acf_local_pagina()` (tipo `page`, resolve por ID) — não escreva
+> a regra `post_name` diretamente, ela silenciosamente nunca casa e o grupo some do painel.
+
 ```php
 <?php
 /**
@@ -287,6 +295,12 @@ add_action( 'acf/init', 'cliconnect_acf_fields_{slug_php}' );
 - `cliconnect_acf_local_pagina()` é compartilhada — declare-a **uma vez** (no primeiro
   `inc/acf-fields-{slug}.php` criado, ou em `inc/helpers.php`) e proteja com
   `if ( ! function_exists( ... ) )` se houver risco de duplicar.
+- A função resolve por ID (`page == {id}`). Se a página ainda não existe (antes do seed),
+  cai no fallback `page == 0` (sem match) — o grupo continua registrado e `update_field()`
+  funciona. Depois que o seed cria a página, recarregue o admin e o grupo aparece.
+  Se precisar que o grupo apareça antes mesmo do seed, use `page_template` como localização
+  (requer `Template Name:` no cabeçalho do `page-{slug}.php` e `_wp_page_template` salvo
+  na página — veja `seed.md`).
 
 ---
 
@@ -351,6 +365,8 @@ Regras:
 ```php
 <?php
 /**
+ * Template Name: {Título}
+ *
  * Página "{Título}".
  *
  * Só orquestra: cada seção do layout vira um template-part em

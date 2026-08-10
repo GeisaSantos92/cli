@@ -1423,6 +1423,10 @@ class Cliconnect_Seed {
 			'tc_blog_titulo' => 'Conheça mais sobre a CLI',
 		);
 
+		// Garante que o template nomeado está atribuído à página (necessário para
+		// a regra de localização do ACF: page_template == page-trabalhe-conosco.php).
+		update_post_meta( $page_id, '_wp_page_template', 'page-trabalhe-conosco.php' );
+
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $page_id );
 		}

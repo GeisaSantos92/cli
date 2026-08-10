@@ -104,13 +104,17 @@ Ordem fixa (cada passo depende do anterior). Código pronto de cada arquivo em
 2. **CPTs novos** (se o plano previu) em `inc/cpt.php` + campos em
    `inc/acf-fields-cpt.php`, seguindo os CPTs existentes.
 3. **Grupo ACF da página**: `inc/acf-fields-{slug}.php`, com abas por seção,
-   chaves `field_{slug}_*`, grupo `group_cli_{slug}`, localização resolvida por slug
-   (funciona em qualquer ambiente e cobre as traduções do Polylang).
+   chaves `field_{slug}_*`, grupo `group_cli_{slug}`. Localização via
+   `cliconnect_acf_local_pagina()` (tipo `page`, por ID) — **nunca use `post_name`**,
+   esse tipo não existe no ACF 6.x e faz o grupo sumir silenciosamente do painel.
+   Detalhes e aviso completo em `references/estrutura-pagina.md`.
 4. **Template-parts**: `template-parts/{slug}/{secao}.php` — um por seção, cada um com
    guarda `ABSPATH`, leitura dos campos no topo, `return` cedo se vazio, e só marcação
    depois. Escape em toda saída.
 5. **Template da página**: `page-{slug}.php` — só orquestra o `foreach` das seções,
-   como `front-page.php`.
+   como `front-page.php`. **Obrigatório**: inclua `Template Name: {Título}` no cabeçalho
+   PHPDoc (ver molde em `references/estrutura-pagina.md`) — sem isso o WordPress não
+   registra o template como selecionável e `_wp_page_template` não é reconhecido.
 6. **CSS**: `assets/css/page-{slug}.css`, com cabeçalho de comentário, seções numeradas
    e **apenas tokens** (`var(--cor-*)`, `var(--tam-*)`, `var(--raio*)`). Se precisar de
    um valor que não existe como token, primeiro procure um equivalente; só então

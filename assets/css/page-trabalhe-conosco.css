@@ -12,28 +12,30 @@
 
 .tc-hero {
 	background: linear-gradient(180deg, var(--cor-fundo-azul) 0%, var(--cor-fundo) 100%);
-	padding-block: clamp(3rem, 5vw, 5rem);
+	padding-block: clamp(4rem, 6vw, 6rem);
 	text-align: center;
 }
 
 .tc-hero__inner {
-	max-width: 680px;
+	max-width: 880px;
 }
 
 .tc-hero__titulo {
 	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h2);
+	font-size: clamp(2.5rem, 4.5vw, 4rem);
 	color: var(--cor-texto);
-	margin-block: 0.5rem 1rem;
+	margin-block: 0.75rem 1.5rem;
 	line-height: 1.1;
+	max-width:760px;
+	margin: 20px auto;
 }
 
 .tc-hero__texto {
-	font-size: var(--tam-body);
+	font-size: 1.25rem;
 	color: var(--cor-texto-suave);
-	max-width: 640px;
+	max-width: 960px;
 	margin-inline: auto;
-	margin-bottom: 1.5rem;
+	margin-bottom: 2.5rem;
 	line-height: 1.6;
 }
 
@@ -42,51 +44,81 @@
 	justify-content: center;
 }
 
+.tc-hero__acoes .botao {
+	min-width: 331px;
+	min-height: 74px;
+	padding: 22px 40px;
+}
+
 /* ==========================================================================
-   2. Sobre (fundo azul escuro)
+   2. Sobre (card azul escuro centralizado)
    ========================================================================== */
 
 .tc-sobre {
-	background-color: var(--cor-marca-profunda);
-	padding-block: var(--secao-espacamento);
-	color: var(--cor-texto-clara);
+	background: var(--cor-fundo);
+	padding: clamp(1.5rem, 3vw, 2.5rem) 47px;
 }
 
 .tc-sobre__inner {
+	background: var(--cor-marca-profunda);
+	border-radius: 14px;
+	overflow: hidden;
+	position: relative;
+	color: var(--cor-texto-clara);
+	padding: 64px;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	gap: clamp(2rem, 5vw, 4rem);
 	align-items: center;
 }
 
+/* Elementos geométricos do fundo do card */
+.tc-sobre__inner::before,
+.tc-sobre__inner::after {
+	content: '';
+	position: absolute;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 20px;
+	transform: rotate(45deg);
+	pointer-events: none;
+}
+
+.tc-sobre__inner::before {
+	width: 480px;
+	height: 480px;
+	top: -160px;
+	right: 320px;
+}
+
+.tc-sobre__inner::after {
+	width: 340px;
+	height: 340px;
+	bottom: -120px;
+	right: 560px;
+}
+
 .tc-sobre__titulo {
 	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h3);
+	font-size: 2.5rem;
+	color: var(--cor-texto-clara);
 	margin-block: 0 1.5rem;
 	line-height: 1.15;
 }
 
 .tc-sobre__paragrafo {
-	font-size: var(--tam-body);
+	font-size: var(--tam-body-sm);
 	color: var(--cor-texto-clara-suave);
-	line-height: 1.7;
+	line-height: 1.5;
 	margin-block: 0 1rem;
 }
 
-.tc-sobre__grade {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 0.5rem;
+.tc-sobre__imagem {
 	border-radius: var(--raio-card);
 	overflow: hidden;
+	align-self: stretch;
 }
 
-.tc-sobre__foto {
-	aspect-ratio: 1;
-	overflow: hidden;
-}
-
-.tc-sobre__foto img {
+.tc-sobre__imagem img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
@@ -95,11 +127,62 @@
 
 /* ==========================================================================
    3. Métricas
-   Reutiliza .metricas__grid e .metrica de theme.css.
+   front-page.css não é carregado aqui — todos os estilos base declarados
+   com escopo .tc-metricas.
+   Design: um único card branco contendo 3 colunas, sem divisórias.
    ========================================================================== */
 
 .tc-metricas {
-	padding-block: var(--secao-espacamento);
+	background: var(--cor-fundo-suave);
+	padding-block: clamp(3rem, 5vw, 5rem);
+}
+
+/* Um cartão branco único, igual ao da home, mas sem divisórias entre métricas. */
+.tc-metricas .metricas__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 0;
+	text-align: center;
+	background: var(--cor-fundo);
+	border-radius: var(--raio-card);
+	box-shadow: var(--sombra-card);
+	overflow: hidden;
+}
+
+.tc-metricas .metrica {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 22px;
+	padding: clamp(2.5rem, 5vw, 4rem) 2rem;
+	background: transparent;
+	border: 0;
+}
+
+.tc-metricas .metrica__numero {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h1);
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.03em;
+	color: var(--cor-texto-marca);
+	font-variant-numeric: tabular-nums;
+	margin: 0;
+}
+
+.tc-metricas .metrica__rotulo {
+	font-size: var(--tam-body);
+	font-weight: 400;
+	line-height: 1.4;
+	color: #616161;
+	margin: 0;
+}
+
+@media (max-width: 780px) {
+	.tc-metricas .metrica + .metrica {
+		border-top: 1px solid var(--cor-borda-sutil);
+	}
 }
 
 /* ==========================================================================
@@ -112,11 +195,12 @@
 }
 
 .tc-frase__texto {
-	font-family: var(--fonte-titulo);
+	font-family: var(--fonte-base);
 	font-size: var(--tam-h3);
+	font-weight: 500;
 	color: var(--cor-texto);
 	line-height: 1.2;
-	max-width: 800px;
+	max-width: 100%;
 	margin-inline: auto;
 }
 
@@ -131,6 +215,21 @@
 
 .tc-valores {
 	padding-block: var(--secao-espacamento);
+}
+
+/* front-page.css não é carregado aqui — reaplica os estilos de cabeçalho centrado. */
+.tc-valores .secao__cabecalho {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 12px;
+	margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.tc-valores .secao__titulo {
+	text-wrap: balance;
+	max-width: min(100%, 940px);
 }
 
 .tc-valores__grade {
@@ -177,70 +276,107 @@
 .tc-valores__cta {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
-	gap: 0.5rem;
+	justify-content: center;
+	gap: 1rem;
 	padding: 1.5rem;
-	background: var(--cor-primaria);
+	/* Gradiente especificado no Figma: base #687FF4 + overlay direcional de #3551F2. */
+	background:
+		linear-gradient(303.09deg, #3551F2 0%, rgba(53, 81, 242, 0) 100%),
+		linear-gradient(0deg, #687FF4, #687FF4);
 	border-radius: var(--raio-card);
 	color: var(--cor-texto-clara);
 	font-family: var(--fonte-titulo);
 	font-size: var(--tam-h5);
 	text-decoration: none;
 	line-height: 1.2;
-	transition: background 0.2s;
+	transition: filter 0.2s;
 }
 
 .tc-valores__cta:hover {
-	background: var(--cor-primaria-escura);
+	filter: brightness(0.9);
 }
 
 .tc-valores__cta svg {
-	align-self: flex-end;
+	align-self: flex-start;
 }
 
 /* ==========================================================================
    6. Depoimento
    ========================================================================== */
 
+/* Fundo branco com blob elíptico lavanda no rodapé (via ::after). */
 .tc-depoimento {
-	background: var(--cor-fundo-azul);
-	padding-block: var(--secao-espacamento);
+	background: var(--cor-fundo);
+	padding-block: clamp(2.5rem, 4vw, 3.5rem);
+	position: relative;
+	overflow: hidden;
 }
 
+.tc-depoimento::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 55%;
+	background: radial-gradient(ellipse 90% 100% at 50% 100%, rgba(104, 127, 244, 0.4) 0%, transparent 70%);
+	pointer-events: none;
+}
+
+/* Grid: coluna esquerda fixa (autor) + coluna direita expansível (citação). */
 .tc-depoimento__inner {
-	display: flex;
-	gap: clamp(2rem, 5vw, 4rem);
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: clamp(2.5rem, 6vw, 5rem);
 	align-items: center;
+	position: relative; /* fica acima do ::after */
+	z-index: 1;
 }
 
-.tc-depoimento__foto {
-	flex-shrink: 0;
+/* Coluna esquerda: foto + nome + cargo empilhados. */
+.tc-depoimento__autor {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.5rem;
 }
 
 .tc-depoimento__foto img {
-	width: clamp(80px, 12vw, 120px);
-	height: clamp(80px, 12vw, 120px);
-	border-radius: 50%;
+	width: clamp(80px, 10vw, 120px);
+	height: clamp(80px, 10vw, 120px);
+	border-radius: var(--raio-card);
 	object-fit: cover;
 	display: block;
+	margin-bottom: 0.5rem;
 }
 
+/* Coluna direita: " tipográfico (via ::before) + citação em azul profundo. */
 .tc-depoimento__bloco {
 	margin: 0;
 }
 
+.tc-depoimento__bloco::before {
+	content: '\201C'; /* " abertura */
+	display: block;
+	font-size: 2.5rem;
+	line-height: 1;
+	color: var(--cor-texto-marca);
+	margin-bottom: 0.75rem;
+}
+
 .tc-depoimento__citacao {
 	font-size: var(--tam-body-lg);
-	color: var(--cor-texto);
+	color: var(--cor-marca-profunda); /* azul navy conforme design */
 	line-height: 1.7;
-	margin: 0 0 1.5rem;
+	margin: 0;
 }
 
 .tc-depoimento__nome {
-	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h6);
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 700;
 	color: var(--cor-texto);
-	margin: 0 0 0.25rem;
+	margin: 0;
 }
 
 .tc-depoimento__cargo {

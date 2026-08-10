@@ -86,6 +86,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página Trabalhe Conosco.
+	if ( cliconnect_e_pagina( 'trabalhe-conosco' ) ) {
+		wp_enqueue_style(
+			'cliconnect-trabalhe-conosco',
+			get_theme_file_uri( '/assets/css/page-trabalhe-conosco.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-trabalhe-conosco.css' )
+		);
+	}
+
 	// Comportamentos vanilla (menu, submenus, acordeão do FAQ).
 	wp_enqueue_script(
 		'cliconnect-theme',

@@ -64,6 +64,11 @@ arquivo:
 			return;
 		}
 
+		// Atribui o template nomeado à página para que a regra de localização do ACF
+		// (page_template == page-{slug}.php) funcione no painel wp-admin.
+		// Sem isso o grupo de campos não aparece mesmo com o código correto.
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-{slug}.php' );
+
 		$campos = array(
 			// 1. Hero.
 			'{slug}_hero_eyebrow' => 'Plataforma',
