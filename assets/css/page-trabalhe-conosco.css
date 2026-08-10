@@ -393,18 +393,10 @@
 	padding-block: var(--secao-espacamento);
 	position: relative;
 	overflow: hidden;
-}
-
-/* Blob decorativo no canto inferior esquerdo. */
-.tc-beneficios::before {
-	content: '';
-	position: absolute;
-	bottom: -120px;
-	left: -120px;
-	width: 480px;
-	height: 480px;
-	background: radial-gradient(ellipse 70% 70% at 30% 70%, rgba(104, 127, 244, 0.18) 0%, transparent 70%);
-	pointer-events: none;
+	background-image: url('../img/fundo-beneficios.png');
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	background-size: auto;
 }
 
 .tc-beneficios .secao__cabecalho {
@@ -549,11 +541,30 @@
 
 /* ==========================================================================
    9. Blog
-   Reutiliza .blog__grid e .card de theme.css.
+   .card e .card__* vêm de theme.css (global).
+   .blog__grid, .blog__cabecalho e .blog__titulo são redeclarados aqui pois
+   front-page.css não é carregado na página Trabalhe Conosco.
    ========================================================================== */
 
 .tc-blog {
 	padding-block: var(--secao-espacamento);
+}
+
+.tc-blog .blog__cabecalho {
+	margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.tc-blog .blog__titulo {
+	font-size: var(--tam-h3);
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	text-wrap: balance;
+}
+
+.tc-blog .blog__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 32px;
 }
 
 /* ==========================================================================
