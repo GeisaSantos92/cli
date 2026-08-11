@@ -1,0 +1,305 @@
+/* ==========================================================================
+   CLI Connect — estilos da página interna de post (/blog/slug).
+
+   Enfileirado só em is_singular('post') (inc/enqueue.php).
+   Depende dos tokens declarados em theme.css.
+
+   Figma: arquivo "CLI Connect", frame "Blog Interna" (node 15855-99256).
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. BREADCRUMB — Home › Blog › Título do post
+   ========================================================================== */
+
+.post-breadcrumb {
+	display: flex;
+	justify-content: center;
+	background: var(--cor-fundo);
+}
+
+.post-breadcrumb__inner {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	width: 100%;
+	max-width: 800px;
+	padding: 24px 0;
+}
+
+.post-breadcrumb__home {
+	display: flex;
+	align-items: center;
+	color: var(--cor-texto-muted, #9a9c9f);
+	text-decoration: none;
+	transition: color 0.15s;
+	flex-shrink: 0;
+}
+
+.post-breadcrumb__home:hover {
+	color: var(--cor-texto-marca);
+}
+
+.post-breadcrumb svg {
+	display: block;
+	flex-shrink: 0;
+}
+
+.post-breadcrumb__link {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-muted, #9a9c9f);
+	text-decoration: none;
+	white-space: nowrap;
+	flex-shrink: 0;
+	transition: color 0.15s;
+}
+
+.post-breadcrumb__link:hover {
+	color: var(--cor-texto-marca);
+}
+
+.post-breadcrumb__atual {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-alt);            /* #566f9d */
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	min-width: 0;
+}
+
+
+/* ==========================================================================
+   2. SEÇÃO PRINCIPAL — conteúdo centralizado em 800px
+   ========================================================================== */
+
+.post-secao {
+	background: var(--cor-fundo);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-inline: var(--margem-lateral);
+}
+
+.post-secao__inner {
+	width: 100%;
+	max-width: 1312px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+/* ==========================================================================
+   3. MATÉRIA — header + imagem + corpo + tags
+   ========================================================================== */
+
+.post-materia {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	max-width: 800px;
+	padding-bottom: 120px;
+}
+
+/* --- Cabeçalho da matéria ------------------------------------------------- */
+
+.post-materia__heading {
+	padding-bottom: 16px;
+	width: 100%;
+}
+
+.post-materia__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);              /* clamp(2rem, 3.4vw, 3rem) */
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto-marca-escura);  /* #003187 */
+	margin: 0;
+}
+
+.post-materia__subtitulo-wrapper {
+	width: 100%;
+}
+
+.post-materia__subtitulo {
+	font-family: var(--fonte-base);
+	font-size: 1.25rem;                    /* 20px */
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--cor-texto-suave);         /* #4a5364 */
+	margin: 0;
+}
+
+.post-materia__data-wrapper {
+	display: flex;
+	align-items: center;
+	padding-top: 24px;
+	width: 100%;
+}
+
+.post-materia__data {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);            /* 16px */
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--cor-texto-alt);           /* #566f9d */
+	margin: 0;
+}
+
+/* --- Corpo: imagem + texto + divider ------------------------------------- */
+
+.post-materia__corpo {
+	display: flex;
+	flex-direction: column;
+	gap: 59px;
+	padding-block: 40px;
+	border-bottom: 1px solid var(--cor-borda);
+	width: 800px;
+	max-width: 100%;
+}
+
+.post-materia__imagem {
+	height: 450px;
+	border-radius: var(--raio-card);       /* 12px */
+	overflow: hidden;
+	background: var(--cor-fundo-azul);
+}
+
+.post-materia__imagem img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	max-width: none;
+}
+
+/* --- Tipografia do conteúdo (the_content) --------------------------------- */
+
+.post-materia__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg);         /* 18px */
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--cor-texto);               /* #1f242d */
+}
+
+.post-materia__texto p {
+	margin: 0 0 1em;
+}
+
+.post-materia__texto p:last-child {
+	margin-bottom: 0;
+}
+
+.post-materia__texto h2,
+.post-materia__texto h3,
+.post-materia__texto h4 {
+	font-family: var(--fonte-titulo);
+	font-weight: 600;
+	line-height: 1.2;
+	color: var(--cor-texto);
+	margin: 1.5em 0 0.5em;
+}
+
+.post-materia__texto h2 { font-size: var(--tam-h4); }
+.post-materia__texto h3 { font-size: var(--tam-h5); }
+.post-materia__texto h4 { font-size: var(--tam-h6); }
+
+.post-materia__texto strong,
+.post-materia__texto b {
+	font-weight: 600;
+}
+
+.post-materia__texto a {
+	color: var(--cor-texto-marca);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.post-materia__texto a:hover {
+	color: var(--cor-primaria-escura);
+}
+
+.post-materia__texto ul,
+.post-materia__texto ol {
+	padding-left: 1.5em;
+	margin: 0 0 1em;
+}
+
+.post-materia__texto li {
+	margin-bottom: 0.25em;
+}
+
+.post-materia__texto blockquote {
+	border-left: 4px solid var(--cor-primaria);
+	padding-left: 1.25em;
+	margin: 1.5em 0;
+	color: var(--cor-texto-suave);
+	font-style: italic;
+}
+
+.post-materia__texto img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--raio-card);
+	display: block;
+}
+
+/* --- Tags ----------------------------------------------------------------- */
+
+.post-materia__tags {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	padding-top: 40px;
+	width: 100%;
+}
+
+.post-materia__tags-label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg);         /* 18px */
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.post-materia__tags-lista {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+}
+
+/* Reutiliza o .blog-tag definido em blog.css —
+   mas blog.css não é carregado no single, então redeclaramos aqui. */
+
+.blog-tag {
+	display: inline-flex;
+}
+
+.blog-tag span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px 12px;
+	background: var(--cor-fundo-suave);
+	border-radius: var(--raio-pill);
+	font-family: var(--fonte-base);
+	font-size: var(--tam-caption);
+	font-weight: 600;
+	line-height: 1.6;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--cor-texto-marca);
+	white-space: nowrap;
+}

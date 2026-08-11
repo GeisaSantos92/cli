@@ -86,6 +86,26 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Listagem do blog (home.php — índice de posts nativos).
+	if ( is_home() ) {
+		wp_enqueue_style(
+			'cliconnect-blog',
+			get_theme_file_uri( '/assets/css/blog.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/blog.css' )
+		);
+	}
+
+	// Página interna de post do blog.
+	if ( is_singular( 'post' ) ) {
+		wp_enqueue_style(
+			'cliconnect-single',
+			get_theme_file_uri( '/assets/css/single.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/single.css' )
+		);
+	}
+
 	// Página Trabalhe Conosco.
 	if ( cliconnect_e_pagina( 'trabalhe-conosco' ) ) {
 		wp_enqueue_style(
