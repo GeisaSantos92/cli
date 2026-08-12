@@ -263,7 +263,201 @@
 }
 
 /* ==========================================================================
-   3. BOOMI
+   4. IMPLANTAÇÃO
+   ========================================================================== */
+
+.cc-impl {
+	background-color: var(--cor-canvas-azul-01, #f5f9ff);
+	padding: var(--tam-secao-v, 80px) 0;
+}
+
+.cc-impl__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 48px;
+}
+
+.cc-impl__header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	text-align: center;
+}
+
+.cc-impl__eyebrow {
+	color: var(--cor-texto-marca, #3551f2);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.cc-impl__titulo {
+	color: var(--cor-texto-primario, #1f242d);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3, 48px);
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.15;
+}
+
+.cc-impl__titulo-linha {
+	display: block;
+}
+
+.cc-impl__texto {
+	color: var(--cor-texto-secundario, #566f9d);
+	font-size: var(--tam-corpo, 16px);
+	line-height: 1.6;
+	max-width: 64ch;
+}
+
+/* Card branco */
+
+.cc-impl__card {
+	background-color: var(--cor-branco, #fff);
+	border-radius: 16px;
+	box-shadow: 0px 5px 30px -10px rgba(32, 66, 135, 0.25);
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	padding: 40px;
+	width: 100%;
+}
+
+/* Grupo (sem / com) */
+
+.cc-impl__grupo {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.cc-impl__label-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.cc-impl__label {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.cc-impl__label--sem {
+	color: var(--cor-texto-alt, #4a5364);
+}
+
+.cc-impl__label--com {
+	color: var(--cor-texto-marca, #3551f2);
+}
+
+.cc-impl__separador {
+	flex: 1;
+	height: 1px;
+	background-color: var(--cor-borda, rgba(39, 62, 128, 0.12));
+}
+
+.cc-impl__separador--com {
+	background-color: var(--cor-texto-marca, #3551f2);
+	opacity: 0.25;
+}
+
+.cc-impl__tempo {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.cc-impl__tempo--sem {
+	color: var(--cor-texto-alt, #4a5364);
+}
+
+.cc-impl__tempo--com {
+	color: var(--cor-texto-marca, #3551f2);
+}
+
+/* Barras */
+
+.cc-impl__barra {
+	border-radius: 99px;
+	display: flex;
+	height: 79px;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+/* Barra cinza — "sem CLI": todos os segmentos iguais, cinza */
+
+.cc-impl__barra--sem {
+	background-color: #d9d9d9;
+}
+
+.cc-impl__barra--sem .cc-impl__etapa {
+	background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%),
+	            linear-gradient(90deg, #969696 0%, #969696 100%);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	flex: 1;
+}
+
+/* Barra azul — "com CLI": track azul claro, segmentos azuis em ~3/7 */
+
+.cc-impl__barra--com {
+	background-color: #e7efff;
+}
+
+.cc-impl__barra-azul {
+	border-radius: 99px;
+	display: flex;
+	height: 100%;
+	overflow: hidden;
+	width: calc(3 / 7 * 100%);
+}
+
+.cc-impl__barra--com .cc-impl__etapa {
+	background-color: var(--cor-texto-marca, #3551f2);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	flex: 1;
+}
+
+/* Texto das etapas */
+
+.cc-impl__etapa {
+	align-items: center;
+	color: #fff;
+	display: flex;
+	font-size: 13px;
+	font-weight: 600;
+	justify-content: center;
+	line-height: 1.3;
+	padding: 8px 4px;
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+	.cc-impl__titulo {
+		font-size: clamp(28px, 5vw, 40px);
+	}
+
+	.cc-impl__card {
+		padding: 24px;
+	}
+
+	.cc-impl__etapa {
+		font-size: 11px;
+	}
+}
+
+/* ==========================================================================
+   5. BOOMI
    ========================================================================== */
 
 .cc-boomi {

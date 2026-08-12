@@ -14,6 +14,7 @@ $cliconnect_secoes = array(
 	'hero',
 	'brands',
 	'solucao',
+	'implantacao',
 	'boomi',
 	'metricas',
 	'destaque',

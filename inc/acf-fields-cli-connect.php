@@ -103,8 +103,25 @@ function cliconnect_acf_fields_cli_connect() {
 		}
 	}
 
-	/* --- 3. BOOMI ----------------------------------------------------------- */
-	$fields[] = $cc_tab( 'boomi', '3 · Boomi' );
+	/* --- 4. IMPLANTAÇÃO ----------------------------------------------------- */
+	$fields[] = $cc_tab( 'implantacao', '4 · Implantação' );
+	$fields[] = $cc_text( 'impl_eyebrow', 'Eyebrow', 'cc_impl_eyebrow' );
+	$fields[] = $cc_text( 'impl_titulo', 'Título (linha 1)', 'cc_impl_titulo' );
+	$fields[] = $cc_text( 'impl_titulo_2', 'Título (linha 2)', 'cc_impl_titulo_2' );
+	$fields[] = $cc_textarea( 'impl_texto', 'Subtítulo', 'cc_impl_texto', 2 );
+	$fields[] = $cc_text( 'impl_sem_label', 'Label "Sem" (ex: SEM CLI CONNECT)', 'cc_impl_sem_label' );
+	$fields[] = $cc_text( 'impl_sem_tempo', 'Tempo "Sem" (ex: 1 MÊS)', 'cc_impl_sem_tempo' );
+	for ( $i = 1; $i <= 7; $i++ ) {
+		$fields[] = $cc_text( "impl_sem_etapa_{$i}", "Etapa sem CLI {$i}", "cc_impl_sem_etapa_{$i}" );
+	}
+	$fields[] = $cc_text( 'impl_com_label', 'Label "Com" (ex: COM CLI CONNECT)', 'cc_impl_com_label' );
+	$fields[] = $cc_text( 'impl_com_tempo', 'Tempo "Com" (ex: 5 DIAS)', 'cc_impl_com_tempo' );
+	for ( $i = 1; $i <= 3; $i++ ) {
+		$fields[] = $cc_text( "impl_com_etapa_{$i}", "Etapa com CLI {$i}", "cc_impl_com_etapa_{$i}" );
+	}
+
+	/* --- 5. BOOMI ----------------------------------------------------------- */
+	$fields[] = $cc_tab( 'boomi', '5 · Boomi' );
 	$fields[] = $cc_text( 'boomi_eyebrow', 'Eyebrow', 'cc_boomi_eyebrow' );
 	$fields[] = $cc_text( 'boomi_titulo', 'Título', 'cc_boomi_titulo' );
 	$fields[] = $cc_textarea( 'boomi_texto', 'Texto de apoio', 'cc_boomi_texto', 3 );

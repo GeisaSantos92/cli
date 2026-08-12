@@ -1491,7 +1491,27 @@ class Cliconnect_Seed {
 			'cc_solucao_3_bullet_2'  => 'Sistemas mais utilizados',
 			'cc_solucao_3_bullet_3'  => 'Menor tempo de implantação',
 
-			// 3. Boomi.
+			// 4. Implantação.
+			'cc_impl_eyebrow'    => 'Implantação Rápida',
+			'cc_impl_titulo'     => 'Menos horas de desenvolvimento.',
+			'cc_impl_titulo_2'   => 'Mais velocidade para o negócio.',
+			'cc_impl_texto'      => 'Reduza o esforço técnico necessário para integrar o SAP e implemente novos projetos com mais agilidade e qualidade.',
+			'cc_impl_sem_label'  => 'Sem CLI Connect',
+			'cc_impl_sem_tempo'  => '1 Mês',
+			'cc_impl_sem_etapa_1' => 'Enviar solicitação',
+			'cc_impl_sem_etapa_2' => 'Definir a necessidade',
+			'cc_impl_sem_etapa_3' => 'Aguardar programação',
+			'cc_impl_sem_etapa_4' => 'Transferência de dados',
+			'cc_impl_sem_etapa_5' => 'Dados disponibilizados',
+			'cc_impl_sem_etapa_6' => 'Manutenção',
+			'cc_impl_sem_etapa_7' => 'Teste e QA',
+			'cc_impl_com_label'  => 'Com CLI Connect',
+			'cc_impl_com_tempo'  => '5 Dias',
+			'cc_impl_com_etapa_1' => 'Enviar solicitação',
+			'cc_impl_com_etapa_2' => 'Definir a necessidade',
+			'cc_impl_com_etapa_3' => 'Dados disponibilizados',
+
+			// 5. Boomi.
 			'cc_boomi_titulo'    => 'Tecnologia de classe mundial',
 			'cc_boomi_subtitulo' => 'Boomi — reconhecida pelo Gartner como líder em iPaaS e API Management por anos consecutivos',
 			'cc_boomi_texto'     => 'A CLI Connect é powered by Boomi, a plataforma de integração mais completa do mercado. Com ela, você conecta qualquer sistema com segurança, escalabilidade e suporte especializado.',
