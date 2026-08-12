@@ -1516,6 +1516,15 @@ class Cliconnect_Seed {
 			'cc_boomi_titulo'  => 'Tecnologia de classe mundial com suporte para o mercado brasileiro',
 			'cc_boomi_texto'   => 'Quando você contrata a CLI Connect, tem acesso à mesma plataforma que grandes empresas globais usam para integrar seus sistemas, mas com o diferencial do suporte especializado no mercado brasileiro, preço acessível e serviço gerenciado incluso.',
 
+			// 6. Operações Críticas.
+			'cc_operacoes_eyebrow'  => 'Operações Críticas',
+			'cc_operacoes_titulo'   => 'Algumas integrações',
+			'cc_operacoes_titulo_2' => 'simplesmente não podem falhar',
+			'cc_operacoes_texto'    => 'Proteja processos críticos com integrações preparadas para operar continuamente, sem comprometer o negócio.',
+			'cc_operacoes_bullet_1' => 'Processos industriais em operações contínua',
+			'cc_operacoes_bullet_2' => 'Pedidos, cotações e faturamento sem falhas ou atrasos',
+			'cc_operacoes_bullet_3' => 'Transações e movimentações sem interrupções',
+
 			// 4. Métricas.
 			'cc_metrica_1_numero' => '+150',
 			'cc_metrica_1_rotulo' => 'integrações por semana',

@@ -16,6 +16,7 @@ $cliconnect_secoes = array(
 	'solucao',
 	'implantacao',
 	'boomi',
+	'operacoes',
 	'metricas',
 	'destaque',
 	'integracoes',

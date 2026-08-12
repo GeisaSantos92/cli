@@ -126,15 +126,15 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_text( 'boomi_titulo', 'Título', 'cc_boomi_titulo' );
 	$fields[] = $cc_textarea( 'boomi_texto', 'Texto de apoio', 'cc_boomi_texto', 3 );
 
-	/* --- 4. OPERAÇÕES CRÍTICAS ---------------------------------------------- */
-	$fields[] = $cc_tab( 'operacoes', '4 · Operações Críticas' );
+	/* --- 6. OPERAÇÕES CRÍTICAS ---------------------------------------------- */
+	$fields[] = $cc_tab( 'operacoes', '6 · Operações Críticas' );
 	$fields[] = $cc_text( 'operacoes_eyebrow', 'Eyebrow', 'cc_operacoes_eyebrow' );
-	$fields[] = $cc_text( 'operacoes_titulo', 'Título', 'cc_operacoes_titulo' );
+	$fields[] = $cc_text( 'operacoes_titulo', 'Título (linha 1)', 'cc_operacoes_titulo' );
+	$fields[] = $cc_text( 'operacoes_titulo_2', 'Título (linha 2)', 'cc_operacoes_titulo_2' );
 	$fields[] = $cc_textarea( 'operacoes_texto', 'Texto de apoio', 'cc_operacoes_texto', 3 );
 	for ( $i = 1; $i <= 3; $i++ ) {
 		$fields[] = $cc_text( "operacoes_bullet_{$i}", "Bullet {$i}", "cc_operacoes_bullet_{$i}" );
 	}
-	$fields[] = $cc_image( 'operacoes_imagem', 'Imagem', 'cc_operacoes_imagem' );
 
 	/* --- 5. DASHBOARD ------------------------------------------------------- */
 	$fields[] = $cc_tab( 'dashboard', '5 · Dashboard' );
