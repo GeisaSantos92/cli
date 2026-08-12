@@ -56,7 +56,18 @@
       "Skill(claude-in-chrome)",
       "mcp__claude-in-chrome__navigate",
       "mcp__claude-in-chrome__tabs_context_mcp",
-      "mcp__claude-in-chrome__computer"
+      "mcp__claude-in-chrome__computer",
+      "Bash(ls /tmp/*.png)",
+      "Bash(ls C:/tmp/*.png)",
+      "Read(//c/Users/geisa/AppData/Local/Temp/**)",
+      "Bash(./bin/wp post:*)",
+      "Bash(mkdir -p assets/seed)",
+      "Bash(wait)",
+      "Bash(cp /tmp/issue-17/3ba31c17-8173-4203-aa1e-ea1854dcd805.png \"/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/issue-17-hero.png\")",
+      "Bash(cmd.exe /c \"copy C:\\\\Users\\\\geisa\\\\AppData\\\\Local\\\\Temp\\\\issue-17\\\\3ba31c17-8173-4203-aa1e-ea1854dcd805.png C:\\\\Users\\\\geisa\\\\Local Sites\\\\cli\\\\app\\\\public\\\\wp-content\\\\themes\\\\cli\\\\assets\\\\img\\\\issue-17-hero.png\")",
+      "Bash(/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/wp cliconnect:*)",
+      "Bash(\"/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/wp\" cliconnect seed)",
+      "Bash(.claude/skills/implementar-issue/scripts/issue.sh 22 --repo GeisaSantos92/cli --destino /tmp/issue-22)"
     ]
   }
 }

@@ -1525,6 +1525,16 @@ class Cliconnect_Seed {
 			'cc_operacoes_bullet_2' => 'Pedidos, cotações e faturamento sem falhas ou atrasos',
 			'cc_operacoes_bullet_3' => 'Transações e movimentações sem interrupções',
 
+			// 7. Dashboard (Tempo Real).
+			'cc_dashboard_eyebrow' => 'Acompanhe em tempo real',
+			'cc_dashboard_titulo'  => 'Acompanhe cada integração e solicite novas demandas em um só lugar',
+			'cc_dashboard_texto'   => 'Tenha visibilidade do andamento dos projetos, acompanhe solicitações e envie novas demandas sempre que precisar. Tudo centralizado em um portal pensado para manter sua operação evoluindo continuamente.',
+			'cc_dashboard_botao'   => array(
+				'title'  => 'Agende uma demonstração',
+				'url'    => '#',
+				'target' => '',
+			),
+
 			// 4. Métricas.
 			'cc_metrica_1_numero' => '+150',
 			'cc_metrica_1_rotulo' => 'integrações por semana',

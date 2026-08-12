@@ -581,6 +581,61 @@
 }
 
 /* ==========================================================================
+   7. DASHBOARD (Tempo Real)
+   ========================================================================== */
+
+.cc-dashboard {
+	background-color: var(--cor-canvas-azul-01, #f5f9ff);
+	padding-bottom: 120px;
+	padding-top: var(--tam-secao-v, 80px);
+}
+
+.cc-dashboard__inner {
+	align-items: center;
+	display: grid;
+	gap: 104px;
+	grid-template-columns: 1fr 1fr;
+}
+
+.cc-dashboard__titulo {
+	color: var(--cor-texto-primario, #1f242d);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h4, 36px);
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.15;
+	margin-bottom: 12px;
+	margin-top: 12px;
+}
+
+.cc-dashboard__corpo {
+	color: var(--cor-texto-secundario, #566f9d);
+	font-size: var(--tam-corpo, 16px);
+	line-height: 1.6;
+}
+
+.cc-dashboard__botao {
+	font-size: var(--tam-h6, 20px);
+	height: 60px;
+	margin-top: 60px;
+	padding-inline: 32px;
+}
+
+.cc-dashboard__visual {
+	aspect-ratio: 3 / 2;
+	background-color: #9dbafe;
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.cc-dashboard__img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+/* ==========================================================================
    4. MÉTRICAS
    ========================================================================== */
 
@@ -1119,6 +1174,7 @@
 
 	.cc-boomi__inner,
 	.cc-operacoes__inner,
+	.cc-dashboard__inner,
 	.cc-depoimento__inner,
 	.cc-departamentos__inner {
 		grid-template-columns: 1fr;
@@ -1155,6 +1211,7 @@
 	.cc-solucao__titulo,
 	.cc-boomi__titulo,
 	.cc-operacoes__titulo,
+	.cc-dashboard__titulo,
 	.cc-destaque__titulo,
 	.cc-pilares__titulo,
 	.cc-agentes__titulo,

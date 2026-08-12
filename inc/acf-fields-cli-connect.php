@@ -142,7 +142,6 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_text( 'dashboard_titulo', 'Título', 'cc_dashboard_titulo' );
 	$fields[] = $cc_textarea( 'dashboard_texto', 'Texto de apoio', 'cc_dashboard_texto', 3 );
 	$fields[] = $cc_link( 'dashboard_botao', 'Botão', 'cc_dashboard_botao' );
-	$fields[] = $cc_image( 'dashboard_imagem', 'Imagem', 'cc_dashboard_imagem' );
 
 	/* --- 6. DEPOIMENTO ------------------------------------------------------ */
 	$fields[] = $cc_tab( 'depoimento', '6 · Depoimento' );
