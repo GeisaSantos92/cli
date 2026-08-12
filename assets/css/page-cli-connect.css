@@ -137,7 +137,7 @@
 	display: flex;
 	align-items: center;
 	width: max-content;
-	animation: marquee 45s linear infinite;
+	animation: cc-marquee 45s linear infinite;
 }
 
 .cc-brands__pista:hover .cc-brands__trilha {
