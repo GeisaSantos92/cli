@@ -1512,12 +1512,9 @@ class Cliconnect_Seed {
 			'cc_impl_com_etapa_3' => 'Dados disponibilizados',
 
 			// 5. Boomi.
-			'cc_boomi_titulo'    => 'Tecnologia de classe mundial',
-			'cc_boomi_subtitulo' => 'Boomi — reconhecida pelo Gartner como líder em iPaaS e API Management por anos consecutivos',
-			'cc_boomi_texto'     => 'A CLI Connect é powered by Boomi, a plataforma de integração mais completa do mercado. Com ela, você conecta qualquer sistema com segurança, escalabilidade e suporte especializado.',
-			'cc_boomi_badge_1'   => 'Líder Gartner - iPaaS',
-			'cc_boomi_badge_2'   => 'Líder Gartner - API',
-			'cc_boomi_imagem'    => $this->img( 'cc-boomi' ),
+			'cc_boomi_eyebrow' => 'Plataforma global',
+			'cc_boomi_titulo'  => 'Tecnologia de classe mundial com suporte para o mercado brasileiro',
+			'cc_boomi_texto'   => 'Quando você contrata a CLI Connect, tem acesso à mesma plataforma que grandes empresas globais usam para integrar seus sistemas, mas com o diferencial do suporte especializado no mercado brasileiro, preço acessível e serviço gerenciado incluso.',
 
 			// 4. Métricas.
 			'cc_metrica_1_numero' => '+150',

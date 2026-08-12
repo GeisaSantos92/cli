@@ -2,6 +2,9 @@
 /**
  * CLI Connect — Boomi.
  *
+ * Layout idêntico à seção Boomi da home: grid 2 colunas,
+ * texto à esquerda e cartão estático Boomi à direita.
+ *
  * @package Cliconnect
  */
 
@@ -9,46 +12,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$titulo    = cliconnect_campo_pagina( 'cc_boomi_titulo' );
-$subtitulo = cliconnect_campo_pagina( 'cc_boomi_subtitulo' );
-$texto     = cliconnect_campo_pagina( 'cc_boomi_texto' );
-$badge_1   = cliconnect_campo_pagina( 'cc_boomi_badge_1' );
-$badge_2   = cliconnect_campo_pagina( 'cc_boomi_badge_2' );
-$imagem    = cliconnect_campo_pagina( 'cc_boomi_imagem' );
+$eyebrow = cliconnect_campo_pagina( 'cc_boomi_eyebrow' );
+$titulo  = cliconnect_campo_pagina( 'cc_boomi_titulo' );
+$texto   = cliconnect_campo_pagina( 'cc_boomi_texto' );
 
-if ( ! $titulo ) {
+/*
+ * O cartão da direita é a mesma peça fechada usada na home
+ * (selo, logo e nota fazem parte da arte).
+ */
+$cartao = cliconnect_imagem_tema(
+	'section-plataforma-boomi.png',
+	array(
+		'class'  => 'cc-boomi__cartao-img',
+		'alt'    => __( 'Powered by Boomi — a única com 11 certificações globais do AICPA', 'cli' ),
+		'width'  => 604,
+		'height' => 403,
+	)
+);
+
+if ( ! $titulo && ! $cartao ) {
 	return;
 }
 ?>
-<section class="cc-boomi secao">
-	<div class="container cc-boomi__inner">
-		<div class="cc-boomi__texto">
-			<h2 class="cc-boomi__titulo"><?php echo esc_html( $titulo ); ?></h2>
+<section class="cc-boomi">
+	<div class="cc-boomi__inner container">
 
-			<?php if ( $subtitulo ) : ?>
-				<p class="cc-boomi__subtitulo"><?php echo esc_html( $subtitulo ); ?></p>
+		<div class="cc-boomi__texto">
+			<?php if ( $eyebrow ) : ?>
+				<span class="eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+			<?php endif; ?>
+
+			<?php if ( $titulo ) : ?>
+				<h2 class="cc-boomi__titulo"><?php echo esc_html( $titulo ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( $texto ) : ?>
 				<p class="cc-boomi__corpo"><?php echo esc_html( $texto ); ?></p>
 			<?php endif; ?>
-
-			<?php if ( $badge_1 || $badge_2 ) : ?>
-				<div class="cc-boomi__badges">
-					<?php if ( $badge_1 ) : ?>
-						<span class="cc-boomi__badge"><?php echo esc_html( $badge_1 ); ?></span>
-					<?php endif; ?>
-					<?php if ( $badge_2 ) : ?>
-						<span class="cc-boomi__badge"><?php echo esc_html( $badge_2 ); ?></span>
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
 		</div>
 
-		<?php if ( $imagem ) : ?>
-			<div class="cc-boomi__visual">
-				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-boomi__img', 'alt' => '' ) ); ?>
+		<?php if ( $cartao ) : ?>
+			<div class="cc-boomi__cartao">
+				<?php echo $cartao; // phpcs:ignore WordPress.Security.EscapeOutput -- montado com escape em cliconnect_imagem_tema(). ?>
 			</div>
 		<?php endif; ?>
+
 	</div>
 </section>

@@ -125,7 +125,6 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_text( 'boomi_eyebrow', 'Eyebrow', 'cc_boomi_eyebrow' );
 	$fields[] = $cc_text( 'boomi_titulo', 'Título', 'cc_boomi_titulo' );
 	$fields[] = $cc_textarea( 'boomi_texto', 'Texto de apoio', 'cc_boomi_texto', 3 );
-	$fields[] = $cc_image( 'boomi_imagem', 'Imagem', 'cc_boomi_imagem' );
 
 	/* --- 4. OPERAÇÕES CRÍTICAS ---------------------------------------------- */
 	$fields[] = $cc_tab( 'operacoes', '4 · Operações Críticas' );
