@@ -92,10 +92,15 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_text( 'brands_titulo', 'Título / legenda', 'cc_brands_titulo' );
 
 	/* --- 3. SOLUÇÃO --------------------------------------------------------- */
-	$fields[] = $cc_tab( 'solucao', '2 · Solução' );
+	$fields[] = $cc_tab( 'solucao', '3 · Solução' );
 	$fields[] = $cc_text( 'solucao_titulo', 'Título da seção', 'cc_solucao_titulo' );
-	for ( $i = 1; $i <= 4; $i++ ) {
+	for ( $i = 1; $i <= 3; $i++ ) {
+		$fields[] = $cc_image( "solucao_{$i}_imagem", "Card {$i} — imagem", "cc_solucao_{$i}_imagem" );
 		$fields[] = $cc_text( "solucao_{$i}_titulo", "Card {$i} — título", "cc_solucao_{$i}_titulo" );
+		$fields[] = $cc_textarea( "solucao_{$i}_texto", "Card {$i} — descrição", "cc_solucao_{$i}_texto", 3 );
+		for ( $j = 1; $j <= 3; $j++ ) {
+			$fields[] = $cc_text( "solucao_{$i}_bullet_{$j}", "Card {$i} — bullet {$j}", "cc_solucao_{$i}_bullet_{$j}" );
+		}
 	}
 
 	/* --- 3. BOOMI ----------------------------------------------------------- */

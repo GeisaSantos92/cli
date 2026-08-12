@@ -1468,11 +1468,28 @@ class Cliconnect_Seed {
 			'cc_brands_titulo' => 'Grandes empresas confiam na CLI',
 
 			// 3. Solução.
-			'cc_solucao_titulo'   => 'Tudo em um única fatura',
-			'cc_solucao_1_titulo' => 'Plataforma',
-			'cc_solucao_2_titulo' => 'Receitas de automação',
-			'cc_solucao_3_titulo' => 'Serviço gerenciado',
-			'cc_solucao_4_titulo' => 'Suporte',
+			'cc_solucao_titulo'      => 'Tudo o que você precisa em uma única solução',
+
+			'cc_solucao_1_imagem'    => $this->img( 'cc-solucao-1' ),
+			'cc_solucao_1_titulo'    => 'Plataforma Global',
+			'cc_solucao_1_texto'     => 'Licença da plataforma já inclusa para conectar sistemas com segurança, escalabilidade e tecnologia reconhecida mundialmente.',
+			'cc_solucao_1_bullet_1'  => 'Licença inclusa',
+			'cc_solucao_1_bullet_2'  => 'Powered by Boomi',
+			'cc_solucao_1_bullet_3'  => 'Escala enterprise',
+
+			'cc_solucao_2_imagem'    => $this->img( 'cc-solucao-2' ),
+			'cc_solucao_2_titulo'    => 'Serviço Incluso',
+			'cc_solucao_2_texto'     => 'Sua operação continua evoluindo após a implantação. Solicite melhorias, novos projetos e suporte contínuo dentro da mesma mensalidade.',
+			'cc_solucao_2_bullet_1'  => 'Novos projetos sob demanda',
+			'cc_solucao_2_bullet_2'  => 'Melhorias contínuas',
+			'cc_solucao_2_bullet_3'  => 'Gestão de incidentes',
+
+			'cc_solucao_3_imagem'    => $this->img( 'cc-solucao-3' ),
+			'cc_solucao_3_titulo'    => 'Biblioteca de Integrações',
+			'cc_solucao_3_texto'     => 'Comece mais rápido utilizando integrações e conectores já prontos para os principais sistemas do mercado.',
+			'cc_solucao_3_bullet_1'  => 'Conectores prontos',
+			'cc_solucao_3_bullet_2'  => 'Sistemas mais utilizados',
+			'cc_solucao_3_bullet_3'  => 'Menor tempo de implantação',
 
 			// 3. Boomi.
 			'cc_boomi_titulo'    => 'Tecnologia de classe mundial',
