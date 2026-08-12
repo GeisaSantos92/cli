@@ -171,7 +171,7 @@
    ========================================================================== */
 
 .cc-solucao {
-	background-color: var(--cor-branco, #fff);
+	background-color: var(--cor-canvas-azul-01, #f5f9ff);
 	padding: var(--tam-secao-v, 80px) 0;
 }
 
