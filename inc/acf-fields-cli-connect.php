@@ -87,7 +87,11 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_link( 'hero_botao', 'Botão', 'cc_hero_botao' );
 	$fields[] = $cc_image( 'hero_imagem', 'Imagem (órbita direita)', 'cc_hero_imagem' );
 
-	/* --- 2. SOLUÇÃO --------------------------------------------------------- */
+	/* --- 2. BRANDS ---------------------------------------------------------- */
+	$fields[] = $cc_tab( 'brands', '2 · Brands' );
+	$fields[] = $cc_text( 'brands_titulo', 'Título / legenda', 'cc_brands_titulo' );
+
+	/* --- 3. SOLUÇÃO --------------------------------------------------------- */
 	$fields[] = $cc_tab( 'solucao', '2 · Solução' );
 	$fields[] = $cc_text( 'solucao_titulo', 'Título da seção', 'cc_solucao_titulo' );
 	for ( $i = 1; $i <= 4; $i++ ) {

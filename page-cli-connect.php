@@ -12,6 +12,7 @@ get_header();
 
 $cliconnect_secoes = array(
 	'hero',
+	'brands',
 	'solucao',
 	'boomi',
 	'metricas',

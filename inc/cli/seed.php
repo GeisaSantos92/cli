@@ -1464,7 +1464,10 @@ class Cliconnect_Seed {
 			'cc_hero_botao'            => $this->link( 'Agende uma demonstração', '/contato/' ),
 			'cc_hero_imagem'           => $this->img( 'cc-hero-orbit' ),
 
-			// 2. Solução.
+			// 2. Brands.
+			'cc_brands_titulo' => 'Grandes empresas confiam na CLI',
+
+			// 3. Solução.
 			'cc_solucao_titulo'   => 'Tudo em um única fatura',
 			'cc_solucao_1_titulo' => 'Plataforma',
 			'cc_solucao_2_titulo' => 'Receitas de automação',
