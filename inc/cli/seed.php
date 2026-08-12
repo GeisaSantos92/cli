@@ -80,6 +80,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Trabalhe Conosco…' );
 		$this->preencher_trabalhe_conosco( $paginas['trabalhe-conosco'] );
 
+		WP_CLI::log( '— Preenchendo CLI Connect…' );
+		$this->preencher_cli_connect( $paginas['cli-connect'] );
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas );
 
@@ -246,7 +249,7 @@ class Cliconnect_Seed {
 	 */
 	protected function titulo_da_midia( $nome ) {
 		$base = pathinfo( $nome, PATHINFO_FILENAME );
-		$base = preg_replace( '/^(cliente|integracao|selo|evento|case|midia|logo|boomi|suporte|blog)-/', '', $base );
+		$base = preg_replace( '/^(cliente|integracao|selo|evento|case|midia|logo|boomi|suporte|blog|cc)-/', '', $base );
 
 		return ucwords( str_replace( '-', ' ', $base ) );
 	}
@@ -1437,6 +1440,147 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  trabalhe-conosco: %d campos preenchidos.', count( $campos ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF da página CLI Connect.
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_cli_connect( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-cli-connect.php' );
+
+		$campos = array(
+			// 1. Hero.
+			'cc_hero_eyebrow'          => '',
+			'cc_hero_titulo'           => 'Integrações que mantêm a',
+			'cc_hero_titulo_destaque'  => 'sua operação em movimento',
+			'cc_hero_texto'            => 'Conecte SAP, ERPs, CRMs e aplicações críticas em uma plataforma preparada para operações em tempo real. Automatize eventos de negócio com segurança, monitoramento contínuo e uma única mensalidade.',
+			'cc_hero_botao'            => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'cc_hero_imagem'           => $this->img( 'cc-hero-orbit' ),
+
+			// 2. Solução.
+			'cc_solucao_titulo'   => 'Tudo em um única fatura',
+			'cc_solucao_1_titulo' => 'Plataforma',
+			'cc_solucao_2_titulo' => 'Receitas de automação',
+			'cc_solucao_3_titulo' => 'Serviço gerenciado',
+			'cc_solucao_4_titulo' => 'Suporte',
+
+			// 3. Boomi.
+			'cc_boomi_titulo'    => 'Tecnologia de classe mundial',
+			'cc_boomi_subtitulo' => 'Boomi — reconhecida pelo Gartner como líder em iPaaS e API Management por anos consecutivos',
+			'cc_boomi_texto'     => 'A CLI Connect é powered by Boomi, a plataforma de integração mais completa do mercado. Com ela, você conecta qualquer sistema com segurança, escalabilidade e suporte especializado.',
+			'cc_boomi_badge_1'   => 'Líder Gartner - iPaaS',
+			'cc_boomi_badge_2'   => 'Líder Gartner - API',
+			'cc_boomi_imagem'    => $this->img( 'cc-boomi' ),
+
+			// 4. Métricas.
+			'cc_metrica_1_numero' => '+150',
+			'cc_metrica_1_rotulo' => 'integrações por semana',
+			'cc_metrica_2_numero' => '+1.000',
+			'cc_metrica_2_rotulo' => 'integrações por mês',
+			'cc_metrica_3_numero' => '5 dias',
+			'cc_metrica_3_rotulo' => 'tempo médio de implantação',
+
+			// 5. Destaque CTA.
+			'cc_destaque_titulo' => 'A forma mais segura de conectar, evoluir e governar sua operação.',
+			'cc_destaque_texto'  => 'Tenha uma operação conectada com custos previsível, suporte especializado e uma estrutura preparada para acompanhar as mudanças do seu negócio.',
+			'cc_destaque_botao'  => $this->link( 'Fale conosco no Whatsapp', '/contato/' ),
+
+			// 6. Depoimento.
+			'cc_dep_foto'  => $this->img( 'cc-dep-joao' ),
+			'cc_dep_nome'  => 'João Carvalho',
+			'cc_dep_cargo' => 'Gerente de Vendas',
+			'cc_dep_texto' => 'Com a CLI Connect, nós reestruturamos nossa governança e nossos processos financeiros.',
+			'cc_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
+
+			// 7. Pilares — eyebrow e título.
+			'cc_pilares_eyebrow' => 'VANTAGENS',
+			'cc_pilares_titulo'  => 'Tudo o que você precisa em uma única solução',
+
+			// Pilar 1: Plataforma Global.
+			'cc_pilar_1_imagem'  => $this->img( 'cc-pilar-1' ),
+			'cc_pilar_1_titulo'  => 'Plataforma Global',
+			'cc_pilar_1_texto'   => 'Licença da plataforma já inclusa para conectar sistemas com segurança, escalabilidade e tecnologia reconhecida mundialmente.',
+			'cc_pilar_1_item_1'  => 'Licença inclusa',
+			'cc_pilar_1_item_2'  => 'Powered by Boomi',
+			'cc_pilar_1_item_3'  => 'Escala enterprise',
+
+			// Pilar 2: Receitas de Automação.
+			'cc_pilar_2_titulo' => 'Receitas de Automação',
+			'cc_pilar_2_texto'  => 'Centenas de receitas prontas para os principais sistemas do mercado, acelerando suas integrações e reduzindo o tempo de desenvolvimento.',
+			'cc_pilar_2_item_1' => '+500 receitas prontas',
+			'cc_pilar_2_item_2' => 'Atualização contínua',
+			'cc_pilar_2_item_3' => 'Expansão sob demanda',
+
+			// Pilar 3: Serviço Gerenciado.
+			'cc_pilar_3_titulo' => 'Serviço Gerenciado',
+			'cc_pilar_3_texto'  => 'Nossa equipe cuida de toda a operação para você, com monitoramento 24h, governança e suporte especializado.',
+			'cc_pilar_3_item_1' => 'Monitoramento 24/7',
+			'cc_pilar_3_item_2' => 'SLA garantido',
+			'cc_pilar_3_item_3' => 'Equipe certificada',
+
+			// 8. AgentStudio.
+			'cc_agentes_eyebrow' => 'PARCEIRO OFICIAL',
+			'cc_agentes_titulo'  => 'Crie, valide e governe agentes de IA com confiança',
+			'cc_agentes_texto'   => 'Uma estrutura completa para desenvolver agentes alinhados ao seu negócio, testar comportamentos antes da implantação e manter controle total da operação em escala.',
+
+			// AgentStudio Card 1: Agent Designer.
+			'cc_agente_1_titulo'  => 'Agent Designer',
+			'cc_agente_1_texto'   => 'Desenvolva agentes capazes de consultar informações, analisar dados e executar ações em sistemas corporativos, com regras, objetivos e comportamentos definidos de acordo com os processos da empresa.',
+			'cc_agente_1_item_1'  => 'Objetivos e responsabilidades definidos',
+			'cc_agente_1_item_2'  => 'Regras e limites de atuação configuráveis',
+			'cc_agente_1_item_3'  => 'Contexto alinhado ao negócio',
+
+			// AgentStudio Card 2: Agent Garden.
+			'cc_agente_2_titulo'  => 'Agent Garden',
+			'cc_agente_2_texto'   => 'Teste cenários, refine instruções e verifique resultados antes da implantação. Uma etapa essencial para garantir que agentes atuem de acordo com as regras e expectativas da organização.',
+			'cc_agente_2_item_1'  => 'Simulação de cenários reais',
+			'cc_agente_2_item_2'  => 'Validação antes da implantação',
+			'cc_agente_2_item_3'  => 'Ajustes contínuos de comportamento',
+
+			// AgentStudio Card 3: Control Tower.
+			'cc_agente_3_titulo'  => 'Control Tower',
+			'cc_agente_3_texto'   => 'Acompanhe desempenho, utilização e atividades dos agentes em um único ambiente, com visibilidade completa para garantir segurança, conformidade e evolução contínua.',
+			'cc_agente_3_item_1'  => 'Monitoramento centralizado',
+			'cc_agente_3_item_2'  => 'Auditoria e rastreabilidade completas',
+			'cc_agente_3_item_3'  => 'Visibilidade sobre uso e desempenho',
+
+			// 9. Departamentos.
+			'cc_dep_secao_titulo' => 'Automatize todos os departamentos da sua empresa',
+			'cc_dep_secao_texto'  => 'Do financeiro ao atendimento, crie fluxos integrados e centralize todas as informações da sua empresa em uma única tela, sem complicação.',
+
+			'cc_dep_1_numero' => '01',
+			'cc_dep_1_titulo' => 'Conectamos seus sistemas.',
+			'cc_dep_1_texto'  => 'Integramos ERP, CRM, e-commerce e plataformas fiscais em uma base única e conectada.',
+
+			'cc_dep_2_numero' => '02',
+			'cc_dep_2_titulo' => 'Automatizamos seus processos.',
+			'cc_dep_2_texto'  => 'Criamos fluxos de automação que eliminam tarefas manuais e reduzem erros operacionais.',
+
+			'cc_dep_3_numero' => '03',
+			'cc_dep_3_titulo' => 'Garantimos visibilidade total.',
+			'cc_dep_3_texto'  => 'Centralize dados de diferentes sistemas e tome decisões baseadas em informação confiável em tempo real.',
+
+			// 10. Reforma Tributária.
+			'cc_reforma_eyebrow'  => 'REFORMA TRIBUTÁRIA',
+			'cc_reforma_titulo'   => 'A Reforma Tributária mudou as regras. Automatize e garanta vantagem competitiva',
+			'cc_reforma_texto'    => 'Automatize os fluxos da sua empresa e antecipe os ajustes operacionais para a Reforma Tributária',
+			'cc_reforma_1_titulo' => 'Proteja a margem do negócio contra erros de cálculo tributário',
+			'cc_reforma_2_titulo' => 'Automatize obrigações acessórias sem aumentar equipe',
+			'cc_reforma_3_titulo' => 'Reduza o tempo de fechamento fiscal e minimize riscos de autuação',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+
+		WP_CLI::log( sprintf( '  cli-connect: %d campos preenchidos.', count( $campos ) ) );
 	}
 
 	/**

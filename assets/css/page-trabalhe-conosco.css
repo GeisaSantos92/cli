@@ -11,8 +11,10 @@
    ========================================================================== */
 
 .tc-hero {
-	background: linear-gradient(180deg, var(--cor-fundo-azul) 0%, var(--cor-fundo) 100%);
-	padding-block: clamp(4rem, 6vw, 6rem);
+	background:
+		linear-gradient(180deg, rgba(130, 172, 255, 0.2) 0%, rgba(199, 218, 255, 0) 24%),
+		var(--cor-fundo-suave);
+	padding-block: clamp(4rem, 6vw, 5rem);
 	text-align: center;
 }
 
@@ -31,9 +33,9 @@
 }
 
 .tc-hero__texto {
-	font-size: 1.25rem;
-	color: var(--cor-texto-suave);
-	max-width: 960px;
+	font-size: var(--tam-body-lg);
+	color: var(--cor-texto-alt);
+	max-width: 750px;
 	margin-inline: auto;
 	margin-bottom: 2.5rem;
 	line-height: 1.6;
@@ -45,9 +47,8 @@
 }
 
 .tc-hero__acoes .botao {
-	min-width: 331px;
-	min-height: 74px;
-	padding: 22px 40px;
+	min-height: 60px;
+	padding: 16px 32px;
 }
 
 /* ==========================================================================
@@ -55,20 +56,20 @@
    ========================================================================== */
 
 .tc-sobre {
-	background: var(--cor-fundo);
-	padding: clamp(1.5rem, 3vw, 2.5rem) 47px;
+	background: var(--cor-fundo-suave);
+	padding: 0 var(--margem-lateral) 80px;
 }
 
 .tc-sobre__inner {
 	background: var(--cor-marca-profunda);
-	border-radius: 14px;
+	border-radius: 16px;
 	overflow: hidden;
 	position: relative;
 	color: var(--cor-texto-clara);
-	padding: 64px;
+	padding: 80px;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: clamp(2rem, 5vw, 4rem);
+	gap: clamp(3rem, 7vw, 6.5rem);
 	align-items: center;
 }
 
@@ -99,16 +100,16 @@
 
 .tc-sobre__titulo {
 	font-family: var(--fonte-titulo);
-	font-size: 2.5rem;
+	font-size: var(--tam-h2);
 	color: var(--cor-texto-clara);
 	margin-block: 0 1.5rem;
 	line-height: 1.15;
 }
 
 .tc-sobre__paragrafo {
-	font-size: var(--tam-body-sm);
+	font-size: var(--tam-body);
 	color: var(--cor-texto-clara-suave);
-	line-height: 1.5;
+	line-height: 1.6;
 	margin-block: 0 1rem;
 }
 
@@ -161,11 +162,11 @@
 }
 
 .tc-metricas .metrica__numero {
-	font-family: var(--fonte-base);
+	font-family: var(--fonte-titulo);
 	font-size: var(--tam-h1);
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 1.1;
-	letter-spacing: -0.03em;
+	letter-spacing: -0.04em;
 	color: var(--cor-texto-marca);
 	font-variant-numeric: tabular-nums;
 	margin: 0;
@@ -173,9 +174,9 @@
 
 .tc-metricas .metrica__rotulo {
 	font-size: var(--tam-body);
-	font-weight: 400;
-	line-height: 1.4;
-	color: #616161;
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--cor-texto-alt);
 	margin: 0;
 }
 
@@ -190,16 +191,16 @@
    ========================================================================== */
 
 .tc-frase {
-	padding-block: clamp(3rem, 5vw, 5rem);
+	padding-block: clamp(4rem, 8vw, 7.5rem);
 	text-align: center;
 }
 
 .tc-frase__texto {
-	font-family: var(--fonte-base);
-	font-size: var(--tam-h3);
-	font-weight: 500;
+	font-family: var(--fonte-titulo);
+	font-size: 2.5rem;
+	font-weight: 600;
 	color: var(--cor-texto);
-	line-height: 1.2;
+	line-height: 1.1;
 	max-width: 100%;
 	margin-inline: auto;
 }
@@ -235,15 +236,17 @@
 .tc-valores__grade {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 1.25rem;
+	grid-template-rows: repeat(2, 242px);
+	gap: 0.75rem;
 	margin-top: 3rem;
 }
 
 .tc-valor {
-	padding: 1.5rem;
+	padding: 2.0625rem;
 	border: 1px solid var(--cor-borda);
-	border-radius: var(--raio-card);
+	border-radius: var(--raio);
 	background: var(--cor-fundo);
+	overflow: hidden;
 }
 
 .tc-valor__icone {
@@ -252,22 +255,26 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--cor-fundo-azul);
-	border-radius: var(--raio);
-	color: var(--cor-primaria);
+	background:
+		linear-gradient(0deg, rgba(157, 186, 254, 0.4) 0%, rgba(157, 186, 254, 0) 100%),
+		var(--cor-primaria);
+	border: 1px solid var(--cor-borda);
+	border-radius: 4px;
+	color: white;
 	margin-bottom: 1rem;
 }
 
 .tc-valor__titulo {
-	font-family: var(--fonte-titulo);
+	font-family: var(--fonte-base);
 	font-size: var(--tam-h6);
+	font-weight: 500;
 	color: var(--cor-texto);
 	margin-block: 0 0.5rem;
 }
 
 .tc-valor__texto {
-	font-size: var(--tam-body-sm);
-	color: var(--cor-texto-suave);
+	font-size: var(--tam-body);
+	color: var(--cor-texto-alt);
 	line-height: 1.6;
 	margin: 0;
 }
@@ -277,16 +284,17 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	gap: 1rem;
-	padding: 1.5rem;
-	/* Gradiente especificado no Figma: base #687FF4 + overlay direcional de #3551F2. */
+	gap: 0.75rem;
+	padding: 2.0625rem;
+	/* Gradiente conforme Figma: linear-gradient(-40.86deg, #3551f2 0%, rgba(53,81,242,0) 100%) sobre #687FF4 */
 	background:
-		linear-gradient(303.09deg, #3551F2 0%, rgba(53, 81, 242, 0) 100%),
-		linear-gradient(0deg, #687FF4, #687FF4);
-	border-radius: var(--raio-card);
+		linear-gradient(-40.86deg, #3551f2 0%, rgba(53, 81, 242, 0) 100%),
+		#687ff4;
+	border-radius: var(--raio);
 	color: var(--cor-texto-clara);
-	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h5);
+	font-family: var(--fonte-base);
+	font-size: 1.5rem;
+	font-weight: 500;
 	text-decoration: none;
 	line-height: 1.2;
 	transition: filter 0.2s;
@@ -304,7 +312,7 @@
    6. Depoimento
    ========================================================================== */
 
-/* Fundo branco com blob elíptico lavanda no rodapé (via ::after). */
+/* Fundo branco com blob elíptico lavanda (via ::after centrado). */
 .tc-depoimento {
 	background: var(--cor-fundo);
 	padding-block: clamp(2.5rem, 4vw, 3.5rem);
@@ -315,73 +323,84 @@
 .tc-depoimento::after {
 	content: '';
 	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 55%;
-	background: radial-gradient(ellipse 90% 100% at 50% 100%, rgba(104, 127, 244, 0.4) 0%, transparent 70%);
+	bottom: -30%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 120%;
+	height: 120%;
+	background: radial-gradient(ellipse 80% 70% at 50% 100%, rgba(104, 127, 244, 0.35) 0%, transparent 70%);
 	pointer-events: none;
 }
 
-/* Grid: coluna esquerda fixa (autor) + coluna direita expansível (citação). */
+/* Grid: 1 coluna esquerda + 3 colunas direita (ratio 1:3 conforme Figma). */
 .tc-depoimento__inner {
 	display: grid;
-	grid-template-columns: auto 1fr;
-	gap: clamp(2.5rem, 6vw, 5rem);
-	align-items: center;
-	position: relative; /* fica acima do ::after */
+	grid-template-columns: 1fr 3fr;
+	border-bottom: 2px solid rgba(39, 62, 128, 0.05);
+	padding-bottom: 24px;
+	position: relative;
 	z-index: 1;
 }
 
-/* Coluna esquerda: foto + nome + cargo empilhados. */
+/* Coluna esquerda: foto + nome + cargo, centrada verticalmente. */
 .tc-depoimento__autor {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 0.5rem;
+	justify-content: center;
+	gap: 1rem;
+	min-height: 286px;
 }
 
 .tc-depoimento__foto img {
-	width: clamp(80px, 10vw, 120px);
-	height: clamp(80px, 10vw, 120px);
-	border-radius: var(--raio-card);
+	width: 124px;
+	height: 124px;
+	border-radius: var(--raio);
 	object-fit: cover;
+	object-position: top;
 	display: block;
-	margin-bottom: 0.5rem;
-}
-
-/* Coluna direita: " tipográfico (via ::before) + citação em azul profundo. */
-.tc-depoimento__bloco {
-	margin: 0;
-}
-
-.tc-depoimento__bloco::before {
-	content: '\201C'; /* " abertura */
-	display: block;
-	font-size: 2.5rem;
-	line-height: 1;
-	color: var(--cor-texto-marca);
-	margin-bottom: 0.75rem;
-}
-
-.tc-depoimento__citacao {
-	font-size: var(--tam-body-lg);
-	color: var(--cor-marca-profunda); /* azul navy conforme design */
-	line-height: 1.7;
-	margin: 0;
 }
 
 .tc-depoimento__nome {
 	font-family: var(--fonte-base);
-	font-size: var(--tam-body);
-	font-weight: 700;
+	font-size: var(--tam-h5);
+	font-weight: 600;
+	line-height: 1.5;
 	color: var(--cor-texto);
 	margin: 0;
 }
 
 .tc-depoimento__cargo {
-	font-size: var(--tam-body-sm);
-	color: var(--cor-texto-suave);
+	font-size: var(--tam-h6);
+	font-weight: 400;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+/* Coluna direita: " (Mona Sans 64px) em flex-row + citação 28px. */
+.tc-depoimento__bloco {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	padding-left: 24px;
+	margin: 0;
+	align-self: center;
+}
+
+.tc-depoimento__bloco::before {
+	content: '\201C';
+	font-family: var(--fonte-eyebrow); /* Mona Sans */
+	font-size: 4rem; /* 64px */
+	line-height: 1;
+	color: var(--cor-texto-marca-escura);
+	flex-shrink: 0;
+}
+
+.tc-depoimento__citacao {
+	font-size: var(--tam-h5); /* 28px */
+	font-style: normal;
+	color: var(--cor-texto-marca-escura);
+	line-height: 1.6;
 	margin: 0;
 }
 
@@ -450,15 +469,16 @@
 }
 
 .tc-beneficio__titulo {
-	font-family: var(--fonte-titulo);
+	font-family: var(--fonte-base);
 	font-size: var(--tam-h6);
+	font-weight: 500;
 	color: var(--cor-texto);
 	margin-block: 0 0.5rem;
 }
 
 .tc-beneficio__texto {
-	font-size: var(--tam-body-sm);
-	color: var(--cor-texto-suave);
+	font-size: var(--tam-body);
+	color: var(--cor-texto-alt);
 	line-height: 1.6;
 	margin: 0;
 }
@@ -490,9 +510,9 @@
 }
 
 .tc-jeito__intro {
-	font-size: var(--tam-body);
+	font-size: var(--tam-h6);
 	color: var(--cor-texto);
-	line-height: 1.6;
+	line-height: 1.3;
 	margin: 0;
 }
 
@@ -524,22 +544,22 @@
 }
 
 .tc-jeito__numero {
-	font-size: var(--tam-body-sm);
-	color: var(--cor-texto-suave);
-	font-weight: 400;
+	font-size: var(--tam-body);
+	color: var(--cor-texto-alt);
+	font-weight: 600;
 	flex-shrink: 0;
 }
 
 .tc-jeito__nome {
-	font-family: var(--fonte-titulo);
+	font-family: var(--fonte-base);
 	font-size: var(--tam-body-lg);
-	font-weight: 700;
+	font-weight: 600;
 	color: var(--cor-texto-marca-escura);
 }
 
 /* Coluna direita: descrição. */
 .tc-jeito__descricao {
-	font-size: var(--tam-body);
+	font-size: var(--tam-body-lg);
 	color: var(--cor-texto-alt);
 	line-height: 1.6;
 }
@@ -587,6 +607,7 @@
 	.tc-valores__grade,
 	.tc-beneficios__grade {
 		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: unset;
 	}
 }
 
@@ -594,6 +615,19 @@
 	.tc-sobre__inner,
 	.tc-depoimento__inner {
 		grid-template-columns: 1fr;
+	}
+
+	.tc-depoimento__citacao {
+		font-size: var(--tam-h6);
+	}
+
+	.tc-depoimento__nome {
+		font-size: var(--tam-h6);
+	}
+
+	.tc-sobre__inner {
+		padding: 40px;
+		gap: 2rem;
 	}
 
 	.tc-jeito__cabecalho,
@@ -609,6 +643,7 @@
 	.tc-valores__grade,
 	.tc-beneficios__grade {
 		grid-template-columns: 1fr;
+		grid-template-rows: unset;
 	}
 
 	.tc-frase__texto {

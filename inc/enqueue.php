@@ -116,6 +116,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página CLI Connect.
+	if ( cliconnect_e_pagina( 'cli-connect' ) ) {
+		wp_enqueue_style(
+			'cliconnect-cli-connect',
+			get_theme_file_uri( '/assets/css/page-cli-connect.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-cli-connect.css' )
+		);
+	}
+
 	// Comportamentos vanilla (menu, submenus, acordeão do FAQ).
 	wp_enqueue_script(
 		'cliconnect-theme',
