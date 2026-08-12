@@ -3,6 +3,7 @@
  * CLI Connect — Depoimento.
  *
  * Card azul escuro horizontal: foto + nome/cargo | citação | botão.
+ * Elementos decorativos: brilho (glow esquerda) e linhas diagonais (direita).
  *
  * @package Cliconnect
  */
@@ -19,11 +20,20 @@ $foto  = cliconnect_campo_pagina( 'cc_dep_foto' );
 if ( ! $texto ) {
 	return;
 }
+
+$uri = get_template_directory_uri();
 ?>
 <section class="cc-depoimento">
 	<div class="container">
 		<div class="cc-depoimento__card">
 
+			<?php /* Decorativos ------------------------------------------------ */ ?>
+			<img src="<?php echo esc_url( $uri . '/assets/img/cc-dep-brilho.svg' ); ?>"
+				class="cc-depoimento__brilho" alt="" aria-hidden="true" focusable="false">
+			<img src="<?php echo esc_url( $uri . '/assets/img/cc-dep-linhas.svg' ); ?>"
+				class="cc-depoimento__linhas" alt="" aria-hidden="true" focusable="false">
+
+			<?php /* Perfil ----------------------------------------------------- */ ?>
 			<div class="cc-depoimento__perfil">
 				<?php if ( $foto ) : ?>
 					<div class="cc-depoimento__foto-wrap">
@@ -41,10 +51,14 @@ if ( ! $texto ) {
 				</div>
 			</div>
 
-			<blockquote class="cc-depoimento__citacao">
-				<p>"<?php echo esc_html( $texto ); ?>"</p>
-			</blockquote>
+			<?php /* Citação (coluna stretch com borda inferior) ---------------- */ ?>
+			<div class="cc-depoimento__quote-col">
+				<blockquote class="cc-depoimento__citacao">
+					<p>"<?php echo esc_html( $texto ); ?>"</p>
+				</blockquote>
+			</div>
 
+			<?php /* Botão ------------------------------------------------------ */ ?>
 			<div class="cc-depoimento__acao">
 				<?php cliconnect_botao_pagina( 'cc_dep_botao', 'cc-depoimento__botao' ); ?>
 			</div>
