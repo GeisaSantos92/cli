@@ -175,6 +175,26 @@ function cliconnect_acf_fields_cli_connect() {
 	}
 	$fields[] = $cc_image( 'np_imagem', 'Imagem', 'cc_np_imagem' );
 
+	/* --- 8b. VANTAGENS ------------------------------------------------------ */
+	$fields[] = $cc_tab( 'vantagens', '8b · Vantagens' );
+	$fields[] = $cc_text( 'vantag_eyebrow', 'Eyebrow', 'cc_vantag_eyebrow' );
+	$fields[] = $cc_text( 'vantag_titulo', 'Título', 'cc_vantag_titulo' );
+	$fields[] = $cc_textarea( 'vantag_texto', 'Texto de apoio', 'cc_vantag_texto', 2 );
+	for ( $i = 1; $i <= 6; $i++ ) {
+		$fields[] = $cc_text( "vantag_{$i}_titulo", "Card {$i} — título", "cc_vantag_{$i}_titulo" );
+		$fields[] = $cc_textarea( "vantag_{$i}_texto", "Card {$i} — texto", "cc_vantag_{$i}_texto", 2 );
+	}
+
+	/* --- 8c. DIFERENCIAIS --------------------------------------------------- */
+	$fields[] = $cc_tab( 'diferenciais', '8c · Diferenciais' );
+	$fields[] = $cc_text( 'dif_eyebrow', 'Eyebrow', 'cc_dif_eyebrow' );
+	$fields[] = $cc_text( 'dif_titulo', 'Título', 'cc_dif_titulo' );
+	$fields[] = $cc_textarea( 'dif_texto', 'Subtítulo', 'cc_dif_texto', 2 );
+	$fields[] = $cc_link( 'dif_botao', 'Botão CTA', 'cc_dif_botao' );
+	for ( $i = 1; $i <= 9; $i++ ) {
+		$fields[] = $cc_text( "dif_row_{$i}", "Linha {$i} — texto", "cc_dif_row_{$i}" );
+	}
+
 	/* --- 9. COMPARATIVO ----------------------------------------------------- */
 	$fields[] = $cc_tab( 'comparativo', '9 · Comparativo' );
 	$fields[] = $cc_text( 'comp_titulo', 'Título da seção', 'cc_comp_titulo' );
@@ -191,6 +211,23 @@ function cliconnect_acf_fields_cli_connect() {
 		$fields[] = $cc_text( "dep_item_{$i}_titulo", "Item {$i} — título", "cc_dep_item_{$i}_titulo" );
 		$fields[] = $cc_textarea( "dep_item_{$i}_texto", "Item {$i} — texto", "cc_dep_item_{$i}_texto", 2 );
 	}
+
+	/* --- 11. PARCEIRO OFICIAL ----------------------------------------------- */
+	$fields[] = $cc_tab( 'parceiro', '11 · Parceiro Oficial' );
+	$fields[] = $cc_text( 'parceiro_eyebrow', 'Eyebrow', 'cc_parceiro_eyebrow' );
+	$fields[] = $cc_text( 'parceiro_titulo', 'Título', 'cc_parceiro_titulo' );
+	$fields[] = $cc_textarea( 'parceiro_texto', 'Texto de apoio', 'cc_parceiro_texto', 2 );
+	$fields[] = $cc_text( 'parceiro_esq_titulo', 'Coluna esquerda — título (ex: CLI Connect)', 'cc_parceiro_esq_titulo' );
+	$fields[] = $cc_text( 'parceiro_esq_sub', 'Coluna esquerda — subtítulo', 'cc_parceiro_esq_sub' );
+	for ( $i = 1; $i <= 4; $i++ ) {
+		$fields[] = $cc_text( "parceiro_esq_item_{$i}", "Esquerda — item {$i}", "cc_parceiro_esq_item_{$i}" );
+	}
+	$fields[] = $cc_text( 'parceiro_dir_titulo', 'Coluna direita — título (ex: Desenvolvimento)', 'cc_parceiro_dir_titulo' );
+	$fields[] = $cc_text( 'parceiro_dir_sub', 'Coluna direita — subtítulo', 'cc_parceiro_dir_sub' );
+	for ( $i = 1; $i <= 4; $i++ ) {
+		$fields[] = $cc_text( "parceiro_dir_item_{$i}", "Direita — item {$i}", "cc_parceiro_dir_item_{$i}" );
+	}
+	$fields[] = $cc_textarea( 'parceiro_destaque', 'Banner de destaque (aceita <strong>)', 'cc_parceiro_destaque', 2 );
 
 	acf_add_local_field_group(
 		array(

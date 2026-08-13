@@ -1555,7 +1555,66 @@ class Cliconnect_Seed {
 			'cc_dep_texto' => 'Com a CLI Connect, nós reestruturamos nossa governança e nossos processos financeiros.',
 			'cc_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
 
-			// 7. Pilares — eyebrow e título.
+			// 8c. Diferenciais.
+			'cc_dif_eyebrow' => 'NOSSOS DIFERENCIAIS',
+			'cc_dif_titulo'  => 'Projetada para entregar valor contínuo',
+			'cc_dif_texto'   => 'Conheça os diferenciais que tornam a CLI Connect uma alternativa mais simples e previsível para operações em crescimento.',
+			'cc_dif_botao'   => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'cc_dif_row_1'   => 'Sem custo adicional por projeto',
+			'cc_dif_row_2'   => 'Sem cobrança por execução, fluxo ou mensagem',
+			'cc_dif_row_3'   => 'Expertise em sistemas do mercado brasileiro',
+			'cc_dif_row_4'   => 'Plataforma líder em segurança e compliance',
+			'cc_dif_row_5'   => 'Operação monitorada e gerenciada pela CLI',
+			'cc_dif_row_6'   => 'Preço condizente com a realidade brasileira',
+			'cc_dif_row_7'   => 'Suporte para sistemas complexos',
+			'cc_dif_row_8'   => 'Biblioteca com mais de 30.000 integrações',
+			'cc_dif_row_9'   => 'Atendimento humanizado e especializado',
+
+			// 8b. Vantagens.
+			'cc_vantag_eyebrow'  => 'VANTAGENS',
+			'cc_vantag_titulo'   => 'Por que adotar o CLI Connect',
+			'cc_vantag_texto'    => 'Do financeiro ao atendimento, crie fluxos integrados e centralize todas as informações da sua empresa em uma única tela, sem complicação.',
+			'cc_vantag_1_titulo' => 'Mais Produtividade',
+			'cc_vantag_1_texto'  => 'Automatize tarefas repetitivas e libere seus times para atividades mais estratégicas e de maior valor para o negócio.',
+			'cc_vantag_2_titulo' => 'Mais Governança',
+			'cc_vantag_2_texto'  => 'Defina exatamente o que cada agente pode acessar, responder ou executar, com aprovações humanas nos pontos críticos.',
+			'cc_vantag_3_titulo' => 'Mais Segurança',
+			'cc_vantag_3_texto'  => 'Reduza riscos de exposição de dados sensíveis e mantenha controle total sobre o uso da IA em toda a organização.',
+			'cc_vantag_4_titulo' => 'Mais Integração',
+			'cc_vantag_4_texto'  => 'Conecte agentes aos sistemas corporativos que sua empresa já utiliza — ERP, CRM, APIs e plataformas internas.',
+			'cc_vantag_5_titulo' => 'Mais Velocidade',
+			'cc_vantag_5_texto'  => 'Crie e coloque agentes em operação com uma abordagem visual, simples e escalável — com menor dependência de TI.',
+			'cc_vantag_6_titulo' => 'Controle de Custos',
+			'cc_vantag_6_texto'  => 'Monitore consumo, uso de tokens e limites de operação dos agentes para manter a IA dentro do orçamento planejado.',
+
+			// 8. Na Prática.
+			'cc_np_eyebrow'   => 'NA PRÁTICA',
+			'cc_np_titulo'    => 'Converse com seus dados. O agente faz o restante.',
+			'cc_np_texto'     => 'Faça perguntas, execute processos e obtenha respostas baseadas nos dados da sua operação.',
+			'cc_np_bullet_1'  => 'Consulta múltiplos sistemas simultaneamente',
+			'cc_np_bullet_2'  => 'Executa fluxos sem intervenção manual',
+			'cc_np_bullet_3'  => 'Mantém todo o histórico da operação',
+			'cc_np_imagem'    => $this->img( 'cc-na-pratica' ),
+
+			// 7. Parceiro Oficial (Comparativo).
+			'cc_parceiro_eyebrow'   => 'PARCEIRO OFICIAL',
+			'cc_parceiro_titulo'    => 'Integre seus sistemas com muito menos tempo e esforço técnico',
+			'cc_parceiro_texto'     => 'Com o CLI Connect você elimina a complexidade e o tempo de desenvolvimento tradicional, permitindo integrações até 5x mais rápidas que soluções baseadas no desenvolvimento tradicional.',
+			'cc_parceiro_esq_titulo' => 'CLI Connect',
+			'cc_parceiro_esq_sub'   => 'Integrações prontas para usar, com eventos automáticos e sem esforço de desenvolvimento',
+			'cc_parceiro_esq_item_1' => 'Conectores pré-construídos e prontos para uso',
+			'cc_parceiro_esq_item_2' => 'Eventos automáticos e bidirecionais',
+			'cc_parceiro_esq_item_3' => 'Configuração com baixo código',
+			'cc_parceiro_esq_item_4' => 'Implantação rápida e segura',
+			'cc_parceiro_dir_titulo' => 'Desenvolvimento',
+			'cc_parceiro_dir_sub'   => 'Abordagem tradicional com mais etapas, dependências e esforço técnico',
+			'cc_parceiro_dir_item_1' => 'Desenvolvimento de código no SAP',
+			'cc_parceiro_dir_item_2' => 'Testes e correções no SAP',
+			'cc_parceiro_dir_item_3' => 'Dependência de recursos especialistas',
+			'cc_parceiro_dir_item_4' => 'Ciclos longos de desenvolvimento',
+			'cc_parceiro_destaque'  => 'Integrações feitas em até <strong>5x menos</strong> tempo. Com mais qualidade e mais segurança.',
+
+			// 8. Pilares — eyebrow e título.
 			'cc_pilares_eyebrow' => 'VANTAGENS',
 			'cc_pilares_titulo'  => 'Tudo o que você precisa em uma única solução',
 

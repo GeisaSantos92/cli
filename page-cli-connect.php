@@ -18,14 +18,13 @@ $cliconnect_secoes = array(
 	'boomi',
 	'operacoes',
 	'dashboard',
-	'metricas',
-	'destaque',
-	'integracoes',
 	'depoimento',
-	'pilares',
-	'agentes',
-	'departamentos',
-	'reforma',
+	'parceiro',
+	'selos',
+	'pratica',
+	'vantagens',
+	'diferenciais',
+	'faq',
 );
 
 foreach ( $cliconnect_secoes as $cliconnect_secao ) {
