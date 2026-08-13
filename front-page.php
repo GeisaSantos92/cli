@@ -27,7 +27,6 @@ get_header();
 		'clientes',      // Esteira de logos.
 		'midia',         // Bloco 1 — IA corporativa.
 		'midia',         // Bloco 2 — Na prática.
-		'depoimento',    // Case em destaque + métricas.
 		'eventos',       // Sua operação responde em tempo real.
 		'compliance',    // Selos e certificações.
 		'integracoes',   // Sua integração pode já estar pronta.
