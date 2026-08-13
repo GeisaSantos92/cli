@@ -341,3 +341,51 @@
 	color: var(--cor-texto-alt);           /* #566f9d */
 	margin: 0;
 }
+
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+/* Tablet — cards de 3 passam para 2 colunas */
+@media (max-width: 1024px) {
+	.blog-cards__grade {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+	/* Destaque — empilha imagem acima da info */
+	.blog-destaque {
+		padding-bottom: 48px;
+	}
+
+	.blog-destaque__conteudo {
+		grid-template-columns: 1fr;
+		row-gap: 24px;
+	}
+
+	.blog-destaque__info {
+		padding-right: 0;
+	}
+
+	/* Newsletter — empilha texto acima do form */
+	.blog-newsletter__conteudo {
+		grid-template-columns: 1fr;
+		column-gap: 0;
+		row-gap: 32px;
+	}
+
+	/* Cards — coluna única */
+	.blog-cards {
+		padding-top: 64px;
+		padding-bottom: 80px;
+	}
+
+	.blog-cards__grade {
+		grid-template-columns: 1fr;
+		row-gap: 48px;
+	}
+}
