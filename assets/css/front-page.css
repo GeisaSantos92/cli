@@ -309,11 +309,12 @@
 	border: 1px solid var(--cor-borda);
 	border-radius: 6px;
 	background: #fff;
+	overflow: hidden;
 }
 
 .agente-card__integracao img {
-	max-width: 100%;
-	max-height: 100%;
+	width: 100%;
+	height: 100%;
 	object-fit: contain;
 }
 

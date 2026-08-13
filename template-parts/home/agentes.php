@@ -56,7 +56,7 @@ $legenda = cliconnect_campo( 'agentes_legenda' );
 							<div class="agente-card__integracoes">
 								<?php foreach ( $integracoes as $integracao_id ) : ?>
 									<span class="agente-card__integracao">
-										<?php echo cliconnect_thumb( $integracao_id, 'thumbnail', array( 'alt' => '' ) ); ?>
+										<?php echo cliconnect_thumb( $integracao_id, 'medium', array( 'alt' => '' ) ); ?>
 									</span>
 								<?php endforeach; ?>
 							</div>
