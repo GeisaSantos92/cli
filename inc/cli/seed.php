@@ -368,6 +368,9 @@ class Cliconnect_Seed {
 	 */
 	protected function criar_clientes() {
 		$itens = array(
+			array( 'Panasonic', 'cliente-panasonic', true ),
+			array( 'Cocamar', 'cliente-cocamar', true ),
+			array( 'Localiza', 'cliente-localiza', true ),
 			array( 'HSBC', 'cliente-hsbc', false ),
 			array( 'Unimed', 'cliente-unimed', false ),
 			array( 'Martins', 'cliente-martins', false ),
@@ -375,11 +378,13 @@ class Cliconnect_Seed {
 			array( 'Arcom', 'cliente-arcom', false ),
 			array( 'Seculus', 'cliente-seculus', false ),
 			array( 'Grupo Ferroeste', 'cliente-grupo-ferroeste', false ),
-			array( 'Panasonic', 'cliente-panasonic', true ),
-			array( 'Cocamar', 'cliente-cocamar', true ),
-			array( 'Localiza', 'cliente-localiza', true ),
-			array( 'RodOil', 'cliente-rodoil', false ),
-			array( 'Albaugh', 'cliente-albaugh', false ),
+			array( 'Real', 'cliente-real', false ),
+			array( 'BNP Paribas Cardif', 'cliente-bnp-paribas-cardif', false ),
+			array( 'Thomson Reuters', 'cliente-thomson-reuters', false ),
+			array( 'Unidas', 'cliente-unidas', false ),
+			array( 'BRZ', 'cliente-brz', false ),
+			array( 'SBC', 'cliente-sbc', false ),
+			array( 'Indiana', 'cliente-indiana', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
