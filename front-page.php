@@ -46,7 +46,7 @@ get_header();
 			++$cliconnect_bloco_midia;
 			$cliconnect_args = array(
 				'indice'    => $cliconnect_bloco_midia,
-				'invertida' => ( 1 === $cliconnect_bloco_midia % 2 ),
+				'invertida' => false,
 			);
 		}
 
