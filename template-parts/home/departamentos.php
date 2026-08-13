@@ -12,8 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$nos = cliconnect_lista_numerada( 'departamento_%d', 6 );
-
 $titulo = cliconnect_campo( 'departamentos_titulo' );
 $texto  = cliconnect_campo( 'departamentos_texto' );
 $prova  = cliconnect_campo( 'prova_texto' );
@@ -21,10 +19,6 @@ $prova  = cliconnect_campo( 'prova_texto' );
 if ( ! $titulo ) {
 	return;
 }
-
-$metade   = (int) ceil( count( $nos ) / 2 );
-$esquerda = array_slice( $nos, 0, $metade );
-$direita  = array_slice( $nos, $metade );
 
 $logos_prova = cliconnect_posts(
 	'cli_cliente',
@@ -40,33 +34,17 @@ $logos_prova = cliconnect_posts(
 	<div class="container">
 		<div class="departamentos__grid">
 
-			<div class="departamentos__diagrama" aria-hidden="true">
-				<div class="departamentos__coluna departamentos__coluna--esquerda">
-					<?php foreach ( $esquerda as $no ) : ?>
-						<span class="departamentos__no"><?php echo esc_html( $no ); ?></span>
-					<?php endforeach; ?>
-				</div>
-
-				<div class="departamentos__centro">
-					<?php
-					echo cliconnect_imagem_tema( // phpcs:ignore WordPress.Security.EscapeOutput -- montado com escape em cliconnect_imagem_tema().
-						'logo-white.svg',
-						array(
-							'class'  => 'departamentos__centro-logo',
-							'alt'    => '',
-							'width'  => 122,
-							'height' => 87,
-						)
-					);
-					?>
-				</div>
-
-				<div class="departamentos__coluna departamentos__coluna--direita">
-					<?php foreach ( $direita as $no ) : ?>
-						<span class="departamentos__no"><?php echo esc_html( $no ); ?></span>
-					<?php endforeach; ?>
-				</div>
-			</div>
+			<?php
+			echo cliconnect_imagem_tema( // phpcs:ignore WordPress.Security.EscapeOutput -- montado com escape em cliconnect_imagem_tema().
+				'section-departamentos.png',
+				array(
+					'class'  => 'departamentos__imagem',
+					'alt'    => __( 'Diagrama de departamentos: Compras, Atendimento e Logística (esquerda) conectados ao logo da CLI Connect, e Fiscal, Financeiro e RH (direita)', 'cli' ),
+					'width'  => 614,
+					'height' => 305,
+				)
+			);
+			?>
 
 			<div class="departamentos__texto">
 				<h2 class="departamentos__titulo"><?php echo nl2br( esc_html( $titulo ) ); ?></h2>
