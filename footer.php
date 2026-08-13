@@ -4,10 +4,11 @@
  *
  * Estrutura (fiel ao Figma):
  * - Bloco CTA azul, sobreposto à transição para o rodapé escuro (Customizer).
- * - Rodapé escuro: logo + colunas de links (menu "rodape", onde cada item de
- *   1º nível é o título de uma coluna) sobre o planeta.
  * - Faixa branca da agência (template-parts/rodape-agencia.php), com o
  *   copyright do cliente e os links legais.
+ * - Rodapé escuro: barra superior com logo + "powered by boomi" à esquerda
+ *   e ícones sociais à direita (Customizer); abaixo, colunas de links
+ *   (menu "rodape", onde cada item de 1º nível é o título de uma coluna).
  * - Botões flutuantes: voltar ao topo e WhatsApp (Customizer).
  *
  * @package Cliconnect
@@ -21,6 +22,8 @@ $cta_titulo = get_theme_mod( 'cliconnect_cta_titulo' ) ?? '';
 $cta_texto  = get_theme_mod( 'cliconnect_cta_botao_texto' ) ?? '';
 $cta_url    = get_theme_mod( 'cliconnect_cta_botao_url' ) ?? '';
 $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
+$linkedin   = get_theme_mod( 'cliconnect_social_linkedin' ) ?? '';
+$instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 ?>
 
 <?php if ( $cta_titulo && ! is_page_template( 'page-trabalhe-conosco.php' ) ) : ?>
@@ -57,11 +60,43 @@ $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
 	<div class="site-footer__inner">
 		<div class="site-footer__top">
 
-			<a class="site-footer__brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php cliconnect_logo( 'claro', 373 ); ?>
-			</a>
+			<div class="site-footer__brand-wrap">
+				<a class="site-footer__brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+					<?php cliconnect_logo( 'claro', 200 ); ?>
+				</a>
+			</div>
 
-			<?php if ( has_nav_menu( 'rodape' ) ) : ?>
+			<?php if ( $linkedin || $instagram ) : ?>
+			<div class="site-footer__sociais">
+				<?php if ( $linkedin ) : ?>
+				<a
+					class="site-footer__social-link"
+					href="<?php echo esc_url( $linkedin ); ?>"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="<?php esc_attr_e( 'LinkedIn', 'cli' ); ?>"
+				>
+					<?php echo cliconnect_social_icon( 'linkedin' ); // phpcs:ignore WordPress.Security.EscapeOutput -- SVG gerado internamente. ?>
+				</a>
+				<?php endif; ?>
+				<?php if ( $instagram ) : ?>
+				<a
+					class="site-footer__social-link"
+					href="<?php echo esc_url( $instagram ); ?>"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="<?php esc_attr_e( 'Instagram', 'cli' ); ?>"
+				>
+					<?php echo cliconnect_social_icon( 'instagram' ); // phpcs:ignore WordPress.Security.EscapeOutput -- SVG gerado internamente. ?>
+				</a>
+				<?php endif; ?>
+			</div>
+			<?php endif; ?>
+
+		</div>
+
+		<?php if ( has_nav_menu( 'rodape' ) ) : ?>
+		<div class="site-footer__links">
 			<nav aria-label="<?php esc_attr_e( 'Links do rodapé', 'cli' ); ?>">
 				<?php
 				wp_nav_menu(
@@ -70,14 +105,13 @@ $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
 						'container'      => false,
 						'menu_class'     => 'site-footer__grid',
 						'fallback_cb'    => false,
-						'depth'          => 2,
+						'depth'          => 3,
 					)
 				);
 				?>
 			</nav>
-			<?php endif; ?>
-
 		</div>
+		<?php endif; ?>
 
 		<div class="site-footer__espaco" aria-hidden="true"></div>
 	</div>

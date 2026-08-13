@@ -968,11 +968,19 @@ p {
 	padding: clamp(48px, 6vw, 72px) var(--margem-lateral) 0;
 }
 
+/* Barra superior: logo+powered à esquerda, ícones sociais à direita */
 .site-footer__top {
-	display: grid;
-	grid-template-columns: minmax(280px, 420px) 1fr;
-	gap: clamp(32px, 5vw, 80px);
-	align-items: start;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-block: 24px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.site-footer__brand-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
 }
 
 .site-footer__brand {
@@ -984,17 +992,68 @@ p {
 	color: #fff;
 }
 
-/* Colunas de links (menu "rodape": item de 1º nível = título da coluna) */
+/* Ícones sociais LinkedIn e Instagram */
+.site-footer__sociais {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.site-footer__social-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cor-texto-clara-suave);
+	transition: color 0.2s ease;
+}
+
+.site-footer__social-link:hover,
+.site-footer__social-link:focus-visible {
+	color: #fff;
+}
+
+/*
+ * Colunas de links — depth=3:
+ *   nível 1 (li) = coluna visual (pode conter múltiplas seções)
+ *   nível 2 (li) = seção com título (Plataforma, Sistemas, etc.)
+ *   nível 3 (li) = link individual
+ */
+.site-footer__links {
+	padding-top: clamp(40px, 5vw, 80px);
+}
+
 .site-footer__grid {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	display: flex;
 	gap: clamp(24px, 3vw, 40px);
+	align-items: flex-start;
 }
 
+/* Cada coluna visual */
+.site-footer__grid > li {
+	flex: 1;
+	min-width: 0;
+}
+
+/* Link do grupo (nível 1) não é visível */
 .site-footer__grid > li > a {
+	display: none;
+}
+
+/* Dentro da coluna: seções empilhadas */
+.site-footer__grid > li > .sub-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+/* Título da seção (nível 2) */
+.site-footer__grid > li > .sub-menu > li > a {
 	display: block;
 	font-size: var(--tam-body);
 	font-weight: 600;
@@ -1003,7 +1062,8 @@ p {
 	margin-bottom: 16px;
 }
 
-.site-footer__grid .sub-menu {
+/* Lista de links (nível 3) */
+.site-footer__grid > li > .sub-menu > li > .sub-menu {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -1012,15 +1072,15 @@ p {
 	gap: 12px;
 }
 
-.site-footer__grid .sub-menu a {
+.site-footer__grid > li > .sub-menu > li > .sub-menu a {
 	font-size: var(--tam-body-sm);
 	color: var(--cor-texto-clara-suave);
 	text-decoration: none;
 	transition: color 0.2s ease;
 }
 
-.site-footer__grid .sub-menu a:hover,
-.site-footer__grid .sub-menu a:focus-visible {
+.site-footer__grid > li > .sub-menu > li > .sub-menu a:hover,
+.site-footer__grid > li > .sub-menu > li > .sub-menu a:focus-visible {
 	color: #fff;
 }
 
@@ -1028,16 +1088,17 @@ p {
  * "Ver todos" (item marcado com a classe link-ver-todos no menu) ganha o
  * tratamento de link de ação: sublinhado e seta.
  */
-.site-footer__grid .link-ver-todos > a {
+.site-footer__grid > li > .sub-menu > li > .sub-menu .link-ver-todos > a {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 	color: #fff;
-	border-bottom: 1px solid currentColor;
+	font-weight: 600;
+	border-bottom: 1px solid var(--cor-texto-clara-suave);
 	padding-bottom: 2px;
 }
 
-.site-footer__grid .link-ver-todos > a::after {
+.site-footer__grid > li > .sub-menu > li > .sub-menu .link-ver-todos > a::after {
 	content: "\2192";
 	line-height: 1;
 }
@@ -1063,9 +1124,10 @@ p {
 	height: clamp(140px, 20vw, 300px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
 	.site-footer__top {
-		grid-template-columns: 1fr;
+		flex-wrap: wrap;
+		gap: 16px;
 	}
 }
 

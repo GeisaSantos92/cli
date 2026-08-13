@@ -610,6 +610,10 @@ class Cliconnect_Seed {
 				'Como funciona o modelo de contratação?',
 				'<p>É uma <strong>mensalidade fixa</strong>, com integrações ilimitadas e serviço gerenciado incluso. Não há cobrança por volume de chamadas nem por nova integração: quanto mais a sua operação cresce, mais você se beneficia do modelo.</p>',
 			),
+			array(
+				'Posso criar minhas próprias integrações na CLI Connect?',
+				'<p>Sim. Além da biblioteca com mais de 30.000 automações prontas, a plataforma Boomi permite que o seu time crie conectores e fluxos personalizados. A CLI Connect apoia na estruturação e documentação dessas integrações, garantindo que sigam as melhores práticas de governança e performance.</p>',
+			),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -1051,51 +1055,129 @@ class Cliconnect_Seed {
 			)
 		);
 
-		// --- Rodapé (colunas) ------------------------------------------------
+		// --- Rodapé (colunas) — depth=3 ----------------------------------------
+		// Nível 1 = coluna visual (grupo); nível 2 = seção; nível 3 = links.
 		$this->montar_menu(
 			'rodape',
 			'CLI — Rodapé',
 			array(
+				// Coluna 1: Plataforma + Recursos
 				array(
-					'titulo' => 'Plataforma',
-					'url'    => '/plataforma/',
+					'titulo' => 'col-plataforma-recursos',
+					'url'    => '#',
 					'filhos' => array(
-						'CLI Connect'   => '/cli-connect/',
-						'CLI Signature' => '/cli-signature/',
-					),
-				),
-				array(
-					'titulo' => 'Sistemas',
-					'url'    => '/sistemas/',
-					'filhos' => array(
-						'Claude'     => '/sistemas/',
-						'ChatGPT'    => '/sistemas/',
-						'SAP'        => '/sistemas/',
-						'Salesforce' => '/sistemas/',
-						'TOTVS'      => '/sistemas/',
-						'Senior'     => '/sistemas/',
 						array(
-							'titulo'  => 'Ver todos',
-							'url'     => '/sistemas/',
-							'classes' => 'link-ver-todos',
+							'titulo' => 'Plataforma',
+							'url'    => '/plataforma/',
+							'filhos' => array(
+								'CLI Connect'   => '/cli-connect/',
+								'CLI Signature' => '/cli-signature/',
+							),
+						),
+						array(
+							'titulo' => 'Recursos',
+							'url'    => '/contato/',
+							'filhos' => array(
+								'Cases'            => $cases_url,
+								'Blog'             => $blog_url,
+								'Trabalhe Conosco' => '/trabalhe-conosco/',
+								'Contato'          => '/contato/',
+							),
 						),
 					),
 				),
+				// Coluna 2: Sistemas
 				array(
-					'titulo' => 'Soluções',
-					'url'    => '/solucoes/',
-					'filhos' => $solucoes,
-				),
-				array(
-					'titulo' => 'Recursos',
-					'url'    => '/contato/',
+					'titulo' => 'col-sistemas',
+					'url'    => '#',
 					'filhos' => array(
-						'Cases'                    => $cases_url,
-						'Blog'                     => $blog_url,
-						'Trabalhe Conosco'         => '/trabalhe-conosco/',
-						'Contato'                  => '/contato/',
-						'Política de Privacidade'  => '/privacidade/',
-						'Termos de Uso'            => '/termos/',
+						array(
+							'titulo' => 'Sistemas',
+							'url'    => '/sistemas/',
+							'filhos' => array(
+								'Claude'         => '/sistemas/',
+								'ChatGPT'        => '/sistemas/',
+								'SAP'            => '/sistemas/',
+								'Salesforce'     => '/sistemas/',
+								'TOTVS Protheus' => '/sistemas/',
+								'Sankhya'        => '/sistemas/',
+								'Senior'         => '/sistemas/',
+								'Dynamics 365'   => '/sistemas/',
+								array(
+									'titulo'  => 'Ver todos',
+									'url'     => '/sistemas/',
+									'classes' => 'link-ver-todos',
+								),
+							),
+						),
+					),
+				),
+				// Coluna 3: Industria
+				array(
+					'titulo' => 'col-industria',
+					'url'    => '#',
+					'filhos' => array(
+						array(
+							'titulo' => 'Industria',
+							'url'    => '/industria/',
+							'filhos' => array(
+								'Serviços Financeiros' => '/industria/',
+								'Manufatura'           => '/industria/',
+								'Logística (3PL)'      => '/industria/',
+								'Software (ISV)'       => '/industria/',
+								'Varejo'               => '/industria/',
+								'Hotelaria e Turismo'  => '/industria/',
+								'Seguros'              => '/industria/',
+							),
+						),
+					),
+				),
+				// Coluna 4: Departamento + Nuvem
+				array(
+					'titulo' => 'col-departamento-nuvem',
+					'url'    => '#',
+					'filhos' => array(
+						array(
+							'titulo' => 'Departamento',
+							'url'    => '/departamento/',
+							'filhos' => array(
+								'Recursos Humanos (RH)'         => '/departamento/',
+								'Operações de Receita (RevOps)' => '/departamento/',
+								'Marketing'                     => '/departamento/',
+								'Financeiro'                    => '/departamento/',
+							),
+						),
+						array(
+							'titulo' => 'Nuvem',
+							'url'    => '/nuvem/',
+							'filhos' => array(
+								'AWS'          => '/nuvem/',
+								'Google Cloud' => '/nuvem/',
+								'Azure'        => '/nuvem/',
+							),
+						),
+					),
+				),
+				// Coluna 5: Iniciativas
+				array(
+					'titulo' => 'col-iniciativas',
+					'url'    => '#',
+					'filhos' => array(
+						array(
+							'titulo' => 'Iniciativas',
+							'url'    => '/iniciativas/',
+							'filhos' => array(
+								'Atualização de Sistemas Legados'    => '/iniciativas/',
+								'IA Corporativa'                     => '/iniciativas/',
+								'Integração Pós-Fusão'               => '/iniciativas/',
+								'Compras ao Pagamento (S2P)'         => '/iniciativas/',
+								'Pedido ao Recebimento (O2C)'        => '/iniciativas/',
+								'Jornada do Colaborador (H2R)'       => '/iniciativas/',
+								'Soberania de Dados'                 => '/iniciativas/',
+								'Centro de Excelência em Integração' => '/iniciativas/',
+								'Visão 360° do Cliente'              => '/iniciativas/',
+							),
+						),
 					),
 				),
 			)
