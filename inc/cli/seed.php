@@ -818,7 +818,7 @@ class Cliconnect_Seed {
 			'hero_botao'            => $this->link( 'Agende uma demonstração', '/contato/' ),
 
 			// 2. Agentes.
-			'agentes_legenda'       => 'Mais de 30.000 integrações prontas para uso',
+			'agentes_legenda'       => '+30 mil integrações prontas para uso',
 
 			// 3. Camadas (a ilustração é asset do tema).
 			'camadas_titulo'        => "Tudo o que você precisa.\nCom custo previsível.",
