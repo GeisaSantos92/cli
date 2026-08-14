@@ -127,6 +127,7 @@
 	border: 1px solid var(--cor-borda);
 	box-shadow: var(--sombra-card);
 	animation: hero-flutua 7s ease-in-out infinite;
+	will-change: transform;
 }
 
 .hero__logo img {
@@ -177,6 +178,7 @@
 	gap: 24px;
 	width: max-content;
 	animation: marquee 42s linear infinite;
+	will-change: transform;
 }
 
 .agentes__pista:hover .agentes__trilha {
@@ -528,6 +530,7 @@
 	align-items: center;
 	width: max-content;
 	animation: marquee 45s linear infinite;
+	will-change: transform;
 }
 
 .clientes__pista:hover .clientes__trilha {

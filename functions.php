@@ -78,6 +78,7 @@ cliconnect_require( '/inc/enqueue.php' );
 cliconnect_require( '/inc/clean-head.php' );
 cliconnect_require( '/inc/customizer.php' );
 cliconnect_require( '/inc/analytics.php' );
+cliconnect_require( '/inc/seo.php' );
 cliconnect_require( '/inc/icons.php' );
 cliconnect_require( '/inc/template-tags.php' );
 cliconnect_require( '/inc/menu-walker.php' );
