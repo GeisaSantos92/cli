@@ -890,6 +890,8 @@ class Cliconnect_Seed {
 
 			// 13. Frase.
 			'frase_texto'           => 'Seus sistemas falam entre si.',
+			'frase_texto_b'         => 'Você cuida do',
+			'frase_destaque'        => 'que importa',
 
 			// 14. Suporte.
 			'suporte_eyebrow'       => 'Atendimento quando precisar',

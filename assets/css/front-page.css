@@ -1162,7 +1162,7 @@
 }
 
 /* ==========================================================================
-   13. FRASE — "Seus sistemas falam entre si."
+   13. FRASE — animação de texto ciclado (6 s, loop infinito)
    ========================================================================== */
 
 .frase {
@@ -1170,16 +1170,94 @@
 	text-align: center;
 }
 
-.frase__texto {
+/* Palco: empilha as frases na mesma célula de grid */
+.frase__palco {
+	display: grid;
+	place-items: center;
 	font-family: var(--fonte-titulo);
 	font-size: clamp(2.25rem, 5.2vw, 4.6875rem);
 	font-weight: 600;
-	line-height: 1.1;
 	letter-spacing: -0.03em;
 	color: var(--cor-texto);
-	max-width: 26ch;
-	margin-inline: auto;
+}
+
+.frase__texto {
+	grid-area: 1 / 1;        /* sobrepõe todas as frases */
+	line-height: 1.1;
+	margin: 0;
+	max-width: 22ch;
 	text-wrap: balance;
+}
+
+/* Frase A: "Seus sistemas falam entre si" — 0 s → 3 s visível */
+.frase__texto--a {
+	animation:
+		frase-a-opacidade 6s linear infinite,
+		frase-a-slide     6s linear infinite;
+}
+
+/* Frase B: "Você cuida do que importa" — 3,17 s → 6 s visível */
+.frase__texto--b {
+	animation:
+		frase-b-opacidade 6s linear infinite,
+		frase-b-slide     6s linear infinite;
+}
+
+/* Destaque: muda de cor para azul enquanto a frase B está visível */
+.frase__destaque {
+	font-style: normal;
+	color: var(--cor-texto);
+	animation: frase-destaque-cor 6s linear infinite;
+}
+
+/* --- Keyframes ---------------------------------------------------------- */
+
+@keyframes frase-a-opacidade {
+	0%      { animation-timing-function: ease-out; opacity: 0; }
+	8.333%  { opacity: 1; }
+	41.667% { animation-timing-function: ease-out; opacity: 1; }
+	50%     { opacity: 0; }
+	100%    { opacity: 0; }
+}
+
+@keyframes frase-a-slide {
+	0%     { animation-timing-function: ease-out; translate: 0 30px; }
+	8.333% { translate: 0 0; }
+	100%   { translate: 0 0; }
+}
+
+@keyframes frase-b-opacidade {
+	0%      { opacity: 0; }
+	52.85%  { animation-timing-function: ease-out; opacity: 0; }
+	61.183% { opacity: 1; }
+	100%    { opacity: 1; }
+}
+
+@keyframes frase-b-slide {
+	0%      { translate: 0 30px; }
+	52.85%  { animation-timing-function: ease-out; translate: 0 30px; }
+	61.183% { translate: 0 0; }
+	100%    { translate: 0 0; }
+}
+
+@keyframes frase-destaque-cor {
+	0%      { animation-timing-function: step-end; color: var(--cor-texto); }
+	62.067% { animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1); color: var(--cor-texto); }
+	71.45%  { color: #3551f2; }
+	100%    { color: #3551f2; }
+}
+
+/* Acessibilidade: sem animação — exibe apenas a frase A estática */
+@media (prefers-reduced-motion: reduce) {
+	.frase__texto--a,
+	.frase__texto--b,
+	.frase__destaque {
+		animation: none;
+	}
+
+	.frase__texto--b {
+		display: none;
+	}
 }
 
 /* ==========================================================================

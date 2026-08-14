@@ -287,7 +287,9 @@ function cliconnect_acf_fields_home() {
 
 	/* --- 13. FRASE ------------------------------------------------------- */
 	$fields[] = cliconnect_acf_tab( 'frase', '13 · Frase de impacto' );
-	$fields[] = cliconnect_acf_text( 'frase_texto', 'Frase', 'frase_texto' );
+	$fields[] = cliconnect_acf_text( 'frase_texto',    'Frase A',    'frase_texto' );
+	$fields[] = cliconnect_acf_text( 'frase_texto_b',  'Frase B (prefixo)',  'frase_texto_b' );
+	$fields[] = cliconnect_acf_text( 'frase_destaque', 'Frase B (destaque em azul)', 'frase_destaque' );
 
 	/* --- 14. SUPORTE ----------------------------------------------------- */
 	$fields[] = cliconnect_acf_tab( 'suporte', '14 · Suporte' );
