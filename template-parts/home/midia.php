@@ -20,7 +20,7 @@ $invertida = ! empty( $args['invertida'] );
 $eyebrow = cliconnect_campo( "midia_{$indice}_eyebrow" );
 $titulo  = cliconnect_campo( "midia_{$indice}_titulo" );
 $texto   = cliconnect_campo( "midia_{$indice}_texto" );
-$imagem  = cliconnect_campo_imagem( "midia_{$indice}_imagem", 'large', array( 'alt' => '' ) );
+$imagem  = cliconnect_campo_imagem( "midia_{$indice}_imagem", 'large' );
 
 $topicos = cliconnect_lista_numerada( "midia_{$indice}_topico_%d", 3 );
 

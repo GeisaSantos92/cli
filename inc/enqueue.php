@@ -168,8 +168,9 @@ add_filter( 'script_loader_tag', 'cliconnect_defer_script', 10, 2 );
  */
 function cliconnect_preload_fonts() {
 	$fontes = array(
-		'/assets/fonts/inter-400_700-latin.woff2',
-		'/assets/fonts/rajdhani-600-latin.woff2',
+		'/assets/fonts/inter-400_700-latin.woff2',    // corpo do texto
+		'/assets/fonts/rajdhani-600-latin.woff2',     // títulos (H1, H2) — LCP font
+		'/assets/fonts/mona-sans-600-latin.woff2',    // eyebrow above-the-fold
 	);
 
 	foreach ( $fontes as $fonte ) {
