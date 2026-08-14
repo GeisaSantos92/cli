@@ -113,10 +113,24 @@ function cliconnect_imagem_tema( $arquivo, $atributos = array() ) {
 			$valor = '';
 		}
 
-		$html .= ' ' . esc_attr( $nome ) . '="' . esc_attr( $valor ) . '"';
+		$html .= ' ' . esc_attr( $nome ) . '="' . esc_attr( (string) $valor ) . '"';
 	}
 
-	return $html . '>';
+	$img = $html . '>';
+
+	// Serve versão WebP quando existe um .webp correspondente ao lado do PNG/JPG.
+	$webp_relativo = (string) preg_replace( '/\.(png|jpe?g)$/i', '.webp', $relativo );
+	if (
+		$webp_relativo !== $relativo
+		&& file_exists( get_theme_file_path( $webp_relativo ) )
+	) {
+		return '<picture>'
+			. '<source type="image/webp" srcset="' . esc_url( get_theme_file_uri( $webp_relativo ) ) . '">'
+			. $img
+			. '</picture>';
+	}
+
+	return $img;
 }
 
 /**

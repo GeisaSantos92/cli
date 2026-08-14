@@ -38,7 +38,7 @@ $titulo  = cliconnect_campo( 'eventos_titulo' );
 
 					<?php if ( has_post_thumbnail( $evento->ID ) ) : ?>
 						<div class="evento-card__imagem">
-							<?php echo cliconnect_thumb( $evento->ID, 'large', array( 'alt' => '' ) ); ?>
+							<?php echo cliconnect_thumb( $evento->ID, 'large', array( 'alt' => get_the_title( $evento ) ) ); ?>
 						</div>
 					<?php endif; ?>
 

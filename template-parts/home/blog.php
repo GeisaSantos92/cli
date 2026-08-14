@@ -47,7 +47,7 @@ $link   = cliconnect_campo( 'blog_link', array() );
 				<article class="card">
 					<?php if ( has_post_thumbnail( $artigo->ID ) ) : ?>
 						<a class="card__media" href="<?php echo esc_url( get_permalink( $artigo ) ); ?>">
-							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => '' ) ); ?>
+							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => get_the_title( $artigo ) ) ); ?>
 						</a>
 					<?php endif; ?>
 
