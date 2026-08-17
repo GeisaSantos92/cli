@@ -116,6 +116,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página CLI Signature.
+	if ( cliconnect_e_pagina( 'cli-signature' ) ) {
+		wp_enqueue_style(
+			'cliconnect-cli-signature',
+			get_theme_file_uri( '/assets/css/page-cli-signature.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-cli-signature.css' )
+		);
+	}
+
 	// Página CLI Connect.
 	if ( cliconnect_e_pagina( 'cli-connect' ) ) {
 		wp_enqueue_style(

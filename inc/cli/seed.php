@@ -83,6 +83,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo CLI Connect…' );
 		$this->preencher_cli_connect( $paginas['cli-connect'] );
 
+		WP_CLI::log( '— Preenchendo CLI Signature…' );
+		$this->preencher_cli_signature( $paginas['cli-signature'] );
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas );
 
@@ -249,7 +252,7 @@ class Cliconnect_Seed {
 	 */
 	protected function titulo_da_midia( $nome ) {
 		$base = pathinfo( $nome, PATHINFO_FILENAME );
-		$base = preg_replace( '/^(cliente|integracao|selo|evento|case|midia|logo|boomi|suporte|blog|cc)-/', '', $base );
+		$base = preg_replace( '/^(cliente|integracao|selo|evento|case|midia|logo|boomi|suporte|blog|cc|cs)-/', '', $base );
 
 		return ucwords( str_replace( '-', ' ', $base ) );
 	}
@@ -1785,6 +1788,140 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  cli-connect: %d campos preenchidos.', count( $campos ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF da página CLI Signature.
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_cli_signature( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-cli-signature.php' );
+
+		$campos = array(
+			// 1. Hero.
+			'cs_hero_eyebrow' => 'CLI SIGNATURE',
+			'cs_hero_titulo'  => 'Projetos críticos exigem mais do que execução. Exigem assinatura.',
+			'cs_hero_texto'   => 'A modalidade premium da CLI Connect para empresas que operam projetos críticos com especialistas dedicados, governança executiva e acompanhamento contínuo.',
+			'cs_hero_botao'   => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'cs_hero_bg'      => $this->img( 'cs-hero-bg' ),
+
+			// 2. Para quem (Cenários).
+			'cs_cenarios_eyebrow' => 'Quando o desafio exige mais',
+			'cs_cenarios_titulo'  => 'Para quem é o CLI Signature?',
+			'cs_cenarios_texto'   => 'Ideal para empresas em cenários de alta complexidade que exigem acompanhamento especializado.',
+
+			'cs_cenarios_1_titulo' => 'Transformação Digital',
+			'cs_cenarios_1_texto'  => 'Modernização de arquitetura, substituição de legados, novos canais digitais e jornadas omnichannel.',
+
+			'cs_cenarios_2_titulo' => 'Integrações Críticas',
+			'cs_cenarios_2_texto'  => 'SAP, Salesforce, Totvs, ERPs, CRMs, e-commerce, fiscal, dados, APIs e plataformas de negócio.',
+
+			'cs_cenarios_3_titulo' => 'Ambientes Complexos',
+			'cs_cenarios_3_texto'  => 'Integrações que precisam funcionar com estabilidade, rastreabilidade e suporte contínuo.',
+
+			'cs_cenarios_4_titulo' => 'Múltiplos Stakeholders',
+			'cs_cenarios_4_texto'  => 'TI, negócio, fornecedores, consultorias, squads internos e áreas executivas.',
+
+			'cs_cenarios_5_titulo' => 'Iniciativas Estratégicas',
+			'cs_cenarios_5_texto'  => 'Roadmap, priorização, gestão de riscos, arquitetura, SLA e comunicação executiva.',
+
+			'cs_cenarios_6_titulo' => 'Operações de Missão Crítica',
+			'cs_cenarios_6_texto'  => 'Processos que não podem sofrer interrupções e exigem monitoramento, governança e resposta rápida.',
+
+			// 3. Pilares.
+			'cs_pilares_eyebrow' => 'modelo enterprise',
+			'cs_pilares_titulo'  => 'A experiência enterprise da CLI Connect',
+			'cs_pilares_texto'   => 'O CLI Signature amplia a experiência da CLI Connect com uma camada dedicada de governança, atendimento executivo e evolução contínua para operações estratégicas.',
+
+			'cs_pilares_1_imagem' => $this->img( 'cs-pilar-1' ),
+			'cs_pilares_1_titulo' => 'Excelência Técnica CLI',
+			'cs_pilares_1_texto'  => 'Especialistas em Integrações, APIs, Dados, IA, iPaaS, Salesforce, SAP, ERPs, Fiscal e plataformas corporativas.',
+
+			'cs_pilares_2_imagem' => $this->img( 'cs-pilar-2' ),
+			'cs_pilares_2_titulo' => 'Governança Executiva',
+			'cs_pilares_2_texto'  => 'Rituais periódicos, indicadores, acompanhamento estratégico e evolução planejada.',
+
+			'cs_pilares_3_imagem' => $this->img( 'cs-pilar-3' ),
+			'cs_pilares_3_titulo' => 'Acompanhamento Exclusivo',
+			'cs_pilares_3_texto'  => 'Gestor de Projeto/Relacionamento e Arquiteto dedicados para garantir decisões técnicas sólidas e alinhadas ao negócio.',
+
+			// 4. Diferenciais.
+			'cs_diferenciais_titulo_1' => 'Mais do que uma plataforma.',
+			'cs_diferenciais_titulo_2' => 'Uma operação continuamente acompanhada.',
+			'cs_diferenciais_texto'    => 'O CLI Signature amplia a experiência da CLI Connect com uma camada dedicada de governança, atendimento executivo e evolução contínua para operações estratégicas.',
+
+			'cs_diferenciais_1_titulo' => 'Especialistas dedicados',
+			'cs_diferenciais_1_texto'  => 'Profissionais acompanhando sua operação de forma próxima.',
+
+			'cs_diferenciais_2_titulo' => 'Governança executiva',
+			'cs_diferenciais_2_texto'  => 'Reuniões, indicadores e evolução planejada.',
+
+			'cs_diferenciais_3_titulo' => 'Atendimento prioritário',
+			'cs_diferenciais_3_texto'  => 'Fluxos exclusivos para demandas críticas.',
+
+			'cs_diferenciais_4_titulo' => 'Evolução contínua',
+			'cs_diferenciais_4_texto'  => 'Novas integrações e melhorias fazem parte do serviço.',
+
+			'cs_diferenciais_5_titulo' => 'Monitoramento',
+			'cs_diferenciais_5_texto'  => 'Visibilidade constante sobre toda a operação.',
+
+			'cs_diferenciais_6_titulo' => 'Excelência operacional',
+			'cs_diferenciais_6_texto'  => 'Boas práticas desde a arquitetura até a sustentação.',
+
+			// 7. Operação Gerenciada.
+			'cs_operacao_eyebrow'  => 'Operação Gerenciada',
+			'cs_operacao_titulo_1' => 'Garanta uma operação contínua',
+			'cs_operacao_titulo_2' => 'e preparada para evoluir',
+			'cs_operacao_texto'    => 'Conte com uma operação estruturada para sustentar, monitorar e evoluir continuamente seu ambiente, com SLA acordado, governança operacional e processos definidos para garantir mais previsibilidade e eficiência.',
+
+			'cs_operacao_1_titulo' => 'Catálogo de Serviços',
+			'cs_operacao_1_texto'  => 'Tenha um atendimento estruturado com SLA acordado, priorização por criticidade e gestão organizada das demandas.',
+
+			'cs_operacao_2_titulo' => 'Gestão de Incidentes',
+			'cs_operacao_2_texto'  => 'Resolva ocorrências com agilidade, rastreabilidade e indicadores que proporcionam visibilidade sobre o atendimento.',
+
+			'cs_operacao_3_titulo' => 'Melhorias Evolutivas',
+			'cs_operacao_3_texto'  => 'Evolua continuamente seu ambiente com monitoramento operacional, melhorias planejadas e uma base de conhecimento sempre atualizada.',
+
+			'cs_operacao_4_titulo' => 'Documentação',
+			'cs_operacao_4_texto'  => 'Mantenha uma documentação técnica completa e uma base de conhecimento organizada para garantir continuidade e padronização operacional.',
+
+			// 5. Gestor de Projeto.
+			'cs_gestor_titulo'   => 'Gestor de Projeto e Relacionamento Dedicado',
+			'cs_gestor_texto'    => 'Tenha um ponto focal exclusivo para acompanhar a jornada do seu cliente. Organize prioridades, conduza ritos de governança com maestria e garanta uma comunicação clara e fluida entre negócio, tecnologia e operação.',
+			'cs_gestor_botao'    => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'cs_gestor_1_titulo' => 'Acompanhamento do Roadmap',
+			'cs_gestor_2_titulo' => 'Governança de Backlog',
+			'cs_gestor_3_titulo' => 'Reuniões Executivas e Operacionais',
+			'cs_gestor_4_titulo' => 'Gestão de Prioridades',
+			'cs_gestor_5_titulo' => 'Comunicação com Stakeholders',
+			'cs_gestor_6_titulo' => 'Acompanhamento de SLA e Indicadores',
+			'cs_gestor_7_titulo' => 'Plano de Evolução Contínua',
+
+			// 6. Arquiteto Dedicado.
+			'cs_arquiteto_titulo'   => 'Arquiteto Dedicado',
+			'cs_arquiteto_texto'    => 'Um especialista sênior responsável por garantir que as decisões técnicas estejam alinhadas à estratégia, escalabilidade, segurança e evolução da empresa.',
+			'cs_arquiteto_botao'    => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'cs_arquiteto_1_titulo' => 'Desenho de Arquitetura',
+			'cs_arquiteto_2_titulo' => 'Revisão Técnica de Soluções',
+			'cs_arquiteto_3_titulo' => 'Definição de Padrões',
+			'cs_arquiteto_4_titulo' => 'Apoio em Decisões Críticas',
+			'cs_arquiteto_5_titulo' => 'Estratégia de APIs e Integrações',
+			'cs_arquiteto_6_titulo' => 'Avaliação de Riscos Técnicos',
+			'cs_arquiteto_7_titulo' => 'Roadmap de Modernização',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+
+		WP_CLI::log( sprintf( '  cli-signature: %d campos preenchidos.', count( $campos ) ) );
 	}
 
 	/**

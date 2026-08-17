@@ -1,0 +1,722 @@
+/* ==========================================================================
+   CLI Signature — Estilos da página de produto.
+
+   Enfileirado por contexto: só carrega em cliconnect_e_pagina('cli-signature').
+   Tokens de cor/tipo/layout vêm de theme.css (--cor-*, --fonte-*, --tam-*).
+   ========================================================================== */
+
+/* --- Hero ------------------------------------------------------------------ */
+
+.cs-hero {
+	position: relative;
+	overflow: hidden;
+	background-color: #040f23;
+}
+
+/* Foto de fundo — cobre a seção inteira, sujeito posicionado à direita. */
+.cs-hero__bg {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.cs-hero__bg-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: right center;
+}
+
+/* Gradiente que escurece a esquerda e protege a legibilidade do texto. */
+.cs-hero__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to right, #040f23 22%, transparent 65%);
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Grid de 2 colunas: texto | espaço livre (área onde fica a foto). */
+.cs-hero__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 80px;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	min-height: 460px;
+	padding-block: 40px;
+}
+
+.cs-hero__conteudo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.cs-hero__eyebrow {
+	margin-bottom: 16px;
+}
+
+.cs-hero__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto-clara);
+	margin: 0 0 16px;
+	width: 100%;
+}
+
+.cs-hero__texto {
+	font-size: var(--tam-body-lg);
+	line-height: 1.6;
+	color: var(--cor-texto-clara-suave);
+	margin: 0;
+	width: 100%;
+}
+
+.cs-hero__acoes {
+	margin-top: 60px;
+}
+
+/* Coluna direita — placeholder vazio; a foto de fundo preenche visualmente. */
+.cs-hero__imagem {
+	aspect-ratio: 1 / 1;
+	border-radius: var(--raio-card);
+}
+
+/* --- Cenários (Para quem?) -------------------------------------------------- */
+
+.cs-cenarios {
+	background: var(--cor-fundo-suave);
+}
+
+.cs-cenarios__header {
+	text-align: center;
+	margin-bottom: 80px;
+}
+
+.cs-cenarios__eyebrow {
+	margin-bottom: 16px;
+}
+
+.cs-cenarios__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+}
+
+.cs-cenarios__subtitulo {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: 0;
+}
+
+.cs-cenarios__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	column-gap: 80px;
+	row-gap: 40px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Card individual */
+.cs-card-cenario {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	padding-bottom: 17px;
+	border-bottom: 1px solid var(--cor-borda);
+}
+
+/* Círculo do ícone */
+.cs-card-cenario__icone-wrap {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 1px solid var(--cor-borda);
+	background:
+		linear-gradient(to top, rgba(157, 186, 254, 0.4), transparent),
+		#fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--cor-primaria);
+}
+
+.cs-card-cenario__corpo {
+	flex: 1;
+	min-width: 0;
+}
+
+.cs-card-cenario__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--cor-texto);
+	margin: 0 0 4px;
+	min-height: 32px;
+	display: flex;
+	align-items: center;
+}
+
+.cs-card-cenario__texto {
+	font-size: var(--tam-body-sm);
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+/* --- Pilares (experiência enterprise) --------------------------------------- */
+
+.cs-pilares {
+	background: var(--cor-fundo-suave);
+	padding-top: var(--secao-espacamento);
+	padding-bottom: 80px;
+}
+
+.cs-pilares__header {
+	text-align: center;
+	max-width: 710px;
+	margin-inline: auto;
+	padding-bottom: 64px;
+}
+
+.cs-pilares__eyebrow {
+	margin-bottom: 16px;
+}
+
+.cs-pilares__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+}
+
+.cs-pilares__subtitulo {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+.cs-pilares__grid {
+	display: flex;
+	gap: 32px;
+	align-items: flex-start;
+}
+
+/* Card */
+.cs-pilar-card {
+	flex: 1;
+	min-width: 0;
+	background: #fff;
+	border: 1.2px solid var(--cor-borda-sutil);
+	border-radius: 9.6px;
+	box-shadow: 2px 6px 10px -5px rgba(14, 52, 94, 0.1);
+	overflow: hidden;
+}
+
+.cs-pilar-card__imagem {
+	aspect-ratio: 596 / 447;
+	overflow: hidden;
+}
+
+.cs-pilar-card__img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.cs-pilar-card__corpo {
+	padding: 24px;
+}
+
+.cs-pilar-card__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--cor-texto);
+	margin: 0 0 12px;
+}
+
+.cs-pilar-card__texto {
+	font-size: var(--tam-body-sm);
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+/* --- Diferenciais (Mais do que uma plataforma) ------------------------------ */
+
+.cs-diferenciais {
+	/* Fundo azul-claro que desvanece para branco na base, fiel ao Figma. */
+	background: linear-gradient(to bottom, var(--cor-fundo-suave) 67%, #fff 100%);
+	padding-top: 80px;
+	padding-bottom: var(--secao-espacamento);
+}
+
+.cs-diferenciais__inner {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.cs-diferenciais__header {
+	text-align: center;
+}
+
+.cs-diferenciais__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+}
+
+.cs-diferenciais__titulo-linha {
+	display: block;
+}
+
+.cs-diferenciais__subtitulo {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+.cs-diferenciais__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Card */
+.cs-dif-card {
+	background: #fff;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	padding: 33px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+/* Ícone — quadrado azul com gradiente + ícone branco */
+.cs-dif-card__icone-wrap {
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	border: 1px solid var(--cor-borda);
+	background:
+		linear-gradient(to top, rgba(157, 186, 254, 0.4), transparent),
+		var(--cor-primaria);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: #fff;
+	margin-bottom: 0;
+}
+
+.cs-dif-card__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--cor-texto);
+	margin: 24px 0 8px;
+}
+
+.cs-dif-card__texto {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	margin: 0;
+}
+
+/* --- Selos (Compliance & Segurança) ---------------------------------------- */
+
+.cs-selos {
+	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 160px;
+}
+
+.cs-selos__inner {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	align-items: center;
+}
+
+.cs-selos__header {
+	text-align: center;
+	max-width: 728px;
+}
+
+.cs-selos__eyebrow {
+	margin-bottom: 16px;
+}
+
+.cs-selos__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+}
+
+.cs-selos__subtitulo {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: #566f9d;
+	margin: 0;
+}
+
+/* Card container branco com borda e cantos arredondados */
+.cs-selos__card {
+	background: #fff;
+	border: 1px solid var(--cor-borda);
+	border-radius: 24px;
+	overflow: hidden;
+	width: 100%;
+	max-width: 1060px;
+}
+
+.cs-selos__grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Bordas internas entre células */
+.cs-selo-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 16px;
+	border-right: 1px solid rgba(39, 62, 128, 0.1);
+	border-bottom: 1px solid rgba(39, 62, 128, 0.1);
+}
+
+/* Remove borda direita da última coluna */
+.cs-selo-item:nth-child(5n) {
+	border-right: none;
+}
+
+/* Remove borda inferior da última linha */
+.cs-selos__grid:has(.cs-selo-item:nth-child(6)) .cs-selo-item:nth-child(n+6),
+.cs-selos__grid:not(:has(.cs-selo-item:nth-child(6))) .cs-selo-item {
+	border-bottom: none;
+}
+
+.cs-selo-item img {
+	max-height: 96px;
+	width: auto;
+	max-width: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+/* --- Operação Gerenciada ---------------------------------------------------- */
+
+.cs-operacao {
+	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 80px;
+}
+
+.cs-operacao__inner {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.cs-operacao__header {
+	text-align: center;
+}
+
+.cs-operacao__eyebrow {
+	margin-bottom: 16px;
+}
+
+.cs-operacao__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+}
+
+.cs-operacao__titulo-linha {
+	display: block;
+}
+
+.cs-operacao__subtitulo {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: 0 auto;
+	max-width: 820px;
+}
+
+.cs-operacao__grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Card */
+.cs-op-card {
+	background: #fff;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	padding: 33px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.cs-op-card__icone-wrap {
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	border: 1px solid var(--cor-borda);
+	background:
+		linear-gradient(to top, rgba(157, 186, 254, 0.4), transparent),
+		var(--cor-primaria);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: #fff;
+}
+
+.cs-op-card__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--cor-texto);
+	margin: 24px 0 8px;
+}
+
+.cs-op-card__texto {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: #566f9d;
+	margin: 0;
+}
+
+/* --- Gestor / Arquiteto (cs-especialista) ----------------------------------- */
+
+.cs-especialista--gestor {
+	padding-top: 120px;
+	padding-bottom: 80px;
+}
+
+.cs-especialista--arquiteto {
+	padding-top: 80px;
+	padding-bottom: 120px;
+}
+
+.cs-especialista__inner {
+	display: flex;
+	gap: 120px;
+	align-items: flex-start;
+}
+
+.cs-especialista__conteudo {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.cs-especialista__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0 0 16px;
+	width: 100%;
+}
+
+.cs-especialista__texto {
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: #566f9d;
+	margin: 0;
+	width: 100%;
+}
+
+.cs-especialista__acoes {
+	padding-top: 60px;
+	width: 100%;
+}
+
+.cs-especialista__lista {
+	flex: 1;
+	min-width: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+/* Item numerado */
+.cs-especialista-item {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+	padding-bottom: 25px;
+	border-bottom: 1px solid rgba(39, 62, 128, 0.1);
+}
+
+.cs-especialista-item__num {
+	font-family: var(--fonte-titulo);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: #566f9d;
+	width: 32px;
+	flex-shrink: 0;
+}
+
+.cs-especialista-item__titulo {
+	font-family: var(--fonte-base);
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: #003187;
+	margin: 0;
+	flex: 1;
+	min-width: 0;
+}
+
+/* --- Responsivo ------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.cs-operacao__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cs-especialista__inner {
+		flex-direction: column;
+		gap: 60px;
+	}
+
+	.cs-especialista__lista {
+		width: 100%;
+	}
+
+	.cs-diferenciais__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.cs-pilares__grid {
+		flex-wrap: wrap;
+	}
+
+	.cs-pilar-card {
+		flex: 1 1 calc(50% - 16px);
+	}
+
+	.cs-hero__inner {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+
+	.cs-hero__imagem {
+		display: none;
+	}
+
+	/* Em telas menores o gradiente desce de cima para não cortar o rosto. */
+	.cs-hero__overlay {
+		background: linear-gradient(to bottom, #040f23 55%, rgba(4, 15, 35, 0.7));
+	}
+
+	.cs-cenarios__grid {
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 40px;
+	}
+}
+
+@media (max-width: 640px) {
+	.cs-especialista--gestor {
+		padding-top: 80px;
+		padding-bottom: 60px;
+	}
+
+	.cs-especialista--arquiteto {
+		padding-top: 60px;
+		padding-bottom: 80px;
+	}
+
+	.cs-especialista__acoes .botao {
+		width: 100%;
+	}
+
+
+	.cs-diferenciais__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cs-pilares__grid {
+		flex-direction: column;
+	}
+
+	.cs-pilar-card {
+		flex: 1 1 100%;
+	}
+
+	.cs-hero__acoes {
+		margin-top: 40px;
+	}
+
+	.cs-hero__acoes .botao {
+		width: 100%;
+	}
+
+	.cs-cenarios__grid {
+		grid-template-columns: 1fr;
+	}
+}

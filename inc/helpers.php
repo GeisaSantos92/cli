@@ -21,13 +21,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return mixed
  */
 function cliconnect_campo( $nome, $padrao = '' ) {
-	static $home_id = null;
-
-	if ( null === $home_id ) {
-		$home_id = (int) get_option( 'page_on_front' );
+	if ( ! function_exists( 'get_field' ) ) {
+		return $padrao;
 	}
 
-	if ( ! $home_id || ! function_exists( 'get_field' ) ) {
+	/*
+	 * get_option('page_on_front') pode vir do cache do WP com o ID da versão PT
+	 * mesmo quando o Polylang já definiu o idioma como EN — o filtro chega tarde.
+	 * Solução: parte do ID base (PT) e pede ao Polylang a tradução do idioma atual.
+	 */
+	$home_id = (int) get_option( 'page_on_front' );
+
+	if ( function_exists( 'pll_current_language' ) && function_exists( 'pll_get_post' ) ) {
+		$lang       = pll_current_language();
+		$translated = $lang ? pll_get_post( $home_id, $lang ) : 0;
+		if ( $translated ) {
+			$home_id = $translated;
+		}
+	}
+
+	if ( ! $home_id ) {
 		return $padrao;
 	}
 
