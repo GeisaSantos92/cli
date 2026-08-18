@@ -480,5 +480,51 @@ function cliconnect_acf_fields_cpt() {
 			),
 		)
 	);
+	/* =====================================================================
+	   SOLUÇÃO
+	   ===================================================================== */
+	acf_add_local_field_group(
+		array(
+			'key'            => 'group_cli_solucao',
+			'title'          => 'Dados da Solução',
+			'location'       => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'cli_solucao',
+					),
+				),
+			),
+			'menu_order'     => 0,
+			'position'       => 'normal',
+			'hide_on_screen' => array( 'the_content', 'custom_fields', 'discussion', 'comments' ),
+			'fields'         => array(
+				array(
+					'key'     => 'field_solucao_msg',
+					'label'   => '',
+					'name'    => '',
+					'type'    => 'message',
+					'message' => 'O <strong>logo</strong> da solução é a <em>Imagem destacada</em>. Use PNG/SVG com fundo transparente.',
+				),
+				array(
+					'key'          => 'field_solucao_descricao',
+					'label'        => 'Descrição curta',
+					'name'         => 'solucao_descricao',
+					'type'         => 'textarea',
+					'rows'         => 2,
+					'new_lines'    => '',
+					'instructions' => 'Uma linha exibida no card da listagem.',
+				),
+				array(
+					'key'          => 'field_solucao_url',
+					'label'        => 'Link da página (opcional)',
+					'name'         => 'solucao_url',
+					'type'         => 'url',
+					'instructions' => 'URL da landing page desta solução, se houver.',
+				),
+			),
+		)
+	);
 }
 add_action( 'acf/init', 'cliconnect_acf_fields_cpt' );

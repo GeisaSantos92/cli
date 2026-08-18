@@ -92,8 +92,11 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Contato…' );
 		$this->preencher_contato( $paginas['contato'] );
 
+		WP_CLI::log( '— Criando Soluções (taxonomia)…' );
+		$termos_solucao = $this->criar_solucoes();
+
 		WP_CLI::log( '— Montando menus…' );
-		$this->criar_menus( $paginas );
+		$this->criar_menus( $paginas, $termos_solucao );
 
 		WP_CLI::log( '— Ajustando o Customizer…' );
 		$this->configurar_customizer();
@@ -133,6 +136,23 @@ class Cliconnect_Seed {
 			if ( $menu ) {
 				wp_delete_nav_menu( $menu->term_id );
 			}
+		}
+
+		// Remove termos de taxonomia criados pelo seed.
+		$termos_seed = get_terms(
+			array(
+				'taxonomy'   => 'cli_categoria_solucao',
+				'hide_empty' => false,
+				'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'     => self::META,
+						'compare' => 'EXISTS',
+					),
+				),
+			)
+		);
+		foreach ( $termos_seed as $termo ) {
+			wp_delete_term( $termo->term_id, 'cli_categoria_solucao' );
 		}
 
 		WP_CLI::log( sprintf( '  reset: %d objetos removidos.', count( $ids ) ) );
@@ -946,28 +966,161 @@ class Cliconnect_Seed {
 	}
 
 	/* =====================================================================
+	   SOLUÇÕES (CPT + TAXONOMIA)
+	   ===================================================================== */
+
+	/**
+	 * Cria a hierarquia de termos cli_categoria_solucao e os posts cli_solucao.
+	 *
+	 * Retorna um mapa [chave_interna => term_id] dos termos pai, para que
+	 * criar_menus() possa gerar URLs reais via get_term_link().
+	 *
+	 * @return array<string,int>
+	 */
+	protected function criar_solucoes() {
+		$tax = 'cli_categoria_solucao';
+
+		$hierarquia = array(
+			'tecnologia'     => array(
+				'nome'   => 'Tecnologia',
+				'filhos' => array(
+					'claude'                         => 'Claude',
+					'chatgpt'                        => 'ChatGPT',
+					'sap'                            => 'SAP',
+					'salesforce'                     => 'Salesforce',
+					'totvs-protheus'                 => 'TOTVS Protheus',
+					'sankhya'                        => 'Sankhya',
+					'senior'                         => 'Senior',
+					'dynamics-365'                   => 'Dynamics 365',
+				),
+			),
+			'industria'      => array(
+				'nome'   => 'Indústria',
+				'filhos' => array(
+					'servicos-financeiros'           => 'Serviços Financeiros',
+					'manufatura'                     => 'Manufatura',
+					'logistica-3pl'                  => 'Logística (3PL)',
+					'software-isv'                   => 'Software (ISV)',
+					'varejo'                         => 'Varejo',
+					'hotelaria-e-turismo'            => 'Hotelaria e Turismo',
+					'seguros'                        => 'Seguros',
+				),
+			),
+			'departamento'   => array(
+				'nome'   => 'Departamento',
+				'filhos' => array(
+					'recursos-humanos-rh'            => 'Recursos Humanos (RH)',
+					'operacoes-de-receita-revops'    => 'Operações de Receita (RevOps)',
+					'marketing'                      => 'Marketing',
+					'financeiro'                     => 'Financeiro',
+				),
+			),
+			'nuvem'          => array(
+				'nome'   => 'Nuvem',
+				'filhos' => array(
+					'aws'                            => 'AWS',
+					'google-cloud'                   => 'Google Cloud',
+					'azure'                          => 'Azure',
+				),
+			),
+			'por-iniciativa' => array(
+				'nome'   => 'Por Iniciativa',
+				'filhos' => array(
+					'atualizacao-de-sistemas-legados' => 'Atualização de Sistemas Legados',
+					'pedido-ao-recebimento'           => 'Pedido ao Recebimento',
+					'ia-corporativa'                  => 'IA Corporativa',
+					'compras-ao-pagamento'            => 'Compras ao Pagamento',
+					'jornada-do-colaborador'          => 'Jornada do Colaborador',
+					'soberania-de-dados'              => 'Soberania de Dados',
+					'visao-360-do-cliente'            => 'Visão 360° do Cliente',
+					'modernizacao-de-erp'             => 'Modernização de ERP',
+				),
+			),
+		);
+
+		// Mapa retornado: chave_pai => term_id e chave_filho => term_id.
+		$ids = array();
+
+		foreach ( $hierarquia as $chave_pai => $dados_pai ) {
+			// Termo pai.
+			$existe_pai = term_exists( $dados_pai['nome'], $tax );
+			if ( $existe_pai ) {
+				$pai_id = (int) ( is_array( $existe_pai ) ? $existe_pai['term_id'] : $existe_pai );
+			} else {
+				$ins = wp_insert_term( $dados_pai['nome'], $tax );
+				if ( is_wp_error( $ins ) ) {
+					WP_CLI::warning( "  Categoria \"{$dados_pai['nome']}\": " . $ins->get_error_message() );
+					continue;
+				}
+				$pai_id = (int) $ins['term_id'];
+			}
+			update_term_meta( $pai_id, self::META, $chave_pai );
+			$ids[ $chave_pai ] = $pai_id;
+
+			// Termos filhos + posts.
+			foreach ( $dados_pai['filhos'] as $chave_filho => $nome_filho ) {
+				$existe_filho = term_exists( $nome_filho, $tax, $pai_id );
+				if ( $existe_filho ) {
+					$filho_id = (int) ( is_array( $existe_filho ) ? $existe_filho['term_id'] : $existe_filho );
+				} else {
+					$ins_filho = wp_insert_term( $nome_filho, $tax, array( 'parent' => $pai_id ) );
+					if ( is_wp_error( $ins_filho ) ) {
+						WP_CLI::warning( "  Tipo \"{$nome_filho}\": " . $ins_filho->get_error_message() );
+						continue;
+					}
+					$filho_id = (int) $ins_filho['term_id'];
+				}
+				update_term_meta( $filho_id, self::META, $chave_filho );
+				$ids[ $chave_filho ] = $filho_id;
+
+				// Post cli_solucao para este tipo (stub sem imagem — cliente adiciona depois).
+				$post_id = $this->upsert(
+					'solucao:' . $chave_filho,
+					array(
+						'post_title'  => $nome_filho,
+						'post_type'   => 'cli_solucao',
+						'post_status' => 'publish',
+					)
+				);
+
+				if ( $post_id ) {
+					wp_set_object_terms( $post_id, $filho_id, $tax );
+				}
+			}
+		}
+
+		WP_CLI::log( sprintf( '  soluções: %d categorias, %d tipos.', count( $hierarquia ), count( $ids ) - count( $hierarquia ) ) );
+
+		return $ids;
+	}
+
+	/* =====================================================================
 	   MENUS
 	   ===================================================================== */
 
 	/**
 	 * Cria os três menus do tema e os atribui às locations.
 	 *
-	 * @param array $paginas slug => ID.
+	 * @param array $paginas        slug => ID.
+	 * @param array $termos_solucao chave => term_id dos termos de solução.
 	 * @return void
 	 */
-	protected function criar_menus( $paginas ) {
-		$cases_url = get_post_type_archive_link( 'cli_case' );
-		$blog_url  = get_permalink( (int) get_option( 'page_for_posts' ) );
+	protected function criar_menus( $paginas, $termos_solucao = array() ) {
+		$cases_url     = get_post_type_archive_link( 'cli_case' );
+		$blog_url      = get_permalink( (int) get_option( 'page_for_posts' ) );
+		$solucoes_base = get_post_type_archive_link( 'cli_solucao' ) ?: home_url( '/solucoes/' );
 
-		$solucoes = array(
-			'Tecnologias'                    => '/solucoes/',
-			'Atualização de Sistemas Legados' => '/solucoes/',
-			'IA Corporativa'                 => '/solucoes/',
-			'Portal de APIs e Servidores MCP' => '/solucoes/',
-			'Compras ao Pagamento'           => '/solucoes/',
-			'Visão 360° do Cliente'          => '/solucoes/',
-			'Modernização de ERP'            => '/solucoes/',
-		);
+		/*
+		 * Helper: retorna a URL do termo de taxonomia pelo mapa de IDs.
+		 * Fallback para $solucoes_base se o termo não foi criado.
+		 */
+		$turl = function ( $chave ) use ( $termos_solucao, $solucoes_base ) {
+			if ( empty( $termos_solucao[ $chave ] ) ) {
+				return $solucoes_base;
+			}
+			$link = get_term_link( (int) $termos_solucao[ $chave ], 'cli_categoria_solucao' );
+			return is_wp_error( $link ) ? $solucoes_base : $link;
+		};
 
 		/*
 		 * Soluções no menu principal tem três níveis: os filhos viram os títulos
@@ -977,65 +1130,65 @@ class Cliconnect_Seed {
 		$solucoes_mega = array(
 			array(
 				'titulo' => 'Tecnologia',
-				'url'    => '/solucoes/',
+				'url'    => $turl( 'tecnologia' ),
 				'filhos' => array(
-					'Claude'          => '/solucoes/',
-					'ChatGPT'         => '/solucoes/',
-					'SAP'             => '/solucoes/',
-					'Salesforce'      => '/solucoes/',
-					'TOTVS Protheus'  => '/solucoes/',
-					'Sankhya'         => '/solucoes/',
-					'Senior'          => '/solucoes/',
-					'Dynamics 365'    => '/solucoes/',
+					'Claude'          => $turl( 'claude' ),
+					'ChatGPT'         => $turl( 'chatgpt' ),
+					'SAP'             => $turl( 'sap' ),
+					'Salesforce'      => $turl( 'salesforce' ),
+					'TOTVS Protheus'  => $turl( 'totvs-protheus' ),
+					'Sankhya'         => $turl( 'sankhya' ),
+					'Senior'          => $turl( 'senior' ),
+					'Dynamics 365'    => $turl( 'dynamics-365' ),
 				),
 			),
 			array(
 				'titulo' => 'Indústria',
-				'url'    => '/solucoes/',
+				'url'    => $turl( 'industria' ),
 				'filhos' => array(
-					'Serviços Financeiros' => '/solucoes/',
-					'Manufatura'           => '/solucoes/',
-					'Logística (3PL)'      => '/solucoes/',
-					'Software (ISV)'       => '/solucoes/',
-					'Varejo'               => '/solucoes/',
-					'Hotelaria e Turismo'  => '/solucoes/',
-					'Seguros'              => '/solucoes/',
+					'Serviços Financeiros' => $turl( 'servicos-financeiros' ),
+					'Manufatura'           => $turl( 'manufatura' ),
+					'Logística (3PL)'      => $turl( 'logistica-3pl' ),
+					'Software (ISV)'       => $turl( 'software-isv' ),
+					'Varejo'               => $turl( 'varejo' ),
+					'Hotelaria e Turismo'  => $turl( 'hotelaria-e-turismo' ),
+					'Seguros'              => $turl( 'seguros' ),
 				),
 			),
 			array(
 				'titulo' => 'Departamento',
-				'url'    => '/solucoes/',
+				'url'    => $turl( 'departamento' ),
 				'filhos' => array(
-					'Recursos Humanos (RH)'          => '/solucoes/',
-					'Operações de Receita (RevOps)'  => '/solucoes/',
-					'Marketing'                      => '/solucoes/',
-					'Financeiro'                     => '/solucoes/',
+					'Recursos Humanos (RH)'         => $turl( 'recursos-humanos-rh' ),
+					'Operações de Receita (RevOps)' => $turl( 'operacoes-de-receita-revops' ),
+					'Marketing'                     => $turl( 'marketing' ),
+					'Financeiro'                    => $turl( 'financeiro' ),
 				),
 			),
 			array(
 				'titulo' => 'Nuvem',
-				'url'    => '/solucoes/',
+				'url'    => $turl( 'nuvem' ),
 				'filhos' => array(
-					'AWS'          => '/solucoes/',
-					'Google Cloud' => '/solucoes/',
-					'Azure'        => '/solucoes/',
+					'AWS'          => $turl( 'aws' ),
+					'Google Cloud' => $turl( 'google-cloud' ),
+					'Azure'        => $turl( 'azure' ),
 				),
 			),
 			array(
 				'titulo' => 'Por Iniciativa',
-				'url'    => '/solucoes/',
+				'url'    => $turl( 'por-iniciativa' ),
 				'filhos' => array(
-					'Atualização de Sistemas Legados' => '/solucoes/',
-					'Pedido ao Recebimento'           => '/solucoes/',
-					'IA Corporativa'                  => '/solucoes/',
-					'Compras ao Pagamento'            => '/solucoes/',
-					'Jornada do Colaborador'          => '/solucoes/',
-					'Soberania de Dados'              => '/solucoes/',
-					'Visão 360° do Cliente'           => '/solucoes/',
-					'Modernização de ERP'             => '/solucoes/',
+					'Atualização de Sistemas Legados' => $turl( 'atualizacao-de-sistemas-legados' ),
+					'Pedido ao Recebimento'           => $turl( 'pedido-ao-recebimento' ),
+					'IA Corporativa'                  => $turl( 'ia-corporativa' ),
+					'Compras ao Pagamento'            => $turl( 'compras-ao-pagamento' ),
+					'Jornada do Colaborador'          => $turl( 'jornada-do-colaborador' ),
+					'Soberania de Dados'              => $turl( 'soberania-de-dados' ),
+					'Visão 360° do Cliente'           => $turl( 'visao-360-do-cliente' ),
+					'Modernização de ERP'             => $turl( 'modernizacao-de-erp' ),
 				),
 			),
-			array( 'titulo' => 'Ver todos', 'url' => '/solucoes/' ),
+			array( 'titulo' => 'Ver todos', 'url' => $solucoes_base ),
 		);
 
 		$descricao_produto = 'Integre todos os seus sistemas e coloque agentes de IA personalizados para trabalhar em seus processos.';
@@ -1063,7 +1216,7 @@ class Cliconnect_Seed {
 				),
 				array(
 					'titulo' => 'Soluções',
-					'url'    => '/solucoes/',
+					'url'    => $solucoes_base,
 					'filhos' => $solucoes_mega,
 				),
 				array( 'titulo' => 'Integração SAP', 'url' => '/integracao-sap/' ),
@@ -1104,48 +1257,48 @@ class Cliconnect_Seed {
 						),
 					),
 				),
-				// Coluna 2: Sistemas
+				// Coluna 2: Tecnologia
 				array(
-					'titulo' => 'col-sistemas',
+					'titulo' => 'col-tecnologia',
 					'url'    => '#',
 					'filhos' => array(
 						array(
-							'titulo' => 'Sistemas',
-							'url'    => '/sistemas/',
+							'titulo' => 'Tecnologia',
+							'url'    => $turl( 'tecnologia' ),
 							'filhos' => array(
-								'Claude'         => '/sistemas/',
-								'ChatGPT'        => '/sistemas/',
-								'SAP'            => '/sistemas/',
-								'Salesforce'     => '/sistemas/',
-								'TOTVS Protheus' => '/sistemas/',
-								'Sankhya'        => '/sistemas/',
-								'Senior'         => '/sistemas/',
-								'Dynamics 365'   => '/sistemas/',
+								'Claude'         => $turl( 'claude' ),
+								'ChatGPT'        => $turl( 'chatgpt' ),
+								'SAP'            => $turl( 'sap' ),
+								'Salesforce'     => $turl( 'salesforce' ),
+								'TOTVS Protheus' => $turl( 'totvs-protheus' ),
+								'Sankhya'        => $turl( 'sankhya' ),
+								'Senior'         => $turl( 'senior' ),
+								'Dynamics 365'   => $turl( 'dynamics-365' ),
 								array(
 									'titulo'  => 'Ver todos',
-									'url'     => '/sistemas/',
+									'url'     => $turl( 'tecnologia' ),
 									'classes' => 'link-ver-todos',
 								),
 							),
 						),
 					),
 				),
-				// Coluna 3: Industria
+				// Coluna 3: Indústria
 				array(
 					'titulo' => 'col-industria',
 					'url'    => '#',
 					'filhos' => array(
 						array(
-							'titulo' => 'Industria',
-							'url'    => '/industria/',
+							'titulo' => 'Indústria',
+							'url'    => $turl( 'industria' ),
 							'filhos' => array(
-								'Serviços Financeiros' => '/industria/',
-								'Manufatura'           => '/industria/',
-								'Logística (3PL)'      => '/industria/',
-								'Software (ISV)'       => '/industria/',
-								'Varejo'               => '/industria/',
-								'Hotelaria e Turismo'  => '/industria/',
-								'Seguros'              => '/industria/',
+								'Serviços Financeiros' => $turl( 'servicos-financeiros' ),
+								'Manufatura'           => $turl( 'manufatura' ),
+								'Logística (3PL)'      => $turl( 'logistica-3pl' ),
+								'Software (ISV)'       => $turl( 'software-isv' ),
+								'Varejo'               => $turl( 'varejo' ),
+								'Hotelaria e Turismo'  => $turl( 'hotelaria-e-turismo' ),
+								'Seguros'              => $turl( 'seguros' ),
 							),
 						),
 					),
@@ -1157,43 +1310,42 @@ class Cliconnect_Seed {
 					'filhos' => array(
 						array(
 							'titulo' => 'Departamento',
-							'url'    => '/departamento/',
+							'url'    => $turl( 'departamento' ),
 							'filhos' => array(
-								'Recursos Humanos (RH)'         => '/departamento/',
-								'Operações de Receita (RevOps)' => '/departamento/',
-								'Marketing'                     => '/departamento/',
-								'Financeiro'                    => '/departamento/',
+								'Recursos Humanos (RH)'         => $turl( 'recursos-humanos-rh' ),
+								'Operações de Receita (RevOps)' => $turl( 'operacoes-de-receita-revops' ),
+								'Marketing'                     => $turl( 'marketing' ),
+								'Financeiro'                    => $turl( 'financeiro' ),
 							),
 						),
 						array(
 							'titulo' => 'Nuvem',
-							'url'    => '/nuvem/',
+							'url'    => $turl( 'nuvem' ),
 							'filhos' => array(
-								'AWS'          => '/nuvem/',
-								'Google Cloud' => '/nuvem/',
-								'Azure'        => '/nuvem/',
+								'AWS'          => $turl( 'aws' ),
+								'Google Cloud' => $turl( 'google-cloud' ),
+								'Azure'        => $turl( 'azure' ),
 							),
 						),
 					),
 				),
-				// Coluna 5: Iniciativas
+				// Coluna 5: Por Iniciativa
 				array(
 					'titulo' => 'col-iniciativas',
 					'url'    => '#',
 					'filhos' => array(
 						array(
-							'titulo' => 'Iniciativas',
-							'url'    => '/iniciativas/',
+							'titulo' => 'Por Iniciativa',
+							'url'    => $turl( 'por-iniciativa' ),
 							'filhos' => array(
-								'Atualização de Sistemas Legados'    => '/iniciativas/',
-								'IA Corporativa'                     => '/iniciativas/',
-								'Integração Pós-Fusão'               => '/iniciativas/',
-								'Compras ao Pagamento (S2P)'         => '/iniciativas/',
-								'Pedido ao Recebimento (O2C)'        => '/iniciativas/',
-								'Jornada do Colaborador (H2R)'       => '/iniciativas/',
-								'Soberania de Dados'                 => '/iniciativas/',
-								'Centro de Excelência em Integração' => '/iniciativas/',
-								'Visão 360° do Cliente'              => '/iniciativas/',
+								'Atualização de Sistemas Legados' => $turl( 'atualizacao-de-sistemas-legados' ),
+								'IA Corporativa'                  => $turl( 'ia-corporativa' ),
+								'Compras ao Pagamento'            => $turl( 'compras-ao-pagamento' ),
+								'Pedido ao Recebimento'           => $turl( 'pedido-ao-recebimento' ),
+								'Jornada do Colaborador'          => $turl( 'jornada-do-colaborador' ),
+								'Soberania de Dados'              => $turl( 'soberania-de-dados' ),
+								'Visão 360° do Cliente'           => $turl( 'visao-360-do-cliente' ),
+								'Modernização de ERP'             => $turl( 'modernizacao-de-erp' ),
 							),
 						),
 					),

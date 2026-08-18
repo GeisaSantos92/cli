@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Soluções — Listagem (archive e taxonomy).
+
+   Enfileirado em is_post_type_archive('cli_solucao') e is_tax('cli_categoria_solucao').
+   Tokens de cor/tipo/layout vêm de theme.css.
+   ========================================================================== */
+
+/* --- 1. Layout geral ------------------------------------------------------- */
+
+.sl-listagem {
+	padding-block: 80px 120px;
+	background: var(--cor-fundo-suave);
+}
+
+.sl-listagem__inner {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: 48px;
+	align-items: start;
+}
+
+/* --- 2. Sidebar ------------------------------------------------------------- */
+
+.sl-sidebar {
+	position: sticky;
+	top: 100px;
+	background: var(--cor-fundo);
+	border-radius: var(--raio);
+	padding: 24px;
+}
+
+.sl-sidebar__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	font-weight: 600;
+	color: var(--cor-texto-suave);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin: 0 0 16px;
+}
+
+.sl-sidebar__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.sl-sidebar__grupo {
+	display: flex;
+	flex-direction: column;
+}
+
+.sl-sidebar__filhos {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding-left: 12px;
+	border-left: 2px solid var(--cor-borda);
+	margin: 4px 0 4px 12px;
+}
+
+.sl-sidebar__link {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	text-decoration: none;
+	padding: 6px 8px;
+	border-radius: 4px;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sl-sidebar__link--pai {
+	font-weight: 600;
+	color: var(--cor-texto);
+}
+
+.sl-sidebar__link:hover,
+.sl-sidebar__link:focus-visible {
+	background: var(--cor-fundo-suave);
+	color: var(--cor-primaria);
+}
+
+.sl-sidebar__link--ativo {
+	color: var(--cor-primaria);
+	background: rgba(53, 81, 242, 0.06);
+	font-weight: 600;
+}
+
+/* --- 3. Conteúdo ------------------------------------------------------------ */
+
+.sl-conteudo__cabecalho {
+	margin-bottom: 32px;
+}
+
+.sl-conteudo__voltar {
+	display: inline-block;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	text-decoration: none;
+	margin-bottom: 8px;
+	transition: color 0.15s ease;
+}
+
+.sl-conteudo__voltar:hover {
+	color: var(--cor-primaria);
+}
+
+.sl-conteudo__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	color: var(--cor-texto);
+	margin: 0;
+}
+
+.sl-conteudo__descricao {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto-suave);
+	margin: 12px 0 0;
+	line-height: 1.6;
+}
+
+.sl-conteudo__vazio {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto-suave);
+}
+
+/* --- 4. Grid de cards ------------------------------------------------------- */
+
+.sl-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 16px;
+}
+
+/* --- 5. Card individual ----------------------------------------------------- */
+
+.sl-card {
+	background: var(--cor-fundo);
+	border-radius: var(--raio);
+	overflow: hidden;
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.sl-card:hover {
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	transform: translateY(-2px);
+}
+
+.sl-card__link {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 20px;
+	text-decoration: none;
+}
+
+.sl-card__logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 56px;
+}
+
+.sl-card__logo img {
+	max-height: 48px;
+	max-width: 100%;
+	width: auto;
+	object-fit: contain;
+}
+
+.sl-card__sem-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	background: var(--cor-fundo-suave);
+	border-radius: 8px;
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h5);
+	font-weight: 700;
+	color: var(--cor-primaria);
+	text-transform: uppercase;
+}
+
+.sl-card__nome {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	font-weight: 600;
+	color: var(--cor-texto);
+	margin: 0;
+	text-align: center;
+}
+
+.sl-card__descricao {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-caption);
+	color: var(--cor-texto-suave);
+	margin: 0;
+	line-height: 1.5;
+	text-align: center;
+}
+
+/* --- 6. Responsivo ---------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+	.sl-listagem__inner {
+		grid-template-columns: 220px 1fr;
+		gap: 32px;
+	}
+}
+
+@media (max-width: 768px) {
+	.sl-listagem {
+		padding-block: 48px 80px;
+	}
+
+	.sl-listagem__inner {
+		grid-template-columns: 1fr;
+	}
+
+	.sl-sidebar {
+		position: static;
+	}
+
+	.sl-grid {
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	}
+}

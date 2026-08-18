@@ -181,6 +181,24 @@ function cliconnect_register_post_types() {
 			'rewrite'       => false,
 		)
 	);
+
+	// --- Soluções (catálogo público — tecnologias, segmentos, iniciativas) --
+	register_post_type(
+		'cli_solucao',
+		array(
+			'labels'        => cliconnect_cpt_labels( 'Solução', 'Soluções', 'f' ),
+			'public'        => true,
+			'show_in_rest'  => true,
+			'menu_icon'     => 'dashicons-chart-area',
+			'menu_position' => 28,
+			'supports'      => array( 'title', 'thumbnail', 'excerpt', 'page-attributes' ),
+			'has_archive'   => 'solucoes',
+			'rewrite'       => array(
+				'slug'       => 'solucao',
+				'with_front' => false,
+			),
+		)
+	);
 }
 add_action( 'init', 'cliconnect_register_post_types' );
 
@@ -208,6 +226,32 @@ function cliconnect_register_taxonomies() {
 			'show_admin_column' => true,
 			'hierarchical'      => true,
 			'rewrite'           => false,
+		)
+	);
+
+	// --- Categorias de Solução (hierárquica: Tecnologia > SAP, etc.) --------
+	register_taxonomy(
+		'cli_categoria_solucao',
+		array( 'cli_solucao' ),
+		array(
+			'labels'            => array(
+				'name'          => 'Categorias de Solução',
+				'singular_name' => 'Categoria de Solução',
+				'menu_name'     => 'Categorias',
+				'all_items'     => 'Todas as Categorias',
+				'edit_item'     => 'Editar Categoria',
+				'add_new_item'  => 'Adicionar Categoria',
+				'search_items'  => 'Buscar Categorias',
+			),
+			'public'            => true,
+			'show_in_rest'      => true,
+			'show_admin_column' => true,
+			'hierarchical'      => true,
+			'rewrite'           => array(
+				'slug'         => 'solucoes',
+				'hierarchical' => true,
+				'with_front'   => false,
+			),
 		)
 	);
 
@@ -244,7 +288,7 @@ function cliconnect_admin_order_cpts( $query ) {
 		return;
 	}
 
-	$ordenaveis = array( 'cli_agente', 'cli_integracao', 'cli_cliente', 'cli_evento', 'cli_faq', 'cli_selo' );
+	$ordenaveis = array( 'cli_agente', 'cli_integracao', 'cli_cliente', 'cli_evento', 'cli_faq', 'cli_selo', 'cli_solucao' );
 
 	if ( in_array( $query->get( 'post_type' ), $ordenaveis, true ) && ! $query->get( 'orderby' ) ) {
 		$query->set( 'orderby', 'menu_order title' );
