@@ -95,6 +95,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Criando Soluções (taxonomia)…' );
 		$termos_solucao = $this->criar_solucoes();
 
+		WP_CLI::log( '— Criando páginas de solução…' );
+		$this->criar_paginas_solucao();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1092,6 +1095,107 @@ class Cliconnect_Seed {
 		WP_CLI::log( sprintf( '  soluções: %d categorias, %d tipos.', count( $hierarquia ), count( $ids ) - count( $hierarquia ) ) );
 
 		return $ids;
+	}
+
+	/**
+	 * Cria uma página WordPress (template Solução) para cada item da taxonomia
+	 * e popula o campo solucao_url no post cli_solucao correspondente.
+	 *
+	 * As páginas nascem sem conteúdo (stubs). Os templates-parts têm `return`
+	 * cedo quando os campos ACF estão vazios, então nada é exibido enquanto o
+	 * cliente não preencher. Basta entrar no painel, escolher a página e preencher
+	 * as abas de conteúdo.
+	 *
+	 * @return void
+	 */
+	protected function criar_paginas_solucao() {
+		/*
+		 * chave-seed-cpt => [ slug-da-pagina, Título ]
+		 *
+		 * A chave-seed-cpt deve ser idêntica à usada em criar_solucoes()
+		 * no formato 'solucao:{chave_filho}'.
+		 */
+		$solucoes = array(
+			// Tecnologia
+			'claude'                          => array( 'claude',                          'Claude' ),
+			'chatgpt'                         => array( 'chatgpt',                         'ChatGPT' ),
+			'sap'                             => array( 'sap',                             'SAP' ),
+			'salesforce'                      => array( 'salesforce',                      'Salesforce' ),
+			'totvs-protheus'                  => array( 'totvs-protheus',                  'TOTVS Protheus' ),
+			'sankhya'                         => array( 'sankhya',                         'Sankhya' ),
+			'senior'                          => array( 'senior',                          'Senior' ),
+			'dynamics-365'                    => array( 'dynamics-365',                    'Dynamics 365' ),
+			// Indústria
+			'servicos-financeiros'            => array( 'servicos-financeiros',            'Serviços Financeiros' ),
+			'manufatura'                      => array( 'manufatura',                      'Manufatura' ),
+			'logistica-3pl'                   => array( 'logistica-3pl',                   'Logística (3PL)' ),
+			'software-isv'                    => array( 'software-isv',                    'Software (ISV)' ),
+			'varejo'                          => array( 'varejo',                          'Varejo' ),
+			'hotelaria-e-turismo'             => array( 'hotelaria-e-turismo',             'Hotelaria e Turismo' ),
+			'seguros'                         => array( 'seguros',                         'Seguros' ),
+			// Departamento
+			'recursos-humanos-rh'             => array( 'recursos-humanos',                'Recursos Humanos' ),
+			'operacoes-de-receita-revops'     => array( 'revops',                          'Operações de Receita (RevOps)' ),
+			'marketing'                       => array( 'marketing-solucao',               'Marketing' ),
+			'financeiro'                      => array( 'financeiro-solucao',              'Financeiro' ),
+			// Nuvem
+			'aws'                             => array( 'aws',                             'AWS' ),
+			'google-cloud'                    => array( 'google-cloud',                    'Google Cloud' ),
+			'azure'                           => array( 'azure',                           'Azure' ),
+			// Por Iniciativa
+			'atualizacao-de-sistemas-legados' => array( 'atualizacao-de-sistemas-legados', 'Atualização de Sistemas Legados' ),
+			'pedido-ao-recebimento'           => array( 'pedido-ao-recebimento',           'Pedido ao Recebimento' ),
+			'ia-corporativa'                  => array( 'ia-corporativa',                  'IA Corporativa' ),
+			'compras-ao-pagamento'            => array( 'compras-ao-pagamento',            'Compras ao Pagamento' ),
+			'jornada-do-colaborador'          => array( 'jornada-do-colaborador',          'Jornada do Colaborador' ),
+			'soberania-de-dados'              => array( 'soberania-de-dados',              'Soberania de Dados' ),
+			'visao-360-do-cliente'            => array( 'visao-360-do-cliente',            'Visão 360° do Cliente' ),
+			'modernizacao-de-erp'             => array( 'modernizacao-de-erp',             'Modernização de ERP' ),
+		);
+
+		$criadas = 0;
+
+		foreach ( $solucoes as $chave_cpt => $dados ) {
+			list( $slug_pagina, $titulo ) = $dados;
+
+			// Cria (ou recupera) a página stub.
+			$page_id = $this->upsert(
+				'pagina:solucao-' . $chave_cpt,
+				array(
+					'post_type'    => 'page',
+					'post_title'   => $titulo,
+					'post_name'    => $slug_pagina,
+					'post_content' => '',
+				)
+			);
+
+			if ( ! $page_id ) {
+				continue;
+			}
+
+			// Aplica o template de solução.
+			update_post_meta( $page_id, '_wp_page_template', 'page-solucao.php' );
+
+			// Vincula o post CPT à landing page via campo ACF solucao_url.
+			$cpt_posts = get_posts(
+				array(
+					'post_type'      => 'cli_solucao',
+					'post_status'    => 'publish',
+					'posts_per_page' => 1,
+					'fields'         => 'ids',
+					'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'     => 'solucao:' . $chave_cpt, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				)
+			);
+
+			if ( $cpt_posts ) {
+				update_field( 'solucao_url', get_permalink( $page_id ), $cpt_posts[0] );
+			}
+
+			++$criadas;
+		}
+
+		WP_CLI::log( sprintf( '  páginas de solução: %d criadas/atualizadas.', $criadas ) );
 	}
 
 	/* =====================================================================
