@@ -95,6 +95,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Criando Soluções (taxonomia)…' );
 		$termos_solucao = $this->criar_solucoes();
 
+		WP_CLI::log( '— Preenchendo Salesforce…' );
+		$this->preencher_solucao_salesforce();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -217,7 +220,16 @@ class Cliconnect_Seed {
 			return;
 		}
 
-		$arquivos = glob( $dir . '/*.{png,jpg,jpeg}', GLOB_BRACE );
+		// Permite SVG no contexto WP-CLI (seed apenas).
+		add_filter(
+			'upload_mimes',
+			static function ( $mimes ) {
+				$mimes['svg'] = 'image/svg+xml';
+				return $mimes;
+			}
+		);
+
+		$arquivos = glob( $dir . '/*.{png,jpg,jpeg,svg}', GLOB_BRACE );
 		$novos    = 0;
 
 		foreach ( $arquivos as $arquivo ) {
@@ -2487,6 +2499,257 @@ class Cliconnect_Seed {
 		$url = (string) $url;
 
 		return ( '/' === substr( $url, 0, 1 ) ) ? home_url( $url ) : $url;
+	}
+
+	/* =====================================================================
+	   SOLUÇÕES — LANDING PAGES
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Salesforce".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_salesforce() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:salesforce', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Salesforce: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o seu Salesforce',
+			'solucao_hero_titulo'          => 'Salesforce sem barreiras.',
+			'solucao_hero_titulo_destaque' => 'Integração sem limites.',
+			'solucao_hero_corpo'           => 'Conecte o Salesforce a qualquer ERP ou banco de dados com flexibilidade total e elimine os limites da sua arquitetura de dados.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/salesforce/',
+			'solucao_hero_imagem'          => $this->img( 'salesforce-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_pilares_1_icone'  => $this->img( 'salesforce-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Fluxos de aprovação automatizados',
+			'solucao_pilares_1_desc'   => 'Dispare fluxos de aprovação automaticamente sempre que houver mudanças no Salesforce',
+			'solucao_pilares_2_icone'  => $this->img( 'salesforce-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Operações em massa auditáveis',
+			'solucao_pilares_2_desc'   => 'Execute operações em massa com rastreabilidade completa, auditoria centralizada e mais segurança para alterações em grande escala.',
+			'solucao_pilares_3_icone'  => $this->img( 'salesforce-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Integração segura com ambientes internos',
+			'solucao_pilares_3_desc'   => 'Conecte o Salesforce aos sistemas internos da empresa sem abrir portas no firewall, preservando a segurança da infraestrutura corporativa.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_salesforce_casos( $post_id );
+		$this->preencher_salesforce_diferencial( $post_id );
+		$this->preencher_salesforce_selos( $post_id );
+		$this->preencher_salesforce_plataforma( $post_id );
+		$this->preencher_salesforce_aceleradores( $post_id );
+		$this->preencher_salesforce_faq( $post_id );
+
+		WP_CLI::log( "  Salesforce preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Diferencial Técnico do Salesforce.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_diferencial( $post_id ) {
+		$campos = array(
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Uma arquitetura preparada para ambientes corporativos',
+			'solucao_dif_corpo'    => 'Independentemente da tecnologia utilizada pela sua empresa, a CLI Connect aplica as melhores práticas de integração para garantir segurança, governança e alta disponibilidade, respeitando as particularidades de cada sistema.',
+			'solucao_dif_topico_1' => 'Suporte completo às APIs REST do Salesforce',
+			'solucao_dif_topico_2' => 'Automatize eventos com a Subscription API.',
+			'solucao_dif_topico_3' => 'Autentique integrações com JWT Bearer Flow.',
+			'solucao_dif_imagem'   => $this->img( 'salesforce-dif' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Selos do Salesforce.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_selos( $post_id ) {
+		$campos = array(
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Aceleradores de Integração do Salesforce.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_aceleradores( $post_id ) {
+		$campos = array(
+			'solucao_acel_eyebrow'  => 'aceleradores de integração',
+			'solucao_acel_titulo'   => 'Modelo pronto para começar',
+			'solucao_acel_corpo'    => 'Utilize um modelo pronto para sincronizar clientes, produtos, pedidos ou oportunidades entre o Salesforce e o ERP.',
+			'solucao_acel_topico_1' => 'Cadastro de clientes',
+			'solucao_acel_topico_2' => 'Sincronização de pedidos',
+			'solucao_acel_topico_3' => 'Atualização de produtos',
+			'solucao_acel_topico_4' => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'  => '',
+			'solucao_acel_imagem'   => $this->img( 'salesforce-aceleradores' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Plataforma Única do Salesforce.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_plataforma( $post_id ) {
+		$campos = array(
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Um único ambiente para conectar todo o ecossistema',
+			'solucao_plat_corpo'    => 'Conecte o Salesforce aos demais sistemas da empresa em uma única plataforma e elimine integrações isoladas, processos manuais e retrabalho à medida que seu ecossistema evolui.',
+			'solucao_plat_topico_1' => 'Centralize todo o seu ecossistema',
+			'solucao_plat_topico_2' => 'Elimine integrações isoladas',
+			'solucao_plat_topico_3' => 'Evolua sem aumentar a complexidade',
+			'solucao_plat_imagem'   => $this->img( 'salesforce-plataforma' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Cria os posts cli_faq do Salesforce e vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sf-apis',
+				'Quais APIs do Salesforce são suportadas?',
+				'<p>A CLI Connect suporta as principais APIs REST do Salesforce, incluindo a REST API, Bulk API, Streaming API (Push Topics) e a Subscription API (Platform Events). A escolha da API é feita de acordo com o volume de dados e a necessidade de eventos em tempo real de cada integração.</p>',
+			),
+			array(
+				'faq:sf-firewall',
+				'É possível integrar o Salesforce a um ERP on-premises sem abrir portas no firewall?',
+				'<p>Sim. A CLI Connect utiliza a Boomi Atom, um agente de integração instalado dentro da rede corporativa que faz a comunicação de saída com a plataforma na nuvem. Não é necessário abrir portas de entrada no firewall, preservando totalmente a segurança da infraestrutura interna.</p>',
+			),
+			array(
+				'faq:sf-mulesoft',
+				'Como a CLI Connect se compara ao MuleSoft?',
+				'<p>A CLI Connect utiliza o Boomi como plataforma de integração, que oferece uma interface low-code, modelo de preço mais previsível e menor custo de operação em comparação ao MuleSoft. Além disso, o modelo gerenciado da CLI Connect inclui a operação, o monitoramento e o suporte continuado, eliminando a necessidade de uma equipe interna dedicada à plataforma.</p>',
+			),
+			array(
+				'faq:sf-atualizacoes',
+				'As integrações continuam funcionando após atualizações do Salesforce?',
+				'<p>Sim. O Salesforce mantém retrocompatibilidade nas suas APIs versionadas, e a CLI Connect acompanha cada release para garantir que as integrações permaneçam estáveis. O time de monitoramento valida os fluxos críticos a cada atualização e aciona o suporte preventivo quando necessário.</p>',
+			),
+			array(
+				'faq:sf-produtos',
+				'Quais produtos Salesforce podem ser integrados?',
+				'<p>É possível integrar Sales Cloud, Marketing Cloud, Service Cloud, Revenue Cloud, Data Cloud e demais soluções da plataforma Salesforce utilizando a mesma arquitetura de integração.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Salesforce FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Casos de Uso do Salesforce.
+	 *
+	 * Chamado dentro de preencher_solucao_salesforce().
+	 *
+	 * @param int $post_id ID do post cli_solucao do Salesforce.
+	 * @return void
+	 */
+	protected function preencher_salesforce_casos( $post_id ) {
+		$campos = array(
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow' => 'casos de uso',
+			'solucao_casos_titulo'  => 'Integrações mais rápidas, seguras e inteligentes',
+
+			'solucao_casos_1_icone'  => $this->img( 'salesforce-caso-1' ),
+			'solucao_casos_1_titulo' => 'Lead-to-Quote',
+			'solucao_casos_1_desc'   => 'Automatize o processo desde a geração do lead até a criação da proposta comercial, conectando o Salesforce às ferramentas responsáveis pela qualificação, aprovação e vendas.',
+
+			'solucao_casos_2_icone'  => $this->img( 'salesforce-caso-2' ),
+			'solucao_casos_2_titulo' => 'Sincronização de pedidos',
+			'solucao_casos_2_desc'   => 'Mantenha pedidos, clientes e produtos sincronizados entre o Salesforce e ERPs como SAP ou NetSuite por meio de integrações em tempo real ou programadas.',
+
+			'solucao_casos_3_icone'  => $this->img( 'salesforce-caso-3' ),
+			'solucao_casos_3_titulo' => 'Hub para múltiplas organizações Salesforce',
+			'solucao_casos_3_desc'   => 'Centralize integrações de diferentes ambientes Salesforce em uma única arquitetura, simplificando a governança e reduzindo a complexidade operacional.',
+
+			'solucao_casos_4_icone'  => $this->img( 'salesforce-caso-4' ),
+			'solucao_casos_4_titulo' => 'Audiências para Marketing',
+			'solucao_casos_4_desc'   => 'Compartilhe segmentos e públicos automaticamente entre o Salesforce e plataformas de marketing, mantendo campanhas sempre atualizadas.',
+
+			'solucao_casos_5_icone'  => $this->img( 'salesforce-caso-5' ),
+			'solucao_casos_5_titulo' => 'Integração com Data Warehouse',
+			'solucao_casos_5_desc'   => 'Envie informações do Salesforce para plataformas analíticas como Snowflake e BigQuery para consolidar indicadores e apoiar decisões baseadas em dados.',
+
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
 	}
 }
 

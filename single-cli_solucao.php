@@ -17,6 +17,13 @@ get_header();
 
 $cliconnect_secoes = array(
 	'hero',
+	'pilares',
+	'casos',
+	'selos',
+	'diferencial',
+	'plataforma',
+	'aceleradores',
+	'faq',
 );
 
 foreach ( $cliconnect_secoes as $cliconnect_secao ) {
