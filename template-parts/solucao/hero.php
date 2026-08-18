@@ -2,11 +2,10 @@
 /**
  * Solução — Seção Hero.
  *
- * Layout: duas colunas (chamada à esquerda, imagem à direita).
- * Campos ACF (group_cli_solucao_pagina, aba "1 · Hero"):
- *   ps_hero_eyebrow, ps_hero_titulo, ps_hero_titulo_destaque,
- *   ps_hero_corpo, ps_hero_btn1_texto, ps_hero_btn1_url,
- *   ps_hero_btn2_texto, ps_hero_btn2_url, ps_hero_imagem.
+ * Campos ACF (group_cli_solucao, aba "1 · Hero"):
+ *   solucao_hero_eyebrow, solucao_hero_titulo, solucao_hero_titulo_destaque,
+ *   solucao_hero_corpo, solucao_hero_btn1_texto, solucao_hero_btn1_url,
+ *   solucao_hero_btn2_texto, solucao_hero_btn2_url, solucao_hero_imagem.
  *
  * @package Cliconnect
  */
@@ -15,15 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$eyebrow          = cliconnect_campo_pagina( 'ps_hero_eyebrow' );
-$titulo           = cliconnect_campo_pagina( 'ps_hero_titulo' );
-$titulo_destaque  = cliconnect_campo_pagina( 'ps_hero_titulo_destaque' );
-$corpo            = cliconnect_campo_pagina( 'ps_hero_corpo' );
-$btn1_texto       = cliconnect_campo_pagina( 'ps_hero_btn1_texto' );
-$btn1_url         = cliconnect_campo_pagina( 'ps_hero_btn1_url' );
-$btn2_texto       = cliconnect_campo_pagina( 'ps_hero_btn2_texto' );
-$btn2_url         = cliconnect_campo_pagina( 'ps_hero_btn2_url' );
-$imagem_id        = cliconnect_campo_pagina( 'ps_hero_imagem', 0 );
+$eyebrow         = cliconnect_campo_pagina( 'solucao_hero_eyebrow' );
+$titulo          = cliconnect_campo_pagina( 'solucao_hero_titulo' );
+$titulo_destaque = cliconnect_campo_pagina( 'solucao_hero_titulo_destaque' );
+$corpo           = cliconnect_campo_pagina( 'solucao_hero_corpo' );
+$btn1_texto      = cliconnect_campo_pagina( 'solucao_hero_btn1_texto' );
+$btn1_url        = cliconnect_campo_pagina( 'solucao_hero_btn1_url' );
+$btn2_texto      = cliconnect_campo_pagina( 'solucao_hero_btn2_texto' );
+$btn2_url        = cliconnect_campo_pagina( 'solucao_hero_btn2_url' );
+$imagem_id       = cliconnect_campo_pagina( 'solucao_hero_imagem', 0 );
 
 if ( ! $titulo && ! $titulo_destaque ) {
 	return;

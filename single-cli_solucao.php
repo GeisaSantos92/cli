@@ -1,10 +1,10 @@
 <?php
 /**
- * Template Name: Solução
+ * Single: cli_solucao — Landing page de solução.
  *
- * Landing page compartilhada por todas as soluções (Salesforce, SAP, etc.).
- * Seções opcionais: cada template-part retorna cedo quando seus campos estão
- * vazios, tornando a seção invisível para páginas que não a usam.
+ * Cada post do CPT é ao mesmo tempo o item do catálogo (listagens) e a
+ * landing page da solução. Seções opcionais: cada template-part retorna cedo
+ * quando seus campos ACF estão vazios, tornando a seção invisível.
  *
  * @package Cliconnect
  */

@@ -96,7 +96,6 @@ cliconnect_require( '/inc/acf-fields-cli-connect.php' );
 cliconnect_require( '/inc/acf-fields-cli-signature.php' );
 cliconnect_require( '/inc/acf-fields-contato.php' );
 cliconnect_require( '/inc/acf-fields-integracao-sap.php' );
-cliconnect_require( '/inc/acf-fields-solucao-pagina.php' );
 
 // Comandos WP-CLI: carregados apenas no contexto de linha de comando,
 // inertes em produção/requisições web.

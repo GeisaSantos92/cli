@@ -482,11 +482,15 @@ function cliconnect_acf_fields_cpt() {
 	);
 	/* =====================================================================
 	   SOLUÇÃO
+	   O CPT cli_solucao é ao mesmo tempo o item do catálogo (listagens) e a
+	   landing page da solução (single-cli_solucao.php). Campos divididos em abas:
+	   - Catálogo: logo (imagem destacada) + descrição curta (card da listagem)
+	   - Seções da landing: hero, e demais seções a serem adicionadas por Figma.
 	   ===================================================================== */
 	acf_add_local_field_group(
 		array(
 			'key'            => 'group_cli_solucao',
-			'title'          => 'Dados da Solução',
+			'title'          => 'Solução',
 			'location'       => array(
 				array(
 					array(
@@ -500,6 +504,15 @@ function cliconnect_acf_fields_cpt() {
 			'position'       => 'normal',
 			'hide_on_screen' => array( 'the_content', 'custom_fields', 'discussion', 'comments' ),
 			'fields'         => array(
+
+				/* --- Aba: Catálogo ----------------------------------------- */
+				array(
+					'key'       => 'field_solucao_tab_catalogo',
+					'label'     => 'Catálogo',
+					'name'      => '',
+					'type'      => 'tab',
+					'placement' => 'left',
+				),
 				array(
 					'key'     => 'field_solucao_msg',
 					'label'   => '',
@@ -516,13 +529,76 @@ function cliconnect_acf_fields_cpt() {
 					'new_lines'    => '',
 					'instructions' => 'Uma linha exibida no card da listagem.',
 				),
+
+				/* --- Aba: Hero --------------------------------------------- */
 				array(
-					'key'          => 'field_solucao_url',
-					'label'        => 'Link da página (opcional)',
-					'name'         => 'solucao_url',
-					'type'         => 'url',
-					'instructions' => 'URL da landing page desta solução, se houver.',
+					'key'       => 'field_solucao_tab_hero',
+					'label'     => '1 · Hero',
+					'name'      => '',
+					'type'      => 'tab',
+					'placement' => 'left',
 				),
+				array(
+					'key'          => 'field_solucao_hero_eyebrow',
+					'label'        => 'Eyebrow',
+					'name'         => 'solucao_hero_eyebrow',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "Para o seu Salesforce".',
+				),
+				array(
+					'key'   => 'field_solucao_hero_titulo',
+					'label' => 'Título — linha 1 (escuro)',
+					'name'  => 'solucao_hero_titulo',
+					'type'  => 'text',
+				),
+				array(
+					'key'   => 'field_solucao_hero_titulo_destaque',
+					'label' => 'Título — linha 2 (azul)',
+					'name'  => 'solucao_hero_titulo_destaque',
+					'type'  => 'text',
+				),
+				array(
+					'key'    => 'field_solucao_hero_corpo',
+					'label'  => 'Corpo',
+					'name'   => 'solucao_hero_corpo',
+					'type'   => 'textarea',
+					'rows'   => 3,
+					'new_lines' => '',
+				),
+				array(
+					'key'   => 'field_solucao_hero_btn1_texto',
+					'label' => 'Botão primário — Texto',
+					'name'  => 'solucao_hero_btn1_texto',
+					'type'  => 'text',
+				),
+				array(
+					'key'   => 'field_solucao_hero_btn1_url',
+					'label' => 'Botão primário — URL',
+					'name'  => 'solucao_hero_btn1_url',
+					'type'  => 'text',
+				),
+				array(
+					'key'   => 'field_solucao_hero_btn2_texto',
+					'label' => 'Botão secundário — Texto',
+					'name'  => 'solucao_hero_btn2_texto',
+					'type'  => 'text',
+				),
+				array(
+					'key'   => 'field_solucao_hero_btn2_url',
+					'label' => 'Botão secundário — URL',
+					'name'  => 'solucao_hero_btn2_url',
+					'type'  => 'text',
+				),
+				array(
+					'key'           => 'field_solucao_hero_imagem',
+					'label'         => 'Imagem (coluna direita)',
+					'name'          => 'solucao_hero_imagem',
+					'type'          => 'image',
+					'return_format' => 'id',
+					'preview_size'  => 'medium',
+					'instructions'  => 'Visual da solução — logos conectados, diagrama, etc. Proporção quadrada.',
+				),
+
 			),
 		)
 	);
