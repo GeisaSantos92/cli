@@ -86,6 +86,12 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo CLI Signature…' );
 		$this->preencher_cli_signature( $paginas['cli-signature'] );
 
+		WP_CLI::log( '— Preenchendo Integração SAP…' );
+		$this->preencher_integracao_sap( $paginas['integracao-sap'] );
+
+		WP_CLI::log( '— Preenchendo Contato…' );
+		$this->preencher_contato( $paginas['contato'] );
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas );
 
@@ -381,6 +387,8 @@ class Cliconnect_Seed {
 			array( 'Arcom', 'cliente-arcom', false ),
 			array( 'Seculus', 'cliente-seculus', false ),
 			array( 'Grupo Ferroeste', 'cliente-grupo-ferroeste', false ),
+			array( 'Rodoil', 'cliente-rodoil', false ),
+			array( 'Albaugh', 'cliente-albaugh', false ),
 			array( 'Real', 'cliente-real', false ),
 			array( 'BNP Paribas Cardif', 'cliente-bnp-paribas-cardif', false ),
 			array( 'Thomson Reuters', 'cliente-thomson-reuters', false ),
@@ -1925,6 +1933,193 @@ class Cliconnect_Seed {
 	}
 
 	/**
+	 * Preenche os campos ACF da página Integração SAP.
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_integracao_sap( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-integracao-sap.php' );
+
+		$campos = array(
+			// 1. Hero.
+			'sap_hero_titulo_azul'   => 'Expanda as capacidades do SAP',
+			'sap_hero_titulo_escuro' => 'sem aumentar a complexidade da sua operação',
+			'sap_hero_texto'         => 'Conecte seu SAP S/4HANA e outros sistemas críticos com uma estrutura preparada para operações complexas, eventos automáticos e evolução contínua.',
+			'sap_hero_botao'         => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'sap_hero_imagem'        => $this->img( 'sap-hero' ),
+
+			// 2. Velocidade.
+			'sap_vel_eyebrow'    => 'otimize seu tempo',
+			'sap_vel_titulo'     => 'Mais velocidade para o negócio.',
+			'sap_vel_texto'      => 'Reduza o esforço técnico necessário para integrar o SAP e implemente novos projetos com muito mais agilidade.',
+			'sap_vel_sem_label'  => 'SEM CLI CONNECT',
+			'sap_vel_sem_tempo'  => '1 MÊS',
+			'sap_vel_sem_1'      => "Enviar\nsolicitação",
+			'sap_vel_sem_2'      => "Definir\na necessidade",
+			'sap_vel_sem_3'      => "Aguardar\nprogramação",
+			'sap_vel_sem_4'      => "Transferência\nde dados",
+			'sap_vel_sem_5'      => "Dados\ndisponibilizados",
+			'sap_vel_sem_6'      => 'Manutenção',
+			'sap_vel_sem_7'      => 'Teste e QA',
+			'sap_vel_com_label'  => 'COM CLI CONNECT',
+			'sap_vel_com_tempo'  => '5 DIAS',
+			'sap_vel_com_1'      => "Enviar\nsolicitação",
+			'sap_vel_com_2'      => "Definir\na necessidade",
+			'sap_vel_com_3'      => "Dados\ndisponibilizados",
+
+			// 3. SAP Integrado (Conectar).
+			'sap_con_eyebrow' => 'SAP INTEGRADO',
+			'sap_con_titulo'  => "Seu SAP pronto para\nconectar o que vem pela frente",
+			'sap_con_texto'   => 'Uma plataforma de integração que cresce com o seu negócio, permitindo conectar novos sistemas, canais e processos sem retrabalho.',
+			'sap_con_imagem'  => $this->img( 'sap-conectar' ),
+
+			// 4. SAP Sincronizado.
+			'sap_sin_eyebrow' => 'SAP SINCRONIZADO',
+			'sap_sin_titulo'  => "Atualizações automáticas\nsempre que algo muda no SAP",
+			'sap_sin_texto'   => 'Pedidos, cadastros, estoques e outras informações são sincronizados automaticamente com os sistemas conectados, mantendo toda a operação atualizada sem processos manuais.',
+			'sap_sin_imagem'  => $this->img( 'sap-sincronizar' ),
+
+			// 5. Libere Recursos.
+			'sap_rec_eyebrow'        => 'LIBERE RECURSOS',
+			'sap_rec_titulo'         => 'Reduza o número de horas trabalhadas',
+			'sap_rec_texto'          => 'Evite projetos extensos de desenvolvimento para conectar novos sistemas e processos.',
+			'sap_rec_metrica_numero' => '65%',
+			'sap_rec_metrica_label'  => 'de redução nas horas trabalhadas',
+			'sap_rec_imagem'         => $this->img( 'sap-recursos' ),
+			'sap_rec_imagem_overlay' => $this->img( 'sap-recursos-overlay' ),
+
+			// 6. Depoimento.
+			'sap_dep_foto'  => $this->img( 'sap-depoimento-foto' ),
+			'sap_dep_nome'  => 'João Carvalho',
+			'sap_dep_cargo' => 'Gerente de Vendas',
+			'sap_dep_frase' => '"R$ 6 milhões economizados em horas de desenvolvimento ABAP"',
+			'sap_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
+
+			// 7. Sistemas.
+			'sap_sis_titulo'    => "Conecte o SAP aos sistemas\nque movem sua operação",
+			'sap_sis_subtitulo' => 'Integre e governe sua operação independentemente da tecnologia utilizada',
+			'sap_sis_1'         => 'CRM',
+			'sap_sis_2'         => 'E-commerce',
+			'sap_sis_3'         => 'Fiscal',
+			'sap_sis_4'         => 'Marketplace',
+			'sap_sis_5'         => 'BI',
+			'sap_sis_6'         => 'Financeiro',
+			'sap_sis_7'         => 'RH',
+			'sap_sis_8'         => 'Sites',
+			'sap_sis_9'         => 'Aplicativos',
+			'sap_sis_10'        => 'Agente de IA',
+
+			// 8. Clean Core.
+			'sap_cc_eyebrow'   => 'PRESERVE SEU CLEAN CORE',
+			'sap_cc_titulo'    => 'Aproveite o seu standard',
+			'sap_cc_texto'     => 'Inovação sob medida com respeito absoluto ao seu núcleo. Preserve seu Clean Core e atualize seu SAP sem medo.',
+			'sap_cc_1_titulo'  => 'Implantação Ágil',
+			'sap_cc_1_texto'   => 'Soluções plug-and-play que conversam nativamente com seu SAP, reduzindo o tempo de setup de meses para semanas.',
+			'sap_cc_1_imagem'  => $this->img( 'sap-cleancore-1' ),
+			'sap_cc_2_titulo'  => 'Upgrades sem dor de cabeça',
+			'sap_cc_2_texto'   => 'Atualize seu SAP para as versões mais recentes sem quebrar customizações ou paralisar sua operação.',
+			'sap_cc_2_imagem'  => $this->img( 'sap-cleancore-2' ),
+			'sap_cc_3_titulo'  => 'Redução do custo com manutenção',
+			'sap_cc_3_texto'   => 'Elimine os gastos exorbitantes com manutenção e testes de códigos customizados ("Z") a cada novo ciclo da SAP.',
+			'sap_cc_3_imagem'  => $this->img( 'sap-cleancore-3a' ),
+			'sap_cc_3_imagem_b' => $this->img( 'sap-cleancore-3b' ),
+
+			// 9. Integrações inclusas.
+			'sap_int_eyebrow'   => 'INTEGRAÇÕES INCLUSAS',
+			'sap_int_titulo'    => "Comece mais rápido com modelos\njá utilizados em ambientes reais",
+			'sap_int_botao'     => $this->link( 'Agende uma demonstração', '/contato/' ),
+			'sap_int_nota'      => 'Mais de 30.000 integrações prontas para uso',
+			'sap_int_1_titulo'  => 'SAP + Salesforce',
+			'sap_int_1_desc'    => 'Sincronização comercial e atendimento.',
+			'sap_int_1_logo'    => $this->img( 'sap-int-salesforce' ),
+			'sap_int_2_titulo'  => 'SAP + VTEX',
+			'sap_int_2_desc'    => 'Pedidos, clientes, estoque e faturamento.',
+			'sap_int_2_logo'    => $this->img( 'sap-int-vtex' ),
+			'sap_int_3_titulo'  => 'SAP + RD Station',
+			'sap_int_3_desc'    => 'Marketing e vendas alinhados.',
+			'sap_int_3_logo'    => $this->img( 'sap-int-rdstation' ),
+			'sap_int_4_titulo'  => 'SAP + Senior',
+			'sap_int_4_desc'    => 'RH e folha sincronizados automaticamente.',
+			'sap_int_4_logo'    => $this->img( 'sap-int-senior' ),
+			'sap_int_5_titulo'  => 'SAP + Sankhya',
+			'sap_int_5_desc'    => 'Processos entre ERPs sem retrabalho.',
+			'sap_int_5_logo'    => $this->img( 'sap-int-sankhya' ),
+			'sap_int_6_titulo'  => 'SAP + Thompson Reuters',
+			'sap_int_6_desc'    => 'Obrigações fiscais sempre integradas.',
+			'sap_int_6_logo'    => $this->img( 'sap-int-thomson' ),
+			'sap_int_7_titulo'  => 'SAP + MV Saúde',
+			'sap_int_7_desc'    => 'Dados clínicos e financeiros conectados.',
+			'sap_int_7_logo'    => $this->img( 'sap-int-mv' ),
+			'sap_int_8_titulo'  => 'SAP + Tasy',
+			'sap_int_8_desc'    => 'Informações hospitalares sincronizadas.',
+			'sap_int_8_logo'    => $this->img( 'sap-int-tasy' ),
+
+			// 10. Migração ECC → S/4HANA.
+			'sap_mig_titulo' => 'Sua migração para o SAP S/4HANA com risco zero e sem surpresas',
+			'sap_mig_texto'  => 'O suporte ao SAP ECC termina em 2027. Planeje sua transição agora e tenha acesso aos melhores especialistas do mercado.',
+			'sap_mig_botao'  => $this->link( 'Migrar agora', '/contato/' ),
+
+			// 11. Benefícios.
+			'sap_ben_eyebrow'   => 'BENEFÍCIOS',
+			'sap_ben_titulo'    => 'Os benefícios da CLI Connect para o seu SAP',
+			'sap_ben_botao'     => $this->link( 'Entrar em contato', '/contato/' ),
+			'sap_ben_1_rotulo'  => '01 - Especialização SAP',
+			'sap_ben_1_desc'    => 'Experiência em projetos envolvendo integrações com o SAP S/4HANA.',
+			'sap_ben_2_rotulo'  => '02 - Serviço Gerenciado',
+			'sap_ben_2_desc'    => 'Monitoramento contínuo, suporte especializado e evolução constante da sua plataforma de integração.',
+			'sap_ben_3_rotulo'  => '03 - Mensalidade previsível',
+			'sap_ben_3_desc'    => 'Modelo de contratação por assinatura com custos fixos e previsíveis, sem surpresas no orçamento.',
+			'sap_ben_4_rotulo'  => '04 - Conectores prontos',
+			'sap_ben_4_desc'    => 'Mais de 30.000 conectores prontos para uso imediato, acelerando o tempo de implantação.',
+			'sap_ben_5_rotulo'  => '05 - Governança operacional',
+			'sap_ben_5_desc'    => 'Visibilidade total dos fluxos de integração com rastreabilidade, alertas e gestão centralizada.',
+			'sap_ben_6_rotulo'  => '06 - Plataforma líder global',
+			'sap_ben_6_desc'    => 'Tecnologia Boomi — líder no Gartner Magic Quadrant para plataformas de integração.',
+
+			// 12. Automação.
+			'sap_aut_eyebrow'  => 'EVENTOS AUTOMÁTICOS',
+			'sap_aut_titulo'   => "Transforme eventos do SAP\nem ações automáticas",
+			'sap_aut_texto'    => "Integre o SAP à sua operação e converta eventos em execução automática,\nsem interrupções manuais.",
+			'sap_aut_1_etapa1' => 'Pedido aprovado no SAP',
+			'sap_aut_1_etapa2' => 'Faturamento iniciado',
+			'sap_aut_1_etapa3' => 'Cliente notificado',
+			'sap_aut_2_etapa1' => 'Produto atualizado',
+			'sap_aut_2_etapa2' => 'Canais sincronizados',
+			'sap_aut_2_etapa3' => 'Operação atualizada',
+			'sap_aut_3_etapa1' => 'Estoque mínimo',
+			'sap_aut_3_etapa2' => 'Fornecedor acionado',
+			'sap_aut_3_etapa3' => 'Reposição iniciada',
+			'sap_aut_4_etapa1' => 'Nova regulação',
+			'sap_aut_4_etapa2' => 'Impactos identificados',
+			'sap_aut_4_etapa3' => 'Áreas notificadas',
+			'sap_aut_5_etapa1' => 'Indicador fora da meta',
+			'sap_aut_5_etapa2' => 'Gestor alertado',
+			'sap_aut_5_etapa3' => 'Plano de ação iniciado',
+
+			// --- 13. FAQ --------------------------------------------------
+			'sap_faq_eyebrow'    => 'FAQ',
+			'sap_faq_titulo'     => 'Dúvidas Frequentes',
+			'sap_faq_1_pergunta' => 'A CLI Connect funciona com ambientes SAP S/4HANA on-premises e na nuvem?',
+			'sap_faq_1_resposta' => 'Sim. A plataforma da CLI Connect é compatível com ambientes SAP S/4HANA tanto on-premises quanto em nuvem (incluindo SAP BTP), garantindo flexibilidade independentemente da infraestrutura escolhida pela sua empresa.',
+			'sap_faq_2_pergunta' => 'É preciso desenvolver integrações em ABAP para conectar o SAP S/4HANA?',
+			'sap_faq_2_resposta' => 'Não. A CLI Connect utiliza conectores nativos e APIs padrão do SAP, eliminando a necessidade de desenvolvimento em ABAP. Isso preserva o Clean Core do seu SAP e reduz drasticamente o custo e o tempo de implantação.',
+			'sap_faq_3_pergunta' => 'Quanto tempo leva para colocar a primeira integração em operação?',
+			'sap_faq_3_resposta' => 'Com os modelos prontos da CLI Connect, a primeira integração pode entrar em operação em até 5 dias úteis, dependendo da complexidade do processo. Nossa equipe acompanha todo o processo de configuração e testes.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+
+		WP_CLI::log( sprintf( '  integracao-sap: %d campos preenchidos.', count( $campos ) ) );
+	}
+
+	/**
 	 * Define a imagem destacada a partir do nome base de um asset do seed.
 	 *
 	 * @param int    $post_id ID do post.
@@ -1958,6 +2153,176 @@ class Cliconnect_Seed {
 		}
 
 		return $ids;
+	}
+
+	/**
+	 * Preenche os campos ACF da página Contato.
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_contato( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-contato.php' );
+
+		// Cria (ou recupera) o formulário CF7 — idempotente pelo slug.
+		$cf7_id = $this->criar_form_cf7_contato();
+
+		$campos = array(
+			// 1. Formulário.
+			// 2. Clientes.
+			'ct_clientes_subtitulo' => 'Grandes empresas confiam na CLI',
+
+			// 1. Formulário.
+			'ct_form_titulo'        => 'Solicite uma proposta para sua operação',
+			'ct_form_texto'         => 'Tire dúvidas, avalie possibilidades e descubra como a CLI pode apoiar sua operação com integrações, automação e IA corporativa.',
+			'ct_form_email'         => 'atendimento@cliconsultoria.com.br',
+			'ct_form_telefone'      => '(31) 4042-2051',
+			'ct_form_facebook_url'  => 'https://www.facebook.com/cliconsultoria',
+			'ct_form_instagram_url' => 'https://www.instagram.com/cliconsultoria',
+			'ct_form_whatsapp_url'  => 'https://wa.me/553140422051',
+			'ct_form_cf7_id'        => $cf7_id,
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+	}
+
+	/**
+	 * Cria o formulário Contact Form 7 da página Contato.
+	 *
+	 * Idempotente: se já existir um post wpcf7_contact_form com o slug
+	 * "contato-cli", retorna o ID existente sem duplicar.
+	 *
+	 * @return int ID do post CF7, ou 0 em caso de erro.
+	 */
+	protected function criar_form_cf7_contato() {
+		if ( ! post_type_exists( 'wpcf7_contact_form' ) ) {
+			WP_CLI::warning( 'Contact Form 7 não está ativo — formulário não criado.' );
+			return 0;
+		}
+
+		// Verifica se já existe.
+		$existente = get_posts(
+			array(
+				'post_type'      => 'wpcf7_contact_form',
+				'name'           => 'contato-cli',
+				'posts_per_page' => 1,
+				'post_status'    => 'publish',
+			)
+		);
+
+		if ( $existente ) {
+			return (int) $existente[0]->ID;
+		}
+
+		// Template do formulário (shortcodes CF7).
+		$form_template = '<label>Nome
+[text* ct-nome placeholder "Nome"]</label>
+
+<label>Telefone
+[tel* ct-telefone placeholder "Telefone"]</label>
+
+<label>E-mail
+[email* ct-email placeholder "E-mail"]</label>
+
+<label>Mensagem
+[textarea* ct-mensagem placeholder "Digite sua mensagem"]</label>
+
+[acceptance ct-aceite] Ao enviar, concordo em receber comunicações da CLI[/acceptance]
+
+[submit "Enviar"]';
+
+		$cf7_id = wp_insert_post(
+			array(
+				'post_title'  => 'Contato CLI',
+				'post_name'   => 'contato-cli',
+				'post_type'   => 'wpcf7_contact_form',
+				'post_status' => 'publish',
+			)
+		);
+
+		if ( is_wp_error( $cf7_id ) || ! $cf7_id ) {
+			WP_CLI::warning( 'Falha ao criar formulário CF7: ' . ( is_wp_error( $cf7_id ) ? $cf7_id->get_error_message() : 'erro desconhecido' ) );
+			return 0;
+		}
+
+		$admin_email = (string) get_option( 'admin_email' );
+		$blog_name   = (string) get_option( 'blogname' );
+
+		update_post_meta( $cf7_id, '_form', $form_template );
+
+		update_post_meta(
+			$cf7_id,
+			'_mail',
+			array(
+				'active'             => true,
+				'recipient'          => $admin_email,
+				'sender'             => $blog_name . ' <' . $admin_email . '>',
+				'subject'            => '[' . $blog_name . '] Novo contato — [ct-nome]',
+				'body'               => "Nome: [ct-nome]\nTelefone: [ct-telefone]\nE-mail: [ct-email]\n\nMensagem:\n[ct-mensagem]",
+				'additional_headers' => 'Reply-To: [ct-email]',
+				'attachments'        => '',
+				'use_html'           => false,
+				'exclude_blank'      => false,
+			)
+		);
+
+		update_post_meta(
+			$cf7_id,
+			'_mail_2',
+			array(
+				'active'             => false,
+				'recipient'          => '',
+				'sender'             => '',
+				'subject'            => '',
+				'body'               => '',
+				'additional_headers' => '',
+				'attachments'        => '',
+				'use_html'           => false,
+				'exclude_blank'      => false,
+			)
+		);
+
+		update_post_meta(
+			$cf7_id,
+			'_messages',
+			array(
+				'mail_sent_ok'               => 'Mensagem enviada com sucesso. Em breve entraremos em contato.',
+				'mail_sent_ng'               => 'Ocorreu um erro. Por favor, tente novamente.',
+				'validation_error'           => 'Preencha os campos obrigatórios antes de enviar.',
+				'spam'                       => 'Parece que há um problema com o envio.',
+				'accept_terms'               => 'É necessário aceitar os termos para continuar.',
+				'invalid_required'           => 'Campo obrigatório.',
+				'invalid_too_long'           => 'Texto muito longo.',
+				'invalid_too_short'          => 'Texto muito curto.',
+				'invalid_date'               => 'Data inválida.',
+				'date_too_early'             => 'Data muito antiga.',
+				'date_too_late'              => 'Data muito recente.',
+				'invalid_number'             => 'Número inválido.',
+				'number_too_small'           => 'Número muito pequeno.',
+				'number_too_large'           => 'Número muito grande.',
+				'invalid_email'              => 'E-mail inválido.',
+				'invalid_url'               => 'URL inválida.',
+				'invalid_tel'               => 'Telefone inválido.',
+				'upload_failed'              => 'Upload falhou.',
+				'upload_file_type_invalid'   => 'Tipo de arquivo inválido.',
+				'upload_file_too_large'      => 'Arquivo muito grande.',
+				'upload_failed_php_error'    => 'Erro ao fazer upload.',
+				'upload_file_count_exceeded' => 'Muitos arquivos.',
+				'quiz_answer_not_correct'    => 'Resposta incorreta.',
+			)
+		);
+
+		update_post_meta( $cf7_id, '_additional_settings', '' );
+
+		WP_CLI::log( "  Formulário CF7 criado (ID: {$cf7_id})." );
+
+		return $cf7_id;
 	}
 
 	/**

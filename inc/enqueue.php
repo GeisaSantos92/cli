@@ -126,6 +126,26 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página Integração SAP.
+	if ( cliconnect_e_pagina( 'integracao-sap' ) ) {
+		wp_enqueue_style(
+			'cliconnect-integracao-sap',
+			get_theme_file_uri( '/assets/css/page-integracao-sap.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-integracao-sap.css' )
+		);
+	}
+
+	// Página Contato.
+	if ( cliconnect_e_pagina( 'contato' ) ) {
+		wp_enqueue_style(
+			'cliconnect-contato',
+			get_theme_file_uri( '/assets/css/page-contato.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-contato.css' )
+		);
+	}
+
 	// Página CLI Connect.
 	if ( cliconnect_e_pagina( 'cli-connect' ) ) {
 		wp_enqueue_style(

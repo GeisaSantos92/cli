@@ -1,0 +1,376 @@
+/* ==========================================================================
+   Contato — Estilos da página de contato.
+
+   Enfileirado por contexto: só carrega em cliconnect_e_pagina('contato').
+   Tokens de cor/tipo/layout vêm de theme.css (--cor-*, --fonte-*, --tam-*).
+   ========================================================================== */
+
+/* --- 1. Seção Formulário --------------------------------------------------- */
+
+.ct-formulario {
+	padding-block: 120px 80px;
+	background:
+		linear-gradient(180deg, rgba(130, 178, 255, 0.2) 0%, rgba(199, 220, 255, 0) 24%),
+		var(--cor-fundo-suave);
+}
+
+.ct-formulario__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 80px;
+	align-items: start;
+}
+
+/* Coluna esquerda */
+.ct-formulario__col-info {
+	display: flex;
+	flex-direction: column;
+	gap: 48px;
+}
+
+.ct-formulario__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0;
+}
+
+.ct-formulario__texto {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: -32px 0 0; /* compensa o gap de 48px no flex: título + texto ficam juntos */
+}
+
+.ct-formulario__cards {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+/* Cards brancos de informação */
+.ct-card {
+	background: var(--cor-fundo);
+	border-radius: var(--raio);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.ct-card__titulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto);
+	margin: 0;
+}
+
+.ct-card__itens {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ct-card__item {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.ct-card__label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+}
+
+.ct-card__valor {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	line-height: 1.6;
+	color: var(--cor-texto);
+	text-decoration: none;
+}
+
+a.ct-card__valor:hover,
+a.ct-card__valor:focus-visible {
+	color: var(--cor-primaria);
+	text-decoration: underline;
+}
+
+/* Redes sociais */
+.ct-redes {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.ct-rede {
+	display: flex;
+	flex-shrink: 0;
+	text-decoration: none;
+	transition: opacity 0.2s ease;
+}
+
+.ct-rede:hover,
+.ct-rede:focus-visible {
+	opacity: 0.8;
+}
+
+/* Coluna direita */
+.ct-formulario__col-form {
+	/* Alinha pelo topo, não pelo centro da grid */
+}
+
+.ct-form-wrapper {
+	background: var(--cor-fundo);
+	padding: 40px;
+}
+
+.ct-form-aviso {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+	margin: 0;
+}
+
+/* --- 2. Seção Clientes (carrossel) ---------------------------------------- */
+
+.ct-clientes {
+	background: var(--cor-fundo-suave);
+	padding-block: 80px 120px;
+	overflow: hidden;
+}
+
+.ct-clientes__subtitulo {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: 0 0 32px;
+	text-align: center;
+}
+
+/*
+ * Reutiliza as classes .clientes__* da home para o mesmo comportamento de
+ * marquee. O keyframe é redeclarado aqui pois front-page.css só carrega na
+ * página inicial.
+ */
+.ct-clientes .clientes__pista {
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+	mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.ct-clientes .clientes__trilha {
+	display: flex;
+	align-items: center;
+	width: max-content;
+	animation: marquee 45s linear infinite;
+	will-change: transform;
+}
+
+.ct-clientes .clientes__pista:hover .clientes__trilha {
+	animation-play-state: paused;
+}
+
+.ct-clientes .clientes__logo {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: clamp(150px, 14vw, 200px);
+	height: 40px;
+}
+
+.ct-clientes .clientes__logo img {
+	max-height: 34px;
+	max-width: 80%;
+	width: auto;
+	object-fit: contain;
+}
+
+@keyframes marquee {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+	.ct-clientes {
+		padding-block: 48px 64px;
+	}
+}
+
+/* --- CF7: adaptação visual ao design --------------------------------------- */
+
+.ct-form-wrapper .wpcf7-form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ct-form-wrapper .wpcf7-form p {
+	margin: 0;
+}
+
+.ct-form-wrapper .wpcf7-form label {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto);
+	width: 100%;
+}
+
+.ct-form-wrapper .wpcf7-form-control-wrap {
+	display: block;
+	width: 100%;
+}
+
+.ct-form-wrapper input.wpcf7-text,
+.ct-form-wrapper input.wpcf7-email,
+.ct-form-wrapper input.wpcf7-tel,
+.ct-form-wrapper input.wpcf7-number,
+.ct-form-wrapper input.wpcf7-url,
+.ct-form-wrapper textarea.wpcf7-textarea {
+	width: 100%;
+	background: #f8faff;
+	border: 1px solid var(--cor-borda);
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto);
+	line-height: 1.6;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ct-form-wrapper input.wpcf7-text::placeholder,
+.ct-form-wrapper input.wpcf7-email::placeholder,
+.ct-form-wrapper input.wpcf7-tel::placeholder,
+.ct-form-wrapper textarea.wpcf7-textarea::placeholder {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.ct-form-wrapper input.wpcf7-text:focus,
+.ct-form-wrapper input.wpcf7-email:focus,
+.ct-form-wrapper input.wpcf7-tel:focus,
+.ct-form-wrapper textarea.wpcf7-textarea:focus {
+	outline: none;
+	border-color: var(--cor-primaria);
+	box-shadow: 0 0 0 3px rgba(53, 81, 242, 0.1);
+}
+
+.ct-form-wrapper textarea.wpcf7-textarea {
+	height: 180px;
+	resize: vertical;
+}
+
+/* Botão de envio */
+.ct-form-wrapper input.wpcf7-submit {
+	width: 100%;
+	height: 52px;
+	margin-top: 28px;
+	background: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+	border: none;
+	border-radius: var(--raio);
+	font-family: var(--fonte-botao);
+	font-size: var(--tam-h6);
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.ct-form-wrapper input.wpcf7-submit:hover,
+.ct-form-wrapper input.wpcf7-submit:focus-visible {
+	background: var(--cor-primaria-escura);
+}
+
+/* Checkbox de aceitação */
+.ct-form-wrapper .wpcf7-acceptance {
+	margin-top: 4px;
+}
+
+.ct-form-wrapper .wpcf7-acceptance .wpcf7-list-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+}
+
+.ct-form-wrapper .wpcf7-acceptance input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+	accent-color: var(--cor-primaria);
+	cursor: pointer;
+}
+
+.ct-form-wrapper .wpcf7-acceptance .wpcf7-list-item-label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-caption);
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+}
+
+/* Mensagens de resposta CF7 */
+.ct-form-wrapper .wpcf7-response-output {
+	margin-top: 12px;
+	padding: 10px 14px;
+	border-radius: var(--raio);
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	border: 1px solid currentColor;
+}
+
+.ct-form-wrapper .wpcf7-mail-sent-ok {
+	color: var(--cor-positivo);
+	border-color: var(--cor-positivo);
+	background: rgba(2, 84, 45, 0.06);
+}
+
+.ct-form-wrapper .wpcf7-mail-sent-ng,
+.ct-form-wrapper .wpcf7-spam-blocked,
+.ct-form-wrapper .wpcf7-validation-errors {
+	color: #b91c1c;
+	border-color: #b91c1c;
+	background: rgba(185, 28, 28, 0.06);
+}
+
+/* --- Responsivo ------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+	.ct-formulario__inner {
+		grid-template-columns: 1fr;
+		gap: 48px;
+	}
+
+	.ct-formulario__col-info {
+		gap: 32px;
+	}
+
+	.ct-formulario__texto {
+		margin-top: -16px;
+	}
+}
+
+@media (max-width: 640px) {
+	.ct-formulario {
+		padding-block: 64px 48px;
+	}
+
+	.ct-form-wrapper {
+		padding: 24px;
+	}
+}
