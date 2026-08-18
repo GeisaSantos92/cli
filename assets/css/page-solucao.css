@@ -64,10 +64,14 @@
 .sh-hero__botoes {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	width: fit-content;
 	gap: 10px;
-	width: 100%;
 	margin-top: 44px;
+}
+
+/* Segundo botão: fundo branco sobre o hero azul-claro */
+.sh-hero__botoes .botao--contorno {
+	background: var(--cor-fundo);
 }
 
 /* Imagem (coluna direita) */
