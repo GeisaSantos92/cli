@@ -156,6 +156,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Landing page de Solução (page-solucao.php — compartilhada por todas as soluções).
+	if ( is_page_template( 'page-solucao.php' ) ) {
+		wp_enqueue_style(
+			'cliconnect-solucao-pagina',
+			get_theme_file_uri( '/assets/css/page-solucao.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-solucao.css' )
+		);
+	}
+
 	// Listagem de Soluções (archive e taxonomy).
 	if ( is_post_type_archive( 'cli_solucao' ) || is_tax( 'cli_categoria_solucao' ) ) {
 		wp_enqueue_style(

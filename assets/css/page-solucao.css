@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Solução — Landing page de solução (page-solucao.php).
+
+   Enfileirado em is_page_template('page-solucao.php').
+   Tokens de cor/tipo/layout vêm de theme.css (--cor-*, --fonte-*, --tam-*).
+   ========================================================================== */
+
+/* --- 1. Seção Hero --------------------------------------------------------- */
+
+.sh-hero {
+	padding-block: 80px;
+	background: var(--cor-fundo-suave);
+}
+
+.sh-hero__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 80px;
+	align-items: center;
+}
+
+/* Chamada (coluna esquerda) */
+.sh-hero__chamada {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+}
+
+.sh-hero__eyebrow {
+	margin: 0;
+}
+
+.sh-hero__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.sh-hero__titulo-linha {
+	display: block;
+}
+
+.sh-hero__titulo-destaque {
+	display: block;
+	color: var(--cor-primaria);
+}
+
+.sh-hero__corpo {
+	font-family: var(--fonte-base);
+	font-size: 18px;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	margin: 0;
+}
+
+.sh-hero__botoes {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	margin-top: 44px;
+}
+
+.sh-hero__botoes .botao {
+	width: 100%;
+	justify-content: center;
+}
+
+/* Imagem (coluna direita) */
+.sh-hero__imagem-wrap {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	border-radius: var(--raio);
+	overflow: hidden;
+}
+
+.sh-hero__grade {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;
+	border-radius: var(--raio);
+}
+
+.sh-hero__imagem {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: var(--raio);
+}
+
+/* Sinal animado */
+.sh-hero__sinal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 28px;
+	height: auto;
+	animation: sh-sinal-float 3s ease-in-out infinite;
+}
+
+.sh-hero__sinal img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+@keyframes sh-sinal-float {
+	0%, 100% { transform: translate(-50%, -50%) rotate(0deg)   translateX(0); }
+	33%       { transform: translate(-50%, -50%) rotate(8deg)   translateX(6px); }
+	66%       { transform: translate(-50%, -50%) rotate(-6deg)  translateX(-4px); }
+}
+
+/* --- Responsivo ------------------------------------------------------------ */
+
+@media (max-width: 1024px) {
+	.sh-hero__inner {
+		grid-template-columns: 1fr;
+		gap: 48px;
+	}
+
+	.sh-hero__imagem-wrap {
+		max-width: 480px;
+		margin: 0 auto;
+		width: 100%;
+	}
+}
+
+@media (max-width: 640px) {
+	.sh-hero {
+		padding-block: 48px 56px;
+	}
+
+	.sh-hero__corpo {
+		font-size: var(--tam-body);
+	}
+
+	.sh-hero__botoes {
+		margin-top: 28px;
+	}
+}
