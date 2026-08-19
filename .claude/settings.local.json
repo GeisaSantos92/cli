@@ -67,7 +67,30 @@
       "Bash(cmd.exe /c \"copy C:\\\\Users\\\\geisa\\\\AppData\\\\Local\\\\Temp\\\\issue-17\\\\3ba31c17-8173-4203-aa1e-ea1854dcd805.png C:\\\\Users\\\\geisa\\\\Local Sites\\\\cli\\\\app\\\\public\\\\wp-content\\\\themes\\\\cli\\\\assets\\\\img\\\\issue-17-hero.png\")",
       "Bash(/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/wp cliconnect:*)",
       "Bash(\"/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/wp\" cliconnect seed)",
-      "Bash(.claude/skills/implementar-issue/scripts/issue.sh 22 --repo GeisaSantos92/cli --destino /tmp/issue-22)"
+      "Bash(.claude/skills/implementar-issue/scripts/issue.sh 22 --repo GeisaSantos92/cli --destino /tmp/issue-22)",
+      "Bash(\"/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/wp\" --path=\"/c/Users/geisa/Local Sites/cli/app/public\" cliconnect seed)",
+      "Bash(ls:*)",
+      "Read(//c/Users/geisa/Local Sites/cli/app/public/**)",
+      "Bash(gh repo:*)",
+      "mcp__figma__download_assets",
+      "Bash(python -c ':*)",
+      "Bash(cwebp -version)",
+      "Bash(ffmpeg -version)",
+      "Bash(./bin/wp plugin:*)",
+      "Bash(grep -rn \"^get_field\\\\b\\\\|^\\\\$[a-z]* = get_field\\(\" template-parts/home/hero.php template-parts/home/boomi.php template-parts/home/camadas.php)",
+      "Bash(./bin/wp rewrite:*)",
+      "Bash(xargs grep:*)",
+      "Bash(cwebp -q 85 \"C:/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/signature-hero-bg.png\" -o \"C:/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/signature-hero-bg.webp\")",
+      "Bash(magick \"C:/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/signature-hero-bg.png\" -quality 85 \"C:/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/signature-hero-bg.webp\")",
+      "WebFetch(domain:www.figma.com)",
+      "Bash(grep -E \"\\\\.\\(png|jpg|jpeg\\)$\")",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:github-production-user-asset-6210df.s3.amazonaws.com)",
+      "Bash(./bin/wp media:*)",
+      "Bash(identify \"C:/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/assets/img/selos-iso-sprite.png\")",
+      "Bash(./bin/wp attachment:*)",
+      "Bash(rm:*)",
+      "mcp__figma__whoami"
     ]
   }
 }

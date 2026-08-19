@@ -77,6 +77,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo a home…' );
 		$this->preencher_home( $paginas['home'], $cases );
 
+		WP_CLI::log( '— Sincronizando home EN (Polylang)…' );
+		$this->sincronizar_polylang_front( $paginas['home'] );
+
 		WP_CLI::log( '— Preenchendo Trabalhe Conosco…' );
 		$this->preencher_trabalhe_conosco( $paginas['trabalhe-conosco'] );
 
@@ -97,6 +100,42 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( '— Preenchendo Salesforce…' );
 		$this->preencher_solucao_salesforce();
+
+		WP_CLI::log( '— Preenchendo Salesforce Sales Cloud…' );
+		$this->preencher_solucao_salesforce_sales_cloud();
+
+		WP_CLI::log( '— Preenchendo SAP…' );
+		$this->preencher_solucao_sap();
+
+		WP_CLI::log( '— Preenchendo TOTVS Protheus…' );
+		$this->preencher_solucao_totvs();
+
+		WP_CLI::log( '— Preenchendo TOTVS Datasul…' );
+		$this->preencher_solucao_datasul();
+
+		WP_CLI::log( '— Preenchendo TOTVS Winthor…' );
+		$this->preencher_solucao_winthor();
+
+		WP_CLI::log( '— Preenchendo TOTVS Logix…' );
+		$this->preencher_solucao_logix();
+
+		WP_CLI::log( '— Preenchendo Senior…' );
+		$this->preencher_solucao_senior();
+
+		WP_CLI::log( '— Preenchendo Sankhya…' );
+		$this->preencher_solucao_sankhya();
+
+		WP_CLI::log( '— Preenchendo Salesforce Service Cloud…' );
+		$this->preencher_solucao_salesforce_service_cloud();
+
+		WP_CLI::log( '— Preenchendo Salesforce Marketing Cloud…' );
+		$this->preencher_solucao_salesforce_marketing_cloud();
+
+		WP_CLI::log( '— Preenchendo Microsoft Dynamics 365…' );
+		$this->preencher_solucao_dynamics365();
+
+		WP_CLI::log( '— Preenchendo RD Station CRM…' );
+		$this->preencher_solucao_rd_station();
 
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
@@ -347,6 +386,9 @@ class Cliconnect_Seed {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $ids['home'] );
 		update_option( 'page_for_posts', $ids['blog'] );
+
+		// Registrar a home PT no Polylang (sem copiar meta — feito depois do preencher_home).
+		$this->registrar_polylang_front( $ids['home'] );
 
 		WP_CLI::log( sprintf( '  páginas: %d (home #%d, blog #%d).', count( $ids ), $ids['home'], $ids['blog'] ) );
 
@@ -947,15 +989,35 @@ class Cliconnect_Seed {
 			'blog_link'             => $this->link( 'Ver todas as postagens', get_permalink( (int) get_option( 'page_for_posts' ) ) ),
 
 			// 16. FAQ.
-			'faq_eyebrow'           => 'FAQ',
-			'faq_titulo'            => 'Dúvidas Frequentes',
+			'faq_eyebrow' => 'FAQ',
+			'faq_titulo'  => 'Dúvidas Frequentes',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $home_id );
 		}
 
-		WP_CLI::log( sprintf( '  home: %d campos preenchidos.', count( $campos ) ) );
+		// FAQ — itens específicos da home.
+		$faq_home = array(
+			array( 'faq:home-o-que-faz',       'O que exatamente o CLI Connect faz?',                     '<p>O CLI Connect é uma plataforma de integração empresarial que conecta ERPs, CRMs, e-commerces e demais sistemas corporativos. Utilizamos a tecnologia da Boomi para criar, monitorar e manter fluxos de dados seguros, escaláveis e auditáveis entre os sistemas da sua empresa.</p>' ),
+			array( 'faq:home-quanto-tempo',     'Quanto tempo demora o serviço?',                          '<p>O tempo varia conforme a complexidade das integrações. Projetos simples podem entrar em produção em poucas semanas; cenários mais complexos, com múltiplos sistemas e regras de negócio, podem levar alguns meses. Durante o diagnóstico inicial apresentamos um cronograma realista para o seu caso.</p>' ),
+			array( 'faq:home-algo-parar',       'E se algo parar de funcionar?',                           '<p>Nossa equipe monitora as integrações continuamente. Em caso de falha, abrimos um chamado automaticamente e acionamos o time de suporte antes mesmo de você perceber o problema. Você também pode acionar o suporte a qualquer momento pelos nossos canais de atendimento.</p>' ),
+			array( 'faq:home-dependencia',      'Vou depender da CLI para tudo?',                          '<p>Não. As integrações são construídas sobre a plataforma Boomi, que é de sua propriedade. A CLI Connect cuida da operação, evolução e suporte — mas você tem acesso ao ambiente e pode acionar outros parceiros Boomi se desejar. Nosso modelo é de parceria, não de lock-in.</p>' ),
+			array( 'faq:home-contratacao',      'Como funciona o modelo de contratação?',                  '<p>Trabalhamos com projetos de implantação (escopo fechado) e contratos de serviço gerenciado (mensalidade por ambiente monitorado). O modelo mais adequado depende do seu momento: novos clientes geralmente começam pela implantação e evoluem para o serviço gerenciado após o go-live.</p>' ),
+			array( 'faq:home-criar-integracoes', 'Posso criar minhas próprias integrações na CLI Connect?', '<p>Sim. A plataforma Boomi permite que times internos criem e editem integrações. A CLI Connect pode treinar sua equipe, fazer revisões de código e assumir a operação quando necessário. Muitos clientes optam por um modelo híbrido, onde desenvolvem internamente e contam com a CLI para suporte e monitoramento.</p>' ),
+		);
+		$faq_ids = array();
+		foreach ( $faq_home as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$faq_ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'faq_itens', $faq_ids, $home_id );
+
+		WP_CLI::log( sprintf( '  home: %d campos preenchidos, %d FAQs vinculados.', count( $campos ), count( $faq_ids ) ) );
 	}
 
 	/**
@@ -1000,10 +1062,17 @@ class Cliconnect_Seed {
 					'chatgpt'                        => 'ChatGPT',
 					'sap'                            => 'SAP',
 					'salesforce'                     => 'Salesforce',
+					'salesforce-sales-cloud'         => 'Salesforce Sales Cloud',
+					'salesforce-service-cloud'       => 'Salesforce Service Cloud',
+				'salesforce-marketing-cloud'     => 'Salesforce Marketing Cloud',
 					'totvs-protheus'                 => 'TOTVS Protheus',
+					'totvs-datasul'                  => 'TOTVS Datasul',
+					'totvs-winthor'                  => 'TOTVS Winthor',
+					'totvs-logix'                    => 'TOTVS Logix',
 					'sankhya'                        => 'Sankhya',
 					'senior'                         => 'Senior',
 					'dynamics-365'                   => 'Dynamics 365',
+					'rd-station-crm'                 => 'RD Station CRM',
 				),
 			),
 			'industria'      => array(
@@ -1124,7 +1193,7 @@ class Cliconnect_Seed {
 
 		/*
 		 * Helper: retorna a URL do termo de taxonomia pelo mapa de IDs.
-		 * Fallback para $solucoes_base se o termo não foi criado.
+		 * Usado apenas para cabeçalhos de categoria (Tecnologia, Indústria, etc.).
 		 */
 		$turl = function ( $chave ) use ( $termos_solucao, $solucoes_base ) {
 			if ( empty( $termos_solucao[ $chave ] ) ) {
@@ -1132,6 +1201,26 @@ class Cliconnect_Seed {
 			}
 			$link = get_term_link( (int) $termos_solucao[ $chave ], 'cli_categoria_solucao' );
 			return is_wp_error( $link ) ? $solucoes_base : $link;
+		};
+
+		/*
+		 * Helper: retorna o permalink do post cli_solucao pelo slug do seed.
+		 * Usado para itens folha — aponta para a landing page real.
+		 */
+		$purl = function ( $chave ) use ( $solucoes_base ) {
+			$posts = get_posts( array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,       // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:' . $chave, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			) );
+			if ( ! $posts ) {
+				return $solucoes_base;
+			}
+			$link = get_permalink( (int) $posts[0] );
+			return $link ?: $solucoes_base;
 		};
 
 		/*
@@ -1144,60 +1233,66 @@ class Cliconnect_Seed {
 				'titulo' => 'Tecnologia',
 				'url'    => $turl( 'tecnologia' ),
 				'filhos' => array(
-					'Claude'          => $turl( 'claude' ),
-					'ChatGPT'         => $turl( 'chatgpt' ),
-					'SAP'             => $turl( 'sap' ),
-					'Salesforce'      => $turl( 'salesforce' ),
-					'TOTVS Protheus'  => $turl( 'totvs-protheus' ),
-					'Sankhya'         => $turl( 'sankhya' ),
-					'Senior'          => $turl( 'senior' ),
-					'Dynamics 365'    => $turl( 'dynamics-365' ),
+					'Claude'                     => $purl( 'claude' ),
+					'ChatGPT'                    => $purl( 'chatgpt' ),
+					'SAP'                        => $purl( 'sap' ),
+					'Salesforce'                 => $purl( 'salesforce' ),
+					'Salesforce Sales Cloud'     => $purl( 'salesforce-sales-cloud' ),
+					'Salesforce Service Cloud'   => $purl( 'salesforce-service-cloud' ),
+					'Salesforce Marketing Cloud' => $purl( 'salesforce-marketing-cloud' ),
+					'TOTVS Protheus'             => $purl( 'totvs-protheus' ),
+					'TOTVS Datasul'              => $purl( 'totvs-datasul' ),
+					'TOTVS Winthor'              => $purl( 'totvs-winthor' ),
+					'TOTVS Logix'               => $purl( 'totvs-logix' ),
+					'Sankhya'                    => $purl( 'sankhya' ),
+					'Senior'                     => $purl( 'senior' ),
+					'Dynamics 365'               => $purl( 'dynamics-365' ),
 				),
 			),
 			array(
 				'titulo' => 'Indústria',
 				'url'    => $turl( 'industria' ),
 				'filhos' => array(
-					'Serviços Financeiros' => $turl( 'servicos-financeiros' ),
-					'Manufatura'           => $turl( 'manufatura' ),
-					'Logística (3PL)'      => $turl( 'logistica-3pl' ),
-					'Software (ISV)'       => $turl( 'software-isv' ),
-					'Varejo'               => $turl( 'varejo' ),
-					'Hotelaria e Turismo'  => $turl( 'hotelaria-e-turismo' ),
-					'Seguros'              => $turl( 'seguros' ),
+					'Serviços Financeiros' => $purl( 'servicos-financeiros' ),
+					'Manufatura'           => $purl( 'manufatura' ),
+					'Logística (3PL)'      => $purl( 'logistica-3pl' ),
+					'Software (ISV)'       => $purl( 'software-isv' ),
+					'Varejo'               => $purl( 'varejo' ),
+					'Hotelaria e Turismo'  => $purl( 'hotelaria-e-turismo' ),
+					'Seguros'              => $purl( 'seguros' ),
 				),
 			),
 			array(
 				'titulo' => 'Departamento',
 				'url'    => $turl( 'departamento' ),
 				'filhos' => array(
-					'Recursos Humanos (RH)'         => $turl( 'recursos-humanos-rh' ),
-					'Operações de Receita (RevOps)' => $turl( 'operacoes-de-receita-revops' ),
-					'Marketing'                     => $turl( 'marketing' ),
-					'Financeiro'                    => $turl( 'financeiro' ),
+					'Recursos Humanos (RH)'         => $purl( 'recursos-humanos-rh' ),
+					'Operações de Receita (RevOps)' => $purl( 'operacoes-de-receita-revops' ),
+					'Marketing'                     => $purl( 'marketing' ),
+					'Financeiro'                    => $purl( 'financeiro' ),
 				),
 			),
 			array(
 				'titulo' => 'Nuvem',
 				'url'    => $turl( 'nuvem' ),
 				'filhos' => array(
-					'AWS'          => $turl( 'aws' ),
-					'Google Cloud' => $turl( 'google-cloud' ),
-					'Azure'        => $turl( 'azure' ),
+					'AWS'          => $purl( 'aws' ),
+					'Google Cloud' => $purl( 'google-cloud' ),
+					'Azure'        => $purl( 'azure' ),
 				),
 			),
 			array(
 				'titulo' => 'Por Iniciativa',
 				'url'    => $turl( 'por-iniciativa' ),
 				'filhos' => array(
-					'Atualização de Sistemas Legados' => $turl( 'atualizacao-de-sistemas-legados' ),
-					'Pedido ao Recebimento'           => $turl( 'pedido-ao-recebimento' ),
-					'IA Corporativa'                  => $turl( 'ia-corporativa' ),
-					'Compras ao Pagamento'            => $turl( 'compras-ao-pagamento' ),
-					'Jornada do Colaborador'          => $turl( 'jornada-do-colaborador' ),
-					'Soberania de Dados'              => $turl( 'soberania-de-dados' ),
-					'Visão 360° do Cliente'           => $turl( 'visao-360-do-cliente' ),
-					'Modernização de ERP'             => $turl( 'modernizacao-de-erp' ),
+					'Atualização de Sistemas Legados' => $purl( 'atualizacao-de-sistemas-legados' ),
+					'Pedido ao Recebimento'           => $purl( 'pedido-ao-recebimento' ),
+					'IA Corporativa'                  => $purl( 'ia-corporativa' ),
+					'Compras ao Pagamento'            => $purl( 'compras-ao-pagamento' ),
+					'Jornada do Colaborador'          => $purl( 'jornada-do-colaborador' ),
+					'Soberania de Dados'              => $purl( 'soberania-de-dados' ),
+					'Visão 360° do Cliente'           => $purl( 'visao-360-do-cliente' ),
+					'Modernização de ERP'             => $purl( 'modernizacao-de-erp' ),
 				),
 			),
 			array( 'titulo' => 'Ver todos', 'url' => $solucoes_base ),
@@ -1278,14 +1373,17 @@ class Cliconnect_Seed {
 							'titulo' => 'Tecnologia',
 							'url'    => $turl( 'tecnologia' ),
 							'filhos' => array(
-								'Claude'         => $turl( 'claude' ),
-								'ChatGPT'        => $turl( 'chatgpt' ),
-								'SAP'            => $turl( 'sap' ),
-								'Salesforce'     => $turl( 'salesforce' ),
-								'TOTVS Protheus' => $turl( 'totvs-protheus' ),
-								'Sankhya'        => $turl( 'sankhya' ),
-								'Senior'         => $turl( 'senior' ),
-								'Dynamics 365'   => $turl( 'dynamics-365' ),
+								'Claude'                     => $purl( 'claude' ),
+								'ChatGPT'                    => $purl( 'chatgpt' ),
+								'SAP'                        => $purl( 'sap' ),
+								'Salesforce'                 => $purl( 'salesforce' ),
+								'Salesforce Sales Cloud'     => $purl( 'salesforce-sales-cloud' ),
+								'Salesforce Service Cloud'   => $purl( 'salesforce-service-cloud' ),
+								'Salesforce Marketing Cloud' => $purl( 'salesforce-marketing-cloud' ),
+								'TOTVS Protheus'             => $purl( 'totvs-protheus' ),
+								'Sankhya'                    => $purl( 'sankhya' ),
+								'Senior'                     => $purl( 'senior' ),
+								'Dynamics 365'               => $purl( 'dynamics-365' ),
 								array(
 									'titulo'  => 'Ver todos',
 									'url'     => $turl( 'tecnologia' ),
@@ -1304,13 +1402,13 @@ class Cliconnect_Seed {
 							'titulo' => 'Indústria',
 							'url'    => $turl( 'industria' ),
 							'filhos' => array(
-								'Serviços Financeiros' => $turl( 'servicos-financeiros' ),
-								'Manufatura'           => $turl( 'manufatura' ),
-								'Logística (3PL)'      => $turl( 'logistica-3pl' ),
-								'Software (ISV)'       => $turl( 'software-isv' ),
-								'Varejo'               => $turl( 'varejo' ),
-								'Hotelaria e Turismo'  => $turl( 'hotelaria-e-turismo' ),
-								'Seguros'              => $turl( 'seguros' ),
+								'Serviços Financeiros' => $purl( 'servicos-financeiros' ),
+								'Manufatura'           => $purl( 'manufatura' ),
+								'Logística (3PL)'      => $purl( 'logistica-3pl' ),
+								'Software (ISV)'       => $purl( 'software-isv' ),
+								'Varejo'               => $purl( 'varejo' ),
+								'Hotelaria e Turismo'  => $purl( 'hotelaria-e-turismo' ),
+								'Seguros'              => $purl( 'seguros' ),
 							),
 						),
 					),
@@ -1324,19 +1422,19 @@ class Cliconnect_Seed {
 							'titulo' => 'Departamento',
 							'url'    => $turl( 'departamento' ),
 							'filhos' => array(
-								'Recursos Humanos (RH)'         => $turl( 'recursos-humanos-rh' ),
-								'Operações de Receita (RevOps)' => $turl( 'operacoes-de-receita-revops' ),
-								'Marketing'                     => $turl( 'marketing' ),
-								'Financeiro'                    => $turl( 'financeiro' ),
+								'Recursos Humanos (RH)'         => $purl( 'recursos-humanos-rh' ),
+								'Operações de Receita (RevOps)' => $purl( 'operacoes-de-receita-revops' ),
+								'Marketing'                     => $purl( 'marketing' ),
+								'Financeiro'                    => $purl( 'financeiro' ),
 							),
 						),
 						array(
 							'titulo' => 'Nuvem',
 							'url'    => $turl( 'nuvem' ),
 							'filhos' => array(
-								'AWS'          => $turl( 'aws' ),
-								'Google Cloud' => $turl( 'google-cloud' ),
-								'Azure'        => $turl( 'azure' ),
+								'AWS'          => $purl( 'aws' ),
+								'Google Cloud' => $purl( 'google-cloud' ),
+								'Azure'        => $purl( 'azure' ),
 							),
 						),
 					),
@@ -1350,14 +1448,14 @@ class Cliconnect_Seed {
 							'titulo' => 'Por Iniciativa',
 							'url'    => $turl( 'por-iniciativa' ),
 							'filhos' => array(
-								'Atualização de Sistemas Legados' => $turl( 'atualizacao-de-sistemas-legados' ),
-								'IA Corporativa'                  => $turl( 'ia-corporativa' ),
-								'Compras ao Pagamento'            => $turl( 'compras-ao-pagamento' ),
-								'Pedido ao Recebimento'           => $turl( 'pedido-ao-recebimento' ),
-								'Jornada do Colaborador'          => $turl( 'jornada-do-colaborador' ),
-								'Soberania de Dados'              => $turl( 'soberania-de-dados' ),
-								'Visão 360° do Cliente'           => $turl( 'visao-360-do-cliente' ),
-								'Modernização de ERP'             => $turl( 'modernizacao-de-erp' ),
+								'Atualização de Sistemas Legados' => $purl( 'atualizacao-de-sistemas-legados' ),
+								'IA Corporativa'                  => $purl( 'ia-corporativa' ),
+								'Compras ao Pagamento'            => $purl( 'compras-ao-pagamento' ),
+								'Pedido ao Recebimento'           => $purl( 'pedido-ao-recebimento' ),
+								'Jornada do Colaborador'          => $purl( 'jornada-do-colaborador' ),
+								'Soberania de Dados'              => $purl( 'soberania-de-dados' ),
+								'Visão 360° do Cliente'           => $purl( 'visao-360-do-cliente' ),
+								'Modernização de ERP'             => $purl( 'modernizacao-de-erp' ),
 							),
 						),
 					),
@@ -1516,6 +1614,75 @@ class Cliconnect_Seed {
 		}
 
 		update_option( 'polylang', $opcoes );
+	}
+
+	/**
+	 * Registra a home PT no Polylang: atualiza page_on_front.pt e vincula
+	 * a tradução EN. Chamado de criar_paginas() — sem copiar meta ainda.
+	 *
+	 * @param int $pt_id ID da home em PT.
+	 * @return void
+	 */
+	protected function registrar_polylang_front( $pt_id ) {
+		if ( ! function_exists( 'pll_save_post_translations' ) ) {
+			return;
+		}
+
+		$opcoes = get_option( 'polylang' );
+		if ( ! is_array( $opcoes ) ) {
+			return;
+		}
+
+		$opcoes['page_on_front']['pt'] = (int) $pt_id;
+
+		$en_id = 0;
+		if ( ! empty( $opcoes['page_on_front']['en'] ) ) {
+			$candidate = (int) $opcoes['page_on_front']['en'];
+			if ( get_post_status( $candidate ) ) {
+				$en_id = $candidate;
+			}
+		}
+
+		update_option( 'polylang', $opcoes );
+
+		if ( $en_id ) {
+			pll_save_post_translations( array( 'pt' => (int) $pt_id, 'en' => $en_id ) );
+		}
+	}
+
+	/**
+	 * Copia os meta ACF da home PT para a home EN após preencher_home().
+	 * Garante que a versão EN tenha o mesmo conteúdo que a PT.
+	 *
+	 * @param int $pt_id ID da home em PT.
+	 * @return void
+	 */
+	protected function sincronizar_polylang_front( $pt_id ) {
+		if ( ! function_exists( 'pll_get_post_language' ) ) {
+			return;
+		}
+
+		$opcoes = get_option( 'polylang' );
+		$en_id  = ! empty( $opcoes['page_on_front']['en'] ) ? (int) $opcoes['page_on_front']['en'] : 0;
+
+		if ( ! $en_id || ! get_post_status( $en_id ) ) {
+			WP_CLI::warning( '  Polylang: home EN não encontrada; conteúdo EN não sincronizado.' );
+			return;
+		}
+
+		$skip = array( '_pll_translations', '_pll_language', '_thumbnail_id' );
+		$meta = get_post_meta( $pt_id );
+		foreach ( $meta as $key => $values ) {
+			if ( in_array( $key, $skip, true ) || strpos( $key, 'pll_' ) === 0 ) {
+				continue;
+			}
+			delete_post_meta( $en_id, $key );
+			foreach ( $values as $val ) {
+				add_post_meta( $en_id, $key, maybe_unserialize( $val ) );
+			}
+		}
+
+		WP_CLI::log( "  Polylang home EN={$en_id}: meta copiadas de PT={$pt_id}." );
 	}
 
 	/* =====================================================================
@@ -1959,7 +2126,32 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $pagina_id );
 		}
 
-		WP_CLI::log( sprintf( '  cli-connect: %d campos preenchidos.', count( $campos ) ) );
+		// FAQ — 5 perguntas específicas da página CLI Connect.
+		$faq_slugs = array(
+			'faq:home-o-que-faz',
+			'faq:home-quanto-tempo',
+			'faq:home-algo-parar',
+			'faq:home-dependencia',
+			'faq:home-contratacao',
+		);
+		$faq_ids = array();
+		foreach ( $faq_slugs as $slug ) {
+			$post = get_posts( array(
+				'post_type'      => 'cli_faq',
+				'posts_per_page' => 1,
+				'meta_key'       => self::META,
+				'meta_value'     => $slug,
+				'fields'         => 'ids',
+			) );
+			if ( $post ) {
+				$faq_ids[] = (int) $post[0];
+			}
+		}
+		if ( $faq_ids ) {
+			update_field( 'faq_itens', $faq_ids, $pagina_id );
+		}
+
+		WP_CLI::log( sprintf( '  cli-connect: %d campos preenchidos, %d FAQs vinculados.', count( $campos ), count( $faq_ids ) ) );
 	}
 
 	/**
@@ -2568,6 +2760,149 @@ class Cliconnect_Seed {
 		WP_CLI::log( "  Salesforce preenchido (ID: {$post_id})." );
 	}
 
+	protected function preencher_solucao_salesforce_sales_cloud() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:salesforce-sales-cloud', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Salesforce Sales Cloud: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Salesforce Sales Cloud',
+			'solucao_hero_titulo'     => 'Conecte o Salesforce Sales Cloud ao ERP e acelere todo o ciclo de vendas',
+			'solucao_hero_corpo'      => 'Automatize a jornada do lead ao faturamento integrando o Sales Cloud com ERP, CPQ, financeiro e demais sistemas da empresa, eliminando retrabalho e garantindo dados sincronizados em cada etapa da venda.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-sales-cloud/',
+			'solucao_hero_imagem'     => $this->img( 'salesforce-sc-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte toda a jornada comercial',
+			'solucao_pilares_1_icone'  => $this->img( 'salesforce-sc-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Automatize do lead ao faturamento',
+			'solucao_pilares_1_desc'   => 'Conecte marketing, CRM, CPQ, ERP e financeiro para transformar oportunidades em pedidos sem processos manuais.',
+			'solucao_pilares_2_icone'  => $this->img( 'salesforce-sc-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize vendas e ERP',
+			'solucao_pilares_2_desc'   => 'Mantenha oportunidades, contas, clientes e pedidos atualizados entre Salesforce e ERP de forma bidirecional.',
+			'solucao_pilares_3_icone'  => $this->img( 'salesforce-sc-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Acione processos em tempo real',
+			'solucao_pilares_3_desc'   => 'Dispare aprovações, notificações e automações imediatamente sempre que um registro importante for alterado no Salesforce.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize os principais processos do Sales Cloud',
+			'solucao_casos_1_icone'   => $this->img( 'salesforce-sc-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Automatize o processo Lead-to-Quote',
+			'solucao_casos_1_desc'    => 'Conecte marketing, Sales Cloud e CPQ para acelerar a geração de propostas e reduzir etapas manuais.',
+			'solucao_casos_2_icone'   => $this->img( 'salesforce-sc-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Sincronize pedidos com o ERP',
+			'solucao_casos_2_desc'    => 'Atualize pedidos do ERP automaticamente no Sales Cloud em processos agendados ou em tempo real.',
+			'solucao_casos_3_icone'   => $this->img( 'salesforce-sc-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Gere pedidos automaticamente',
+			'solucao_casos_3_desc'    => 'Transforme oportunidades ganhas em pedidos no ERP sem redigitação ou intervenção operacional.',
+			'solucao_casos_4_icone'   => $this->img( 'salesforce-sc-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Conecte múltiplas organizações Salesforce',
+			'solucao_casos_4_desc'    => 'Centralize dados entre diferentes instâncias Salesforce mantendo informações comerciais sincronizadas.',
+			'solucao_casos_5_icone'   => $this->img( 'salesforce-sc-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Receba alertas de oportunidades',
+			'solucao_casos_5_desc'    => 'Dispare notificações e processos sempre que oportunidades mudarem de estágio durante a negociação.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações preparadas para produção Salesforce',
+			'solucao_dif_corpo'    => 'Utilize todas as principais operações da REST API, eventos em tempo real e autenticação segura para construir integrações escaláveis sem comprometer a arquitetura do Salesforce.',
+			'solucao_dif_topico_1' => 'Utilize APIs oficiais do Salesforce.',
+			'solucao_dif_topico_2' => 'Automatize eventos em tempo real.',
+			'solucao_dif_topico_3' => 'Proteja conexões com JWT Bearer Flow.',
+			'solucao_dif_imagem'   => $this->img( 'salesforce-sc-dif' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 6 · Plataforma única.
+		update_field( 'solucao_plat_eyebrow',  'plataforma única', $post_id );
+		update_field( 'solucao_plat_titulo',   'Centralize toda a jornada comercial em uma plataforma', $post_id );
+		update_field( 'solucao_plat_corpo',    'O Sales Cloud depende de ERP, CPQ e faturamento para concluir uma venda. Centralize todas essas integrações em uma única plataforma para reduzir custos, simplificar a arquitetura e acelerar novas automações.', $post_id );
+		update_field( 'solucao_plat_topico_1', 'Centralize integrações do ciclo comercial.', $post_id );
+		update_field( 'solucao_plat_topico_2', 'Reutilize fluxos entre diferentes projetos.', $post_id );
+		update_field( 'solucao_plat_topico_3', 'Reduza dependência de desenvolvimentos específicos.', $post_id );
+		update_field( 'solucao_plat_imagem',   $this->img( 'salesforce-sc-plataforma' ), $post_id );
+
+		// 7 · Aceleradores.
+		update_field( 'solucao_acel_eyebrow',  'Aceleradores de integração', $post_id );
+		update_field( 'solucao_acel_titulo',   'Comece com automações já estruturadas', $post_id );
+		update_field( 'solucao_acel_corpo',    'Utilize um modelo pronto para automatizar toda a jornada entre Sales Cloud, CPQ e ERP, reduzindo o tempo de implantação e acelerando a entrega de valor.', $post_id );
+		update_field( 'solucao_acel_topico_1', 'Implante integrações em poucos dias.', $post_id );
+		update_field( 'solucao_acel_topico_2', 'Reutilize modelos já validados.', $post_id );
+		update_field( 'solucao_acel_topico_3', 'Adapte fluxos ao seu processo comercial.', $post_id );
+		update_field( 'solucao_acel_topico_4', 'E muito mais...', $post_id );
+		update_field( 'solucao_acel_btn_texto', 'Começar agora', $post_id );
+		update_field( 'solucao_acel_btn_url',   '/contato/', $post_id );
+		update_field( 'solucao_acel_imagem',   $this->img( 'salesforce-sc-aceleradores' ), $post_id );
+
+		// 8 · FAQ.
+		$this->preencher_salesforce_sc_faq( $post_id );
+
+		WP_CLI::log( "  Salesforce Sales Cloud preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_salesforce_sc_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sc-oportunidades-tempo-real',
+				'Como funciona a sincronização de oportunidades em tempo real?',
+				'<p>A CLI Connect utiliza a Subscription API (Platform Events / Change Data Capture) do Salesforce para capturar alterações em oportunidades no momento em que ocorrem. Assim que um registro é atualizado no Sales Cloud, o evento é processado e os dados são propagados para o ERP ou sistema destino sem polling manual.</p>',
+			),
+			array(
+				'faq:sc-multiplas-orgs',
+				'É possível conectar múltiplas organizações Salesforce à mesma integração?',
+				'<p>Sim. A CLI Connect suporta múltiplas orgs Salesforce em um único projeto de integração. Cada organização é configurada como uma conexão independente, permitindo centralizar fluxos de dados entre diferentes instâncias de Sales Cloud e os sistemas corporativos sem duplicar arquiteturas.</p>',
+			),
+			array(
+				'faq:sc-vs-mulesoft',
+				'Como a CLI Connect se compara ao MuleSoft para integrar o Sales Cloud?',
+				'<p>A CLI Connect é uma alternativa mais acessível e ágil para integrar o Sales Cloud a ERPs e sistemas corporativos. Enquanto o MuleSoft exige equipes especializadas e ciclos longos de implementação, a CLI Connect oferece aceleradores prontos, implantação mais rápida e custo total de propriedade reduzido — mantendo governança, segurança e escalabilidade enterprise.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  Salesforce Sales Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
 	/**
 	 * Preenche os campos ACF da seção Diferencial Técnico do Salesforce.
 	 *
@@ -2654,6 +2989,487 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 	}
+
+	/* =====================================================================
+	   Salesforce Service Cloud
+	   ===================================================================== */
+
+	protected function preencher_solucao_salesforce_service_cloud() {
+		$post_id = $this->upsert( 'solucao:salesforce-service-cloud', array(
+			'post_type'  => 'cli_solucao',
+			'post_title' => 'Salesforce Service Cloud',
+			'post_status' => 'publish',
+		) );
+
+		$campos = array(
+			// 1 · Hero
+			'solucao_hero_eyebrow'    => 'para o seu Salesforce Service Cloud',
+			'solucao_hero_titulo'     => 'Conecte o Salesforce Service Cloud e entregue atendimento com contexto completo',
+			'solucao_hero_corpo'      => 'Integre o Service Cloud ao ERP, faturamento, field service e canais de atendimento para que sua equipe resolva chamados mais rapidamente, sem alternar entre sistemas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-service-cloud/',
+			'solucao_hero_imagem'     => $this->img( 'salesforce-svc-hero' ),
+			// 2 · Pilares
+			'solucao_pilares_titulo'   => 'Conecte toda a operação de atendimento',
+			'solucao_pilares_1_icone'  => $this->img( 'salesforce-svc-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Enriqueça cada atendimento',
+			'solucao_pilares_1_desc'   => 'Disponibilize dados de pedidos, faturamento e histórico do cliente diretamente no caso, sem depender de consultas em outros sistemas.',
+			'solucao_pilares_2_icone'  => $this->img( 'salesforce-svc-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Orquestre todos os canais',
+			'solucao_pilares_2_desc'   => 'Conecte telefonia, WhatsApp, chat e demais canais ao Service Cloud para centralizar toda a jornada de atendimento.',
+			'solucao_pilares_3_icone'  => $this->img( 'salesforce-svc-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Automatize SLAs e escalonamentos',
+			'solucao_pilares_3_desc'   => 'Dispare regras, notificações e encaminhamentos automaticamente conforme eventos do atendimento e integrações corporativas.',
+			// 3 · Casos de uso
+			'solucao_casos_eyebrow'  => 'casos de uso',
+			'solucao_casos_titulo'   => 'Automatize os principais processos de atendimento',
+			'solucao_casos_1_icone'  => $this->img( 'salesforce-svc-caso-1' ),
+			'solucao_casos_1_titulo' => 'Enriqueça casos com dados do ERP',
+			'solucao_casos_1_desc'   => 'Apresente informações de faturamento, pedidos e contratos em tempo real durante o atendimento ao cliente.',
+			'solucao_casos_2_icone'  => $this->img( 'salesforce-svc-caso-2' ),
+			'solucao_casos_2_titulo' => 'Integre equipes de campo',
+			'solucao_casos_2_desc'   => 'Conecte ordens de serviço e sistemas de field service para acompanhar toda a execução do atendimento.',
+			'solucao_casos_3_icone'  => $this->img( 'salesforce-svc-caso-3' ),
+			'solucao_casos_3_titulo' => 'Automatize reembolsos',
+			'solucao_casos_3_desc'   => 'Dispare processos de estorno e reembolso automaticamente após a resolução de um caso.',
+			'solucao_casos_4_icone'  => $this->img( 'salesforce-svc-caso-4' ),
+			'solucao_casos_4_titulo' => 'Sincronize a base de conhecimento',
+			'solucao_casos_4_desc'   => 'Mantenha conteúdos atualizados entre o Service Cloud e portais de autoatendimento sem processos manuais.',
+			'solucao_casos_5_icone'  => $this->img( 'salesforce-svc-caso-5' ),
+			'solucao_casos_5_titulo' => 'Receba alertas proativos de SLA',
+			'solucao_casos_5_desc'   => 'Acione notificações e escalonamentos em tempo real sempre que um SLA estiver em risco.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Atendimento sempre atualizado entre todos os sistemas',
+			'solucao_dif_corpo'    => 'Utilize eventos em tempo real via Subscription API para manter o Service Cloud sincronizado com ERP, faturamento e demais aplicações, garantindo decisões baseadas em informações atuais.',
+			'solucao_dif_topico_1' => 'Atualize dados em tempo real',
+			'solucao_dif_topico_2' => 'Evite informações desatualizadas no atendimento',
+			'solucao_dif_topico_3' => 'Integre eventos entre todos os sistemas',
+			'solucao_dif_imagem'   => $this->img( 'salesforce-svc-dif' ),
+			// 6 · Plataforma
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Uma plataforma para centralizar todo o atendimento',
+			'solucao_plat_corpo'    => 'Grande parte do tempo de atendimento é perdida consultando outros sistemas. Centralize essas integrações para entregar todo o contexto diretamente no Service Cloud e acelerar a resolução dos casos.',
+			'solucao_plat_topico_1' => 'Centralize dados do cliente',
+			'solucao_plat_topico_2' => 'Reduza trocas entre sistemas',
+			'solucao_plat_topico_3' => 'Acelere o tempo de resolução',
+			'solucao_plat_imagem'   => $this->img( 'salesforce-svc-plataforma' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com integrações prontas para atendimento',
+			'solucao_acel_corpo'     => 'Utilize um modelo pré-configurado para consultar faturamento, pedidos e informações do ERP diretamente no Service Cloud, reduzindo o tempo de implantação.',
+			'solucao_acel_topico_1'  => 'Implante consultas rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize modelos validados',
+			'solucao_acel_topico_3'  => 'Adapte fluxos ao seu negócio',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'salesforce-svc-aceleradores' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_salesforce_svc_faq( $post_id );
+		WP_CLI::log( "  Salesforce Service Cloud preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_salesforce_svc_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:svc-erp-tempo-real',
+				'Como o Service Cloud recebe informações do ERP em tempo real?',
+				'<p>A CLI Connect utiliza a Subscription API do Salesforce combinada com webhooks e conectores nativos de ERP para propagar eventos em tempo real. Quando um pedido é atualizado no ERP, o caso correspondente no Service Cloud recebe os dados atualizados automaticamente, sem necessidade de consultas manuais.</p>',
+			),
+			array(
+				'faq:svc-reembolso-automatico',
+				'É possível automatizar processos de reembolso a partir de um caso?',
+				'<p>Sim. A CLI Connect permite criar fluxos que, ao encerrar um caso com determinado status, disparam automaticamente o processo de estorno ou reembolso no ERP ou sistema financeiro. O agente de atendimento não precisa acessar nenhum outro sistema para iniciar o processo.</p>',
+			),
+			array(
+				'faq:svc-whatsapp-telefonia',
+				'Como funciona a integração com WhatsApp e telefonia?',
+				'<p>A CLI Connect conecta plataformas de telefonia e canais de mensageria como WhatsApp ao Service Cloud via APIs oficiais. As interações são registradas automaticamente como casos ou atividades, centralizando toda a jornada de atendimento em um único lugar sem duplicidade de dados.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  Salesforce Service Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/* =====================================================================
+	   Salesforce Marketing Cloud
+	   ===================================================================== */
+
+	protected function preencher_solucao_salesforce_marketing_cloud() {
+		$post_id = $this->upsert( 'solucao:salesforce-marketing-cloud', array(
+			'post_type'   => 'cli_solucao',
+			'post_title'  => 'Salesforce Marketing Cloud',
+			'post_status' => 'publish',
+		) );
+
+		$campos = array(
+			// 1 · Hero
+			'solucao_hero_eyebrow'    => 'para o seu Salesforce Marketing Cloud',
+			'solucao_hero_titulo'     => 'Alimente suas jornadas de marketing com dados vivos de vendas e produto',
+			'solucao_hero_corpo'      => 'Conecte o Salesforce Marketing Cloud ao CRM, e-commerce e data warehouse para criar campanhas baseadas em comportamentos reais, com dados atualizados em cada interação com o cliente.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-marketing-cloud/',
+			'solucao_hero_imagem'     => $this->img( 'salesforce-mc-hero' ),
+			// 2 · Pilares
+			'solucao_pilares_titulo'   => 'Transforme dados em jornadas relevantes',
+			'solucao_pilares_1_icone'  => $this->img( 'salesforce-mc-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Dispare jornadas por eventos reais',
+			'solucao_pilares_1_desc'   => 'Ative campanhas automaticamente a partir de compras, uso de produto e interações de suporte.',
+			'solucao_pilares_2_icone'  => $this->img( 'salesforce-mc-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize audiências em tempo real',
+			'solucao_pilares_2_desc'   => 'Mantenha listas e segmentos atualizados entre Marketing Cloud, CRM e ERP continuamente.',
+			'solucao_pilares_3_icone'  => $this->img( 'salesforce-mc-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Personalize com dados completos',
+			'solucao_pilares_3_desc'   => 'Enriqueça perfis de contato com informações de vendas, produto e comportamento.',
+			// 3 · Casos de uso
+			'solucao_casos_eyebrow'  => 'casos de uso',
+			'solucao_casos_titulo'   => 'Automatize jornadas orientadas por dados',
+			'solucao_casos_1_icone'  => $this->img( 'salesforce-mc-caso-1' ),
+			'solucao_casos_1_titulo' => 'Dispare jornadas automaticamente',
+			'solucao_casos_1_desc'   => 'Acione o Journey Builder a partir de eventos de e-commerce e ERP em tempo real.',
+			'solucao_casos_2_icone'  => $this->img( 'salesforce-mc-caso-2' ),
+			'solucao_casos_2_titulo' => 'Sincronize audiências comerciais',
+			'solucao_casos_2_desc'   => 'Conecte segmentos entre Marketing Cloud, Sales Cloud e Service Cloud continuamente.',
+			'solucao_casos_3_icone'  => $this->img( 'salesforce-mc-caso-3' ),
+			'solucao_casos_3_titulo' => 'Enriqueça perfis de clientes',
+			'solucao_casos_3_desc'   => 'Adicione dados de uso de produto para criar experiências mais personalizadas.',
+			'solucao_casos_4_icone'  => $this->img( 'salesforce-mc-caso-4' ),
+			'solucao_casos_4_titulo' => 'Feche a atribuição de campanhas',
+			'solucao_casos_4_desc'   => 'Conecte marketing, CRM e ERP para acompanhar impacto até a receita.',
+			'solucao_casos_5_icone'  => $this->img( 'salesforce-mc-caso-5' ),
+			'solucao_casos_5_titulo' => 'Aplique opt-out automaticamente',
+			'solucao_casos_5_desc'   => 'Propague preferências de contato entre todos os canais conectados.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para dados de marketing',
+			'solucao_dif_corpo'    => 'Utilize APIs REST e SOAP do Marketing Cloud com controles de consentimento para garantir que preferências acompanhem todos os sistemas conectados.',
+			'solucao_dif_topico_1' => 'Utilize APIs oficiais REST e SOAP',
+			'solucao_dif_topico_2' => 'Propague consentimentos entre sistemas',
+			'solucao_dif_topico_3' => 'Controle opt-outs em todos canais',
+			'solucao_dif_imagem'   => $this->img( 'salesforce-mc-dif' ),
+			// 6 · Plataforma
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize jornadas com dados conectados',
+			'solucao_plat_corpo'    => 'Conecte Marketing Cloud a vendas, produto e suporte em uma única plataforma para criar jornadas baseadas em comportamento real, não em listas antigas.',
+			'solucao_plat_topico_1' => 'Conecte eventos reais de negócio',
+			'solucao_plat_topico_2' => 'Elimine exportações manuais de listas',
+			'solucao_plat_topico_3' => 'Unifique dados entre áreas comerciais',
+			'solucao_plat_imagem'   => $this->img( 'salesforce-mc-plataforma' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'  => 'Aceleradores de integração',
+			'solucao_acel_titulo'   => 'Comece com jornadas já estruturadas',
+			'solucao_acel_corpo'    => 'Utilize um modelo pronto para disparar jornadas no Journey Builder a partir de eventos de ERP e e-commerce, acelerando sua operação de marketing.',
+			'solucao_acel_topico_1' => 'Configure eventos rapidamente',
+			'solucao_acel_topico_2' => 'Reutilize fluxos validados',
+			'solucao_acel_topico_3' => 'Adapte jornadas ao negócio',
+			'solucao_acel_topico_4' => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'   => $this->img( 'salesforce-mc-aceleradores' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_salesforce_mc_faq( $post_id );
+		WP_CLI::log( "  Salesforce Marketing Cloud preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_salesforce_mc_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mc-jornada-evento-externo',
+				'Como disparar uma jornada a partir de um evento fora do Salesforce?',
+				'<p>A CLI Connect utiliza a API de Eventos do Marketing Cloud combinada com conectores nativos de ERP e e-commerce. Quando ocorre um evento externo — como uma compra ou atualização de produto — a integração envia o payload diretamente ao Journey Builder, acionando a jornada correspondente sem intervenção manual.</p>',
+			),
+			array(
+				'faq:mc-optout-todos-canais',
+				'Como garantir que um opt-out se propague para todos os canais?',
+				'<p>A CLI Connect sincroniza preferências de contato entre o Marketing Cloud, o CRM e demais sistemas conectados. Quando um contato solicita opt-out em qualquer canal, a integração propaga a informação em tempo real para todos os pontos de comunicação, garantindo conformidade e evitando envios indesejados.</p>',
+			),
+			array(
+				'faq:mc-segmentos-tempo-real',
+				'É possível sincronizar segmentos de audiência em tempo real com o CRM?',
+				'<p>Sim. A CLI Connect mantém os Data Extensions do Marketing Cloud atualizados a partir de eventos de negócio do CRM, ERP e plataformas de e-commerce. Segmentos e listas refletem dados reais de compras, uso de produto e interações de suporte sem necessidade de exportações manuais ou agendamentos periódicos.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_eyebrow', 'FAQ', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  Salesforce Marketing Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/* =====================================================================
+	   SAP
+	   ===================================================================== */
+
+	/**
+	 * Preenche todos os campos ACF do post cli_solucao do SAP.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_sap() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:sap', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  SAP: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'para o seu SAP',
+			'solucao_hero_titulo'          => 'Acelere sua migração para SAP S/4HANA sem comprometer a operação',
+			'solucao_hero_titulo_destaque' => '',
+			'solucao_hero_corpo'           => 'Conecte o SAP ao restante do seu ecossistema, preserve um ambiente Clean Core e conduza a migração com mais segurança, agilidade e previsibilidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/sap/',
+			'solucao_hero_imagem'          => $this->img( 'sap-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Tudo o que você precisa para integrar seu SAP',
+			'solucao_pilares_1_icone'  => $this->img( 'sap-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Migre com confiança',
+			'solucao_pilares_1_desc'   => 'Conduza sua migração para o SAP S/4HANA com uma arquitetura preparada para reduzir riscos, retrabalho e impactos na operação.',
+			'solucao_pilares_2_icone'  => $this->img( 'sap-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Unifique todo o ecossistema',
+			'solucao_pilares_2_desc'   => 'Integre SAP, Salesforce, Workday, ServiceNow e outras aplicações em uma única plataforma, simplificando a gestão das integrações.',
+			'solucao_pilares_3_icone'  => $this->img( 'sap-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza custos de integração',
+			'solucao_pilares_3_desc'   => 'Utilize Add-on SAP homologado, conectores (RFC, IDoc, BAPI) e protocolos (OData, REST, SOAP). Tudo sem custo adicional.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'  => 'casos de uso',
+			'solucao_casos_titulo'   => 'Automatize os processos mais críticos do SAP',
+			'solucao_casos_1_icone'  => $this->img( 'sap-caso-1' ),
+			'solucao_casos_1_titulo' => 'Pedido ao recebimento integrado',
+			'solucao_casos_1_desc'   => 'Sincronize automaticamente oportunidades, pedidos e faturamento entre Salesforce e SAP S/4HANA.',
+			'solucao_casos_2_icone'  => $this->img( 'sap-caso-2' ),
+			'solucao_casos_2_titulo' => 'Migração sem interrupções',
+			'solucao_casos_2_desc'   => 'Execute o período de convivência entre SAP ECC e S/4HANA mantendo ambos sincronizados durante toda a transição.',
+			'solucao_casos_3_icone'  => $this->img( 'sap-caso-3' ),
+			'solucao_casos_3_titulo' => 'SAP conectado à IA',
+			'solucao_casos_3_desc'   => 'Permita que agentes de IA consultem informações do SAP para acelerar análises e operações.',
+			'solucao_casos_4_icone'  => $this->img( 'sap-caso-4' ),
+			'solucao_casos_4_titulo' => 'Automatize compras corporativas',
+			'solucao_casos_4_desc'   => 'Integre SAP aos principais sistemas de procurement, como Ariba e Coupa, eliminando retrabalho operacional.',
+			'solucao_casos_5_icone'  => $this->img( 'sap-caso-5' ),
+			'solucao_casos_5_titulo' => 'Envie dados para Analytics',
+			'solucao_casos_5_desc'   => 'Alimente automaticamente plataformas como Snowflake e BigQuery com dados atualizados do SAP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'  => '/contato/',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_sap_selos( $post_id );
+		$this->preencher_sap_diferencial( $post_id );
+		$this->preencher_sap_plataforma( $post_id );
+		$this->preencher_sap_aceleradores( $post_id );
+		$this->preencher_sap_faq( $post_id );
+
+		WP_CLI::log( "  SAP preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Selos do SAP.
+	 *
+	 * @param int $post_id ID do post cli_solucao do SAP.
+	 * @return void
+	 */
+	protected function preencher_sap_selos( $post_id ) {
+		$campos = array(
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Diferencial Técnico do SAP.
+	 *
+	 * @param int $post_id ID do post cli_solucao do SAP.
+	 * @return void
+	 */
+	protected function preencher_sap_diferencial( $post_id ) {
+		$campos = array(
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integração nativa, segura e preparada para ambientes SAP',
+			'solucao_dif_corpo'    => 'Conecte seu ambiente SAP utilizando recursos nativos da plataforma, preservando a segurança da infraestrutura e reduzindo a necessidade de componentes intermediários.',
+			'solucao_dif_topico_1' => 'Utilize conectores nativos RFC, BAPI e IDoc.',
+			'solucao_dif_topico_2' => 'Utilize Add-on Nativo, SOAP, Odata, REST',
+			'solucao_dif_topico_3' => 'Preserve a arquitetura Clean Core.',
+			'solucao_dif_imagem'   => $this->img( 'sap-cleancore-1' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Plataforma Única do SAP.
+	 *
+	 * @param int $post_id ID do post cli_solucao do SAP.
+	 * @return void
+	 */
+	protected function preencher_sap_plataforma( $post_id ) {
+		$campos = array(
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize todas as integrações do seu SAP',
+			'solucao_plat_corpo'    => 'Substitua integrações isoladas por uma plataforma única capaz de conectar SAP, aplicações corporativas, dados e automações com governança centralizada.',
+			'solucao_plat_topico_1' => 'Reutilize integrações entre diferentes projetos.',
+			'solucao_plat_topico_2' => 'Padronize toda a arquitetura de integração.',
+			'solucao_plat_topico_3' => 'Reduza custos de manutenção contínua.',
+			'solucao_plat_imagem'   => $this->img( 'sap-conectar' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Preenche os campos ACF da seção Aceleradores de Integração do SAP.
+	 *
+	 * @param int $post_id ID do post cli_solucao do SAP.
+	 * @return void
+	 */
+	protected function preencher_sap_aceleradores( $post_id ) {
+		$campos = array(
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece utilizando integrações já validadas',
+			'solucao_acel_corpo'     => 'Utilize modelos prontos para acelerar a implantação das integrações mais comuns entre SAP e os principais sistemas do mercado.',
+			'solucao_acel_topico_1'  => 'Aproveite modelos de Order-to-Cash.',
+			'solucao_acel_topico_2'  => 'Reduza o tempo de implantação.',
+			'solucao_acel_topico_3'  => 'Adapte fluxos ao seu ambiente.',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'sap-sincronizar' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
+
+	/**
+	 * Cria os posts cli_faq do SAP e vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao do SAP.
+	 * @return void
+	 */
+	protected function preencher_sap_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sap-integracao',
+				'Como a CLI Connect se integra ao SAP?',
+				'<p>A CLI Connect utiliza um Add-on nativo homologado pela SAP, além de conectores RFC, BAPI, IDoc, OData, REST e SOAP. Essa abordagem garante compatibilidade com as principais versões do SAP ECC e S/4HANA, preservando a arquitetura Clean Core e eliminando a necessidade de modificações não suportadas no sistema.</p>',
+			),
+			array(
+				'faq:sap-versoes',
+				'Quais versões do SAP são suportadas?',
+				'<p>A plataforma suporta SAP ECC (incluindo versões 6.0 em diante) e SAP S/4HANA (Cloud e On-Premises). A escolha do conector adequado — RFC/BAPI para processos legados ou OData/APIs REST para S/4HANA — é definida durante a etapa de arquitetura da integração.</p>',
+			),
+			array(
+				'faq:sap-implantacao',
+				'Quanto tempo leva uma implantação?',
+				'<p>O tempo varia conforme a complexidade do cenário, mas projetos com aceleradores prontos podem ser colocados em produção em poucas semanas. A CLI Connect disponibiliza modelos pré-construídos para os cenários mais comuns — como Order-to-Cash, Procure-to-Pay e migração ECC → S/4HANA — reduzindo significativamente o prazo de implantação.</p>',
+			),
+			array(
+				'faq:sap-atualizacoes',
+				'As atualizações do SAP impactam as integrações?',
+				'<p>Integrações desenvolvidas com Add-on nativo e APIs suportadas pela SAP acompanham o ciclo de atualizações sem quebras. A CLI Connect monitora cada release e valida os fluxos críticos preventivamente, acionando o suporte quando algum ajuste for necessário após uma atualização.</p>',
+			),
+			array(
+				'faq:sap-cleancore',
+				'Como preservar o Clean Core durante a migração?',
+				'<p>A principal forma de garantir o Clean Core é evitar modificações diretas no núcleo do SAP. A CLI Connect utiliza APIs e extensões suportadas pela própria SAP — Add-on homologado, OData, RFC e BAPI — mantendo toda a lógica de integração na plataforma iPaaS, fora do core do ERP. Isso facilita futuras atualizações e reduz o risco operacional durante a migração para S/4HANA.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  SAP FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/* =====================================================================
+	   SALESFORCE FAQ
+	   ===================================================================== */
 
 	/**
 	 * Cria os posts cli_faq do Salesforce e vincula à solução.
@@ -2750,6 +3566,1143 @@ class Cliconnect_Seed {
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+	}
+	/* =====================================================================
+	   TOTVS DATASUL
+	   ===================================================================== */
+
+	/**
+	 * Preenche todos os campos ACF do post cli_solucao do TOTVS Datasul.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_datasul() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:totvs-datasul', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  TOTVS Datasul: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'para o seu DATAsul',
+			'solucao_hero_titulo'          => 'Conecte o TOTVS Datasul sem interromper sua operação industrial',
+			'solucao_hero_titulo_destaque' => '',
+			'solucao_hero_corpo'           => 'Integre o Datasul a MES, CRM, portais B2B e plataformas de BI utilizando uma única plataforma. Compartilhe informações entre plantas, automatize processos e modernize sua operação sem alterar o core do ERP.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-datasul/',
+			'solucao_hero_imagem'          => $this->img( 'totvs-datasul-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte toda a operação industrial',
+			'solucao_pilares_1_icone'  => $this->img( 'totvs-datasul-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Integre sua manufatura com mais agilidade',
+			'solucao_pilares_1_desc'   => 'Conecte o Datasul a sistemas de produção, vendas e logística sem projetos longos ou desenvolvimentos complexos.',
+			'solucao_pilares_2_icone'  => $this->img( 'totvs-datasul-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Padronize informações entre plantas',
+			'solucao_pilares_2_desc'   => 'Centralize dados de produção e estoque para garantir decisões mais rápidas e confiáveis em toda a operação.',
+			'solucao_pilares_3_icone'  => $this->img( 'totvs-datasul-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza a dependência de especialistas',
+			'solucao_pilares_3_desc'   => 'Simplifique novas integrações sem depender continuamente de equipes especializadas em Progress 4GL.',
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize os processos que movem sua fábrica',
+			'solucao_casos_1_icone'    => $this->img( 'totvs-datasul-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Sincronize ordens de produção',
+			'solucao_casos_1_desc'     => 'Conecte o MES ao Datasul para atualizar ordens automaticamente durante toda a operação industrial.',
+			'solucao_casos_2_icone'    => $this->img( 'totvs-datasul-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Consolide estoques entre plantas',
+			'solucao_casos_2_desc'     => 'Compartilhe saldos de estoque entre unidades para aumentar a visibilidade da operação.',
+			'solucao_casos_3_icone'    => $this->img( 'totvs-datasul-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Automatize pedidos B2B',
+			'solucao_casos_3_desc'     => 'Integre portais de clientes diretamente ao Datasul para reduzir retrabalho e acelerar o processamento.',
+			'solucao_casos_4_icone'    => $this->img( 'totvs-datasul-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Centralize o fechamento financeiro',
+			'solucao_casos_4_desc'     => 'Consolide informações entre diferentes unidades para simplificar o fechamento corporativo.',
+			'solucao_casos_5_icone'    => $this->img( 'totvs-datasul-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Disponibilize dados para IA',
+			'solucao_casos_5_desc'     => 'Permita que agentes de IA consultem informações do Datasul com segurança através de integrações governadas.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Conectividade preparada para ambientes industriais',
+			'solucao_dif_corpo'        => 'Conecte o Datasul utilizando o protocolo Progress/EMS com processamento realizado dentro da infraestrutura da empresa, preservando segurança e desempenho.',
+			'solucao_dif_topico_1'     => 'Utilize conectividade nativa Progress/EMS.',
+			'solucao_dif_topico_2'     => 'Preserve o banco protegido internamente.',
+			'solucao_dif_topico_3'     => 'Implante dentro da própria infraestrutura.',
+			'solucao_dif_imagem'       => $this->img( 'totvs-datasul-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'     => 'plataforma única',
+			'solucao_plat_titulo'      => 'Integre diferentes ERPs na mesma plataforma',
+			'solucao_plat_corpo'       => 'Empresas que cresceram por aquisições frequentemente operam mais de um ERP. Centralize Datasul, SAP, Protheus e outros sistemas em uma única camada de integração.',
+			'solucao_plat_topico_1'    => 'Reutilize integrações já implantadas.',
+			'solucao_plat_topico_2'    => 'Reduza novos projetos de desenvolvimento.',
+			'solucao_plat_topico_3'    => 'Centralize toda a governança das integrações.',
+			'solucao_plat_imagem'      => $this->img( 'totvs-datasul-plataforma' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Implemente integrações em menos tempo',
+			'solucao_acel_corpo'       => 'Utilize modelos prontos para sincronizar ordens de produção e pedidos B2B, reduzindo o esforço de implantação e acelerando novos projetos.',
+			'solucao_acel_topico_1'    => 'Aproveite modelos para ordens de produção.',
+			'solucao_acel_topico_2'    => 'Reutilize fluxos para pedidos B2B.',
+			'solucao_acel_topico_3'    => 'Adapte rapidamente ao seu ambiente.',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'totvs-datasul-aceleradores' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_datasul_faq( $post_id );
+		WP_CLI::log( "  TOTVS Datasul preenchido (ID: {$post_id})." );
+	}
+
+	/* =====================================================================
+	   TOTVS WINTHOR
+	   ===================================================================== */
+
+	protected function preencher_solucao_winthor() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:totvs-winthor', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Solução TOTVS Winthor não encontrada.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'para o seu Winthor',
+			'solucao_hero_titulo'          => 'Integre o TOTVS Winthor e acelere toda sua operação comercial',
+			'solucao_hero_titulo_destaque' => '',
+			'solucao_hero_corpo'           => 'Conecte o Winthor à força de vendas, e-commerce B2B, transportadoras e bancos para automatizar processos, reduzir retrabalho e manter pedidos, preços e entregas sempre sincronizados.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-winthor/',
+			'solucao_hero_imagem'          => $this->img( 'totvs-winthor-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'       => 'Conecte sua operação de distribuição',
+			'solucao_pilares_1_icone'      => $this->img( 'totvs-winthor-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Atualize preços automaticamente',
+			'solucao_pilares_1_desc'       => 'Sincronize tabelas de preços e promoções em tempo real para toda a equipe comercial, reduzindo inconsistências e acelerando negociações.',
+			'solucao_pilares_2_icone'      => $this->img( 'totvs-winthor-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Automatize pedidos de venda',
+			'solucao_pilares_2_desc'       => 'Integre aplicativos de pré-venda e canais digitais ao Winthor para eliminar digitação manual e acelerar o faturamento.',
+			'solucao_pilares_3_icone'      => $this->img( 'totvs-winthor-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Expanda integrações com facilidade',
+			'solucao_pilares_3_desc'       => 'Conecte novos sistemas utilizando uma arquitetura preparada para crescer junto com sua operação.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos do Winthor',
+			'solucao_casos_1_icone'        => $this->img( 'totvs-winthor-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Sincronize pedidos da força de vendas',
+			'solucao_casos_1_desc'         => 'Envie automaticamente pedidos dos aplicativos comerciais para o Winthor sem retrabalho.',
+			'solucao_casos_2_icone'        => $this->img( 'totvs-winthor-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Atualize preços em tempo real',
+			'solucao_casos_2_desc'         => 'Distribua alterações de preços e descontos imediatamente para vendedores e canais digitais.',
+			'solucao_casos_3_icone'        => $this->img( 'totvs-winthor-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Integre transportadoras',
+			'solucao_casos_3_desc'         => 'Automatize envio de etiquetas, rastreamento e atualização do status das entregas.',
+			'solucao_casos_4_icone'        => $this->img( 'totvs-winthor-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Concilie recebimentos automaticamente',
+			'solucao_casos_4_desc'         => 'Conecte bancos e adquirentes para simplificar a conciliação financeira.',
+			'solucao_casos_5_icone'        => $this->img( 'totvs-winthor-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Consolide vendas entre filiais',
+			'solucao_casos_5_desc'         => 'Centralize indicadores comerciais de diferentes unidades em uma única visão.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Conectividade preparada para operações de alto volume',
+			'solucao_dif_corpo'            => 'A plataforma utiliza conectores dedicados às rotinas automáticas e webservices do Winthor, suportando grandes volumes de pedidos típicos de distribuidores e atacadistas.',
+			'solucao_dif_topico_1'         => 'Processe grandes volumes de pedidos.',
+			'solucao_dif_topico_2'         => 'Utilize conectores nativos do Winthor.',
+			'solucao_dif_topico_3'         => 'Preserve a estabilidade da operação.',
+			'solucao_dif_imagem'           => $this->img( 'totvs-winthor-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'         => 'plataforma única',
+			'solucao_plat_titulo'          => 'Centralize todas as integrações da distribuição',
+			'solucao_plat_corpo'           => 'Conecte Winthor, aplicativos comerciais, transportadoras e bancos em uma única plataforma, reaproveitando integrações e reduzindo novos projetos.',
+			'solucao_plat_topico_1'        => 'Reutilize integrações existentes.',
+			'solucao_plat_topico_2'        => 'Centralize toda a governança.',
+			'solucao_plat_topico_3'        => 'Reduza novos desenvolvimentos.',
+			'solucao_plat_imagem'          => $this->img( 'totvs-winthor-plataforma' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'         => 'Aceleradores de integração',
+			'solucao_acel_titulo'          => 'Comece utilizando integrações prontas',
+			'solucao_acel_corpo'           => 'Implemente rapidamente os principais cenários de integração.',
+			'solucao_acel_topico_1'        => 'Implante integração de pedidos rapidamente.',
+			'solucao_acel_topico_2'        => 'Reutilize modelos para tabelas de preço.',
+			'solucao_acel_topico_3'        => 'Adapte fluxos ao seu processo.',
+			'solucao_acel_topico_4'        => 'E muito mais...',
+			'solucao_acel_btn_texto'       => 'Começar agora',
+			'solucao_acel_btn_url'         => '/contato/',
+			'solucao_acel_imagem'          => $this->img( 'totvs-winthor-aceleradores' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_winthor_faq( $post_id );
+		WP_CLI::log( "  TOTVS Winthor preenchido (ID: {$post_id})." );
+	}
+
+	/* =====================================================================
+	   TOTVS LOGIX
+	   ===================================================================== */
+
+	protected function preencher_solucao_logix() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:totvs-logix', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Solução TOTVS Logix não encontrada.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'para o seu Logix',
+			'solucao_hero_titulo'          => 'Conecte o TOTVS Logix e mantenha seu estoque sincronizado em todos os canais',
+			'solucao_hero_titulo_destaque' => '',
+			'solucao_hero_corpo'           => 'Integre o Logix a ERPs, marketplaces e transportadoras para automatizar a operação logística, eliminar divergências de estoque e acelerar o atendimento de pedidos sem processos manuais.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-logix/',
+			'solucao_hero_imagem'          => $this->img( 'totvs-logix-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'       => 'Mantenha sua logística conectada em tempo real',
+			'solucao_pilares_1_icone'      => $this->img( 'totvs-logix-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize estoques automaticamente',
+			'solucao_pilares_1_desc'       => 'Atualize saldos entre o Logix, marketplaces e canais de venda em tempo real para evitar divergências e melhorar a disponibilidade dos produtos.',
+			'solucao_pilares_2_icone'      => $this->img( 'totvs-logix-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Automatize toda a expedição',
+			'solucao_pilares_2_desc'       => 'Orquestre picking, packing e expedição a partir dos pedidos recebidos, reduzindo retrabalho e aumentando a produtividade do armazém.',
+			'solucao_pilares_3_icone'      => $this->img( 'totvs-logix-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Evite perdas por overselling',
+			'solucao_pilares_3_desc'       => 'Compartilhe informações de estoque entre todos os canais para vender somente o que realmente está disponível.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Automatize toda a operação logística',
+			'solucao_casos_1_icone'        => $this->img( 'totvs-logix-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Sincronize estoques com marketplaces',
+			'solucao_casos_1_desc'         => 'Atualize automaticamente o estoque entre Logix, Amazon, Mercado Livre, Magalu e outros canais de venda.',
+			'solucao_casos_2_icone'        => $this->img( 'totvs-logix-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Direcione pedidos ao centro correto',
+			'solucao_casos_2_desc'         => 'Roteie automaticamente cada pedido para o centro de distribuição mais adequado conforme regras da operação.',
+			'solucao_casos_3_icone'        => $this->img( 'totvs-logix-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Integre transportadoras',
+			'solucao_casos_3_desc'         => 'Automatize emissão de etiquetas, rastreamento e atualização do status de entrega.',
+			'solucao_casos_4_icone'        => $this->img( 'totvs-logix-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atualize o ERP em tempo real',
+			'solucao_casos_4_desc'         => 'Sincronize separação, expedição e faturamento automaticamente entre o Logix e o ERP.',
+			'solucao_casos_5_icone'        => $this->img( 'totvs-logix-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Automatize devoluções',
+			'solucao_casos_5_desc'         => 'Controle devoluções e reentrada de estoque sem processos manuais ou retrabalho operacional.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Escalabilidade para operações logísticas de alto volume',
+			'solucao_dif_corpo'            => 'A plataforma suporta grandes volumes de transações com escalabilidade automática, garantindo estabilidade mesmo durante Black Friday e outras datas sazonais de alta demanda.',
+			'solucao_dif_topico_1'         => 'Processe picos de operação com estabilidade.',
+			'solucao_dif_topico_2'         => 'Escalone pipelines automaticamente.',
+			'solucao_dif_topico_3'         => 'Mantenha a operação disponível em alta demanda.',
+			'solucao_dif_imagem'           => $this->img( 'totvs-logix-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'         => 'plataforma única',
+			'solucao_plat_titulo'          => 'Centralize toda a integração da sua logística',
+			'solucao_plat_corpo'           => 'Conecte Logix, marketplaces, transportadoras e ERPs em uma única plataforma para manter estoques sincronizados em tempo real e eliminar integrações isoladas que geram atrasos e overselling.',
+			'solucao_plat_topico_1'        => 'Centralize todas as integrações.',
+			'solucao_plat_topico_2'        => 'Sincronize estoques em tempo real.',
+			'solucao_plat_topico_3'        => 'Reduza projetos isolados de integração.',
+			'solucao_plat_imagem'          => $this->img( 'totvs-logix-plataforma' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'         => 'Aceleradores de integração',
+			'solucao_acel_titulo'          => 'Comece utilizando integrações prontas',
+			'solucao_acel_corpo'           => 'Implemente rapidamente cenários de sincronização entre Logix e marketplaces utilizando modelos pré-configurados que reduzem o tempo de implantação.',
+			'solucao_acel_topico_1'        => 'Implante integrações mais rapidamente.',
+			'solucao_acel_topico_2'        => 'Reutilize modelos já validados.',
+			'solucao_acel_topico_3'        => 'Adapte fluxos à sua operação.',
+			'solucao_acel_topico_4'        => 'E muito mais...',
+			'solucao_acel_btn_texto'       => 'Começar agora',
+			'solucao_acel_btn_url'         => '/contato/',
+			'solucao_acel_imagem'          => $this->img( 'totvs-logix-aceleradores' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_logix_faq( $post_id );
+		WP_CLI::log( "  TOTVS Logix preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_logix_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:logix-overselling',
+				'Como evitar overselling entre múltiplos canais de venda?',
+				'<p>A CLI Connect sincroniza o saldo de estoque do Logix em tempo real com todos os canais conectados — marketplaces, e-commerce e loja física. Sempre que uma venda é confirmada, a plataforma atualiza automaticamente os demais canais, eliminando o risco de vender um produto que já não está disponível.</p>',
+			),
+			array(
+				'faq:logix-cds',
+				'A CLI Connect suporta múltiplos centros de distribuição?',
+				'<p>Sim. A plataforma permite mapear regras de roteamento por região, tipo de produto ou capacidade de estoque, direcionando cada pedido ao centro de distribuição correto automaticamente. As movimentações de cada CD são refletidas de forma consolidada no Logix.</p>',
+			),
+			array(
+				'faq:logix-transportadoras',
+				'Como funciona a integração com transportadoras?',
+				'<p>A CLI Connect automatiza o envio de dados do pedido à transportadora após a expedição no Logix, recebe o código de rastreamento e atualiza o status de entrega no ERP e nos canais de venda. O processo elimina lançamentos manuais e reduz erros de acompanhamento logístico.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+		WP_CLI::log( sprintf( '  Logix FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_solucao_senior() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:senior',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "senior" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Senior',
+			'solucao_hero_titulo'     => 'Conecte o Senior e automatize toda a jornada do colaborador',
+			'solucao_hero_corpo'      => 'Integre o Senior aos sistemas de folha, ponto, benefícios, acessos e identidade para eliminar processos manuais, proteger dados sensíveis e acelerar toda a operação de RH.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/senior/',
+			'solucao_hero_imagem'     => $this->img( 'senior-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme o RH em um processo conectado',
+			'solucao_pilares_1_icone'  => $this->img( 'senior-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Automatize o ciclo de vida do colaborador',
+			'solucao_pilares_1_desc'   => 'Orquestre admissões, movimentações e desligamentos entre o Senior e todos os sistemas que participam da jornada do colaborador.',
+			'solucao_pilares_2_icone'  => $this->img( 'senior-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Conecte o Senior com segurança',
+			'solucao_pilares_2_desc'   => 'Integre utilizando os webservices oficiais do Senior, preservando regras de negócio e reduzindo a necessidade de desenvolvimentos personalizados.',
+			'solucao_pilares_3_icone'  => $this->img( 'senior-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Proteja dados sensíveis automaticamente',
+			'solucao_pilares_3_desc'   => 'Mascare informações como CPF, salário e dados bancários durante a integração, mantendo conformidade e rastreabilidade.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize os principais processos do RH',
+			'solucao_casos_1_icone'   => $this->img( 'senior-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Orquestre admissões e desligamentos',
+			'solucao_casos_1_desc'    => 'Automatize a criação e revogação de acessos, benefícios e sistemas corporativos sempre que houver mudanças no quadro de colaboradores.',
+			'solucao_casos_2_icone'   => $this->img( 'senior-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Integre folha e ponto',
+			'solucao_casos_2_desc'    => 'Sincronize registros do ponto eletrônico com a folha de pagamento para reduzir inconsistências e retrabalho operacional.',
+			'solucao_casos_3_icone'   => $this->img( 'senior-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize a gestão de benefícios',
+			'solucao_casos_3_desc'    => 'Integre fornecedores de VR, VA, plano de saúde e demais benefícios diretamente ao Senior.',
+			'solucao_casos_4_icone'   => $this->img( 'senior-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Centralize indicadores de RH',
+			'solucao_casos_4_desc'    => 'Consolide dados de headcount, admissões, desligamentos e movimentações para alimentar plataformas de BI em tempo real.',
+			'solucao_casos_5_icone'   => $this->img( 'senior-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Revogue acessos automaticamente',
+			'solucao_casos_5_desc'    => 'Garanta que acessos físicos e digitais sejam removidos automaticamente durante o desligamento do colaborador.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Segurança para dados críticos de RH',
+			'solucao_dif_corpo'       => 'A plataforma identifica e mascara automaticamente informações sensíveis do Senior antes que elas trafeguem entre sistemas, mantendo auditoria e conformidade durante toda a integração.',
+			'solucao_dif_topico_1'    => 'Mascare CPF e salários automaticamente.',
+			'solucao_dif_topico_2'    => 'Proteja dados bancários em trânsito.',
+			'solucao_dif_topico_3'    => 'Audite todas as integrações realizadas.',
+			'solucao_dif_imagem'      => $this->img( 'senior-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_plat_titulo'     => 'Conecte todo o ecossistema do RH',
+			'solucao_plat_corpo'      => 'Elimine integrações isoladas entre Senior, Active Directory, benefícios, ponto, LMS e demais sistemas utilizando uma única plataforma de integração com gestão centralizada.',
+			'solucao_plat_topico_1'   => 'Centralize integrações do RH.',
+			'solucao_plat_topico_2'   => 'Reduza dependência da equipe de TI.',
+			'solucao_plat_topico_3'   => 'Ajuste fluxos com mais agilidade.',
+			'solucao_plat_imagem'     => $this->img( 'senior-plataforma' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com fluxos prontos de RH',
+			'solucao_acel_corpo'      => 'Utilize um modelo pronto para automatizar admissões, movimentações e desligamentos, reduzindo o tempo de implantação e acelerando novos projetos.',
+			'solucao_acel_topico_1'   => 'Implante fluxos JML rapidamente.',
+			'solucao_acel_topico_2'   => 'Reutilize modelos já validados.',
+			'solucao_acel_topico_3'   => 'Adapte processos ao seu RH.',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn_texto'  => 'Começar agora',
+			'solucao_acel_btn_url'    => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'senior-aceleradores' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+		$this->preencher_senior_faq( $post_id );
+		WP_CLI::log( "  Senior preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_solucao_sankhya() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:sankhya',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "sankhya" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Sankhya',
+			'solucao_hero_titulo'     => 'Integre o Sankhya com todo o seu ecossistema sem abrir mão da governança',
+			'solucao_hero_corpo'      => 'Conecte o Sankhya a CRM, e-commerce, bancos e sistemas fiscais utilizando a API Gateway oficial para automatizar processos, preservar as regras do ERP e eliminar integrações paralelas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/sankhya/',
+			'solucao_hero_imagem'     => $this->img( 'sankhya-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte o Sankhya com segurança e escalabilidade',
+			'solucao_pilares_1_icone'  => $this->img( 'sankhya-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Utilize a API Gateway oficial',
+			'solucao_pilares_1_desc'   => 'Integre o Sankhya utilizando os serviços oficiais da plataforma, preservando regras de negócio e evitando acessos diretos ao banco de dados.',
+			'solucao_pilares_2_icone'  => $this->img( 'sankhya-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Respeite a governança do ERP',
+			'solucao_pilares_2_desc'   => 'Garanta que todas as integrações utilizem a camada de autorização nativa do Sankhya, mantendo controle e segurança sobre os dados.',
+			'solucao_pilares_3_icone'  => $this->img( 'sankhya-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Elimine integrações paralelas',
+			'solucao_pilares_3_desc'   => 'Centralize as conexões entre ERP, CRM e e-commerce para reduzir retrabalho, facilitar manutenções e acelerar novos projetos.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize os principais processos do Sankhya',
+			'solucao_casos_1_icone'   => $this->img( 'sankhya-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos do e-commerce',
+			'solucao_casos_1_desc'    => 'Envie pedidos automaticamente para o Sankhya utilizando a API Gateway oficial, reduzindo retrabalho e acelerando o faturamento.',
+			'solucao_casos_2_icone'   => $this->img( 'sankhya-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Atualize produtos e estoques',
+			'solucao_casos_2_desc'    => 'Disponibilize produtos e saldos do Sankhya para canais de venda em tempo real utilizando os datasets oficiais.',
+			'solucao_casos_3_icone'   => $this->img( 'sankhya-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize processos financeiros',
+			'solucao_casos_3_desc'    => 'Integre contas a receber, bancos e conciliação financeira utilizando as entidades financeiras do Sankhya.',
+			'solucao_casos_4_icone'   => $this->img( 'sankhya-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Conecte CRM e ERP',
+			'solucao_casos_4_desc'    => 'Sincronize leads, clientes e oportunidades entre o CRM e o Sankhya para eliminar digitação manual e manter informações atualizadas.',
+			'solucao_casos_5_icone'   => $this->img( 'sankhya-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Disponibilize dados para IA',
+			'solucao_casos_5_desc'    => 'Exponha informações do Sankhya para agentes de Inteligência Artificial utilizando APIs e servidores MCP com governança.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integrações que respeitam a arquitetura do Sankhya',
+			'solucao_dif_corpo'       => 'Todas as integrações utilizam a camada de autorização nativa do Sankhya por meio do usuário de integração e permissões explícitas, evitando acessos diretos ao banco de dados e preservando a governança do ERP.',
+			'solucao_dif_topico_1'    => 'Utilize a API Gateway oficial.',
+			'solucao_dif_topico_2'    => 'Respeite permissões por entidade.',
+			'solucao_dif_topico_3'    => 'Evite acesso direto ao banco.',
+			'solucao_dif_imagem'      => $this->img( 'sankhya-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_plat_titulo'     => 'Centralize todas as integrações do Sankhya',
+			'solucao_plat_corpo'      => 'Empresas em crescimento costumam acumular integrações entre CRM, e-commerce e aplicativos de vendas. Utilize uma única plataforma para centralizar a governança e reutilizar integrações sem multiplicar projetos.',
+			'solucao_plat_topico_1'   => 'Centralize toda a governança.',
+			'solucao_plat_topico_2'   => 'Reutilize integrações existentes.',
+			'solucao_plat_topico_3'   => 'Reduza integrações ponto a ponto.',
+			'solucao_plat_imagem'     => $this->img( 'sankhya-plataforma' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com integrações já prontas',
+			'solucao_acel_corpo'      => 'Utilize um modelo pré-configurado para sincronizar pedidos e clientes entre CRM, e-commerce e Sankhya, reduzindo o tempo de implantação e acelerando novos projetos.',
+			'solucao_acel_topico_1'   => 'Implante pedidos rapidamente.',
+			'solucao_acel_topico_2'   => 'Reutilize modelos validados.',
+			'solucao_acel_topico_3'   => 'Adapte fluxos ao seu negócio.',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn_texto'  => 'Começar agora',
+			'solucao_acel_btn_url'    => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'sankhya-aceleradores' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+		$this->preencher_sankhya_faq( $post_id );
+		WP_CLI::log( "  Sankhya preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_solucao_dynamics365() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:dynamics-365',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "dynamics-365" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Microsoft Dynamics',
+			'solucao_hero_titulo'     => 'Integre o Microsoft Dynamics 365 sem ficar limitado ao Power Platform',
+			'solucao_hero_corpo'      => 'Conecte Dynamics 365, Business Central e Finance & Operations ao restante da sua operação utilizando uma única plataforma para automatizar processos, compartilhar dados e eliminar integrações isoladas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/dynamics-365/',
+			'solucao_hero_imagem'     => $this->img( 'dynamics-365-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte todo o ecossistema Microsoft',
+			'solucao_pilares_1_icone'  => $this->img( 'dynamics-365-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Utilize APIs nativas do Dynamics',
+			'solucao_pilares_1_desc'   => 'Integre utilizando OData e Dynamics 365 Web API para preservar a arquitetura da Microsoft e acelerar novos projetos.',
+			'solucao_pilares_2_icone'  => $this->img( 'dynamics-365-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Conecte diferentes sistemas',
+			'solucao_pilares_2_desc'   => 'Orquestre Dynamics, SAP, Salesforce, Totvs e outras aplicações corporativas em uma única plataforma de integração.',
+			'solucao_pilares_3_icone'  => $this->img( 'dynamics-365-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza a dependência do Power Platform',
+			'solucao_pilares_3_desc'   => 'Utilize uma camada central de integração para cenários corporativos complexos, mantendo flexibilidade e escalabilidade.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize os principais processos do Dynamics',
+			'solucao_casos_1_icone'   => $this->img( 'dynamics-365-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize CRM e ERP',
+			'solucao_casos_1_desc'    => 'Compartilhe oportunidades, contas e clientes entre o Dynamics CRM e ERPs corporativos automaticamente.',
+			'solucao_casos_2_icone'   => $this->img( 'dynamics-365-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Automatize processos financeiros',
+			'solucao_casos_2_desc'    => 'Integre o Dynamics 365 Finance & Operations a bancos e plataformas de conciliação financeira.',
+			'solucao_casos_3_icone'   => $this->img( 'dynamics-365-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Conecte Business Central ao e-commerce',
+			'solucao_casos_3_desc'    => 'Sincronize pedidos, clientes e estoques entre o Business Central e seus canais de venda.',
+			'solucao_casos_4_icone'   => $this->img( 'dynamics-365-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Centralize dados mestres',
+			'solucao_casos_4_desc'    => 'Mantenha clientes, produtos e cadastros sincronizados entre o Dynamics e outros sistemas corporativos.',
+			'solucao_casos_5_icone'   => $this->img( 'dynamics-365-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Disponibilize dados para Inteligência Artificial',
+			'solucao_casos_5_desc'    => 'Exponha informações do Dynamics para agentes de IA utilizando APIs governadas e servidores MCP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Segurança corporativa integrada ao ecossistema Microsoft',
+			'solucao_dif_corpo'       => 'As integrações utilizam autenticação via Azure AD (Microsoft Entra ID) com OAuth2 e suporte a ambientes multi-tenant, preservando os padrões de segurança do Dynamics 365.',
+			'solucao_dif_topico_1'    => 'Utilize autenticação via Azure AD.',
+			'solucao_dif_topico_2'    => 'Suporte ambientes Dynamics multi-tenant.',
+			'solucao_dif_topico_3'    => 'Proteja integrações com OAuth2.',
+			'solucao_dif_imagem'      => $this->img( 'dynamics-365-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_plat_titulo'     => 'Uma plataforma para todo o seu ambiente Microsoft',
+			'solucao_plat_corpo'      => 'Empresas que utilizam Dynamics frequentemente convivem com outros ERPs e CRMs. Centralize todas as integrações em uma única plataforma para simplificar projetos, aquisições e operações multi-ERP.',
+			'solucao_plat_topico_1'   => 'Conecte Dynamics e outros ERPs.',
+			'solucao_plat_topico_2'   => 'Elimine silos de integração.',
+			'solucao_plat_topico_3'   => 'Simplifique cenários de M&A.',
+			'solucao_plat_imagem'     => $this->img( 'dynamics-365-plataforma' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece utilizando integrações prontas',
+			'solucao_acel_corpo'      => 'Implemente rapidamente um modelo pré-configurado para sincronizar contas, oportunidades e pedidos entre o Dynamics 365 e sistemas externos utilizando OData e Web API.',
+			'solucao_acel_topico_1'   => 'Implante integrações rapidamente.',
+			'solucao_acel_topico_2'   => 'Reutilize modelos já validados.',
+			'solucao_acel_topico_3'   => 'Adapte fluxos ao seu negócio.',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn_texto'  => 'Começar agora',
+			'solucao_acel_btn_url'    => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'dynamics-365-aceleradores' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$this->preencher_dynamics365_faq( $post_id );
+
+		WP_CLI::log( "  Microsoft Dynamics 365 preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_dynamics365_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:dynamics365-business-central',
+				'A CLI Connect funciona com Dynamics 365 Business Central e Finance & Operations ao mesmo tempo?',
+				'<p>Sim. A CLI Connect suporta múltiplos produtos da família Dynamics 365 em paralelo. Cada produto é configurado como uma conexão independente na plataforma, permitindo orquestrar dados entre Business Central, Finance & Operations e outros sistemas corporativos em um único projeto de integração.</p>',
+			),
+			array(
+				'faq:dynamics365-autenticacao',
+				'Como a CLI Connect se autentica no Microsoft Dynamics?',
+				'<p>A autenticação é realizada via Azure AD (Microsoft Entra ID) utilizando OAuth2 com credenciais de aplicativo registrado. Esse modelo garante que nenhuma senha de usuário seja armazenada e que os acessos possam ser auditados e revogados centralmente pelo administrador do tenant.</p>',
+			),
+			array(
+				'faq:dynamics365-power-automate',
+				'É possível substituir integrações desenvolvidas em Power Automate?',
+				'<p>Sim. A CLI Connect oferece uma camada de integração corporativa que substitui fluxos do Power Automate em cenários de alta volume, lógica complexa ou necessidade de governança centralizada. A migração é feita de forma gradual, sem interrupção das operações.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  Dynamics 365 FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_solucao_rd_station() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:rd-station-crm',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "rd-station-crm" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu RD Station',
+			'solucao_hero_titulo'     => 'Conecte o RD Station CRM ao ERP e ao marketing sem depender de planilhas',
+			'solucao_hero_corpo'      => 'Automatize a conexão entre vendas, ERP, e-commerce e ferramentas de marketing para manter dados sincronizados, eliminar retrabalho manual e acompanhar o crescimento da operação comercial.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/rd-station-crm/',
+			'solucao_hero_imagem'     => $this->img( 'rd-station-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale sua operação comercial conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'rd-station-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize vendas com ERP',
+			'solucao_pilares_1_desc'   => 'Envie negócios ganhos automaticamente ao ERP e elimine a digitação manual de pedidos, notas e cadastros de clientes.',
+			'solucao_pilares_2_icone'  => $this->img( 'rd-station-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Enriqueça leads automaticamente',
+			'solucao_pilares_2_desc'   => 'Complemente dados de leads do RD Station com informações do ERP e de outras fontes para qualificar melhor cada oportunidade.',
+			'solucao_pilares_3_icone'  => $this->img( 'rd-station-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Conecte sistemas em crescimento',
+			'solucao_pilares_3_desc'   => 'Integre o RD Station CRM a novas ferramentas conforme a operação cresce, sem reescrever integrações existentes.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do ciclo comercial',
+			'solucao_casos_1_icone'   => $this->img( 'rd-station-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Envie negócios ganhos ao ERP',
+			'solucao_casos_1_desc'    => 'Ao fechar um negócio no RD Station CRM, dispare automaticamente a criação do pedido ou contrato no ERP sem intervenção manual.',
+			'solucao_casos_2_icone'   => $this->img( 'rd-station-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Enriqueça dados de leads',
+			'solucao_casos_2_desc'    => 'Sincronize informações de clientes entre o CRM e o ERP para manter histórico comercial e financeiro em um único registro.',
+			'solucao_casos_3_icone'   => $this->img( 'rd-station-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Conecte histórico de compras',
+			'solucao_casos_3_desc'    => 'Disponibilize dados de pedidos e faturas do ERP diretamente no RD Station CRM para que vendedores acompanhem o histórico de cada conta.',
+			'solucao_casos_4_icone'   => $this->img( 'rd-station-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide dados para BI',
+			'solucao_casos_4_desc'    => 'Unifique métricas de vendas do CRM com dados financeiros do ERP em dashboards de inteligência de negócios.',
+			'solucao_casos_5_icone'   => $this->img( 'rd-station-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Distribua leads automaticamente',
+			'solucao_casos_5_desc'    => 'Roteie leads qualificados para vendedores com base em regras de território, segmento ou capacidade de atendimento.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integrações seguras com API oficial',
+			'solucao_dif_corpo'       => 'As integrações utilizam a API REST oficial do RD Station CRM com autenticação por OAuth2 e tokens individuais por integração, garantindo rastreabilidade e controle de acesso granular.',
+			'solucao_dif_topico_1'    => 'Utilize API REST oficial do RD Station.',
+			'solucao_dif_topico_2'    => 'Controle acessos por permissões.',
+			'solucao_dif_topico_3'    => 'Proteja conexões com tokens individuais.',
+			'solucao_dif_imagem'      => $this->img( 'rd-station-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_plat_titulo'     => 'Centralize suas conexões comerciais em uma única plataforma',
+			'solucao_plat_corpo'      => 'Empresas que crescem adotam novas ferramentas ao longo do tempo. Centralize todas as integrações do RD Station CRM em uma plataforma única para simplificar a gestão e escalar sem retrabalho.',
+			'solucao_plat_topico_1'   => 'Conecte CRM e ERP em escala.',
+			'solucao_plat_topico_2'   => 'Reduza processos manuais com automações.',
+			'solucao_plat_topico_3'   => 'Evolua sistemas sem trocar ferramentas.',
+			'solucao_plat_imagem'     => $this->img( 'rd-station-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com uma integração pronta',
+			'solucao_acel_corpo'      => 'Implante fluxos comerciais já validados para sincronizar negócios ganhos, dados de clientes e histórico de compras entre o RD Station CRM e o seu ERP.',
+			'solucao_acel_topico_1'   => 'Implante fluxos comerciais validados.',
+			'solucao_acel_topico_2'   => 'Sincronize vendas automaticamente.',
+			'solucao_acel_topico_3'   => 'Adapte regras ao seu processo.',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn_texto'  => 'Começar agora',
+			'solucao_acel_btn_url'    => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'rd-station-acel' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$this->preencher_rd_station_faq( $post_id );
+
+		WP_CLI::log( "  RD Station CRM preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_rd_station_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:rd-station-crm-erp',
+				'Como sincronizar negócios fechados diretamente com o ERP?',
+				'<p>Ao fechar um negócio no RD Station CRM, a CLI Connect detecta o evento via webhook e aciona automaticamente o fluxo de integração configurado — criando o pedido, contrato ou cadastro de cliente no ERP sem intervenção manual. O mapeamento de campos é definido uma vez e pode ser ajustado conforme as regras do seu processo comercial.</p>',
+			),
+			array(
+				'faq:rd-station-crm-multiplas-contas',
+				'É possível conectar múltiplas contas RD Station de diferentes unidades de negócio?',
+				'<p>Sim. A CLI Connect suporta múltiplas conexões simultâneas com contas distintas do RD Station CRM. Cada unidade de negócio opera com seu próprio conjunto de credenciais e fluxos independentes, centralizados em uma única plataforma de integração para facilitar a governança.</p>',
+			),
+			array(
+				'faq:rd-station-crm-rate-limit',
+				'Como lidar com limites de taxa da API do RD Station CRM?',
+				'<p>A CLI Connect gerencia automaticamente os limites de taxa da API do RD Station CRM por meio de filas e mecanismos de retry com backoff exponencial. Em picos de volume — como importações em lote ou campanhas de grande escala — os dados são processados de forma controlada, sem erros ou perda de registros.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  RD Station CRM FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_sankhya_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sankhya-banco-direto',
+				'A CLI Connect acessa diretamente o banco de dados do Sankhya?',
+				'<p>Não. A CLI Connect utiliza exclusivamente a API Gateway oficial do Sankhya para todas as operações. Não há acesso direto ao banco de dados, preservando a integridade das regras de negócio e a governança da plataforma.</p>',
+			),
+			array(
+				'faq:sankhya-autenticacao',
+				'Como funciona a autenticação nas integrações com o Sankhya?',
+				'<p>A autenticação é realizada por meio do usuário de integração nativo do Sankhya, com credenciais configuradas na plataforma da CLI Connect. Cada integração opera com as permissões explicitamente atribuídas a esse usuário, mantendo rastreabilidade e controle de acesso.</p>',
+			),
+			array(
+				'faq:sankhya-permissoes',
+				'É possível limitar quais dados cada integração pode acessar?',
+				'<p>Sim. As permissões são definidas no próprio Sankhya por entidade e operação (leitura, escrita, exclusão). A CLI Connect respeita essas configurações, garantindo que cada integração acesse apenas os dados autorizados pelo administrador do ERP.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+		WP_CLI::log( sprintf( '  Sankhya FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_senior_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:senior-dados-sensiveis',
+				'Como a CLI Connect protege dados sensíveis do Senior?',
+				'<p>A plataforma aplica mascaramento automático de campos sensíveis — como CPF, salário e dados bancários — antes que as informações trafeguem entre sistemas. Todo o processo é registrado em log de auditoria, garantindo rastreabilidade e conformidade com a LGPD.</p>',
+			),
+			array(
+				'faq:senior-multiplas-filiais',
+				'É possível integrar múltiplas filiais utilizando bases Senior diferentes?',
+				'<p>Sim. A CLI Connect suporta cenários multi-empresa e multi-base, permitindo integrar filiais com instâncias Senior distintas na mesma plataforma. As regras de roteamento e mapeamento de dados são configuradas por empresa, garantindo isolamento e governança centralizados.</p>',
+			),
+			array(
+				'faq:senior-tempo-implantacao',
+				'Quanto tempo leva para automatizar o fluxo de admissão e desligamento?',
+				'<p>Com os aceleradores JML (Joiner, Mover, Leaver) da CLI Connect, projetos de admissão e desligamento podem ser implantados em semanas. Os modelos pré-configurados reduzem o esforço de desenvolvimento e permitem adaptações rápidas às regras específicas de cada empresa.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+		WP_CLI::log( sprintf( '  Senior FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_winthor_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:winthor-volume',
+				'A plataforma suporta operações com grande volume de pedidos?',
+				'<p>Sim. A CLI Connect utiliza conectores dedicados às rotinas automáticas e webservices do Winthor, projetados para suportar o alto volume de pedidos típico de distribuidores e atacadistas. A plataforma processa grandes lotes sem comprometer a estabilidade do ERP.</p>',
+			),
+			array(
+				'faq:winthor-forca-vendas',
+				'É possível integrar vários aplicativos de força de vendas?',
+				'<p>Sim. A CLI Connect conecta simultaneamente diferentes aplicativos de pré-venda e força de vendas ao Winthor, centralizando o recebimento de pedidos em uma única camada de integração. Isso elimina a digitação manual e garante que todos os canais alimentem o ERP de forma automatizada e padronizada.</p>',
+			),
+			array(
+				'faq:winthor-transportadoras',
+				'Como funciona a integração com transportadoras?',
+				'<p>A CLI Connect automatiza o envio de dados de entrega para as transportadoras parceiras, incluindo geração de etiquetas, transmissão de manifesto e recebimento de eventos de rastreamento. O status das entregas é atualizado automaticamente no Winthor, mantendo clientes e operação sempre informados sem intervenção manual.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Winthor FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_datasul_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:datasul-banco-direto',
+				'A CLI Connect acessa o banco de dados do Datasul diretamente?',
+				'<p>Não. A CLI Connect utiliza o protocolo Progress/EMS para comunicar com o Datasul de forma nativa e segura, sem acesso direto ao banco de dados. O processamento ocorre dentro da infraestrutura da empresa, preservando a integridade dos dados e as políticas de segurança corporativas.</p>',
+			),
+			array(
+				'faq:datasul-versoes',
+				'É possível integrar diferentes versões do Datasul?',
+				'<p>Sim. A CLI Connect suporta múltiplas versões do Datasul, adaptando os conectores às APIs disponíveis em cada ambiente. Não é necessário atualizar o ERP para começar a integrar — a plataforma se ajusta ao que está disponível na sua instalação atual.</p>',
+			),
+			array(
+				'faq:datasul-sap',
+				'Posso integrar Datasul e SAP na mesma empresa?',
+				'<p>Sim. A CLI Connect é uma plataforma unificada que permite integrar diferentes ERPs simultaneamente, incluindo Datasul e SAP. Empresas que cresceram por aquisições e operam múltiplos sistemas podem centralizar todas as integrações em uma única camada de governança.</p>',
+			),
+			array(
+				'faq:datasul-mes',
+				'Como integrar o Datasul ao MES?',
+				'<p>A CLI Connect oferece conectores e aceleradores prontos para sincronizar ordens de produção entre o Datasul e sistemas MES. A integração atualiza automaticamente o status das ordens durante toda a operação industrial, eliminando retrabalho manual e reduzindo erros no chão de fábrica.</p>',
+			),
+			array(
+				'faq:datasul-bi-ia',
+				'Os dados podem ser utilizados em BI ou Inteligência Artificial?',
+				'<p>Sim. A CLI Connect disponibiliza dados do Datasul para plataformas de BI como Power BI e Tableau, além de permitir que agentes de IA consultem informações do ERP com segurança através de integrações governadas. Isso transforma dados operacionais em insumo para análise e automação inteligente.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Datasul FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/* =====================================================================
+	   TOTVS PROTHEUS
+	   ===================================================================== */
+
+	/**
+	 * Preenche todos os campos ACF do post cli_solucao do TOTVS Protheus.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_totvs() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:totvs-protheus', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  TOTVS: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'para o seu Protheus',
+			'solucao_hero_titulo'          => 'Integre o TOTVS Protheus com qualquer sistema sem projetos demorados',
+			'solucao_hero_titulo_destaque' => '',
+			'solucao_hero_corpo'           => 'Conecte o Protheus ao CRM, e-commerce, bancos e plataformas fiscais utilizando integrações prontas, reduzindo customizações, acelerando implantações e preservando a estabilidade do seu ERP.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-protheus/',
+			'solucao_hero_imagem'          => $this->img( 'totvs-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Simplifique a integração do seu Protheus',
+			'solucao_pilares_1_icone'  => $this->img( 'totvs-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Elimine integrações customizadas',
+			'solucao_pilares_1_desc'   => 'Reduza a dependência de AdvPL: conecte novos sistemas com agilidade usando ExecAuto Padrões e pontos de entrada Protheus.',
+			'solucao_pilares_2_icone'  => $this->img( 'totvs-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reaproveite integrações prontas',
+			'solucao_pilares_2_desc'   => 'Utilize aceleradores para pedidos, clientes, estoque e processos fiscais, diminuindo tempo de implantação.',
+			'solucao_pilares_3_icone'  => $this->img( 'totvs-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Novas integrações em dias',
+			'solucao_pilares_3_desc'   => 'Conecte novos sistemas em dias, não meses, utilizando uma arquitetura preparada para expansão.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Conecte os principais processos do Protheus',
+			'solucao_casos_1_icone'   => $this->img( 'totvs-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Automatize pedidos do e-commerce',
+			'solucao_casos_1_desc'    => 'Envie pedidos automaticamente para o Protheus, reduzindo retrabalho e acelerando o faturamento.',
+			'solucao_casos_2_icone'   => $this->img( 'totvs-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Clientes sempre atualizados',
+			'solucao_casos_2_desc'    => 'Sincronize cadastros entre CRM, e-commerce e Protheus utilizando APIs REST.',
+			'solucao_casos_3_icone'   => $this->img( 'totvs-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize documentos fiscais',
+			'solucao_casos_3_desc'    => 'Integre a emissão e consulta de documentos fiscais diretamente aos processos financeiros.',
+			'solucao_casos_4_icone'   => $this->img( 'totvs-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Controle estoques entre filiais',
+			'solucao_casos_4_desc'    => 'Atualize saldos automaticamente entre unidades, evitando divergências operacionais.',
+			'solucao_casos_5_icone'   => $this->img( 'totvs-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte o Protheus ao Salesforce',
+			'solucao_casos_5_desc'    => 'Compartilhe informações entre ERP e CRM para eliminar retrabalho comercial e operacional.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Conectividade segura para ambientes Protheus',
+			'solucao_dif_corpo'    => 'Conecte o Protheus utilizando Runtime e comunicação outbound, preservando a infraestrutura da empresa e suportando REST nativamente e ExecAuto chamando as MATA Protheus Standard.',
+			'solucao_dif_topico_1' => 'Evite abrir portas no firewall.',
+			'solucao_dif_topico_2' => 'REST nativo e ExecAuto chamando MATA Protheus Standard.',
+			'solucao_dif_topico_3' => 'Preserve a segurança do ambiente interno.',
+			'solucao_dif_imagem'   => $this->img( 'totvs-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Uma plataforma para integrar todo o seu ecossistema',
+			'solucao_plat_corpo'    => 'Centralize todas as integrações do Protheus, Salesforce, bancos e e-commerce em uma única plataforma, reaproveitando componentes já validados e reduzindo a complexidade operacional.',
+			'solucao_plat_topico_1' => 'Reutilize integrações já implantadas.',
+			'solucao_plat_topico_2' => 'Reduza novos projetos de desenvolvimento.',
+			'solucao_plat_topico_3' => 'Centralize toda a governança das integrações.',
+			'solucao_plat_imagem'   => $this->img( 'totvs-plataforma' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece utilizando integrações prontas',
+			'solucao_acel_corpo'     => 'Implemente cenários recorrentes entre Protheus e outros sistemas utilizando modelos pré-configurados, adaptados rapidamente ao seu ambiente.',
+			'solucao_acel_topico_1'  => 'Implante sincronização de pedidos rapidamente.',
+			'solucao_acel_topico_2'  => 'Reutilize modelos para cadastros.',
+			'solucao_acel_topico_3'  => 'Adapte fluxos ao seu processo.',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'totvs-aceleradores' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_totvs_faq( $post_id );
+
+		WP_CLI::log( "  TOTVS Protheus preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do TOTVS e vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao do TOTVS.
+	 * @return void
+	 */
+	protected function preencher_totvs_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:totvs-sem-vpn',
+				'Como a CLI Connect integra o Protheus sem VPN?',
+				'<p>A CLI Connect utiliza um agente (Boomi Atom) instalado dentro da rede corporativa que realiza comunicação outbound com a plataforma na nuvem. Não é necessário abrir portas no firewall nem configurar VPN — o Protheus permanece protegido enquanto as integrações operam normalmente.</p>',
+			),
+			array(
+				'faq:totvs-advpl',
+				'É necessário desenvolver rotinas AdvPL para cada integração?',
+				'<p>Não. A CLI Connect utiliza ExecAuto chamando as MATA Protheus Standard e APIs REST nativas, eliminando a necessidade de desenvolvimento customizado em AdvPL para a maioria dos cenários. Isso reduz a dependência do ambiente Protheus e torna as integrações mais estáveis e fáceis de manter.</p>',
+			),
+			array(
+				'faq:totvs-legados',
+				'A solução funciona em ambientes Protheus legados?',
+				'<p>Sim. A CLI Connect suporta versões legadas do Protheus, utilizando conectores compatíveis com as APIs disponíveis em cada ambiente. A arquitetura de integração é adaptada ao que está disponível no seu ambiente, sem exigir atualização imediata do ERP.</p>',
+			),
+			array(
+				'faq:totvs-filiais',
+				'Como funciona a integração entre múltiplas filiais?',
+				'<p>A CLI Connect centraliza as integrações de todas as filiais em uma única plataforma, sincronizando estoques, pedidos e cadastros entre as unidades automaticamente. Isso elimina divergências operacionais e garante que todas as filiais trabalhem com as mesmas informações em tempo real.</p>',
+			),
+			array(
+				'faq:totvs-prazo',
+				'Quanto tempo leva para colocar uma integração em produção?',
+				'<p>Com os aceleradores prontos da CLI Connect, a maioria das integrações entre o Protheus e outros sistemas vai a produção em poucos dias. Cenários mais complexos passam por um levantamento rápido antes da implantação, mas o uso de modelos pré-configurados reduz significativamente o prazo em relação a projetos customizados.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  TOTVS FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 }
 
