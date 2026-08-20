@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$perguntas = cliconnect_posts( 'cli_faq' );
+$perguntas = get_field( 'faq_itens', (int) get_option( 'page_on_front' ) );
 
 if ( ! $perguntas ) {
 	return;

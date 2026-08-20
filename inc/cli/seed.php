@@ -137,6 +137,35 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo RD Station CRM…' );
 		$this->preencher_solucao_rd_station();
 
+		WP_CLI::log( '— Preenchendo RD Station Marketing…' );
+		$this->preencher_solucao_rd_station_marketing();
+		$this->preencher_solucao_thomson_reuters_tax_one();
+		$this->preencher_solucao_freshservice();
+		$this->preencher_solucao_servicenow();
+		$this->preencher_solucao_portal_de_api();
+		$this->preencher_solucao_zendesk();
+		$this->preencher_solucao_bionexo();
+		$this->preencher_solucao_tasy();
+		$this->preencher_solucao_mv();
+
+		WP_CLI::log( '— Preenchendo VTEX…' );
+		$this->preencher_solucao_vtex();
+
+		WP_CLI::log( '— Preenchendo Shopify…' );
+		$this->preencher_solucao_shopify();
+
+		WP_CLI::log( '— Preenchendo Magento / Adobe Commerce…' );
+		$this->preencher_solucao_magento();
+
+		WP_CLI::log( '— Preenchendo OnBlox (WMS/TMS)…' );
+		$this->preencher_solucao_onblox();
+
+		WP_CLI::log( '— Preenchendo Narwal (Comex)…' );
+		$this->preencher_solucao_narwal();
+
+		WP_CLI::log( '— Preenchendo Neogrid…' );
+		$this->preencher_solucao_neogrid();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1073,6 +1102,21 @@ class Cliconnect_Seed {
 					'senior'                         => 'Senior',
 					'dynamics-365'                   => 'Dynamics 365',
 					'rd-station-crm'                 => 'RD Station CRM',
+					'rd-station-marketing'           => 'RD Station Marketing',
+					'thomson-reuters-tax-one'        => 'Thomson Reuters Tax One',
+					'freshservice'                   => 'Freshservice',
+					'servicenow'                     => 'ServiceNow',
+					'portal-de-api'                  => 'Portal de API / MCP Server',
+				'zendesk'                        => 'Zendesk',
+				'bionexo'                        => 'Bionexo',
+				'tasy'                           => 'Tasy',
+				'mv'                             => 'MV',
+				'vtex'                           => 'VTEX',
+				'shopify'                        => 'Shopify',
+				'magento'                        => 'Magento / Adobe Commerce',
+				'onblox'                         => 'OnBlox (WMS/TMS)',
+				'narwal'                         => 'Narwal (Comex)',
+				'neogrid'                        => 'Neogrid',
 				),
 			),
 			'industria'      => array(
@@ -4383,6 +4427,1221 @@ class Cliconnect_Seed {
 		WP_CLI::log( sprintf( '  RD Station CRM FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
+	protected function preencher_solucao_rd_station_marketing() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:rd-station-marketing',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "rd-station-marketing" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu RD Station Marketing',
+			'solucao_hero_titulo'     => 'Automatize seu marketing com dados de vendas e produto em tempo real',
+			'solucao_hero_corpo'      => 'Conecte o RD Station Marketing ao CRM, ERP e ferramentas de analytics para transformar leads em oportunidades com dados atualizados em cada etapa do funil comercial.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/rd-station-marketing/',
+			'solucao_hero_imagem'     => $this->img( 'rd-station-marketing-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte marketing ao ciclo comercial',
+			'solucao_pilares_1_icone'  => $this->img( 'rd-station-marketing-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize leads qualificados',
+			'solucao_pilares_1_desc'   => 'Envie MQLs e SQLs automaticamente para o CRM de vendas sem atrasos ou processos manuais.',
+			'solucao_pilares_2_icone'  => $this->img( 'rd-station-marketing-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Capture eventos de conversão',
+			'solucao_pilares_2_desc'   => 'Use webhooks e API REST para reagir rapidamente a interações relevantes dos clientes.',
+			'solucao_pilares_3_icone'  => $this->img( 'rd-station-marketing-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Unifique dados do funil',
+			'solucao_pilares_3_desc'   => 'Conecte marketing, vendas e receita para acompanhar toda jornada até o fechamento.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos de marketing e vendas',
+			'solucao_casos_1_icone'   => $this->img( 'rd-station-marketing-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Envie MQLs ao CRM',
+			'solucao_casos_1_desc'    => 'Sincronize leads qualificados do RD Station Marketing com o CRM em tempo real.',
+			'solucao_casos_2_icone'   => $this->img( 'rd-station-marketing-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Dispare automações por eventos',
+			'solucao_casos_2_desc'    => 'Acione fluxos de marketing a partir de ações de produto ou vendas.',
+			'solucao_casos_3_icone'   => $this->img( 'rd-station-marketing-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Meça atribuição de campanhas',
+			'solucao_casos_3_desc'    => 'Conecte campanhas ao CRM e ERP para acompanhar impacto até a receita.',
+			'solucao_casos_4_icone'   => $this->img( 'rd-station-marketing-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Enriqueça dados de leads',
+			'solucao_casos_4_desc'    => 'Combine informações externas para criar perfis comerciais mais completos.',
+			'solucao_casos_5_icone'   => $this->img( 'rd-station-marketing-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Remova clientes convertidos',
+			'solucao_casos_5_desc'    => 'Retire automaticamente contatos vendidos das réguas de nutrição.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações confiáveis via API oficial',
+			'solucao_dif_corpo'    => 'Conecte o RD Station Marketing utilizando webhooks e API REST com deduplicação de contatos para manter marketing e vendas alinhados.',
+			'solucao_dif_topico_1' => 'Utilize webhooks para eventos rápidos',
+			'solucao_dif_topico_2' => 'Conecte via API REST oficial',
+			'solucao_dif_topico_3' => 'Evite duplicidade entre contatos',
+			'solucao_dif_imagem'   => $this->img( 'rd-station-marketing-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte todo o funil comercial em uma plataforma',
+			'solucao_plat_corpo'    => 'Marketing e vendas perdem eficiência quando trabalham com dados desconectados. Centralize integrações para acompanhar o cliente do primeiro clique ao pedido faturado.',
+			'solucao_plat_topico_1' => 'Unifique dados de marketing e vendas',
+			'solucao_plat_topico_2' => 'Elimine cruzamentos manuais de planilhas',
+			'solucao_plat_topico_3' => 'Conecte toda jornada comercial',
+			'solucao_plat_imagem'   => $this->img( 'rd-station-marketing-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com leads já estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para sincronizar leads qualificados do RD Station Marketing com qualquer CRM e acelere a passagem entre marketing e vendas.',
+			'solucao_acel_topico_1'  => 'Conecte MQLs automaticamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos já validados',
+			'solucao_acel_topico_3'  => 'Adapte regras ao seu processo',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'rd-station-marketing-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$this->preencher_rd_station_marketing_faq( $post_id );
+
+		WP_CLI::log( "  RD Station Marketing preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_rd_station_marketing_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:rd-station-marketing-nutricao',
+				'Como evitar que um lead já fechado continue recebendo e-mails de nutrição?',
+				'<p>A CLI Connect pode acionar automaticamente a remoção do lead das listas ativas do RD Station Marketing ao detectar um negócio ganho ou cliente convertido no CRM. Dessa forma, contatos que já fecharam uma venda deixam de receber fluxos de nutrição automaticamente, sem intervenção manual da equipe de marketing.</p>',
+			),
+			array(
+				'faq:rd-station-marketing-atribuicao',
+				'É possível medir atribuição de campanha até o fechamento no ERP?',
+				'<p>Sim. A CLI Connect conecta os dados de campanha do RD Station Marketing com os registros de venda e faturamento do ERP. Com isso, é possível rastrear a jornada do lead desde o primeiro clique em uma campanha até o pedido faturado, gerando visibilidade sobre o ROI real de cada ação de marketing.</p>',
+			),
+			array(
+				'faq:rd-station-marketing-webhooks',
+				'Como funciona a integração via webhooks em tempo real?',
+				'<p>O RD Station Marketing envia eventos via webhook assim que uma ação ocorre — formulário preenchido, lead qualificado, automação concluída. A CLI Connect recebe esses eventos, valida o payload e aciona os fluxos configurados de forma imediata, sem necessidade de polling. A latência média é de segundos, garantindo que os dados cheguem ao CRM ou ERP praticamente em tempo real.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  RD Station Marketing FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_solucao_thomson_reuters_tax_one() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:thomson-reuters-tax-one',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "thomson-reuters-tax-one" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Tax One',
+			'solucao_hero_titulo'     => 'Centralize a gestão tributária e elimine riscos fiscais na sua empresa',
+			'solucao_hero_corpo'      => 'Conecte facilmente o ecossistema da sua empresa ao Thomson Reuters Tax One. Unifique a apuração de impostos, simplifique as obrigações acessórias e garanta segurança fiscal.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/thomson-reuters-tax-one/',
+			'solucao_hero_imagem'     => $this->img( 'thomson-reuters-tax-one-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Centralize o cálculo fiscal da sua operação',
+			'solucao_pilares_1_icone'  => $this->img( 'thomson-reuters-tax-one-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Centralize regras tributárias',
+			'solucao_pilares_1_desc'   => 'Aplique o mesmo motor de cálculo fiscal em todos os sistemas que geram documentos na empresa.',
+			'solucao_pilares_2_icone'  => $this->img( 'thomson-reuters-tax-one-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reduza divergências fiscais',
+			'solucao_pilares_2_desc'   => 'Mantenha ERP, e-commerce e faturamento alinhados com cálculos tributários consistentes.',
+			'solucao_pilares_3_icone'  => $this->img( 'thomson-reuters-tax-one-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Audite cada cálculo realizado',
+			'solucao_pilares_3_desc'   => 'Tenha rastreabilidade completa de todas as chamadas feitas ao motor fiscal.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize os principais processos fiscais',
+			'solucao_casos_1_icone'   => $this->img( 'thomson-reuters-tax-one-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Calcule impostos no checkout',
+			'solucao_casos_1_desc'    => 'Consulte o motor fiscal em tempo real durante compras no e-commerce para aplicar tributos corretamente.',
+			'solucao_casos_2_icone'   => $this->img( 'thomson-reuters-tax-one-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Conecte múltiplos ERPs',
+			'solucao_casos_2_desc'    => 'Centralize o cálculo fiscal entre SAP, Totvs, Dynamics e outros ERPs da organização.',
+			'solucao_casos_3_icone'   => $this->img( 'thomson-reuters-tax-one-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Reprocesse documentos fiscais',
+			'solucao_casos_3_desc'    => 'Execute cálculos em lote para reconciliar documentos e corrigir inconsistências tributárias.',
+			'solucao_casos_4_icone'   => $this->img( 'thomson-reuters-tax-one-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Atualize regras fiscais automaticamente',
+			'solucao_casos_4_desc'    => 'Sincronize alterações tributárias entre o motor fiscal e sistemas de origem.',
+			'solucao_casos_5_icone'   => $this->img( 'thomson-reuters-tax-one-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Centralize auditorias fiscais',
+			'solucao_casos_5_desc'    => 'Acompanhe todas as consultas ao motor fiscal em uma trilha única de auditoria.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Audite cada cálculo com segurança fiscal',
+			'solucao_dif_corpo'    => 'Centralize todas as chamadas ao motor fiscal com controle de acesso por sistema de origem e rastreabilidade completa para compliance tributário.',
+			'solucao_dif_topico_1' => 'Registre todas as chamadas fiscais',
+			'solucao_dif_topico_2' => 'Controle acessos por sistema origem',
+			'solucao_dif_topico_3' => 'Garanta rastreabilidade para auditorias',
+			'solucao_dif_imagem'   => $this->img( 'thomson-reuters-tax-one-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique cálculos fiscais em uma plataforma',
+			'solucao_plat_corpo'    => 'Empresas com múltiplos ERPs precisam garantir a mesma regra tributária em todos os pontos de emissão. Centralize conexões e reduza riscos de cálculos inconsistentes.',
+			'solucao_plat_topico_1' => 'Centralize regras entre diferentes ERPs',
+			'solucao_plat_topico_2' => 'Padronize cálculos entre unidades',
+			'solucao_plat_topico_3' => 'Reduza riscos de autuações fiscais',
+			'solucao_plat_imagem'   => $this->img( 'thomson-reuters-tax-one-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com um modelo fiscal pronto',
+			'solucao_acel_corpo'     => 'Utilize um template de cálculo tributário centralizado para conectar checkout, ERP e motor fiscal com mais velocidade.',
+			'solucao_acel_topico_1'  => 'Conecte múltiplos ERPs rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos fiscais validados',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações tributárias',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'thomson-reuters-tax-one-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$this->preencher_thomson_reuters_tax_one_faq( $post_id );
+
+		WP_CLI::log( "  Thomson Reuters Tax One preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_thomson_reuters_tax_one_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:tax-one-divergencia-calculo',
+				'Como evitar divergência de cálculo fiscal entre ERP e e-commerce?',
+				'<p>A CLI Connect centraliza todas as chamadas ao motor do Tax One em um único ponto de integração. Tanto o ERP quanto o e-commerce consultam o mesmo motor fiscal, garantindo que o tributo calculado no checkout seja idêntico ao registrado na nota fiscal emitida pelo ERP, eliminando divergências de apuração.</p>',
+			),
+			array(
+				'faq:tax-one-multiplos-erps',
+				'É possível centralizar o motor fiscal para múltiplos ERPs?',
+				'<p>Sim. A CLI Connect permite conectar diferentes ERPs — como SAP, TOTVS e Dynamics — ao mesmo motor do Tax One. Cada sistema realiza suas chamadas de cálculo de forma independente, mas todas passam pela mesma configuração de regras tributárias, garantindo consistência fiscal em toda a organização.</p>',
+			),
+			array(
+				'faq:tax-one-auditoria-chamadas',
+				'Como funciona a auditoria de chamadas ao motor de cálculo?',
+				'<p>A CLI Connect registra cada chamada realizada ao Tax One, incluindo o sistema de origem, os parâmetros enviados, o resultado retornado e o timestamp da operação. Essa trilha de auditoria fica disponível para consulta, facilitando a comprovação de cálculos em processos de fiscalização tributária.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'menu_order'   => $ordem,
+			) );
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens',  $ids, $post_id );
+		WP_CLI::log( sprintf( '  Thomson Reuters Tax One FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	protected function preencher_solucao_freshservice() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:freshservice',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "freshservice" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Freshservice',
+			'solucao_hero_titulo'     => 'Potencialize o Freshservice criando processos completos sem novos módulos',
+			'solucao_hero_corpo'      => 'Conecte o Freshservice aos sistemas internos para criar formulários, aprovações e catálogos de serviço que gravam diretamente no ERP, CRM ou bancos de dados, reduzindo custos de licenciamento.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/freshservice/',
+			'solucao_hero_imagem'     => $this->img( 'freshservice-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme o Freshservice em uma plataforma de processos',
+			'solucao_pilares_1_icone'  => $this->img( 'freshservice-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Crie processos dentro do Freshservice',
+			'solucao_pilares_1_desc'   => 'Construa formulários, aprovações e catálogos conectados aos sistemas internos da empresa.',
+			'solucao_pilares_2_icone'  => $this->img( 'freshservice-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reduza licenças adicionais',
+			'solucao_pilares_2_desc'   => 'Evite módulos extras para integrar processos do Freshservice com outras aplicações corporativas.',
+			'solucao_pilares_3_icone'  => $this->img( 'freshservice-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reutilize workflows criados',
+			'solucao_pilares_3_desc'   => 'Transforme cada processo desenvolvido em um fluxo reutilizável para novas necessidades.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos críticos pelo Freshservice',
+			'solucao_casos_1_icone'   => $this->img( 'freshservice-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Solicite compras pelo Freshservice',
+			'solucao_casos_1_desc'    => 'Crie formulários de compra que registram pedidos diretamente no ERP sem módulos adicionais.',
+			'solucao_casos_2_icone'   => $this->img( 'freshservice-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Automatize acessos internos',
+			'solucao_casos_2_desc'    => 'Conecte catálogo de serviços ao Active Directory ou Okta para provisionar acessos automaticamente.',
+			'solucao_casos_3_icone'   => $this->img( 'freshservice-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize onboarding de colaboradores',
+			'solucao_casos_3_desc'    => 'Dispare admissões simultâneas em folha, e-mail e sistemas internos pelo Freshservice.',
+			'solucao_casos_4_icone'   => $this->img( 'freshservice-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Abra tickets automaticamente',
+			'solucao_casos_4_desc'    => 'Transforme eventos de monitoramento, RH e segurança em chamados no Service Desk.',
+			'solucao_casos_5_icone'   => $this->img( 'freshservice-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize tickets e processos do Freshservice para agentes inteligentes de suporte.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para processos críticos',
+			'solucao_dif_corpo'    => 'Utilize APIs REST do Freshservice com autenticação segura e controle de acesso para conectar processos conforme políticas internas.',
+			'solucao_dif_topico_1' => 'Utilize APIs REST oficiais',
+			'solucao_dif_topico_2' => 'Controle acessos por departamento',
+			'solucao_dif_topico_3' => 'Proteja conexões com API Key',
+			'solucao_dif_imagem'   => $this->img( 'freshservice-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize processos sem depender de módulos',
+			'solucao_plat_corpo'    => 'Transforme o Freshservice na interface dos processos enquanto a plataforma de integração conecta e grava dados nos sistemas internos.',
+			'solucao_plat_topico_1' => 'Centralize workflows corporativos',
+			'solucao_plat_topico_2' => 'Evite novos licenciamentos do fornecedor',
+			'solucao_plat_topico_3' => 'Conecte sistemas sem add-ons',
+			'solucao_plat_imagem'   => $this->img( 'freshservice-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com processos já estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar formulários e catálogos do Freshservice aos sistemas internos com mais velocidade.',
+			'solucao_acel_topico_1'  => 'Conecte processos em poucos minutos',
+			'solucao_acel_topico_2'  => 'Reutilize workflows já validados',
+			'solucao_acel_topico_3'  => 'Adapte fluxos ao negócio',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'freshservice-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		$this->preencher_freshservice_faq( $post_id );
+
+		WP_CLI::log( "  Freshservice preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_freshservice_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:freshservice-processo-sem-modulo',
+				'É possível criar um processo de negócio no Freshservice sem comprar módulo adicional?',
+				'<p>Sim. A CLI Connect permite criar formulários, aprovações e catálogos de serviço que se integram diretamente aos sistemas internos — como ERP e CRM — sem a necessidade de contratar módulos adicionais do Freshservice.</p>',
+			),
+			array(
+				'faq:freshservice-formulario-grava-sistema',
+				'Como um formulário do Freshservice grava diretamente em outro sistema interno?',
+				'<p>A integração é feita via APIs REST do Freshservice. Quando um usuário submete um formulário, a CLI Connect aciona o fluxo de integração, que traduz e envia os dados para o sistema de destino — como SAP, Totvs ou Active Directory — em tempo real.</p>',
+			),
+			array(
+				'faq:freshservice-abrir-tickets-automaticamente',
+				'Como abrir tickets automaticamente a partir de outro sistema?',
+				'<p>Eventos de sistemas externos — como alertas de monitoramento, eventos de RH ou ocorrências de segurança — disparam chamadas via API para a CLI Connect, que cria os tickets correspondentes no Freshservice com os dados e prioridades corretos.</p>',
+			),
+		);
+
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_id = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+		}
+
+		$faq_ids = array();
+		foreach ( $itens as [ $slug ] ) {
+			$posts = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => self::META,
+				'meta_value' => $slug,
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $posts ) ) {
+				$faq_ids[] = (int) $posts[0];
+			}
+		}
+
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+			WP_CLI::log( '  Freshservice FAQ: ' . count( $faq_ids ) . ' perguntas vinculadas.' );
+		}
+	}
+
+	protected function preencher_solucao_servicenow() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:servicenow',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "servicenow" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu ServiceNow',
+			'solucao_hero_titulo'     => 'Potencialize o ServiceNow sem pagar por mais módulos',
+			'solucao_hero_corpo'      => 'Construa processos completos no ServiceNow e conecte diretamente ERP, CRM e sistemas internos sem depender de módulos adicionais de integração.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/servicenow/',
+			'solucao_hero_imagem'     => $this->img( 'servicenow-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme o ServiceNow em uma central de processos',
+			'solucao_pilares_1_icone'  => $this->img( 'servicenow-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Crie processos conectados',
+			'solucao_pilares_1_desc'   => 'Use catálogo, aprovações e fluxos ligados aos sistemas internos.',
+			'solucao_pilares_2_icone'  => $this->img( 'servicenow-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reduza custos de licenciamento',
+			'solucao_pilares_2_desc'   => 'Evite módulos pagos para cada nova integração necessária.',
+			'solucao_pilares_3_icone'  => $this->img( 'servicenow-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Orquestre ponta a ponta',
+			'solucao_pilares_3_desc'   => 'Capture solicitações, valide dados e grave nos sistemas.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos conectados ao ServiceNow',
+			'solucao_casos_1_icone'   => $this->img( 'servicenow-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Automatize cadastro de produtos',
+			'solucao_casos_1_desc'    => 'Crie aprovações no ServiceNow e grave dados no ERP.',
+			'solucao_casos_2_icone'   => $this->img( 'servicenow-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Abra incidentes automaticamente',
+			'solucao_casos_2_desc'    => 'Receba eventos de IA e sistemas diretamente no ServiceNow.',
+			'solucao_casos_3_icone'   => $this->img( 'servicenow-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Sincronize a CMDB',
+			'solucao_casos_3_desc'    => 'Conecte dados de infraestrutura sem Spokes adicionais.',
+			'solucao_casos_4_icone'   => $this->img( 'servicenow-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Valide aprovações no ERP',
+			'solucao_casos_4_desc'    => 'Consulte orçamento e estoque antes de aprovar mudanças.',
+			'solucao_casos_5_icone'   => $this->img( 'servicenow-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Automatize acessos corporativos',
+			'solucao_casos_5_desc'    => 'Dispare provisionamentos a partir de eventos de RH.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações ServiceNow com governança completa',
+			'solucao_dif_corpo'    => 'Conecte o ServiceNow via API com autenticação segura e eventos bidirecionais mantendo auditoria centralizada sem depender de conectores pagos.',
+			'solucao_dif_topico_1' => 'Utilize APIs oficiais do ServiceNow',
+			'solucao_dif_topico_2' => 'Controle acessos por autenticação',
+			'solucao_dif_topico_3' => 'Audite todos os eventos',
+			'solucao_dif_imagem'   => $this->img( 'servicenow-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte processos sem limitar crescimento',
+			'solucao_plat_corpo'    => 'Use o ServiceNow para orquestrar experiências enquanto a CLI Connect conecta sistemas internos sem aumentar custos de licenciamento.',
+			'solucao_plat_topico_1' => 'Centralize integrações corporativas',
+			'solucao_plat_topico_2' => 'Reduza dependência de Spokes',
+			'solucao_plat_topico_3' => 'Escale novos processos',
+			'solucao_plat_imagem'   => $this->img( 'servicenow-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com processos já estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para criar processos no ServiceNow e gravar dados diretamente em ERP como Totvs ou SAP.',
+			'solucao_acel_topico_1'  => 'Configure processos rapidamente',
+			'solucao_acel_topico_2'  => 'Adapte entidades existentes',
+			'solucao_acel_topico_3'  => 'Acelere novas automações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'servicenow-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		$this->preencher_servicenow_faq( $post_id );
+
+		WP_CLI::log( "  ServiceNow preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_solucao_portal_de_api() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:portal-de-api',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "portal-de-api" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'api e mcp server',
+			'solucao_hero_titulo'     => 'Transforme qualquer sistema interno em API ou ferramenta de IA',
+			'solucao_hero_corpo'      => 'Exponha sistemas como ERP, CRM, ITSM e bancos de dados como APIs padronizadas ou servidores MCP prontos para consumo por aplicações, equipes e agentes de IA.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/portal-de-api/',
+			'solucao_hero_imagem'     => $this->img( 'portal-de-api-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Democratize o acesso aos sistemas internos',
+			'solucao_pilares_1_icone'  => $this->img( 'portal-de-api-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Publique APIs sem código adicional',
+			'solucao_pilares_1_desc'   => 'Transforme pipelines existentes em APIs REST documentadas e reutilizáveis por novos projetos.',
+			'solucao_pilares_2_icone'  => $this->img( 'portal-de-api-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Conecte agentes de IA aos sistemas',
+			'solucao_pilares_2_desc'   => 'Exponha processos como ferramentas MCP autenticadas para agentes consultarem e executarem ações.',
+			'solucao_pilares_3_icone'  => $this->img( 'portal-de-api-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize governança de acesso',
+			'solucao_pilares_3_desc'   => 'Controle consumidores, permissões e escopos de cada sistema disponibilizado no portal.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Amplie o uso dos sistemas conectados',
+			'solucao_casos_1_icone'   => $this->img( 'portal-de-api-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Crie APIs de sistemas corporativos',
+			'solucao_casos_1_desc'    => 'Exponha Totvs, Sankhya ou SAP como APIs únicas para consultas e operações reutilizáveis.',
+			'solucao_casos_2_icone'   => $this->img( 'portal-de-api-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Conecte agentes de IA ao ERP',
+			'solucao_casos_2_desc'    => 'Permita que agentes consultem estoque e criem pedidos usando linguagem natural.',
+			'solucao_casos_3_icone'   => $this->img( 'portal-de-api-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Crie um catálogo interno de APIs',
+			'solucao_casos_3_desc'    => 'Ajude equipes a descobrir e reutilizar integrações existentes sem retrabalho.',
+			'solucao_casos_4_icone'   => $this->img( 'portal-de-api-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Modernize acessos legados',
+			'solucao_casos_4_desc'    => 'Exponha mainframes e ESBs como APIs modernas sem revelar protocolos antigos.',
+			'solucao_casos_5_icone'   => $this->img( 'portal-de-api-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Controle consumidores de APIs',
+			'solucao_casos_5_desc'    => 'Gerencie acessos, limites e auditorias por usuário, sistema ou agente.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'APIs seguras para humanos e agentes',
+			'solucao_dif_corpo'    => 'Cada API ou MCP Server publicado herda segurança da plataforma com autenticação, controle de escopo e proteção de dados sensíveis.',
+			'solucao_dif_topico_1' => 'Proteja APIs com autenticação por token',
+			'solucao_dif_topico_2' => 'Controle escopos por consumidor',
+			'solucao_dif_topico_3' => 'Proteja dados sensíveis com guardrails',
+			'solucao_dif_imagem'   => $this->img( 'portal-de-api-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow' => 'plataforma única',
+			'solucao_plat_titulo'  => 'Unifique acesso a todos os sistemas',
+			'solucao_plat_corpo'   => 'Conecte uma vez seus sistemas internos e reutilize essas capacidades como APIs ou ferramentas de IA sem reconstruir integrações para cada projeto.',
+			'solucao_plat_topico_1' => 'Centralize acesso aos sistemas corporativos',
+			'solucao_plat_topico_2' => 'Reutilize integrações já construídas',
+			'solucao_plat_topico_3' => 'Evite novos desenvolvimentos redundantes',
+			'solucao_plat_imagem'  => $this->img( 'portal-de-api-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Transforme integrações existentes em APIs',
+			'solucao_acel_corpo'     => 'Publique pipelines já construídos como endpoints documentados ou ferramentas MCP sem criar novos projetos de desenvolvimento.',
+			'solucao_acel_topico_1'  => 'Converta pipelines rapidamente',
+			'solucao_acel_topico_2'  => 'Reaproveite integrações existentes',
+			'solucao_acel_topico_3'  => 'Disponibilize APIs em poucos cliques',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn1_texto' => 'Começar agora',
+			'solucao_acel_btn1_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'portal-de-api-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		$this->preencher_portal_de_api_faq( $post_id );
+
+		WP_CLI::log( "  Portal de API / MCP Server preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_portal_de_api_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:portal-de-api-diferenca-api-mcp',
+				'Qual a diferença entre publicar uma API e expor um servidor MCP?',
+				'API publica endpoints REST documentados para consumo por sistemas e aplicações. MCP Server expõe ferramentas autenticadas para consumo por agentes de IA, que usam linguagem natural para descobrir e executar ações disponíveis no Portal.',
+			),
+			array(
+				'faq:portal-de-api-agente-descobre-ferramentas',
+				'Como um agente de IA descobre e usa ferramentas publicadas no Portal?',
+				'O agente conecta ao servidor MCP do Portal, que lista automaticamente as ferramentas disponíveis com nome, descrição e parâmetros. O agente seleciona e executa a ferramenta adequada com autenticação e controle de escopo herdados da plataforma.',
+			),
+			array(
+				'faq:portal-de-api-limitar-acesso-consumidor',
+				'É possível limitar o acesso de cada consumidor?',
+				'Sim. Cada consumidor — seja um sistema, usuário ou agente — recebe credenciais próprias com escopos definidos. O Portal controla quais APIs e ferramentas cada consumidor pode acessar e audita todas as chamadas.',
+			),
+			array(
+				'faq:portal-de-api-pipeline-vira-api',
+				'Um pipeline existente pode virar API sem retrabalho?',
+				'Sim. O Portal de API permite publicar pipelines Boomi já construídos como endpoints REST documentados com poucos cliques, sem criar novos projetos de desenvolvimento ou reescrever integrações.',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_id = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+			$ids[] = $faq_id;
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+		WP_CLI::log( "  Portal de API / MCP Server FAQ: " . count( $ids ) . " perguntas vinculadas." );
+	}
+
+	protected function preencher_solucao_zendesk() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:zendesk',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "zendesk" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Zendesk',
+			'solucao_hero_titulo'     => 'Potencialize o Zendesk criando processos completos sem apps adicionais',
+			'solucao_hero_corpo'      => 'Conecte o Zendesk ao ERP, CRM e sistemas de faturamento para criar formulários e fluxos de atendimento que consultam e gravam informações diretamente nos sistemas internos.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/zendesk/',
+			'solucao_hero_imagem'     => $this->img( 'zendesk-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme o Zendesk em uma central de atendimento conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'zendesk-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte atendimento aos sistemas internos',
+			'solucao_pilares_1_desc'   => 'Integre tickets, formulários e macros do Zendesk diretamente ao ERP, CRM e faturamento.',
+			'solucao_pilares_2_icone'  => $this->img( 'zendesk-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reduza apps adicionais',
+			'solucao_pilares_2_desc'   => 'Evite depender de aplicativos pagos do Marketplace para cada nova integração.',
+			'solucao_pilares_3_icone'  => $this->img( 'zendesk-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Enriqueça tickets automaticamente',
+			'solucao_pilares_3_desc'   => 'Consulte dados de pedidos, clientes e faturas sem sair da tela de atendimento.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos críticos de atendimento',
+			'solucao_casos_1_icone'   => $this->img( 'zendesk-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Automatize solicitações de reembolso',
+			'solucao_casos_1_desc'    => 'Consulte e grave informações financeiras no ERP diretamente pelo ticket do Zendesk.',
+			'solucao_casos_2_icone'   => $this->img( 'zendesk-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Enriqueça tickets em tempo real',
+			'solucao_casos_2_desc'    => 'Exiba dados de pedidos e faturas do ERP durante o atendimento ao cliente.',
+			'solucao_casos_3_icone'   => $this->img( 'zendesk-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Crie tickets automaticamente',
+			'solucao_casos_3_desc'    => 'Transforme eventos de ERP, e-commerce e monitoramento em chamados de suporte.',
+			'solucao_casos_4_icone'   => $this->img( 'zendesk-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Sincronize atendimento e vendas',
+			'solucao_casos_4_desc'    => 'Mantenha status de tickets atualizados entre Zendesk e plataformas CRM.',
+			'solucao_casos_5_icone'   => $this->img( 'zendesk-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize tickets e macros do Zendesk como ferramentas para agentes inteligentes.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para atendimento',
+			'solucao_dif_corpo'    => 'Conecte o Zendesk usando APIs oficiais com autenticação segura e controle de permissões conforme agentes e departamentos.',
+			'solucao_dif_topico_1' => 'Utilize Zendesk REST API',
+			'solucao_dif_topico_2' => 'Proteja conexões com OAuth',
+			'solucao_dif_topico_3' => 'Controle permissões por agente',
+			'solucao_dif_imagem'   => $this->img( 'zendesk-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize integrações além do Zendesk',
+			'solucao_plat_corpo'    => 'Deixe o Zendesk focado na experiência do cliente enquanto a plataforma conecta e movimenta dados nos sistemas internos sem apps adicionais.',
+			'solucao_plat_topico_1' => 'Centralize integrações de atendimento',
+			'solucao_plat_topico_2' => 'Reduza dependência do Marketplace',
+			'solucao_plat_topico_3' => 'Escalone processos com previsibilidade',
+			'solucao_plat_imagem'   => $this->img( 'zendesk-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com processos já estruturados',
+			'solucao_acel_corpo'      => 'Utilize um modelo pronto para conectar tickets do Zendesk ao ERP e CRM em processos de consulta e gravação.',
+			'solucao_acel_topico_1'   => 'Conecte processos rapidamente',
+			'solucao_acel_topico_2'   => 'Reutilize fluxos de atendimento',
+			'solucao_acel_topico_3'   => 'Adapte integrações ao negócio',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn1_texto' => 'Começar agora',
+			'solucao_acel_btn1_url'   => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'zendesk-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		$this->preencher_zendesk_faq( $post_id );
+
+		WP_CLI::log( "  Zendesk preenchido (ID: {$post_id})." );
+	}
+
+	protected function preencher_solucao_bionexo() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:bionexo',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "bionexo" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Bionexo',
+			'solucao_hero_titulo'     => 'Conecte o maior marketplace B2B de saúde ao seu ERP',
+			'solucao_hero_corpo'      => 'Integre compras, contratos e faturamento da Bionexo ao ERP financeiro e HIS da instituição para eliminar retrabalho e garantir dados sincronizados em toda a operação hospitalar.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/bionexo/',
+			'solucao_hero_imagem'     => $this->img( 'bionexo-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte compras hospitalares aos sistemas internos',
+			'solucao_pilares_1_icone'  => $this->img( 'bionexo-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize pedidos automaticamente',
+			'solucao_pilares_1_desc'   => 'Conecte pedidos da Bionexo ao ERP financeiro e estoque sem processos manuais.',
+			'solucao_pilares_2_icone'  => $this->img( 'bionexo-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Centralize negociações com fornecedores',
+			'solucao_pilares_2_desc'   => 'Mantenha contratos, preços e condições comerciais sincronizados com sistemas internos.',
+			'solucao_pilares_3_icone'  => $this->img( 'bionexo-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza retrabalho operacional',
+			'solucao_pilares_3_desc'   => 'Elimine digitações manuais entre marketplace, ERP e sistemas hospitalares.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos de compras hospitalares',
+			'solucao_casos_1_icone'   => $this->img( 'bionexo-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos de compra',
+			'solucao_casos_1_desc'    => 'Envie pedidos da Bionexo diretamente para o ERP hospitalar sem intervenção manual.',
+			'solucao_casos_2_icone'   => $this->img( 'bionexo-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Concilie notas fiscais automaticamente',
+			'solucao_casos_2_desc'    => 'Relacione notas recebidas pelo marketplace com registros financeiros internos.',
+			'solucao_casos_3_icone'   => $this->img( 'bionexo-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Atualize contratos e preços',
+			'solucao_casos_3_desc'    => 'Sincronize negociações realizadas com fornecedores no sistema de suprimentos.',
+			'solucao_casos_4_icone'   => $this->img( 'bionexo-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide dados de compras',
+			'solucao_casos_4_desc'    => 'Centralize informações para análises de custo e eficiência hospitalar.',
+			'solucao_casos_5_icone'   => $this->img( 'bionexo-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize tickets e macros do Zendesk como ferramentas para agentes inteligentes.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para saúde',
+			'solucao_dif_corpo'    => 'Conecte a Bionexo usando APIs oficiais com autenticação segura e proteção de dados conforme requisitos da LGPD.',
+			'solucao_dif_topico_1' => 'Utilize API REST da Bionexo',
+			'solucao_dif_topico_2' => 'Proteja acessos com tokens',
+			'solucao_dif_topico_3' => 'Proteja dados conforme LGPD',
+			'solucao_dif_imagem'   => $this->img( 'bionexo-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique compras e sistemas hospitalares',
+			'solucao_plat_corpo'    => 'Conecte marketplace, HIS e ERP financeiro em uma única plataforma para eliminar planilhas e fechar o ciclo operacional.',
+			'solucao_plat_topico_1' => 'Centralize fluxos de compras',
+			'solucao_plat_topico_2' => 'Conecte múltiplos sistemas hospitalares',
+			'solucao_plat_topico_3' => 'Elimine processos manuais',
+			'solucao_plat_imagem'   => $this->img( 'bionexo-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com compras integradas',
+			'solucao_acel_corpo'      => 'Utilize um modelo pronto para conectar pedidos da Bionexo ao ERP hospitalar e acelerar a automação.',
+			'solucao_acel_topico_1'   => 'Conecte pedidos rapidamente',
+			'solucao_acel_topico_2'   => 'Reutilize fluxos hospitalares',
+			'solucao_acel_topico_3'   => 'Adapte processos internos',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn1_texto' => 'Começar agora',
+			'solucao_acel_btn1_url'   => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'bionexo-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  Bionexo preenchido (ID: {$post_id})." );
+		$this->preencher_bionexo_faq( $post_id );
+	}
+
+	protected function preencher_bionexo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:bionexo-sincronizar-pedidos-erp',
+				'Como sincronizar pedidos de compra da Bionexo direto com o ERP?',
+				'A CLI Connect se conecta via API da Bionexo e dispara eventos a cada novo pedido aprovado, gravando automaticamente no ERP hospitalar — como Totvs ou SAP — sem intervenção manual.',
+			),
+			array(
+				'faq:bionexo-conciliar-notas-fiscais',
+				'É possível conciliar notas fiscais automaticamente?',
+				'Sim. A plataforma captura as NFs emitidas pela Bionexo e as concilia com os pedidos de compra registrados no ERP, sinalizando divergências e eliminando o processo manual de conferência.',
+			),
+			array(
+				'faq:bionexo-multiplas-unidades-hospitalares',
+				'Como funciona com múltiplas unidades hospitalares?',
+				'A integração suporta múltiplas unidades em uma única configuração: cada unidade pode ter suas credenciais e fluxos independentes, centralizados e monitorados na mesma plataforma.',
+			),
+		);
+
+		$faq_ids = array();
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_ids[] = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		WP_CLI::log( '  Bionexo FAQ: ' . count( $faq_ids ) . ' perguntas vinculadas.' );
+	}
+
+	protected function preencher_solucao_tasy() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:tasy',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "tasy" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Tasy',
+			'solucao_hero_titulo'     => 'Conecte o núcleo da operação hospitalar a todo o ecossistema',
+			'solucao_hero_corpo'      => 'Integre o Tasy a laboratórios, operadoras de saúde, ERP corporativo e agentes de IA para conectar dados assistenciais e financeiros sem alterar o core hospitalar.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/',
+			'solucao_hero_imagem'     => $this->img( 'tasy-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Amplie o valor dos dados do Tasy',
+			'solucao_pilares_1_icone'  => $this->img( 'tasy-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Aproveite APIs padronizadas do Tasy',
+			'solucao_pilares_1_desc'   => 'Utilize a Tasy Open API para criar integrações documentadas, seguras e escaláveis.',
+			'solucao_pilares_2_icone'  => $this->img( 'tasy-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Conecte faturamento TISS',
+			'solucao_pilares_2_desc'   => 'Integre o Tasy às operadoras de saúde para automatizar processos de faturamento.',
+			'solucao_pilares_3_icone'  => $this->img( 'tasy-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize dados hospitalares',
+			'solucao_pilares_3_desc'   => 'Unifique informações clínicas e financeiras para análises sem alterar o sistema principal.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos hospitalares críticos',
+			'solucao_casos_1_titulo'   => 'Automatize faturamento TISS',
+			'solucao_casos_1_desc'     => 'Conecte o Tasy às operadoras de saúde para agilizar processos de faturamento.',
+			'solucao_casos_1_icone'    => $this->img( 'tasy-caso-1' ),
+			'solucao_casos_2_titulo'   => 'Sincronize resultados laboratoriais',
+			'solucao_casos_2_desc'     => 'Integre sistemas LIS ao prontuário para disponibilizar resultados automaticamente.',
+			'solucao_casos_2_icone'    => $this->img( 'tasy-caso-2' ),
+			'solucao_casos_3_titulo'   => 'Concilie dados financeiros',
+			'solucao_casos_3_desc'     => 'Conecte Tasy e ERP corporativo para consolidar informações financeiras.',
+			'solucao_casos_3_icone'    => $this->img( 'tasy-caso-3' ),
+			'solucao_casos_4_titulo'   => 'Consolide redes hospitalares',
+			'solucao_casos_4_desc'     => 'Padronize integrações entre múltiplas unidades e sistemas hospitalares.',
+			'solucao_casos_4_icone'    => $this->img( 'tasy-caso-4' ),
+			'solucao_casos_5_titulo'   => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'     => 'Disponibilize dados assistenciais para agentes administrativos sem expor o core clínico.',
+			'solucao_casos_5_icone'    => $this->img( 'tasy-caso-5' ),
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Integrações seguras para dados hospitalares',
+			'solucao_dif_corpo'        => 'Utilize a Tasy Open API com autenticação, criptografia e controle de acesso para proteger informações sensíveis de saúde.',
+			'solucao_dif_topico_1'     => 'Utilize APIs oficiais do Tasy',
+			'solucao_dif_topico_2'     => 'Proteja dados sensíveis de saúde',
+			'solucao_dif_topico_3'     => 'Controle acessos conforme LGPD',
+			'solucao_dif_imagem'       => $this->img( 'tasy-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'     => 'plataforma única',
+			'solucao_plat_titulo'      => 'Unifique operações hospitalares complexas',
+			'solucao_plat_corpo'       => 'Crie uma camada única de integração para conectar múltiplas unidades Tasy e sistemas hospitalares sem customizar o core assistencial.',
+			'solucao_plat_topico_1'    => 'Padronize integrações entre unidades',
+			'solucao_plat_topico_2'    => 'Centralize faturamento hospitalar',
+			'solucao_plat_topico_3'    => 'Simplifique consolidação financeira',
+			'solucao_plat_imagem'      => $this->img( 'tasy-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Comece com integrações hospitalares prontas',
+			'solucao_acel_corpo'       => 'Utilize um modelo estruturado para conectar Tasy Open API ao ERP financeiro e operadoras de saúde.',
+			'solucao_acel_topico_1'    => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'    => 'Reutilize fluxos hospitalares',
+			'solucao_acel_topico_3'    => 'Acelere novas integrações',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn1_texto'  => 'Começar agora',
+			'solucao_acel_btn1_url'    => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'tasy-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  Tasy preenchido (ID: {$post_id})." );
+		$this->preencher_tasy_faq( $post_id );
+	}
+
+	protected function preencher_tasy_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:tasy-cli-connect-tasy-open-api',
+				'Como a CLI Connect powered by Boomi usa a Tasy Open API?',
+				'A CLI Connect se conecta à Tasy Open API com autenticação segura e orquestra os fluxos de integração entre o Tasy e sistemas externos como ERP, operadoras de saúde e laboratórios — sem alterar o core hospitalar.',
+			),
+			array(
+				'faq:tasy-faturamento-tiss-multiplas-operadoras',
+				'É possível integrar faturamento TISS de múltiplas operadoras?',
+				'Sim. A plataforma permite configurar conectores para diferentes operadoras de saúde, processando guias e retornos de autorização de forma centralizada e automatizada.',
+			),
+			array(
+				'faq:tasy-consolidacao-financeira-multi-hospital',
+				'Como funciona a consolidação financeira multi-hospital?',
+				'A CLI Connect cria uma camada de integração única que coleta dados financeiros de múltiplas unidades Tasy e os envia ao ERP corporativo, eliminando processos manuais de conciliação.',
+			),
+		);
+
+		$faq_ids = array();
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_ids[] = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		WP_CLI::log( '  Tasy FAQ: ' . count( $faq_ids ) . ' perguntas vinculadas.' );
+	}
+
+	protected function preencher_solucao_mv() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:mv',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "mv" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu SOUL MV',
+			'solucao_hero_titulo'     => 'Conecte o SOUL MV ao ecossistema completo do hospital digital',
+			'solucao_hero_corpo'      => 'Integre o MV a laboratório, diagnóstico por imagem, ERP corporativo e faturamento para conectar processos assistenciais, administrativos e financeiros em uma única operação.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/',
+			'solucao_hero_imagem'      => $this->img( 'mv-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Amplie a conectividade do SOUL MV',
+			'solucao_pilares_1_icone'  => $this->img( 'mv-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Integre sistemas assistenciais',
+			'solucao_pilares_1_desc'   => 'Conecte RIS, PACS, LIS e portais de exames ao MV com troca de dados em tempo real.',
+			'solucao_pilares_2_icone'  => $this->img( 'mv-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Reduza glosas hospitalares',
+			'solucao_pilares_2_desc'   => 'Valide informações dos pedidos de exame antes da execução e evite inconsistências.',
+			'solucao_pilares_3_icone'  => $this->img( 'mv-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize dados financeiros',
+			'solucao_pilares_3_desc'   => 'Consolide informações entre unidades hospitalares e sistemas corporativos.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize processos hospitalares essenciais',
+			'solucao_casos_1_icone'    => $this->img( 'mv-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Integre RIS e PACS ao MV',
+			'solucao_casos_1_desc'     => 'Consulte alergias e histórico clínico durante exames sem trocar de sistema.',
+			'solucao_casos_2_icone'    => $this->img( 'mv-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Automatize faturamento hospitalar',
+			'solucao_casos_2_desc'     => 'Sincronize informações de faturamento e glosas com operadoras de saúde.',
+			'solucao_casos_3_icone'    => $this->img( 'mv-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Concilie finanças entre unidades',
+			'solucao_casos_3_desc'     => 'Conecte MV e ERP corporativo para consolidar resultados financeiros.',
+			'solucao_casos_4_icone'    => $this->img( 'mv-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Automatize acessos internos',
+			'solucao_casos_4_desc'     => 'Provisione acessos em sistemas de apoio a partir de eventos do MV.',
+			'solucao_casos_5_icone'    => $this->img( 'mv-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'     => 'Disponibilize dados assistenciais para agentes administrativos sem expor o core clínico.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Integrações seguras para saúde',
+			'solucao_dif_corpo'        => 'Conecte o MV usando APIs com trilha de auditoria e controles de segurança para proteger dados clínicos conforme a LGPD.',
+			'solucao_dif_topico_1'     => 'Utilize APIs do sistema MV',
+			'solucao_dif_topico_2'     => 'Audite integrações hospitalares',
+			'solucao_dif_topico_3'     => 'Proteja dados clínicos sensíveis',
+			'solucao_dif_imagem'       => $this->img( 'mv-dif' ),
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'     => 'plataforma única',
+			'solucao_plat_titulo'      => 'Unifique sistemas de redes hospitalares',
+			'solucao_plat_corpo'       => 'Centralize integrações entre diferentes HIS, ERPs e sistemas assistenciais para evitar projetos duplicados em cada unidade.',
+			'solucao_plat_topico_1'    => 'Conecte diferentes plataformas hospitalares',
+			'solucao_plat_topico_2'    => 'Padronize integrações entre unidades',
+			'solucao_plat_topico_3'    => 'Reduza esforços de manutenção',
+			'solucao_plat_imagem'      => $this->img( 'mv-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Comece com integrações hospitalares prontas',
+			'solucao_acel_corpo'       => 'Utilize um modelo estruturado para conectar MV, RIS/PACS, LIS e ERP financeiro com mais velocidade.',
+			'solucao_acel_topico_1'    => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'    => 'Reutilize fluxos hospitalares',
+			'solucao_acel_topico_3'    => 'Acelere novas automações',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn1_texto'  => 'Começar agora',
+			'solucao_acel_btn1_url'    => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'mv-acel' ),
+		);
+
+		foreach ( $campos as $campo => $valor ) {
+			update_field( $campo, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  MV preenchido (ID: {$post_id})." );
+		$this->preencher_mv_faq( $post_id );
+	}
+
+	protected function preencher_mv_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mv-reduzir-glosas-ris-pacs',
+				'Como reduzir glosas com integração RIS/PACS ↔ MV?',
+				'A CLI Connect valida automaticamente as informações do pedido de exame antes da execução, cruzando dados entre RIS/PACS e MV para detectar inconsistências que geram glosas antes que elas ocorram.',
+			),
+			array(
+				'faq:mv-conectar-mv-tasy-rede-hospitalar',
+				'É possível conectar MV e Tasy na mesma rede hospitalar?',
+				'Sim. A plataforma atua como camada de integração neutra e pode orquestrar fluxos entre MV e Tasy, permitindo que redes hospitalares com diferentes HIS compartilhem dados de forma padronizada.',
+			),
+			array(
+				'faq:mv-consolidacao-financeira-multi-unidade',
+				'Como funciona a consolidação financeira multi-unidade?',
+				'A CLI Connect coleta dados financeiros de cada unidade MV e os centraliza no ERP corporativo, eliminando consolidações manuais em planilhas e garantindo visibilidade unificada do resultado financeiro da rede.',
+			),
+		);
+
+		$faq_ids = array();
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_ids[] = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		WP_CLI::log( '  MV FAQ: ' . count( $faq_ids ) . ' perguntas vinculadas.' );
+	}
+
+	protected function preencher_zendesk_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:zendesk-processo-sem-app-pago',
+				'Como criar um processo no Zendesk que grava em outro sistema sem app pago?',
+				'A CLI Connect atua como camada de integração externa: o Zendesk dispara um evento via webhook, a plataforma recebe, processa e grava os dados no sistema de destino — como SAP ou Totvs — sem necessidade de aplicativos pagos do Marketplace.',
+			),
+			array(
+				'faq:zendesk-enriquecer-ticket-erp-crm',
+				'Como enriquecer um ticket com dados de ERP e CRM em tempo real?',
+				'Ao abrir um ticket, a CLI Connect consulta o ERP e o CRM em paralelo usando o e-mail ou ID do cliente e retorna os dados — pedidos, faturas, contratos — diretamente no ticket via API do Zendesk, sem intervenção manual do agente.',
+			),
+			array(
+				'faq:zendesk-tickets-macros-agentes-ia',
+				'É possível expor tickets e macros como ferramentas para agentes de IA?',
+				'Sim. A CLI Connect publica os endpoints do Zendesk como ferramentas MCP autenticadas. Agentes de IA podem consultar tickets, aplicar macros e atualizar campos usando linguagem natural, com controle de permissões por escopo.',
+			),
+			array(
+				'faq:zendesk-sincronizacao-status-crm',
+				'Como funciona a sincronização de status entre Zendesk e CRM?',
+				'A CLI Connect monitora mudanças de status no Zendesk via webhook e replica o estado no CRM em tempo real. O fluxo inverso também é suportado: atualizações no CRM refletem automaticamente no ticket do Zendesk.',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$faq_id = $this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+			$ids[] = $faq_id;
+		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+		WP_CLI::log( "  Zendesk FAQ: " . count( $ids ) . " perguntas vinculadas." );
+	}
+
+	protected function preencher_servicenow_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:servicenow-processo-sem-modulo',
+				'Como criar um processo no ServiceNow que grava diretamente em outro sistema, sem módulo de integração nativo?',
+				'<p>A CLI Connect atua como camada de integração externa: o ServiceNow dispara um evento via API, a plataforma recebe, processa e grava os dados no sistema de destino — como SAP ou Totvs — sem necessidade de Spokes ou módulos adicionais do ServiceNow.</p>',
+			),
+			array(
+				'faq:servicenow-cadastro-produtos-totvs',
+				'Como funciona o exemplo de cadastro de produtos → Totvs ERP?',
+				'<p>O usuário preenche um formulário no catálogo de serviços do ServiceNow. Ao aprovado, a CLI Connect recebe o payload, valida os dados e chama a API do Totvs para criar o produto. O ServiceNow recebe a confirmação e fecha o ticket automaticamente.</p>',
+			),
+			array(
+				'faq:servicenow-agente-ia-incidente',
+				'Como um agente de IA abre um incidente no ServiceNow automaticamente?',
+				'<p>O agente de IA envia uma requisição à CLI Connect com os dados do evento. A plataforma formata o payload conforme o schema do ServiceNow e cria o incidente via API REST, incluindo categoria, urgência e descrição — sem intervenção humana.</p>',
+			),
+		);
+
+		foreach ( $itens as [ $slug, $pergunta, $resposta ] ) {
+			$this->upsert( $slug, array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $pergunta,
+				'post_content' => $resposta,
+				'post_status'  => 'publish',
+			) );
+		}
+
+		$faq_ids = array();
+		foreach ( $itens as [ $slug ] ) {
+			$posts = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => self::META,
+				'meta_value' => $slug,
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $posts ) ) {
+				$faq_ids[] = (int) $posts[0];
+			}
+		}
+
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+			WP_CLI::log( '  ServiceNow FAQ: ' . count( $faq_ids ) . ' perguntas vinculadas.' );
+		}
+	}
+
 	protected function preencher_sankhya_faq( $post_id ) {
 		$itens = array(
 			array(
@@ -4703,6 +5962,902 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  TOTVS FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/* =====================================================================
+	   VTEX
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "VTEX" — hero apenas.
+	 */
+	protected function preencher_solucao_vtex() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:vtex',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "vtex" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu VTEX',
+			'solucao_hero_titulo'     => 'Conecte seu e-commerce ao ERP em tempo real',
+			'solucao_hero_corpo'      => 'Integre a VTEX ao ERP, WMS e sistemas de pagamento para sincronizar pedidos, estoque e operações omnichannel com velocidade e segurança.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/vtex/',
+			'solucao_hero_imagem'     => $this->img( 'vtex-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale sua operação digital conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'vtex-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize pedidos automaticamente',
+			'solucao_pilares_1_desc'   => 'Conecte pedidos da VTEX ao ERP em tempo real sem processos manuais.',
+			'solucao_pilares_2_icone'  => $this->img( 'vtex-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Atualize estoque omnichannel',
+			'solucao_pilares_2_desc'   => 'Mantenha lojas físicas, marketplaces e canais digitais sincronizados.',
+			'solucao_pilares_3_icone'  => $this->img( 'vtex-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Aproveite APIs nativas da VTEX',
+			'solucao_pilares_3_desc'   => 'Utilize arquitetura API-first para integrar catálogo, pedidos e operações.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize operações de e-commerce',
+			'solucao_casos_1_icone'   => $this->img( 'vtex-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos com ERP',
+			'solucao_casos_1_desc'    => 'Envie pedidos da VTEX ao ERP automaticamente para acelerar processamento.',
+			'solucao_casos_2_icone'   => $this->img( 'vtex-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Atualize estoque entre canais',
+			'solucao_casos_2_desc'    => 'Conecte loja física, marketplace e e-commerce com estoque sincronizado.',
+			'solucao_casos_3_icone'   => $this->img( 'vtex-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Integre pagamentos e financeiro',
+			'solucao_casos_3_desc'    => 'Concilie transações digitais com sistemas financeiros internos.',
+			'solucao_casos_4_icone'   => $this->img( 'vtex-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize ship from store',
+			'solucao_casos_4_desc'    => 'Transforme lojas físicas em pontos de fulfillment para pedidos digitais.',
+			'solucao_casos_5_icone'   => $this->img( 'vtex-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados de e-commerce para agentes de IA automatizarem atendimento e operações.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integrações preparadas para escala',
+			'solucao_dif_corpo'       => 'Conecte a VTEX usando APIs oficiais com autenticação segura para suportar operações digitais de alto volume.',
+			'solucao_dif_topico_1'    => 'Utilize VTEX IO e REST API',
+			'solucao_dif_topico_2'    => 'Autentique com App Token',
+			'solucao_dif_topico_3'    => 'Suporte picos de vendas',
+			'solucao_dif_imagem'      => $this->img( 'vtex-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_plat_titulo'     => 'Unifique seu ecossistema de comércio',
+			'solucao_plat_corpo'      => 'Conecte VTEX, ERP, WMS e pagamentos em uma única plataforma para manter sua operação sincronizada durante toda a jornada de compra.',
+			'solucao_plat_topico_1'   => 'Centralize integrações comerciais',
+			'solucao_plat_topico_2'   => 'Absorva picos operacionais',
+			'solucao_plat_topico_3'   => 'Mantenha sistemas sincronizados',
+			'solucao_plat_imagem'     => $this->img( 'vtex-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'    => 'Aceleradores de integração',
+			'solucao_acel_titulo'     => 'Comece com integrações de e-commerce',
+			'solucao_acel_corpo'      => 'Utilize um modelo pronto para conectar VTEX ao ERP com pedidos, estoque e processos fiscais estruturados.',
+			'solucao_acel_topico_1'   => 'Conecte operações rapidamente',
+			'solucao_acel_topico_2'   => 'Reutilize fluxos comerciais',
+			'solucao_acel_topico_3'   => 'Acelere novas integrações',
+			'solucao_acel_topico_4'   => 'E muito mais...',
+			'solucao_acel_btn_texto'  => 'Começar agora',
+			'solucao_acel_btn_url'    => '/contato/',
+			'solucao_acel_imagem'     => $this->img( 'vtex-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_vtex( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  VTEX: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria os posts cli_faq da VTEX e os vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao da VTEX.
+	 * @return int[]
+	 */
+	protected function criar_faq_vtex( $post_id ) {
+		$itens = array(
+			array(
+				'faq:vtex-pico-trafego',
+				'Como a CLI Connect powered by Boomi lida com picos de tráfego como Black Friday?',
+				'<p>A plataforma Boomi opera em arquitetura elástica na nuvem, escalando automaticamente para absorver volumes de pedidos superiores aos períodos normais. Durante a Black Friday, os conectores continuam processando pedidos, atualizações de estoque e pagamentos com a mesma confiabilidade, sem necessidade de intervenção manual ou ajuste de infraestrutura.</p>',
+			),
+			array(
+				'faq:vtex-multiplos-marketplaces',
+				'É possível sincronizar estoque entre VTEX e múltiplos marketplaces?',
+				'<p>Sim. A CLI Connect integra a VTEX com os principais marketplaces do mercado, mantendo o estoque atualizado em tempo real em todos os canais. Quando uma venda ocorre em qualquer canal, o estoque é decrementado automaticamente nos demais, evitando overselling e garantindo uma experiência de compra consistente.</p>',
+			),
+			array(
+				'faq:vtex-ship-from-store',
+				'Como funciona o fulfillment ship-from-store?',
+				'<p>A integração conecta os pedidos recebidos na VTEX às lojas físicas elegíveis para envio, com base em regras de proximidade, estoque disponível e capacidade operacional. O processo de separação, embalagem e despacho é gerenciado pela integração entre a VTEX e o WMS ou sistema de ponto de venda da loja.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  VTEX FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   SHOPIFY
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Shopify" — hero apenas.
+	 */
+	protected function preencher_solucao_shopify() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:shopify',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "shopify" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Shopify',
+			'solucao_hero_titulo'     => 'Conecte sua loja Shopify ao ERP sem depender de plugins genéricos',
+			'solucao_hero_corpo'      => 'Integre Shopify, ERP, sistemas fiscais brasileiros e WMS para automatizar pedidos, estoque e operações financeiras com regras adaptadas ao seu negócio.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/shopify/',
+			'solucao_hero_imagem'     => $this->img( 'shopify-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale sua operação Shopify conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'shopify-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Atenda regras fiscais brasileiras',
+			'solucao_pilares_1_desc'   => 'Conecte Shopify ao fiscal brasileiro para automatizar NF-e e processos tributários específicos.',
+			'solucao_pilares_2_icone'  => $this->img( 'shopify-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize estoques multicanal',
+			'solucao_pilares_2_desc'   => 'Mantenha estoque atualizado entre Shopify, ERP e diferentes canais de venda.',
+			'solucao_pilares_3_icone'  => $this->img( 'shopify-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Integre Shopify Plus',
+			'solucao_pilares_3_desc'   => 'Suporte operações avançadas de grandes marcas usando Shopify ou Shopify Plus.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos da loja digital',
+			'solucao_casos_1_icone'   => $this->img( 'shopify-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Emita NF-e automaticamente',
+			'solucao_casos_1_desc'    => 'Conecte pedidos Shopify ao sistema fiscal para gerar documentos eletrônicos.',
+			'solucao_casos_2_icone'   => $this->img( 'shopify-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Sincronize estoque multicanal',
+			'solucao_casos_2_desc'    => 'Atualize disponibilidade entre ERP, Shopify e marketplaces automaticamente.',
+			'solucao_casos_3_icone'   => $this->img( 'shopify-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Concilie pagamentos digitais',
+			'solucao_casos_3_desc'    => 'Conecte gateways de pagamento ao financeiro para facilitar conciliações.',
+			'solucao_casos_4_icone'   => $this->img( 'shopify-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize devoluções',
+			'solucao_casos_4_desc'    => 'Integre processos de retorno entre Shopify, ERP e operações internas.',
+			'solucao_casos_5_icone'   => $this->img( 'shopify-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados da loja para agentes de IA automatizarem atendimento e operações.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações nativas para Shopify',
+			'solucao_dif_corpo'    => 'Conecte sua operação usando Shopify Admin API, GraphQL e Webhooks para sincronizar eventos em tempo real com segurança.',
+			'solucao_dif_topico_1' => 'Utilize Shopify Admin API',
+			'solucao_dif_topico_2' => 'Capture eventos com Webhooks',
+			'solucao_dif_topico_3' => 'Conecte via GraphQL',
+			'solucao_dif_imagem'   => $this->img( 'shopify-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Supere limites dos aplicativos Shopify',
+			'solucao_plat_corpo'    => 'Apps da Shopify resolvem cenários genéricos. Uma plataforma de integração dedicada conecta regras fiscais, múltiplos ERPs e operações complexas.',
+			'solucao_plat_topico_1' => 'Centralize integrações comerciais',
+			'solucao_plat_topico_2' => 'Adapte regras ao negócio',
+			'solucao_plat_topico_3' => 'Reduza dependência de terceiros',
+			'solucao_plat_imagem'   => $this->img( 'shopify-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'  => 'Aceleradores de integração',
+			'solucao_acel_titulo'   => 'Comece com uma operação Shopify integrada',
+			'solucao_acel_corpo'    => 'Utilize um modelo pronto para conectar Shopify ao ERP e automatizar emissão fiscal brasileira desde o início.',
+			'solucao_acel_topico_1' => 'Conecte ERP rapidamente',
+			'solucao_acel_topico_2' => 'Automatize processos fiscais',
+			'solucao_acel_topico_3' => 'Acelere novas integrações',
+			'solucao_acel_topico_4' => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'shopify-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_shopify( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Shopify: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Shopify.
+	 *
+	 * @param int $post_id ID do post cli_solucao (não usado diretamente, mantido por consistência).
+	 * @return int[]
+	 */
+	protected function criar_faq_shopify( $post_id ) {
+		$itens = array(
+			array(
+				'faq:shopify-nfe',
+				'Como a CLI Connect powered by Boomi resolve emissão de NF-e a partir do Shopify?',
+				'<p>A plataforma Boomi conecta os pedidos recebidos no Shopify ao sistema fiscal brasileiro, gerando automaticamente a NF-e com os dados corretos de produto, tributação e destinatário. O processo ocorre em tempo real após a confirmação do pedido, sem intervenção manual e em conformidade com as regras tributárias vigentes.</p>',
+			),
+			array(
+				'faq:shopify-estoque-multicanal',
+				'É possível sincronizar estoque com múltiplos canais?',
+				'<p>Sim. A CLI Connect integra o Shopify com ERP, WMS e marketplaces, mantendo o estoque atualizado em tempo real em todos os canais. Quando uma venda ocorre em qualquer ponto, o saldo é decrementado automaticamente nos demais, eliminando overselling e garantindo consistência operacional.</p>',
+			),
+			array(
+				'faq:shopify-plus',
+				'Funciona com Shopify Plus?',
+				'<p>Sim. A integração suporta tanto o Shopify quanto o Shopify Plus, aproveitando as APIs avançadas disponíveis na versão Plus para automações mais complexas, como fluxos de checkout personalizados, múltiplas lojas e operações B2B.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Shopify FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   ONBLOX (WMS/TMS)
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "OnBlox (WMS/TMS)".
+	 */
+	protected function preencher_solucao_onblox() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:onblox',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "onblox" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu onblox',
+			'solucao_hero_titulo'     => 'Conecte WMS e TMS ao ERP e transportadoras em tempo real',
+			'solucao_hero_corpo'      => 'Integre o OnBlox aos ERPs, e-commerce e aplicativos de rastreamento para sincronizar estoque, operações logísticas e gestão de frota sem processos manuais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/onblox/',
+			'solucao_hero_imagem'     => $this->img( 'onblox-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Conecte toda sua operação logística',
+			'solucao_pilares_1_icone'  => $this->img( 'onblox-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize inventário automaticamente',
+			'solucao_pilares_1_desc'   => 'Mantenha estoque alinhado entre WMS, ERP e canais de venda em tempo real.',
+			'solucao_pilares_2_icone'  => $this->img( 'onblox-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Integre gestão de frota',
+			'solucao_pilares_2_desc'   => 'Conecte manutenção, documentos e licenças aos sistemas financeiros.',
+			'solucao_pilares_3_icone'  => $this->img( 'onblox-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Acelere implantações logísticas',
+			'solucao_pilares_3_desc'   => 'Reduza tempo de integração com fluxos preparados para operações de logística.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos logísticos críticos',
+			'solucao_casos_1_icone'   => $this->img( 'onblox-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize estoque com ERP',
+			'solucao_casos_1_desc'    => 'Conecte OnBlox ao ERP e marketplaces para atualizar disponibilidade automaticamente.',
+			'solucao_casos_2_icone'   => $this->img( 'onblox-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Direcione pedidos automaticamente',
+			'solucao_casos_2_desc'    => 'Roteie pedidos para o centro de distribuição mais adequado.',
+			'solucao_casos_3_icone'   => $this->img( 'onblox-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Conecte rastreamento de frota',
+			'solucao_casos_3_desc'    => 'Integre transportadoras e aplicativos de rastreio ao ecossistema logístico.',
+			'solucao_casos_4_icone'   => $this->img( 'onblox-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Atualize expedições em tempo real',
+			'solucao_casos_4_desc'    => 'Envie status de separação e envio diretamente ao ERP.',
+			'solucao_casos_5_icone'   => $this->img( 'onblox-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados logísticos para agentes automatizarem atendimento e operações.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações preparadas para alta operação',
+			'solucao_dif_corpo'    => 'Conecte múltiplos coletores e dispositivos móveis com alto volume de dados para operações de armazém e frota.',
+			'solucao_dif_topico_1' => 'Suporte alto volume operacional',
+			'solucao_dif_topico_2' => 'Conecte múltiplos dispositivos móveis',
+			'solucao_dif_topico_3' => 'Mantenha dados sincronizados',
+			'solucao_dif_imagem'   => $this->img( 'onblox-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique logística e sistemas corporativos',
+			'solucao_plat_corpo'    => 'Conecte armazém, frota, ERP e financeiro em uma única plataforma para eliminar planilhas e processos manuais.',
+			'solucao_plat_topico_1' => 'Centralize dados logísticos',
+			'solucao_plat_topico_2' => 'Conecte operações ao financeiro',
+			'solucao_plat_topico_3' => 'Elimine exportações manuais',
+			'solucao_plat_imagem'   => $this->img( 'onblox-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com logística integrada',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar OnBlox ao ERP e acelerar a automação dos processos logísticos.',
+			'solucao_acel_topico_1'  => 'Conecte WMS rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos logísticos',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'onblox-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_onblox( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  OnBlox: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução OnBlox.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_onblox( $post_id ) {
+		$itens = array(
+			array(
+				'faq:onblox-estoque-erp',
+				'Como sincronizar estoque entre OnBlox e o ERP?',
+				'<p>A CLI Connect cria uma integração em tempo real entre o OnBlox e o ERP, transmitindo movimentações de estoque automaticamente a cada transação no armazém. Isso elimina reprocessamentos manuais, reduz divergências de inventário e garante que os canais de venda reflitam sempre a disponibilidade real do estoque.</p>',
+			),
+			array(
+				'faq:onblox-frota-financeiro',
+				'É possível integrar dados de frota ao financeiro?',
+				'<p>Sim. A integração conecta o módulo de gestão de frota do OnBlox ao sistema financeiro, automatizando o envio de custos de manutenção, abastecimento e multas. Com isso, os lançamentos contábeis são gerados de forma precisa e os relatórios de custo operacional ficam sempre atualizados sem intervenção manual.</p>',
+			),
+			array(
+				'faq:onblox-multiplos-cds',
+				'Como funciona com múltiplos centros de distribuição?',
+				'<p>A plataforma CLI Connect suporta múltiplos centros de distribuição, roteando pedidos automaticamente para o CD mais adequado com base em regras de proximidade, disponibilidade de estoque e capacidade operacional. Cada CD opera de forma integrada ao ERP e ao e-commerce, mantendo visibilidade centralizada de toda a operação logística.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  OnBlox FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   NARWAL (COMEX)
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Narwal (Comex)".
+	 */
+	protected function preencher_solucao_narwal() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:narwal',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "narwal" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero
+			'solucao_hero_eyebrow'    => 'para o seu Narwal',
+			'solucao_hero_titulo'     => 'Conecte o comércio exterior ao ERP do pedido ao desembaraço',
+			'solucao_hero_corpo'      => 'Integre o Narwal ao ERP financeiro e aos órgãos oficiais de comércio exterior para automatizar importações, exportações e custos operacionais sem processos manuais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/narwal/',
+			'solucao_hero_imagem'     => $this->img( 'narwal-hero' ),
+			// 2 · Pilares
+			'solucao_pilares_titulo'   => 'Conecte toda a operação de comércio exterior',
+			'solucao_pilares_1_icone'  => $this->img( 'narwal-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Integre pedidos internacionais',
+			'solucao_pilares_1_desc'   => 'Conecte compras e vendas internacionais do Narwal diretamente ao ERP corporativo.',
+			'solucao_pilares_2_icone'  => $this->img( 'narwal-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize canais oficiais',
+			'solucao_pilares_2_desc'   => 'Integre Siscomex, Siscarga, Mantra e outros ambientes de comércio exterior.',
+			'solucao_pilares_3_icone'  => $this->img( 'narwal-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Automatize custos de importação',
+			'solucao_pilares_3_desc'   => 'Atualize fretes, desembaraços e despesas diretamente no financeiro.',
+			// 3 · Casos de uso
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos de comércio exterior',
+			'solucao_casos_1_icone'   => $this->img( 'narwal-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos de importação',
+			'solucao_casos_1_desc'    => 'Conecte processos do Narwal ao ERP para eliminar registros manuais.',
+			'solucao_casos_2_icone'   => $this->img( 'narwal-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Atualize custos automaticamente',
+			'solucao_casos_2_desc'    => 'Envie fretes e despesas de desembaraço diretamente ao financeiro.',
+			'solucao_casos_3_icone'   => $this->img( 'narwal-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consolide operações de comex',
+			'solucao_casos_3_desc'    => 'Centralize dados de diferentes filiais para análises estratégicas.',
+			'solucao_casos_4_icone'   => $this->img( 'narwal-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Acompanhe embarques automaticamente',
+			'solucao_casos_4_desc'    => 'Dispare alertas de ETD e ETA para sistemas conectados.',
+			'solucao_casos_5_icone'   => $this->img( 'narwal-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados de comércio exterior para agentes automatizarem processos administrativos.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para comércio exterior',
+			'solucao_dif_corpo'    => 'Conecte o Narwal por APIs dedicadas com auditoria das etapas de importação e exportação para maior controle operacional.',
+			'solucao_dif_topico_1' => 'Integre via APIs dedicadas',
+			'solucao_dif_topico_2' => 'Audite etapas do processo',
+			'solucao_dif_topico_3' => 'Proteja operações certificadas',
+			'solucao_dif_imagem'   => $this->img( 'narwal-dif' ),
+			// 6 · Plataforma Única
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique comex e operação financeira',
+			'solucao_plat_corpo'    => 'Conecte embarques, custos e lançamentos financeiros para eliminar controles manuais entre Narwal e ERP.',
+			'solucao_plat_topico_1' => 'Centralize dados de comércio exterior',
+			'solucao_plat_topico_2' => 'Automatize lançamentos financeiros',
+			'solucao_plat_topico_3' => 'Reduza controles em planilhas',
+			'solucao_plat_imagem'   => $this->img( 'narwal-plat' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com comex integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar processos do Narwal ao ERP financeiro e acelerar sua operação.',
+			'solucao_acel_topico_1'  => 'Conecte processos rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos de importação',
+			'solucao_acel_topico_3'  => 'Acelere integrações financeiras',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'narwal-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_narwal( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Narwal: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Narwal.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_narwal( $post_id ) {
+		$itens = array(
+			array(
+				'faq:narwal-custos-importacao',
+				'Como sincronizar custos de importação com o ERP automaticamente?',
+				'<p>A CLI Connect integra o Narwal ao ERP por meio de uma camada de integração dedicada, transmitindo automaticamente fretes, despesas de desembaraço e tributos aduaneiros assim que são registrados no sistema. Isso elimina a necessidade de lançamentos manuais, reduz erros de conciliação e garante que o financeiro reflita os custos reais de cada processo de importação.</p>',
+			),
+			array(
+				'faq:narwal-multiplas-filiais',
+				'É possível integrar múltiplas filiais e operações de comex?',
+				'<p>Sim. A plataforma CLI Connect suporta ambientes multi-empresa, permitindo centralizar as operações de comércio exterior de diferentes filiais em uma única integração com o ERP. Cada filial mantém sua visibilidade individual, enquanto os dados são consolidados para análises financeiras e operacionais corporativas.</p>',
+			),
+			array(
+				'faq:narwal-duimp',
+				'Como funciona com a transição para a DUIMP?',
+				'<p>A integração é adaptada ao novo modelo da DUIMP (Declaração Única de Importação), conectando os processos do Narwal aos sistemas da Receita Federal e ao ERP de forma compatível com a nova sistemática. Isso garante que a transição ocorra sem interrupções no fluxo de dados entre comex e financeiro.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Narwal FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   NEOGRID
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Neogrid".
+	 */
+	protected function preencher_solucao_neogrid() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:neogrid',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "neogrid" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero
+			'solucao_hero_eyebrow'    => 'para o seu Neogrid',
+			'solucao_hero_titulo'     => 'Conecte sua rede EDI ao ERP sem depender apenas de conectores prontos',
+			'solucao_hero_corpo'      => 'Integre o ecossistema Neogrid de EDI e visibilidade de varejo aos ERPs, BI e sistemas corporativos para ampliar sua operação além das conexões nativas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/neogrid/',
+			'solucao_hero_imagem'     => $this->img( 'neogrid-hero' ),
+			// 2 · Pilares
+			'solucao_pilares_titulo'   => 'Amplie o valor da sua rede Neogrid',
+			'solucao_pilares_1_icone'  => $this->img( 'neogrid-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte qualquer ERP corporativo',
+			'solucao_pilares_1_desc'   => 'Integre Neogrid a ERPs além dos conectores nativos já disponíveis no mercado.',
+			'solucao_pilares_2_icone'  => $this->img( 'neogrid-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize dados comerciais',
+			'solucao_pilares_2_desc'   => 'Conecte pedidos, notas fiscais e informações de varejo ao ERP interno.',
+			'solucao_pilares_3_icone'  => $this->img( 'neogrid-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize dados da rede',
+			'solucao_pilares_3_desc'   => 'Consolide informações de vendas e estoque de múltiplos parceiros comerciais.',
+			// 3 · Casos de uso
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos da cadeia comercial',
+			'solucao_casos_1_icone'   => $this->img( 'neogrid-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Traduza pedidos EDI automaticamente',
+			'solucao_casos_1_desc'    => 'Converta pedidos recebidos pela Neogrid para o formato do ERP interno.',
+			'solucao_casos_2_icone'   => $this->img( 'neogrid-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Conecte dados ao BI corporativo',
+			'solucao_casos_2_desc'    => 'Envie informações de varejo e distribuição para análises estratégicas.',
+			'solucao_casos_3_icone'   => $this->img( 'neogrid-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Integre notas fiscais ao financeiro',
+			'solucao_casos_3_desc'    => 'Conecte documentos fiscais trafegados na Neogrid aos sistemas financeiros.',
+			'solucao_casos_4_icone'   => $this->img( 'neogrid-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Monitore ruptura e estoque',
+			'solucao_casos_4_desc'    => 'Consolide indicadores comerciais para equipes de vendas e operações.',
+			'solucao_casos_5_icone'   => $this->img( 'neogrid-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados comerciais e de varejo para agentes automatizarem atendimento e análises.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Traduza EDI com segurança',
+			'solucao_dif_corpo'    => 'Conecte APIs e formatos EDI da Neogrid com tradução de mensagens para garantir comunicação entre diferentes sistemas.',
+			'solucao_dif_topico_1' => 'Integre APIs e EDI Neogrid',
+			'solucao_dif_topico_2' => 'Traduza formatos automaticamente',
+			'solucao_dif_topico_3' => 'Conecte ERPs heterogêneos',
+			'solucao_dif_imagem'   => $this->img( 'neogrid-dif' ),
+			// 6 · Plataforma Única
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte além do ERP principal',
+			'solucao_plat_corpo'    => 'Amplie o ecossistema Neogrid conectando dados de EDI e visibilidade a novos sistemas sem limitar a operação aos conectores existentes.',
+			'solucao_plat_topico_1' => 'Centralize dados da cadeia',
+			'solucao_plat_topico_2' => 'Conecte sistemas adicionais',
+			'solucao_plat_topico_3' => 'Expanda integrações existentes',
+			'solucao_plat_imagem'   => $this->img( 'neogrid-plat' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com dados comerciais conectados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Neogrid a ERP e BI com fluxos estruturados de dados comerciais.',
+			'solucao_acel_topico_1'  => 'Conecte EDI rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos comerciais',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'neogrid-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_neogrid( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Neogrid: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Neogrid.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_neogrid( $post_id ) {
+		$itens = array(
+			array(
+				'faq:neogrid-erp-nativo',
+				'Como integrar Neogrid a um ERP fora dos conectores nativos?',
+				'<p>A CLI Connect atua como uma camada de integração independente dos conectores nativos da Neogrid, permitindo conectar qualquer ERP por meio da plataforma Boomi. Isso é feito traduzindo os formatos EDI e APIs da Neogrid para o padrão do ERP de destino, sem necessidade de desenvolvimento customizado em cada sistema.</p>',
+			),
+			array(
+				'faq:neogrid-bi-varejo',
+				'É possível levar dados de visibilidade de varejo para o BI corporativo?',
+				'<p>Sim. A integração extrai dados de sell-out, ruptura e estoque disponíveis na Neogrid e os encaminha para o BI corporativo em tempo real ou em lotes programados. Isso permite que equipes de vendas e operações tomem decisões baseadas em dados atualizados, sem exportações manuais ou planilhas intermediárias.</p>',
+			),
+			array(
+				'faq:neogrid-traducao-edi',
+				'Como funciona a tradução de pedidos EDI?',
+				'<p>A plataforma CLI Connect recebe os pedidos no formato EDI transmitido pela Neogrid e realiza a tradução automática para o formato nativo do ERP interno — seja XML, JSON ou layouts proprietários. O processo é auditado com logs de cada transação, garantindo rastreabilidade e facilidade de diagnóstico em caso de divergência.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Neogrid FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   MAGENTO / ADOBE COMMERCE
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Magento / Adobe Commerce".
+	 */
+	protected function preencher_solucao_magento() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:magento',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "magento" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Magento',
+			'solucao_hero_titulo'     => 'Conecte Magento ao seu stack corporativo sem multiplicar extensões',
+			'solucao_hero_corpo'      => 'Integre Magento e Adobe Commerce ao ERP, PIM e sistemas de pagamento para escalar sua operação digital sem sobrecarregar o core da plataforma com customizações.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/magento/',
+			'solucao_hero_imagem'     => $this->img( 'magento-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale seu comércio digital conectado',
+			'solucao_pilares_1_icone'  => $this->img( 'magento-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Integre qualquer arquitetura Magento',
+			'solucao_pilares_1_desc'   => 'Conecte ambientes on-premises e Adobe Commerce Cloud com uma camada centralizada.',
+			'solucao_pilares_2_icone'  => $this->img( 'magento-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize catálogo e preços',
+			'solucao_pilares_2_desc'   => 'Mantenha produtos e informações comerciais atualizados a partir do PIM.',
+			'solucao_pilares_3_icone'  => $this->img( 'magento-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Conecte pagamentos brasileiros',
+			'solucao_pilares_3_desc'   => 'Integre múltiplos gateways de pagamento ao checkout da operação digital.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize operações de comércio digital',
+			'solucao_casos_1_icone'   => $this->img( 'magento-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos com ERP',
+			'solucao_casos_1_desc'    => 'Envie pedidos Magento ao ERP automaticamente para acelerar processamento.',
+			'solucao_casos_2_icone'   => $this->img( 'magento-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Centralize catálogo via PIM',
+			'solucao_casos_2_desc'    => 'Atualize produtos e preços no Magento a partir de uma fonte única.',
+			'solucao_casos_3_icone'   => $this->img( 'magento-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Concilie pagamentos automaticamente',
+			'solucao_casos_3_desc'    => 'Integre gateways e antifraude ao financeiro para reduzir divergências.',
+			'solucao_casos_4_icone'   => $this->img( 'magento-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize devoluções',
+			'solucao_casos_4_desc'    => 'Conecte processos de retorno e logística reversa aos sistemas internos.',
+			'solucao_casos_5_icone'   => $this->img( 'magento-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do e-commerce para agentes automatizarem atendimento e operações.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para Magento',
+			'solucao_dif_corpo'    => 'Conecte Magento usando REST e GraphQL API com tokens de integração por escopo para proteger cada acesso.',
+			'solucao_dif_topico_1' => 'Utilize REST e GraphQL API',
+			'solucao_dif_topico_2' => 'Controle acessos por escopo',
+			'solucao_dif_topico_3' => 'Proteja integrações corporativas',
+			'solucao_dif_imagem'   => $this->img( 'magento-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Evolua sem depender de extensões',
+			'solucao_plat_corpo'    => 'Uma camada externa de integração reduz customizações no Magento, facilita upgrades e conecta sistemas corporativos com mais flexibilidade.',
+			'solucao_plat_topico_1' => 'Centralize integrações externas',
+			'solucao_plat_topico_2' => 'Reduza alterações no core',
+			'solucao_plat_topico_3' => 'Simplifique atualizações futuras',
+			'solucao_plat_imagem'   => $this->img( 'magento-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com comércio integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Magento ou Adobe Commerce ao ERP e PIM com fluxos estruturados.',
+			'solucao_acel_topico_1'  => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize integrações comerciais',
+			'solucao_acel_topico_3'  => 'Acelere novos projetos',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'magento-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_magento( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Magento: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Magento.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_magento( $post_id ) {
+		$itens = array(
+			array(
+				'faq:magento-extensoes',
+				'Como reduzir a dependência de extensões customizadas no Magento?',
+				'<p>A CLI Connect cria uma camada de integração externa ao Magento, transferindo lógicas de negócio — como sincronização de pedidos, catálogo e pagamentos — para a plataforma Boomi. Isso reduz o número de extensões instaladas, simplifica atualizações de versão e mantém o core do Magento estável e performático.</p>',
+			),
+			array(
+				'faq:magento-pim',
+				'É possível centralizar o catálogo via PIM?',
+				'<p>Sim. A integração conecta o PIM ao Magento para sincronizar produtos, descrições, preços e atributos de forma automatizada. Quando uma atualização é feita no PIM, ela se propaga ao Magento sem necessidade de importações manuais, garantindo consistência do catálogo em todos os canais.</p>',
+			),
+			array(
+				'faq:magento-pagamentos',
+				'Como funciona a conciliação de pagamentos e antifraude?',
+				'<p>A integração conecta os gateways de pagamento e sistemas antifraude ao financeiro da empresa, automatizando a conciliação de transações realizadas no Magento. Divergências são identificadas e tratadas de forma centralizada, reduzindo erros manuais e acelerando o fechamento financeiro.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Magento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
 	}
 }
 
