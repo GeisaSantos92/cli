@@ -199,6 +199,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo QAD Redzone…' );
 		$this->preencher_solucao_qad_redzone();
 
+		WP_CLI::log( '— Preenchendo RP Info…' );
+		$this->preencher_solucao_rp_info();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1161,6 +1164,7 @@ class Cliconnect_Seed {
 				'ciss-poder-erp'                 => 'CISS Poder ERP',
 				'ifs-cloud'                      => 'IFS Cloud',
 				'qad-redzone'                    => 'QAD Redzone',
+				'rp-info'                        => 'RP Info',
 				),
 			),
 			'industria'      => array(
@@ -8256,6 +8260,167 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  IFS Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   RP INFO
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "RP Info".
+	 */
+	protected function preencher_solucao_rp_info() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:rp-info',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "rp-info" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu RP Info',
+			'solucao_hero_titulo'     => 'Conecte o RP Info do checkout ao centro de distribuição',
+			'solucao_hero_corpo'      => 'Integre frente de loja, ERP, fornecedores e BI para sincronizar vendas, estoque e operações do varejo em tempo real.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/rp-info/',
+			'solucao_hero_imagem'     => $this->img( 'rp-info-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'      => 'Escale seu varejo conectado',
+			'solucao_pilares_1_icone'     => $this->img( 'rp-info-pilar-1' ),
+			'solucao_pilares_1_titulo'    => 'Conecte operações de varejo',
+			'solucao_pilares_1_desc'      => 'Integre Flex ERP, RPDV, Mix, Target e Task ao ecossistema comercial.',
+			'solucao_pilares_2_icone'     => $this->img( 'rp-info-pilar-2' ),
+			'solucao_pilares_2_titulo'    => 'Sincronize vendas em tempo real',
+			'solucao_pilares_2_desc'      => 'Conecte transações do checkout ao ERP sem processos manuais.',
+			'solucao_pilares_3_icone'     => $this->img( 'rp-info-pilar-3' ),
+			'solucao_pilares_3_titulo'    => 'Integre fornecedores via EDI',
+			'solucao_pilares_3_desc'      => 'Automatize troca de dados com parceiros comerciais.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'        => 'Automatize processos do varejo RP Info',
+			'solucao_casos_1_icone'       => $this->img( 'rp-info-caso-1' ),
+			'solucao_casos_1_titulo'      => 'Sincronize vendas do PDV',
+			'solucao_casos_1_desc'        => 'Atualize vendas do RPDV no Flex ERP em tempo real.',
+			'solucao_casos_2_icone'       => $this->img( 'rp-info-caso-2' ),
+			'solucao_casos_2_titulo'      => 'Conecte fornecedores via EDI',
+			'solucao_casos_2_desc'        => 'Automatize pedidos e informações com parceiros comerciais.',
+			'solucao_casos_3_icone'       => $this->img( 'rp-info-caso-3' ),
+			'solucao_casos_3_titulo'      => 'Consolide vendas multi-loja',
+			'solucao_casos_3_desc'        => 'Centralize resultados de diferentes unidades para análise.',
+			'solucao_casos_4_icone'       => $this->img( 'rp-info-caso-4' ),
+			'solucao_casos_4_titulo'      => 'Centralize processos fiscais',
+			'solucao_casos_4_desc'        => 'Integre SPED e NF-e aos processos corporativos.',
+			'solucao_casos_5_icone'       => $this->img( 'rp-info-caso-5' ),
+			'solucao_casos_5_titulo'      => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'        => 'Disponibilize dados operacionais para agentes inteligentes sem expor o core do RP Info.',
+			'solucao_casos_cta_texto'     => 'Agende uma demonstração',
+			'solucao_casos_cta_url'       => '/contato/',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações para varejo em escala',
+			'solucao_dif_corpo'    => 'Conecte operações com milhares de checkouts utilizando uma arquitetura preparada para alto volume transacional.',
+			'solucao_dif_topico_1' => 'Processe vendas em escala',
+			'solucao_dif_topico_2' => 'Sincronize dados rapidamente',
+			'solucao_dif_topico_3' => 'Suporte múltiplos checkouts',
+			'solucao_dif_imagem'   => $this->img( 'rp-info-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique dados do varejo',
+			'solucao_plat_corpo'    => 'Centralize vendas, estoque e fornecedores em uma única camada de integração sem depender de processos batch.',
+			'solucao_plat_topico_1' => 'Consolide vendas em tempo real',
+			'solucao_plat_topico_2' => 'Centralize dados operacionais',
+			'solucao_plat_topico_3' => 'Reduza processos manuais',
+			'solucao_plat_imagem'   => $this->img( 'rp-info-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com varejo integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar RP Info ao EDI de fornecedores e plataformas analíticas.',
+			'solucao_acel_topico_1'  => 'Conecte fornecedores rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos de varejo',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'rp-info-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_rp_info();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  RP Info: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução RP Info.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_rp_info(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:rp-info-pdv',
+				'titulo'   => 'Como sincronizar vendas de frente de loja em tempo real?',
+				'corpo'    => 'A CLI Connect integra o RPDV da RP Info ao Flex ERP, enviando automaticamente cada transação realizada no checkout em tempo real. Isso elimina fechamentos manuais e garante que estoque e faturamento estejam sempre atualizados sem depender de sincronizações periódicas.',
+			),
+			array(
+				'seed_key' => 'faq:rp-info-edi',
+				'titulo'   => 'É possível integrar com múltiplos fornecedores via EDI?',
+				'corpo'    => 'Sim. A CLI Connect implementa o protocolo EDI para troca de pedidos, notas fiscais e confirmações de entrega entre o RP Info e fornecedores de diferentes formatos e padrões. A integração é configurável por parceiro e permite onboarding de novos fornecedores sem alterar o core do sistema.',
+			),
+			array(
+				'seed_key' => 'faq:rp-info-multiloja',
+				'titulo'   => 'Como funciona a consolidação de vendas multi-loja?',
+				'corpo'    => 'A CLI Connect agrega dados de vendas de múltiplas lojas que utilizam o RP Info e os consolida em um repositório único conectado ao BI corporativo. Gestores têm visibilidade unificada de desempenho por loja, região e período, sem depender de exportações manuais de cada unidade.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+
+		WP_CLI::log( sprintf( '  RP Info FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
