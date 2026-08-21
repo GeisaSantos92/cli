@@ -393,7 +393,7 @@
 /* --- 5. Seção Casos de Uso ------------------------------------------------- */
 
 .sc-casos {
-	padding-block: 120px;
+	padding-block: 120px 80px;
 	background: var(--cor-fundo-suave);
 }
 
@@ -488,7 +488,7 @@
 	font-family: var(--fonte-base);
 	font-size: var(--tam-body);
 	line-height: 1.6;
-	color: var(--cor-texto-suave);
+	color: var(--cor-texto-alt);
 	margin: 0;
 }
 

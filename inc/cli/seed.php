@@ -2600,6 +2600,36 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'servicos-financeiros-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Core Banking conectado',
+			'solucao_casos_1_desc'         => 'Integre sistemas bancários a ERPs, CRMs e plataformas digitais.',
+			'solucao_casos_2_icone'        => $this->img( 'servicos-financeiros-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Pagamentos em tempo real',
+			'solucao_casos_2_desc'         => 'Automatize a troca de informações entre instituições financeiras e sistemas internos.',
+			'solucao_casos_3_icone'        => $this->img( 'servicos-financeiros-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Prevenção à fraude',
+			'solucao_casos_3_desc'         => 'Conecte motores antifraude, plataformas analíticas e canais digitais.',
+			'solucao_casos_4_icone'        => $this->img( 'servicos-financeiros-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Crédito automatizado',
+			'solucao_casos_4_desc'         => 'Orquestre validações, documentos e aprovações entre múltiplos sistemas.',
+			'solucao_casos_5_icone'        => $this->img( 'servicos-financeiros-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Visão 360º do cliente',
+			'solucao_casos_5_desc'         => 'Centralize dados financeiros, comerciais e operacionais em uma única jornada.',
+			'solucao_casos_6_icone'        => $this->img( 'servicos-financeiros-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Dados para Inteligência Artificial',
+			'solucao_casos_6_desc'         => 'Disponibilize informações confiáveis para agentes inteligentes e análises avançadas.',
+			// Sem card CTA azul nesta landing — os seis cards fecham duas linhas.
+			'solucao_casos_cta_texto'      => '',
+			'solucao_casos_cta_url'        => '',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {

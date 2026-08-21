@@ -907,6 +907,28 @@ function cliconnect_acf_fields_cpt() {
 				'type'  => 'textarea',
 				'rows'  => 3,
 			),
+			array(
+				'key'           => 'field_solucao_casos_6_icone',
+				'label'         => 'Card 6 — Ícone',
+				'name'          => 'solucao_casos_6_icone',
+				'type'          => 'image',
+				'return_format' => 'id',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg, png',
+			),
+			array(
+				'key'   => 'field_solucao_casos_6_titulo',
+				'label' => 'Card 6 — Título',
+				'name'  => 'solucao_casos_6_titulo',
+				'type'  => 'text',
+			),
+			array(
+				'key'   => 'field_solucao_casos_6_desc',
+				'label' => 'Card 6 — Descrição',
+				'name'  => 'solucao_casos_6_desc',
+				'type'  => 'textarea',
+				'rows'  => 3,
+			),
 			// Card CTA azul (opcional — deixe o texto vazio para não exibir).
 			array(
 				'key'          => 'field_solucao_casos_cta_texto',
@@ -922,7 +944,7 @@ function cliconnect_acf_fields_cpt() {
 				'type'  => 'text',
 			),
 
-			// ----- Aba: 5 · Diferencial Técnico --------------------------------
+			// ----- Aba: 7 · Diferencial Técnico --------------------------------
 			array(
 				'key'   => 'field_solucao_dif_tab',
 				'label' => '7 · Diferencial',
