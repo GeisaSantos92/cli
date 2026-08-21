@@ -178,6 +178,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Oracle NetSuite…' );
 		$this->preencher_solucao_oracle_netsuite();
 
+		WP_CLI::log( '— Preenchendo TOTVS Consinco…' );
+		$this->preencher_solucao_totvs_consinco();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1133,6 +1136,7 @@ class Cliconnect_Seed {
 				'sap-business-one'               => 'SAP Business One',
 				'sap-ecc'                        => 'SAP ECC',
 				'oracle-netsuite'                => 'Oracle NetSuite',
+				'totvs-consinco'                 => 'TOTVS Consinco',
 				),
 			),
 			'industria'      => array(
@@ -7304,6 +7308,152 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Oracle NetSuite FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   TOTVS CONSINCO
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "TOTVS Consinco".
+	 */
+	protected function preencher_solucao_totvs_consinco() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:totvs-consinco',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "totvs-consinco" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Consinco',
+			'solucao_hero_titulo'     => 'Conecte o Consinco da gôndola ao centro de distribuição',
+			'solucao_hero_corpo'      => 'Integre o ERP de varejo alimentar com PDV, e-commerce e fornecedores para sincronizar preços, estoque e operações em toda a rede.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/totvs-consinco/',
+			'solucao_hero_imagem'     => $this->img( 'totvs-consinco-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Integre toda operação do varejo alimentar',
+			'solucao_pilares_1_icone'  => $this->img( 'totvs-consinco-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte compras e operações',
+			'solucao_pilares_1_desc'   => 'Integre processos de compras, preços e promoções do varejo.',
+			'solucao_pilares_2_icone'  => $this->img( 'totvs-consinco-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Automatize conexões EDI',
+			'solucao_pilares_2_desc'   => 'Sincronize dados com fornecedores sem processos manuais.',
+			'solucao_pilares_3_icone'  => $this->img( 'totvs-consinco-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Unifique preços e canais',
+			'solucao_pilares_3_desc'   => 'Mantenha loja física e digital sempre alinhadas.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do varejo alimentar',
+			'solucao_casos_1_icone'   => $this->img( 'totvs-consinco-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize preços e promoções',
+			'solucao_casos_1_desc'    => 'Atualize valores entre Consinco, PDV e e-commerce automaticamente.',
+			'solucao_casos_2_icone'   => $this->img( 'totvs-consinco-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Integre fornecedores via EDI',
+			'solucao_casos_2_desc'    => 'Conecte indústrias parceiras ao fluxo de compras.',
+			'solucao_casos_3_icone'   => $this->img( 'totvs-consinco-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consolide vendas da rede',
+			'solucao_casos_3_desc'    => 'Centralize dados de vendas multi-loja para BI.',
+			'solucao_casos_4_icone'   => $this->img( 'totvs-consinco-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize reposição de estoque',
+			'solucao_casos_4_desc'    => 'Use giro de vendas para apoiar abastecimento automático.',
+			'solucao_casos_5_icone'   => $this->img( 'totvs-consinco-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do varejo para agentes de IA sem expor o core do sistema.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações preparadas para alto volume',
+			'solucao_dif_corpo'    => 'Conecte operações de supermercado com milhares de SKUs e múltiplas lojas mantendo performance, estabilidade e processamento contínuo.',
+			'solucao_dif_topico_1' => 'Suporte grandes volumes transacionais',
+			'solucao_dif_topico_2' => 'Conecte múltiplas lojas',
+			'solucao_dif_topico_3' => 'Processe dados continuamente',
+			'solucao_dif_imagem'   => $this->img( 'totvs-consinco-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize conexões de toda rede',
+			'solucao_plat_corpo'    => 'Unifique integrações EDI, PDV e e-commerce em uma única plataforma para reduzir esforço operacional e acelerar novos parceiros.',
+			'solucao_plat_topico_1' => 'Centralize integrações EDI',
+			'solucao_plat_topico_2' => 'Reduza onboarding de fornecedores',
+			'solucao_plat_topico_3' => 'Reutilize conexões existentes',
+			'solucao_plat_imagem'   => $this->img( 'totvs-consinco-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com integrações estruturadas',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Consinco, fornecedores EDI, PDV e e-commerce com mais velocidade.',
+			'solucao_acel_topico_1'  => 'Conecte fornecedores rapidamente',
+			'solucao_acel_topico_2'  => 'Adapte fluxos existentes',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'totvs-consinco-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_totvs_consinco( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  TOTVS Consinco: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq do TOTVS Consinco e retorna seus IDs.
+	 *
+	 * @param int $post_id ID do post cli_solucao pai.
+	 * @return int[]
+	 */
+	protected function criar_faq_totvs_consinco( $post_id ) {
+		$itens = array(
+			array(
+				'faq:totvs-consinco-precos',
+				'Como sincronizar preços entre loja física e digital?',
+				'<p>A CLI Connect cria um fluxo centralizado que captura alterações de preços e promoções diretamente no Consinco e distribui automaticamente para o PDV e a plataforma de e-commerce. Qualquer mudança de tabela de preços, campanha promocional ou desconto é propagada em tempo real para todos os canais, eliminando divergências de valores e retrabalho manual nas equipes comerciais.</p>',
+			),
+			array(
+				'faq:totvs-consinco-edi',
+				'É possível integrar múltiplos fornecedores via EDI rapidamente?',
+				'<p>Sim. A CLI Connect oferece aceleradores de integração EDI que padronizam o onboarding de novos fornecedores. Em vez de construir um mapeamento específico para cada parceiro, a plataforma reutiliza conectores EDI configuráveis que suportam os principais formatos do setor. Isso reduz o tempo de integração de semanas para dias e facilita a adição de novos fornecedores conforme a operação cresce.</p>',
+			),
+			array(
+				'faq:totvs-consinco-reposicao',
+				'Como funciona a reposição automática de estoque?',
+				'<p>A CLI Connect conecta os dados de giro de vendas do Consinco com o sistema de compras e os fornecedores, criando um ciclo automatizado de reposição. Quando o estoque de um produto atinge o ponto de pedido definido, a plataforma dispara automaticamente o processo de compra com o fornecedor correspondente, sem necessidade de intervenção manual. Isso reduz rupturas de gôndola e excesso de estoque em toda a rede.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  TOTVS Consinco FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
