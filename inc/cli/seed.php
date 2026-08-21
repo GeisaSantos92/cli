@@ -7905,17 +7905,23 @@ class Cliconnect_Seed {
 				'fields'     => 'ids',
 			) );
 			if ( ! empty( $existing ) ) {
-				$ids[] = (int) $existing[0];
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
 				continue;
 			}
 			$faq_id = wp_insert_post( array(
-				'post_type'   => 'cli_faq',
-				'post_title'  => $item['titulo'],
-				'post_status' => 'publish',
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
 			) );
 			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
 				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
-				update_field( 'faq_corpo', $item['corpo'], $faq_id );
 				$ids[] = $faq_id;
 			}
 		}
@@ -8058,20 +8064,25 @@ class Cliconnect_Seed {
 				'fields'     => 'ids',
 			) );
 			if ( ! empty( $existing ) ) {
-				$ids[] = (int) $existing[0];
+				$id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $id;
 				continue;
 			}
 			$id = wp_insert_post( array(
-				'post_type'   => 'cli_faq',
-				'post_status' => 'publish',
-				'post_title'  => $item['titulo'],
+				'post_type'    => 'cli_faq',
+				'post_status'  => 'publish',
+				'post_title'   => $item['titulo'],
+				'post_content' => $item['corpo'],
 			) );
 			if ( is_wp_error( $id ) ) {
 				continue;
 			}
 			update_post_meta( $id, '_cliconnect_seed', $item['seed_key'] );
-			update_field( 'faq_pergunta', $item['titulo'], $id );
-			update_field( 'faq_resposta', $item['corpo'], $id );
 			$ids[] = $id;
 		}
 
