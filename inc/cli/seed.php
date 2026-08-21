@@ -196,6 +196,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo IFS Cloud…' );
 		$this->preencher_solucao_ifs_cloud();
 
+		WP_CLI::log( '— Preenchendo QAD Redzone…' );
+		$this->preencher_solucao_qad_redzone();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1157,6 +1160,7 @@ class Cliconnect_Seed {
 				'arius-erp'                      => 'Arius ERP',
 				'ciss-poder-erp'                 => 'CISS Poder ERP',
 				'ifs-cloud'                      => 'IFS Cloud',
+				'qad-redzone'                    => 'QAD Redzone',
 				),
 			),
 			'industria'      => array(
@@ -8252,6 +8256,167 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  IFS Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   QAD REDZONE
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "QAD Redzone".
+	 */
+	protected function preencher_solucao_qad_redzone() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:qad-redzone',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "qad-redzone" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu QAD Redzone',
+			'solucao_hero_titulo'     => 'Conecte o QAD Redzone ao ERP e ao chão de fábrica em tempo real',
+			'solucao_hero_corpo'      => 'Integre produtividade de linha, manufatura e qualidade ao QAD ERP e BI corporativo para transformar dados operacionais em decisões rápidas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/qad-redzone/',
+			'solucao_hero_imagem'     => $this->img( 'qad-redzone-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'      => 'Transforme dados da fábrica em valor',
+			'solucao_pilares_1_icone'     => $this->img( 'qad-redzone-pilar-1' ),
+			'solucao_pilares_1_titulo'    => 'Monitore produtividade em tempo real',
+			'solucao_pilares_1_desc'      => 'Sincronize dados de OEE e desempenho das linhas automaticamente.',
+			'solucao_pilares_2_icone'     => $this->img( 'qad-redzone-pilar-2' ),
+			'solucao_pilares_2_titulo'    => 'Integre com QAD ERP',
+			'solucao_pilares_2_desc'      => 'Conecte execução industrial aos processos corporativos do ERP.',
+			'solucao_pilares_3_icone'     => $this->img( 'qad-redzone-pilar-3' ),
+			'solucao_pilares_3_titulo'    => 'Conecte fábrica e BI',
+			'solucao_pilares_3_desc'      => 'Leve dados operacionais para análises estratégicas corporativas.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'        => 'Automatize processos de manufatura',
+			'solucao_casos_1_icone'       => $this->img( 'qad-redzone-caso-1' ),
+			'solucao_casos_1_titulo'      => 'Integre OEE ao ERP',
+			'solucao_casos_1_desc'        => 'Envie indicadores de produtividade do Redzone ao QAD ERP.',
+			'solucao_casos_2_icone'       => $this->img( 'qad-redzone-caso-2' ),
+			'solucao_casos_2_titulo'      => 'Controle qualidade integrada',
+			'solucao_casos_2_desc'        => 'Conecte não conformidades aos processos de qualidade.',
+			'solucao_casos_3_icone'       => $this->img( 'qad-redzone-caso-3' ),
+			'solucao_casos_3_titulo'      => 'Consolide produção multi-planta',
+			'solucao_casos_3_desc'        => 'Centralize dados industriais de diferentes unidades produtivas.',
+			'solucao_casos_4_icone'       => $this->img( 'qad-redzone-caso-4' ),
+			'solucao_casos_4_titulo'      => 'Alerte paradas de linha',
+			'solucao_casos_4_desc'        => 'Dispare alertas em tempo real para manutenção preventiva.',
+			'solucao_casos_5_icone'       => $this->img( 'qad-redzone-caso-5' ),
+			'solucao_casos_5_titulo'      => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'        => 'Disponibilize dados operacionais para agentes inteligentes sem expor o core do Redzone.',
+			'solucao_casos_cta_texto'     => 'Agende uma demonstração',
+			'solucao_casos_cta_url'       => '/contato/',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações para manufatura em tempo real',
+			'solucao_dif_corpo'    => 'Processe grandes volumes de dados industriais com conectividade preparada para sensores e operações contínuas de produção.',
+			'solucao_dif_topico_1' => 'Processe dados em alto volume',
+			'solucao_dif_topico_2' => 'Conecte eventos industriais',
+			'solucao_dif_topico_3' => 'Acompanhe produção em tempo real',
+			'solucao_dif_imagem'   => $this->img( 'qad-redzone-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte toda sua operação industrial',
+			'solucao_plat_corpo'    => 'Centralize dados do chão de fábrica, ERP e BI para eliminar informações isoladas e ampliar o valor do Redzone.',
+			'solucao_plat_topico_1' => 'Integre fábrica e escritório',
+			'solucao_plat_topico_2' => 'Centralize dados produtivos',
+			'solucao_plat_topico_3' => 'Amplie visibilidade operacional',
+			'solucao_plat_imagem'   => $this->img( 'qad-redzone-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com manufatura conectada',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar QAD Redzone ao QAD ERP e plataformas analíticas corporativas.',
+			'solucao_acel_topico_1'  => 'Conecte dados rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize padrões industriais',
+			'solucao_acel_topico_3'  => 'Acelere projetos fabris',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'qad-redzone-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_qad_redzone();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  QAD Redzone: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução QAD Redzone.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_qad_redzone(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:qad-redzone-oee',
+				'titulo'   => 'Como levar dados de OEE do Redzone para o QAD ERP?',
+				'corpo'    => 'A CLI Connect captura os indicadores de OEE gerados pelo QAD Redzone em tempo real e os envia automaticamente ao QAD ERP, permitindo que gestores acompanhem desempenho de linha diretamente nos relatórios corporativos, sem exportações manuais.',
+			),
+			array(
+				'seed_key' => 'faq:qad-redzone-alertas',
+				'titulo'   => 'É possível gerar alertas de parada de linha em tempo real?',
+				'corpo'    => 'Sim. A integração monitora os eventos de parada registrados no Redzone e aciona automaticamente notificações para equipes de manutenção, qualidade ou operações. Os alertas podem ser enviados por e-mail, mensagem ou integrados a sistemas de gestão de manutenção.',
+			),
+			array(
+				'seed_key' => 'faq:qad-redzone-multiplanta',
+				'titulo'   => 'Como funciona a consolidação multi-planta?',
+				'corpo'    => 'A CLI Connect agrega dados de produtividade e qualidade de múltiplas plantas que utilizam o QAD Redzone em um repositório centralizado, conectado ao ERP e ao BI corporativo. Isso garante visibilidade unificada da operação industrial sem depender de consolidações manuais por planta.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+
+		WP_CLI::log( sprintf( '  QAD Redzone FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
