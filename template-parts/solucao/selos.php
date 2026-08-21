@@ -2,7 +2,7 @@
 /**
  * Solução — Seção Selos (Compliance & Segurança).
  *
- * Campos ACF (group_cli_solucao, aba "4 · Selos"):
+ * Campos ACF (group_cli_solucao, aba "6 · Selos"):
  *   solucao_selos_eyebrow, solucao_selos_titulo, solucao_selos_corpo.
  *
  * Os badges de certificação são assets estáticos do tema (mesmos em todas as

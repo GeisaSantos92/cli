@@ -2,14 +2,14 @@
 /**
  * Solução — Seção Casos de Uso.
  *
- * Campos ACF (group_cli_solucao, aba "3 · Casos de Uso"):
+ * Campos ACF (group_cli_solucao, aba "5 · Casos de Uso"):
  *   solucao_casos_eyebrow, solucao_casos_titulo,
- *   solucao_casos_{1-5}_icone (image ID), solucao_casos_{1-5}_titulo,
- *   solucao_casos_{1-5}_desc,
+ *   solucao_casos_{1-6}_icone (image ID), solucao_casos_{1-6}_titulo,
+ *   solucao_casos_{1-6}_desc,
  *   solucao_casos_cta_texto, solucao_casos_cta_url.
  *
  * O card CTA azul (último) só é exibido quando solucao_casos_cta_texto
- * estiver preenchido. Em páginas sem CTA o último slot fica vazio.
+ * estiver preenchido. Sem CTA, os seis cards fecham duas linhas de três.
  *
  * @package Cliconnect
  */
@@ -22,7 +22,7 @@ $eyebrow = cliconnect_campo_pagina( 'solucao_casos_eyebrow' );
 $titulo  = cliconnect_campo_pagina( 'solucao_casos_titulo' );
 
 $cards = array();
-for ( $i = 1; $i <= 5; $i++ ) {
+for ( $i = 1; $i <= 6; $i++ ) {
 	$card_tit  = cliconnect_campo_pagina( "solucao_casos_{$i}_titulo" );
 	$card_desc = cliconnect_campo_pagina( "solucao_casos_{$i}_desc" );
 

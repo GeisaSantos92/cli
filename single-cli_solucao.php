@@ -17,7 +17,9 @@ get_header();
 
 $cliconnect_secoes = array(
 	'hero',
+	'metricas',
 	'pilares',
+	'logos',
 	'casos',
 	'selos',
 	'diferencial',

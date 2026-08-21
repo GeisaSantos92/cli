@@ -98,6 +98,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Salesforce…' );
 		$this->preencher_solucao_salesforce();
 
+		WP_CLI::log( '— Preenchendo Serviços Financeiros…' );
+		$this->preencher_solucao_servicos_financeiros();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -303,6 +306,28 @@ class Cliconnect_Seed {
 	 */
 	protected function img( $nome ) {
 		return $this->midia[ $nome ] ?? 0;
+	}
+
+	/**
+	 * Busca o ID de um post criado por upsert() a partir do slug do seed.
+	 *
+	 * @param string $slug      Identificador estável do seed (ex.: 'cliente:hsbc').
+	 * @param string $post_type Tipo do post.
+	 * @return int ID do post, ou 0 se não existir.
+	 */
+	protected function id_do_seed( $slug, $post_type ) {
+		$posts = get_posts(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $slug,      // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		return $posts ? (int) $posts[0] : 0;
 	}
 
 	/* =====================================================================
@@ -2504,6 +2529,175 @@ class Cliconnect_Seed {
 	/* =====================================================================
 	   SOLUÇÕES — LANDING PAGES
 	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Serviços Financeiros".
+	 *
+	 * Landing page da indústria de serviços financeiros. Preenchida seção a
+	 * seção; as ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_servicos_financeiros() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:servicos-financeiros', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Serviços Financeiros: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para serviços financeiros',
+			'solucao_hero_titulo'          => 'Da implementação à produção em semanas.',
+			'solucao_hero_titulo_destaque' => 'Porque bancos não esperam.',
+			'solucao_hero_corpo'           => 'Conecte sistemas bancários, plataformas digitais e soluções de segurança em uma única arquitetura de integração preparada para evoluir continuamente.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'servicos-financeiros-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '95%',
+			'solucao_metrica_1_rotulo'     => 'mais rápida a verificação de identidade',
+			'solucao_metrica_2_numero'     => '24.000',
+			'solucao_metrica_2_rotulo'     => 'horas de trabalho manual eliminadas',
+			'solucao_metrica_3_numero'     => '5%',
+			'solucao_metrica_3_rotulo'     => 'de aumento no NPS',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_pilares_1_icone'      => $this->img( 'servicos-financeiros-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Compliance desde a arquitetura',
+			'solucao_pilares_1_desc'       => 'Controle de acessos, rastreabilidade e governança para ambientes altamente regulados.',
+			'solucao_pilares_2_icone'      => $this->img( 'servicos-financeiros-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Integrações que evoluem junto com o negócio',
+			'solucao_pilares_2_desc'       => 'Novos fluxos, alterações e melhorias fazem parte da operação, sem iniciar um novo projeto a cada mudança.',
+			'solucao_pilares_3_icone'      => $this->img( 'servicos-financeiros-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Dados preparados para automação e IA',
+			'solucao_pilares_3_desc'       => 'Transforme informações dispersas em processos conectados, prontos para alimentar agentes inteligentes e análises em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos os serviços financeiros de grandes empresas',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:bnp-paribas-cardif', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:hsbc', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'servicos-financeiros-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Core Banking conectado',
+			'solucao_casos_1_desc'         => 'Integre sistemas bancários a ERPs, CRMs e plataformas digitais.',
+			'solucao_casos_2_icone'        => $this->img( 'servicos-financeiros-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Pagamentos em tempo real',
+			'solucao_casos_2_desc'         => 'Automatize a troca de informações entre instituições financeiras e sistemas internos.',
+			'solucao_casos_3_icone'        => $this->img( 'servicos-financeiros-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Prevenção à fraude',
+			'solucao_casos_3_desc'         => 'Conecte motores antifraude, plataformas analíticas e canais digitais.',
+			'solucao_casos_4_icone'        => $this->img( 'servicos-financeiros-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Crédito automatizado',
+			'solucao_casos_4_desc'         => 'Orquestre validações, documentos e aprovações entre múltiplos sistemas.',
+			'solucao_casos_5_icone'        => $this->img( 'servicos-financeiros-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Visão 360º do cliente',
+			'solucao_casos_5_desc'         => 'Centralize dados financeiros, comerciais e operacionais em uma única jornada.',
+			'solucao_casos_6_icone'        => $this->img( 'servicos-financeiros-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Dados para Inteligência Artificial',
+			'solucao_casos_6_desc'         => 'Disponibilize informações confiáveis para agentes inteligentes e análises avançadas.',
+			// Sem card CTA azul nesta landing — os seis cards fecham duas linhas.
+			'solucao_casos_cta_texto'      => '',
+			'solucao_casos_cta_url'        => '',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_servicos_financeiros_faq( $post_id );
+
+		WP_CLI::log( "  Serviços Financeiros preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Serviços Financeiros e vincula à solução.
+	 *
+	 * O Figma mostra apenas as perguntas (accordion fechado); as respostas
+	 * foram redigidas a partir do que a própria landing afirma e seguem
+	 * pendentes de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Serviços Financeiros.
+	 * @return void
+	 */
+	protected function preencher_servicos_financeiros_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sf-fin-core-banking',
+				'Quanto tempo leva para integrar um core banking?',
+				'<p>Os primeiros fluxos costumam entrar em produção em semanas, não em meses. O prazo depende do core utilizado, do volume de dados e das validações de segurança exigidas, mas a implementação é feita por etapas: as integrações críticas sobem primeiro e as demais entram em ondas seguintes, sem travar a operação.</p>',
+			),
+			array(
+				'faq:sf-fin-legados',
+				'A CLI funciona com sistemas legados?',
+				'<p>Sim. Além das APIs REST e SOAP, a plataforma se conecta a bancos de dados, arquivos, filas de mensageria e serviços internos que não expõem API. Para ambientes on-premises, a comunicação é feita por um agente instalado dentro da rede corporativa, sem abrir portas de entrada no firewall.</p>',
+			),
+			array(
+				'faq:sf-fin-open-finance',
+				'Como as integrações acompanham iniciativas de Open Finance?',
+				'<p>As integrações são construídas sobre uma camada de APIs governada, com versionamento, controle de acessos e rastreabilidade de ponta a ponta. Isso permite expor e consumir serviços de parceiros no ritmo em que a regulação e as fases do Open Finance avançam, sem reescrever a arquitetura a cada mudança.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-ia',
+				'É possível utilizar dados legados em projetos de IA?',
+				'<p>Sim. As integrações normalizam e conectam informações que hoje estão dispersas entre sistemas, deixando-as em um formato confiável e rastreável. É esse conjunto tratado que alimenta agentes inteligentes, motores de decisão e análises avançadas.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-sensiveis',
+				'Como a CLI protege dados sensíveis durante as integrações?',
+				'<p>Os dados trafegam criptografados, as credenciais ficam em cofre e cada acesso é registrado para auditoria. A operação segue os padrões de compliance da plataforma — SOC 2, ISO 27001, PCI DSS e LGPD/GDPR, entre outros — e os fluxos são desenhados para expor apenas as informações necessárias a cada sistema.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Serviços Financeiros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
 
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Salesforce".

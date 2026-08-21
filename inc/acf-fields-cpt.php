@@ -599,12 +599,76 @@ function cliconnect_acf_fields_cpt() {
 					'instructions'  => 'Visual da solução — logos conectados, diagrama, etc. Proporção quadrada.',
 				),
 
-				// ----- Aba: 2 · Pilares ----------------------------------------
+				// ----- Aba: 2 · Métricas ---------------------------------------
 				array(
-					'key'   => 'field_solucao_pilares_tab',
-					'label' => '2 · Pilares',
+					'key'   => 'field_solucao_metricas_tab',
+					'label' => '2 · Métricas',
 					'name'  => '',
 					'type'  => 'tab',
+				),
+				array(
+					'key'     => 'field_solucao_metricas_msg',
+					'label'   => '',
+					'name'    => '',
+					'type'    => 'message',
+					'message' => 'Faixa de números logo abaixo do hero. Deixe o número em branco para esconder a métrica; sem nenhum número, a faixa inteira some.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_1_numero',
+					'label'        => 'Métrica 1 — Número',
+					'name'         => 'solucao_metrica_1_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_1_rotulo',
+					'label'        => 'Métrica 1 — Rótulo',
+					'name'         => 'solucao_metrica_1_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_2_numero',
+					'label'        => 'Métrica 2 — Número',
+					'name'         => 'solucao_metrica_2_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_2_rotulo',
+					'label'        => 'Métrica 2 — Rótulo',
+					'name'         => 'solucao_metrica_2_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_3_numero',
+					'label'        => 'Métrica 3 — Número',
+					'name'         => 'solucao_metrica_3_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_3_rotulo',
+					'label'        => 'Métrica 3 — Rótulo',
+					'name'         => 'solucao_metrica_3_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+
+				// ----- Aba: 3 · Pilares ----------------------------------------
+				array(
+					'key'   => 'field_solucao_pilares_tab',
+					'label' => '3 · Pilares',
+					'name'  => '',
+					'type'  => 'tab',
+				),
+				array(
+					'key'          => 'field_solucao_pilares_eyebrow',
+					'label'        => 'Eyebrow',
+					'name'         => 'solucao_pilares_eyebrow',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "Pilares". Deixe vazio para ocultar.',
 				),
 				array(
 					'key'          => 'field_solucao_pilares_titulo',
@@ -687,9 +751,36 @@ function cliconnect_acf_fields_cpt() {
 				),
 
 			// ----- Aba: 3 · Casos de Uso ---------------------------------------
+			// ----- Aba: 4 · Logos ------------------------------------------
+			array(
+				'key'   => 'field_solucao_logos_tab',
+				'label' => '4 · Logos',
+				'name'  => '',
+				'type'  => 'tab',
+			),
+			array(
+				'key'          => 'field_solucao_logos_texto',
+				'label'        => 'Microcopy',
+				'name'         => 'solucao_logos_texto',
+				'type'         => 'text',
+				'instructions' => 'Ex.: "Integramos os serviços financeiros de grandes empresas". Vazio esconde a faixa.',
+			),
+			array(
+				'key'           => 'field_solucao_logos_clientes',
+				'label'         => 'Clientes',
+				'name'          => 'solucao_logos_clientes',
+				'type'          => 'relationship',
+				'post_type'     => array( 'cli_cliente' ),
+				'filters'       => array( 'search' ),
+				'return_format' => 'id',
+				'min'           => 0,
+				'max'           => 4,
+				'instructions'  => 'Logos exibidos ao lado do texto (recomendado: 2 a 4). O logo é a imagem destacada do cliente.',
+			),
+
 			array(
 				'key'   => 'field_solucao_casos_tab',
-				'label' => '3 · Casos de Uso',
+				'label' => '5 · Casos de Uso',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -816,6 +907,28 @@ function cliconnect_acf_fields_cpt() {
 				'type'  => 'textarea',
 				'rows'  => 3,
 			),
+			array(
+				'key'           => 'field_solucao_casos_6_icone',
+				'label'         => 'Card 6 — Ícone',
+				'name'          => 'solucao_casos_6_icone',
+				'type'          => 'image',
+				'return_format' => 'id',
+				'preview_size'  => 'thumbnail',
+				'mime_types'    => 'svg, png',
+			),
+			array(
+				'key'   => 'field_solucao_casos_6_titulo',
+				'label' => 'Card 6 — Título',
+				'name'  => 'solucao_casos_6_titulo',
+				'type'  => 'text',
+			),
+			array(
+				'key'   => 'field_solucao_casos_6_desc',
+				'label' => 'Card 6 — Descrição',
+				'name'  => 'solucao_casos_6_desc',
+				'type'  => 'textarea',
+				'rows'  => 3,
+			),
 			// Card CTA azul (opcional — deixe o texto vazio para não exibir).
 			array(
 				'key'          => 'field_solucao_casos_cta_texto',
@@ -831,10 +944,10 @@ function cliconnect_acf_fields_cpt() {
 				'type'  => 'text',
 			),
 
-			// ----- Aba: 5 · Diferencial Técnico --------------------------------
+			// ----- Aba: 7 · Diferencial Técnico --------------------------------
 			array(
 				'key'   => 'field_solucao_dif_tab',
-				'label' => '5 · Diferencial',
+				'label' => '7 · Diferencial',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -888,7 +1001,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 4 · Selos -------------------------------------------
 			array(
 				'key'   => 'field_solucao_selos_tab',
-				'label' => '4 · Selos',
+				'label' => '6 · Selos',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -916,7 +1029,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 7 · Aceleradores ------------------------------------
 			array(
 				'key'   => 'field_solucao_acel_tab',
-				'label' => '7 · Aceleradores',
+				'label' => '9 · Aceleradores',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -989,7 +1102,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 6 · Plataforma Única --------------------------------
 			array(
 				'key'   => 'field_solucao_plat_tab',
-				'label' => '6 · Plataforma',
+				'label' => '8 · Plataforma',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -1043,7 +1156,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 8 · FAQ ---------------------------------------------
 			array(
 				'key'   => 'field_solucao_faq_tab',
-				'label' => '8 · FAQ',
+				'label' => '10 · FAQ',
 				'name'  => '',
 				'type'  => 'tab',
 			),

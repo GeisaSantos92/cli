@@ -124,10 +124,98 @@
 	66%       { transform: translate(-50%, -50%) rotate(-6deg)  translateX(-4px); }
 }
 
-/* --- 2. Seção Pilares ------------------------------------------------------ */
+/* --- 2. Seção Métricas ----------------------------------------------------- */
+
+/*
+ * Tira horizontal entre o hero e o resto da página: número grande e rótulo
+ * lado a lado, com divisórias verticais também nas duas pontas (Figma).
+ */
+.sh-metricas {
+	background: var(--cor-fundo-suave);
+	border-block: 1px solid var(--cor-borda);
+}
+
+.sh-metricas__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	border-inline: 1px solid var(--cor-borda);
+}
+
+.sh-metrica {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 24px;
+	min-height: 133px;
+	padding: 24px;
+	border-left: 1px solid var(--cor-borda);
+}
+
+.sh-metrica:first-child {
+	border-left: 0;
+}
+
+/*
+ * Número em degradê: azul da marca com um véu mais claro esmaecendo de cima
+ * para baixo. A cor sólida fica como fallback onde background-clip:text não
+ * é suportado.
+ */
+.sh-metrica__numero {
+	margin: 0;
+	font-family: var(--fonte-titulo);
+	font-size: clamp(2.5rem, 4.4vw, 4rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	font-variant-numeric: tabular-nums;
+	color: var(--cor-texto-marca);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+	.sh-metrica__numero {
+		background-image:
+			linear-gradient(0deg, rgba(157, 186, 254, 0) 0%, rgba(157, 186, 254, 0.4) 100%),
+			linear-gradient(90deg, var(--cor-primaria) 0%, var(--cor-primaria) 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+}
+
+.sh-metrica__rotulo {
+	margin: 0;
+	max-width: 180px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	font-weight: 500;
+	line-height: 1.6;
+	letter-spacing: -0.01em;
+	color: var(--cor-texto-alt);
+}
+
+/* Empilhado, as divisórias viram horizontais. */
+@media (max-width: 880px) {
+	.sh-metricas__grid {
+		grid-template-columns: 1fr;
+		border-inline: 0;
+	}
+
+	.sh-metrica {
+		min-height: 0;
+		justify-content: flex-start;
+		border-left: 0;
+		border-top: 1px solid var(--cor-borda);
+	}
+
+	.sh-metrica:first-child {
+		border-top: 0;
+	}
+}
+
+/* --- 3. Seção Pilares ------------------------------------------------------ */
 
 .sp-pilares {
-	padding-block: 80px;
+	padding-block: 120px 80px;
 	background: var(--cor-fundo-suave);
 }
 
@@ -136,6 +224,17 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 40px;
+}
+
+.sp-pilares__header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+}
+
+.sp-pilares__eyebrow {
+	margin: 0;
 }
 
 .sp-pilares__titulo {
@@ -210,14 +309,91 @@
 	font-family: var(--fonte-base);
 	font-size: var(--tam-body);
 	line-height: 1.6;
-	color: var(--cor-texto-suave);
+	color: var(--cor-texto-alt);
 	margin: 0;
 }
 
-/* --- 3. Seção Casos de Uso ------------------------------------------------- */
+/* --- 4. Seção Logos ------------------------------------------------------- */
+
+/*
+ * Faixa de clientes do segmento: microcopy à esquerda e um logo por célula à
+ * direita, com divisórias verticais também nas pontas (Figma).
+ */
+.sh-logos {
+	background: var(--cor-fundo-suave);
+	border-block: 1px solid var(--cor-borda);
+}
+
+.sh-logos__grid {
+	display: flex;
+	align-items: stretch;
+	border-inline: 1px solid var(--cor-borda);
+}
+
+.sh-logos__texto {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	max-width: 410px;
+	min-height: 131px;
+	padding: 16px 24px;
+	margin: 0;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-marca-escura);
+}
+
+.sh-logos__lista {
+	display: flex;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.sh-logos__item {
+	display: flex;
+	flex: 1 1 0;
+	min-width: 0;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 35px;
+	border-left: 1px solid var(--cor-borda);
+}
+
+.sh-logos__item img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 56px;
+	object-fit: contain;
+}
+
+/* Empilhado, o texto vira cabeçalho e as divisórias viram horizontais. */
+@media (max-width: 880px) {
+	.sh-logos__grid {
+		flex-direction: column;
+		border-inline: 0;
+	}
+
+	.sh-logos__texto {
+		max-width: none;
+		min-height: 0;
+		padding-inline: 0;
+	}
+
+	.sh-logos__item {
+		min-height: 100px;
+		border-left: 0;
+		border-top: 1px solid var(--cor-borda);
+	}
+}
+
+/* --- 5. Seção Casos de Uso ------------------------------------------------- */
 
 .sc-casos {
-	padding-block: 120px;
+	padding-block: 120px 80px;
 	background: var(--cor-fundo-suave);
 }
 
@@ -312,7 +488,7 @@
 	font-family: var(--fonte-base);
 	font-size: var(--tam-body);
 	line-height: 1.6;
-	color: var(--cor-texto-suave);
+	color: var(--cor-texto-alt);
 	margin: 0;
 }
 
@@ -350,7 +526,7 @@
 	-webkit-mask-position: center;
 }
 
-/* --- 5. Seção Diferencial Técnico ------------------------------------------ */
+/* --- 7. Seção Diferencial Técnico ------------------------------------------ */
 
 .sd-dif {
 	padding-block: 120px 80px;
@@ -448,7 +624,7 @@
 	display: block;
 }
 
-/* --- 4. Seção Selos (Compliance & Segurança) ------------------------------- */
+/* --- 6. Seção Selos (Compliance & Segurança) ------------------------------- */
 
 .ss-selos {
 	padding-block: 120px 160px;
@@ -549,7 +725,7 @@
 	left: -109.57%;
 }
 
-/* --- 7. Seção Aceleradores de Integração ------------------------------------ */
+/* --- 9. Seção Aceleradores de Integração ------------------------------------ */
 
 .sacel-acel {
 	padding-block: 64px 80px;
@@ -650,7 +826,7 @@
 	display: block;
 }
 
-/* --- 6. Seção Plataforma Única --------------------------------------------- */
+/* --- 8. Seção Plataforma Única --------------------------------------------- */
 
 .spu-plat {
 	padding-block: 120px 80px;
@@ -746,7 +922,7 @@
 	display: block;
 }
 
-/* --- 8. Seção FAQ ---------------------------------------------------------- */
+/* --- 10. Seção FAQ ---------------------------------------------------------- */
 
 .sfaq {
 	padding-block: 80px 120px;
