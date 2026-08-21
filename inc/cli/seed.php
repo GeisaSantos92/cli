@@ -181,6 +181,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo TOTVS Consinco…' );
 		$this->preencher_solucao_totvs_consinco();
 
+		WP_CLI::log( '— Preenchendo TOTVS Linx…' );
+		$this->preencher_solucao_totvs_linx();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1137,6 +1140,7 @@ class Cliconnect_Seed {
 				'sap-ecc'                        => 'SAP ECC',
 				'oracle-netsuite'                => 'Oracle NetSuite',
 				'totvs-consinco'                 => 'TOTVS Consinco',
+				'totvs-linx'                     => 'TOTVS Linx',
 				),
 			),
 			'industria'      => array(
@@ -7454,6 +7458,157 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  TOTVS Consinco FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   TOTVS LINX
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "TOTVS Linx".
+	 */
+	protected function preencher_solucao_totvs_linx() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:totvs-linx',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "totvs-linx" não encontrado.' );
+			return;
+		}
+		$post_id = $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Linx',
+			'solucao_hero_titulo'     => 'Conecte o Linx do PDV ao ERP corporativo',
+			'solucao_hero_corpo'      => 'Integre soluções Linx de varejo, moda, postos e farmácias ao ERP, CRM e programas de fidelidade para centralizar operações comerciais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/totvs-linx/',
+			'solucao_hero_imagem'     => $this->img( 'totvs-linx-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale sua operação Linx conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'totvs-linx-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte verticais Linx',
+			'solucao_pilares_1_desc'   => 'Integre operações de moda, varejo, postos e farmácias ao ecossistema corporativo.',
+			'solucao_pilares_2_icone'  => $this->img( 'totvs-linx-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize vendas em tempo real',
+			'solucao_pilares_2_desc'   => 'Conecte transações do PDV aos sistemas financeiros automaticamente.',
+			'solucao_pilares_3_icone'  => $this->img( 'totvs-linx-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Integre fidelidade e CRM',
+			'solucao_pilares_3_desc'   => 'Conecte dados de clientes aos programas de relacionamento.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do varejo Linx',
+			'solucao_casos_1_icone'   => $this->img( 'totvs-linx-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize vendas com ERP',
+			'solucao_casos_1_desc'    => 'Envie transações do PDV Linx ao financeiro corporativo automaticamente.',
+			'solucao_casos_2_icone'   => $this->img( 'totvs-linx-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Conecte programas de fidelidade',
+			'solucao_casos_2_desc'    => 'Integre dados de clientes com CRM e plataformas de relacionamento.',
+			'solucao_casos_3_icone'   => $this->img( 'totvs-linx-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consolide vendas multi-loja',
+			'solucao_casos_3_desc'    => 'Centralize resultados de diferentes lojas e bandeiras comerciais.',
+			'solucao_casos_4_icone'   => $this->img( 'totvs-linx-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Integre documentos fiscais',
+			'solucao_casos_4_desc'    => 'Conecte SAT, NF-e e NFC-e em uma operação centralizada.',
+			'solucao_casos_5_icone'   => $this->img( 'totvs-linx-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do varejo para agentes administrativos sem expor o core do sistema.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações para alto volume de vendas',
+			'solucao_dif_corpo'    => 'Conecte operações de PDV com processamento em tempo real para suportar grandes volumes de transações comerciais.',
+			'solucao_dif_topico_1' => 'Processe vendas em tempo real',
+			'solucao_dif_topico_2' => 'Suporte alto volume transacional',
+			'solucao_dif_topico_3' => 'Conecte múltiplas unidades',
+			'solucao_dif_imagem'   => $this->img( 'totvs-linx-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique operações de varejo',
+			'solucao_plat_corpo'    => 'Centralize dados de diferentes soluções Linx para conectar vendas, financeiro e CRM sem customizar sistemas existentes.',
+			'solucao_plat_topico_1' => 'Consolide múltiplas bandeiras',
+			'solucao_plat_topico_2' => 'Centralize dados comerciais',
+			'solucao_plat_topico_3' => 'Evite customizações complexas',
+			'solucao_plat_imagem'   => $this->img( 'totvs-linx-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com varejo integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Linx PDV ao ERP financeiro e programas de fidelidade.',
+			'solucao_acel_topico_1'  => 'Conecte PDVs rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos comerciais',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'totvs-linx-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+		$faq_ids = $this->criar_faq_totvs_linx();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+			WP_CLI::log( sprintf( '  TOTVS Linx FAQ: %d perguntas vinculadas.', count( $faq_ids ) ) );
+		}
+		WP_CLI::log( '  TOTVS Linx: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria (ou reutiliza) os FAQs do TOTVS Linx.
+	 */
+	protected function criar_faq_totvs_linx() {
+		$itens = array(
+			array(
+				'faq:totvs-linx-bandeiras',
+				'Como consolidar vendas de múltiplas bandeiras Linx?',
+				'<p>A CLI Connect cria um hub central que agrega transações de diferentes verticais Linx — moda, farmácias, postos, conveniência — e consolida os dados em um único repositório financeiro. Cada bandeira mantém sua operação independente no PDV, mas os resultados são consolidados automaticamente no ERP corporativo. Isso elimina reconciliações manuais e garante visibilidade em tempo real da performance de toda a rede.</p>',
+			),
+			array(
+				'faq:totvs-linx-fidelidade',
+				'É possível integrar com programas de fidelidade de terceiros?',
+				'<p>Sim. A CLI Connect conecta o Linx a qualquer plataforma de CRM ou fidelidade via API, sejam soluções proprietárias ou de terceiros. Os dados de compra registrados no PDV são enviados automaticamente para o programa de fidelidade, que processa pontos e benefícios e retorna as informações ao caixa em tempo real. A integração é configurável e reutilizável para cada novo parceiro de fidelidade.</p>',
+			),
+			array(
+				'faq:totvs-linx-fiscal',
+				'Como funciona a integração fiscal centralizada (SAT/NFC-e)?',
+				'<p>A CLI Connect centraliza a emissão e o armazenamento de documentos fiscais gerados pelo Linx PDV — SAT, NF-e e NFC-e — em um repositório único integrado ao ERP. Qualquer documento emitido pelas lojas é automaticamente transmitido, validado e armazenado de forma estruturada, facilitando obrigações acessórias, auditorias e conciliação fiscal sem depender de processos manuais por loja.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as [ $seed_key, $titulo, $conteudo ] ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $seed_key,
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$ids[] = $existing[0];
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $titulo,
+				'post_content' => $conteudo,
+				'post_status'  => 'publish',
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $seed_key );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  TOTVS Linx FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
