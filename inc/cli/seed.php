@@ -190,6 +190,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Arius ERP…' );
 		$this->preencher_solucao_arius_erp();
 
+		WP_CLI::log( '— Preenchendo CISS Poder ERP…' );
+		$this->preencher_solucao_ciss_poder_erp();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1149,6 +1152,7 @@ class Cliconnect_Seed {
 				'totvs-linx'                     => 'TOTVS Linx',
 				'totvs-rm'                       => 'TOTVS RM',
 				'arius-erp'                      => 'Arius ERP',
+				'ciss-poder-erp'                 => 'CISS Poder ERP',
 				),
 			),
 			'industria'      => array(
@@ -7915,6 +7919,163 @@ class Cliconnect_Seed {
 				$ids[] = $faq_id;
 			}
 		}
+		return $ids;
+	}
+
+	/* =====================================================================
+	   CISS PODER ERP
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "CISS Poder ERP".
+	 */
+	protected function preencher_solucao_ciss_poder_erp() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:ciss-poder-erp',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "ciss-poder-erp" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu CISS',
+			'solucao_hero_titulo'     => 'Conecte o CISSPoder a toda a operação do varejo',
+			'solucao_hero_corpo'      => 'Integre compras, estoque, PDV, e-commerce, fornecedores e financeiro para manter toda a operação varejista sincronizada em tempo real.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/ciss-poder-erp/',
+			'solucao_hero_imagem'     => $this->img( 'ciss-poder-erp-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'      => 'Integre toda a operação varejista',
+			'solucao_pilares_1_icone'     => $this->img( 'ciss-poder-erp-pilar-1' ),
+			'solucao_pilares_1_titulo'    => 'Sincronize vendas e estoque',
+			'solucao_pilares_1_desc'      => 'Conecte PDV, e-commerce e marketplaces ao CISSPoder para manter vendas e estoques atualizados.',
+			'solucao_pilares_2_icone'     => $this->img( 'ciss-poder-erp-pilar-2' ),
+			'solucao_pilares_2_titulo'    => 'Conecte fornecedores',
+			'solucao_pilares_2_desc'      => 'Automatize pedidos, notas e informações de fornecedores por EDI, reduzindo lançamentos manuais.',
+			'solucao_pilares_3_icone'     => $this->img( 'ciss-poder-erp-pilar-3' ),
+			'solucao_pilares_3_titulo'    => 'Integre compras e abastecimento',
+			'solucao_pilares_3_desc'      => 'Leve dados de vendas e estoque para processos de compra e reposição mais eficientes.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'        => 'Automatize processos do varejo',
+			'solucao_casos_1_icone'       => $this->img( 'ciss-poder-erp-caso-1' ),
+			'solucao_casos_1_titulo'      => 'Sincronize vendas do PDV',
+			'solucao_casos_1_desc'        => 'Leve as vendas das lojas para o CISSPoder em tempo real e mantenha a operação atualizada.',
+			'solucao_casos_2_icone'       => $this->img( 'ciss-poder-erp-caso-2' ),
+			'solucao_casos_2_titulo'      => 'Conecte o e-commerce',
+			'solucao_casos_2_desc'        => 'Integre pedidos e estoque entre o CISSPoder e os canais digitais de venda.',
+			'solucao_casos_3_icone'       => $this->img( 'ciss-poder-erp-caso-3' ),
+			'solucao_casos_3_titulo'      => 'Integre fornecedores via EDI',
+			'solucao_casos_3_desc'        => 'Automatize o recebimento de pedidos e documentos enviados por fornecedores.',
+			'solucao_casos_4_icone'       => $this->img( 'ciss-poder-erp-caso-4' ),
+			'solucao_casos_4_titulo'      => 'Automatize a reposição',
+			'solucao_casos_4_desc'        => 'Conecte vendas, estoque e abastecimento para acelerar pedidos de reposição.',
+			'solucao_casos_5_icone'       => $this->img( 'ciss-poder-erp-caso-5' ),
+			'solucao_casos_5_titulo'      => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'        => 'Disponibilize dados assistenciais para agentes administrativos sem expor o core clínico.',
+			'solucao_casos_cta_texto'     => 'Agende uma demonstração',
+			'solucao_casos_cta_url'       => '/contato/',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações para operações de alto volume',
+			'solucao_dif_corpo'    => 'Conecte o CISSPoder aos sistemas que sustentam sua operação, mantendo dados de vendas, estoque e compras sincronizados mesmo em redes com múltiplas lojas.',
+			'solucao_dif_topico_1' => 'Processe grandes volumes de transações',
+			'solucao_dif_topico_2' => 'Sincronize dados em tempo real',
+			'solucao_dif_topico_3' => 'Conecte múltiplas lojas e sistemas',
+			'solucao_dif_imagem'   => $this->img( 'ciss-poder-erp-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Uma operação de varejo conectada',
+			'solucao_plat_corpo'    => 'O CISSPoder já centraliza a gestão do varejo. A CLI Connect amplia essa capacidade conectando o ERP aos sistemas que fazem parte da operação.',
+			'solucao_plat_topico_1' => 'Conecte PDV e e-commerce',
+			'solucao_plat_topico_2' => 'Integre fornecedores e WMS',
+			'solucao_plat_topico_3' => 'Centralize dados entre lojas',
+			'solucao_plat_imagem'   => $this->img( 'ciss-poder-erp-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com uma integração pronta',
+			'solucao_acel_corpo'     => 'Use um modelo pronto para conectar o CISSPoder aos principais sistemas da operação varejista e acelerar a implantação.',
+			'solucao_acel_topico_1'  => 'Conecte PDV e e-commerce',
+			'solucao_acel_topico_2'  => 'Automatize integrações com fornecedores',
+			'solucao_acel_topico_3'  => 'Reutilize fluxos entre lojas',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'ciss-poder-erp-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_ciss_poder_erp();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  CISS Poder ERP: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução CISS Poder ERP.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_ciss_poder_erp(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:ciss-poder-erp-pdv',
+				'titulo'   => 'Como sincronizar vendas do PDV com o CISSPoder?',
+				'corpo'    => 'A CLI Connect integra os pontos de venda ao CISSPoder em tempo real, enviando automaticamente as transações realizadas nas lojas para o ERP. Isso elimina exportações manuais e mantém estoque e financeiro sempre atualizados.',
+			),
+			array(
+				'seed_key' => 'faq:ciss-poder-erp-ecommerce',
+				'titulo'   => 'É possível integrar o CISSPoder com e-commerce e marketplaces?',
+				'corpo'    => 'Sim. A integração conecta o CISSPoder a plataformas de e-commerce e marketplaces, sincronizando pedidos, estoque e informações de produto de forma automatizada, com visibilidade centralizada da operação digital.',
+			),
+			array(
+				'seed_key' => 'faq:ciss-poder-erp-edi',
+				'titulo'   => 'Como integrar o CISSPoder aos fornecedores via EDI?',
+				'corpo'    => 'A CLI Connect implementa a troca de documentos eletrônicos por EDI entre o CISSPoder e os fornecedores, automatizando o recebimento de pedidos, notas fiscais e confirmações sem necessidade de digitação manual.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$ids[] = (int) $existing[0];
+				continue;
+			}
+			$id = wp_insert_post( array(
+				'post_type'   => 'cli_faq',
+				'post_status' => 'publish',
+				'post_title'  => $item['titulo'],
+			) );
+			if ( is_wp_error( $id ) ) {
+				continue;
+			}
+			update_post_meta( $id, '_cliconnect_seed', $item['seed_key'] );
+			update_field( 'faq_pergunta', $item['titulo'], $id );
+			update_field( 'faq_resposta', $item['corpo'], $id );
+			$ids[] = $id;
+		}
+
+		WP_CLI::log( sprintf( '  CISS Poder ERP FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
