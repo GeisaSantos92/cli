@@ -211,6 +211,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Onclick ERP…' );
 		$this->preencher_solucao_onclick_erp();
 
+		WP_CLI::log( '— Preenchendo Propz…' );
+		$this->preencher_solucao_propz();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1177,6 +1180,7 @@ class Cliconnect_Seed {
 				'rp-info'                        => 'RP Info',
 				'viasoft'                        => 'Viasoft',
 				'onclick-erp'                    => 'Onclick ERP',
+				'propz'                          => 'Propz',
 				),
 			),
 			'industria'      => array(
@@ -8741,6 +8745,169 @@ class Cliconnect_Seed {
 			}
 		}
 		WP_CLI::log( sprintf( '  Onclick ERP FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   PROPZ
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Propz".
+	 */
+	protected function preencher_solucao_propz() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:propz',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "propz" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Propz',
+			'solucao_hero_titulo'     => 'Conecte a inteligência da Propz aos dados da sua empresa',
+			'solucao_hero_corpo'      => 'Integre PDV, e-commerce e ERP para alimentar personalização de varejo com dados atualizados e ativar ofertas no canal certo.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/propz/',
+			'solucao_hero_imagem'     => $this->img( 'propz-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme dados em experiências personalizadas',
+			'solucao_pilares_1_icone'  => $this->img( 'propz-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Alimente dados em tempo real',
+			'solucao_pilares_1_desc'   => 'Conecte vendas do PDV, e-commerce e ERP à Propz.',
+			'solucao_pilares_2_icone'  => $this->img( 'propz-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Ative ofertas automaticamente',
+			'solucao_pilares_2_desc'   => 'Envie campanhas personalizadas para canais digitais.',
+			'solucao_pilares_3_icone'  => $this->img( 'propz-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize histórico de compras',
+			'solucao_pilares_3_desc'   => 'Unifique dados multi-canal para entender consumidores.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos de personalização',
+			'solucao_casos_1_icone'   => $this->img( 'propz-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Envie vendas para Propz',
+			'solucao_casos_1_desc'    => 'Atualize inteligência de consumo com dados de venda.',
+			'solucao_casos_2_icone'   => $this->img( 'propz-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Distribua ofertas personalizadas',
+			'solucao_casos_2_desc'    => 'Ative campanhas Propz em app, SMS e e-mail.',
+			'solucao_casos_3_icone'   => $this->img( 'propz-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consolide compras multi-canal',
+			'solucao_casos_3_desc'    => 'Unifique histórico para segmentação de clientes.',
+			'solucao_casos_4_icone'   => $this->img( 'propz-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Meça resultados de campanhas',
+			'solucao_casos_4_desc'    => 'Retorne dados de campanha ao CRM e ERP.',
+			'solucao_casos_5_icone'   => $this->img( 'propz-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados de consumidores para agentes de IA utilizando APIs governadas e servidores MCP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow' => 'diferencial técnico',
+			'solucao_dif_titulo'  => 'Integrações seguras para dados de clientes',
+			'solucao_dif_corpo'   => 'Conecte a Propz via API REST com governança de dados e controles alinhados às exigências da LGPD.',
+			'solucao_dif_topico_1' => 'Proteja dados de consumidores.',
+			'solucao_dif_topico_2' => 'Controle acessos por integração.',
+			'solucao_dif_topico_3' => 'Governar dados conforme LGPD.',
+			'solucao_dif_imagem'   => $this->img( 'propz-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte dados e personalização',
+			'solucao_plat_corpo'    => 'Centralize entrada e saída de dados entre Propz, canais digitais e sistemas internos sem processos manuais.',
+			'solucao_plat_topico_1' => 'Integre canais de ativação.',
+			'solucao_plat_topico_2' => 'Centralize dados comerciais.',
+			'solucao_plat_topico_3' => 'Automatize jornadas personalizadas.',
+			'solucao_plat_imagem'   => $this->img( 'propz-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com varejo personalizado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar vendas, Propz e canais de ativação em um fluxo completo.',
+			'solucao_acel_topico_1'  => 'Conecte dados rapidamente.',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos de campanha.',
+			'solucao_acel_topico_3'  => 'Acelere personalização comercial.',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'propz-acel' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_propz();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  Propz: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Propz.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_propz(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:propz-dados-venda',
+				'titulo'   => 'Como alimentar a Propz com dados de venda em tempo real?',
+				'corpo'    => '<p>A CLI Connect monitora eventos de venda no PDV, e-commerce e ERP e os envia automaticamente para a Propz em tempo real. Cada transação atualiza o histórico de compras do consumidor, permitindo que a plataforma recalcule ofertas e segmentações sem atrasos — sem nenhuma exportação manual ou lote periódico.</p>',
+			),
+			array(
+				'seed_key' => 'faq:propz-ofertas-canais',
+				'titulo'   => 'É possível devolver ofertas geradas pela Propz para o app/SMS automaticamente?',
+				'corpo'    => '<p>Sim. A CLI Connect recebe as campanhas publicadas pela Propz e as distribui automaticamente para os canais configurados — aplicativo, SMS, e-mail e push. O fluxo é bidirecional: dados de venda entram na Propz e as ofertas personalizadas saem para os canais digitais sem intervenção manual.</p>',
+			),
+			array(
+				'seed_key' => 'faq:propz-atribuicao-resultados',
+				'titulo'   => 'Como funciona a atribuição de resultados de campanha no CRM/ERP?',
+				'corpo'    => '<p>A CLI Connect captura os eventos de conversão registrados pela Propz — compras realizadas após ativação de oferta — e os retorna ao CRM e ao ERP com os atributos de campanha. Isso permite que gestores visualizem ROI, taxa de conversão e receita incremental diretamente nas ferramentas de gestão, sem cruzamentos manuais de dados.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  Propz FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
