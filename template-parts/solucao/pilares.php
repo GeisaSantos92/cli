@@ -2,8 +2,8 @@
 /**
  * Solução — Seção Pilares.
  *
- * Campos ACF (group_cli_solucao, aba "2 · Pilares"):
- *   solucao_pilares_titulo,
+ * Campos ACF (group_cli_solucao, aba "3 · Pilares"):
+ *   solucao_pilares_eyebrow, solucao_pilares_titulo,
  *   solucao_pilares_{1,2,3}_icone (image ID), solucao_pilares_{1,2,3}_titulo,
  *   solucao_pilares_{1,2,3}_desc.
  *
@@ -14,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$titulo = cliconnect_campo_pagina( 'solucao_pilares_titulo' );
+$eyebrow = cliconnect_campo_pagina( 'solucao_pilares_eyebrow' );
+$titulo  = cliconnect_campo_pagina( 'solucao_pilares_titulo' );
 
 $cards = array();
 for ( $i = 1; $i <= 3; $i++ ) {
@@ -39,8 +40,16 @@ if ( ! $titulo && empty( $cards ) ) {
 	<div class="container">
 		<div class="sp-pilares__inner">
 
-			<?php if ( $titulo ) : ?>
-				<h2 class="sp-pilares__titulo"><?php echo esc_html( $titulo ); ?></h2>
+			<?php if ( $eyebrow || $titulo ) : ?>
+				<div class="sp-pilares__header">
+					<?php if ( $eyebrow ) : ?>
+						<p class="eyebrow sp-pilares__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
+					<?php endif; ?>
+
+					<?php if ( $titulo ) : ?>
+						<h2 class="sp-pilares__titulo"><?php echo esc_html( $titulo ); ?></h2>
+					<?php endif; ?>
+				</div>
 			<?php endif; ?>
 
 			<?php if ( $cards ) : ?>

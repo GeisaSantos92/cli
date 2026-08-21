@@ -308,6 +308,28 @@ class Cliconnect_Seed {
 		return $this->midia[ $nome ] ?? 0;
 	}
 
+	/**
+	 * Busca o ID de um post criado por upsert() a partir do slug do seed.
+	 *
+	 * @param string $slug      Identificador estável do seed (ex.: 'cliente:hsbc').
+	 * @param string $post_type Tipo do post.
+	 * @return int ID do post, ou 0 se não existir.
+	 */
+	protected function id_do_seed( $slug, $post_type ) {
+		$posts = get_posts(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $slug,      // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		return $posts ? (int) $posts[0] : 0;
+	}
+
 	/* =====================================================================
 	   PÁGINAS
 	   ===================================================================== */
@@ -2554,6 +2576,30 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'horas de trabalho manual eliminadas',
 			'solucao_metrica_3_numero'     => '5%',
 			'solucao_metrica_3_rotulo'     => 'de aumento no NPS',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_pilares_1_icone'      => $this->img( 'servicos-financeiros-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Compliance desde a arquitetura',
+			'solucao_pilares_1_desc'       => 'Controle de acessos, rastreabilidade e governança para ambientes altamente regulados.',
+			'solucao_pilares_2_icone'      => $this->img( 'servicos-financeiros-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Integrações que evoluem junto com o negócio',
+			'solucao_pilares_2_desc'       => 'Novos fluxos, alterações e melhorias fazem parte da operação, sem iniciar um novo projeto a cada mudança.',
+			'solucao_pilares_3_icone'      => $this->img( 'servicos-financeiros-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Dados preparados para automação e IA',
+			'solucao_pilares_3_desc'       => 'Transforme informações dispersas em processos conectados, prontos para alimentar agentes inteligentes e análises em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos os serviços financeiros de grandes empresas',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:bnp-paribas-cardif', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:hsbc', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {

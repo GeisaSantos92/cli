@@ -664,6 +664,13 @@ function cliconnect_acf_fields_cpt() {
 					'type'  => 'tab',
 				),
 				array(
+					'key'          => 'field_solucao_pilares_eyebrow',
+					'label'        => 'Eyebrow',
+					'name'         => 'solucao_pilares_eyebrow',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "Pilares". Deixe vazio para ocultar.',
+				),
+				array(
 					'key'          => 'field_solucao_pilares_titulo',
 					'label'        => 'Título da seção',
 					'name'         => 'solucao_pilares_titulo',
@@ -744,9 +751,36 @@ function cliconnect_acf_fields_cpt() {
 				),
 
 			// ----- Aba: 3 · Casos de Uso ---------------------------------------
+			// ----- Aba: 4 · Logos ------------------------------------------
+			array(
+				'key'   => 'field_solucao_logos_tab',
+				'label' => '4 · Logos',
+				'name'  => '',
+				'type'  => 'tab',
+			),
+			array(
+				'key'          => 'field_solucao_logos_texto',
+				'label'        => 'Microcopy',
+				'name'         => 'solucao_logos_texto',
+				'type'         => 'text',
+				'instructions' => 'Ex.: "Integramos os serviços financeiros de grandes empresas". Vazio esconde a faixa.',
+			),
+			array(
+				'key'           => 'field_solucao_logos_clientes',
+				'label'         => 'Clientes',
+				'name'          => 'solucao_logos_clientes',
+				'type'          => 'relationship',
+				'post_type'     => array( 'cli_cliente' ),
+				'filters'       => array( 'search' ),
+				'return_format' => 'id',
+				'min'           => 0,
+				'max'           => 4,
+				'instructions'  => 'Logos exibidos ao lado do texto (recomendado: 2 a 4). O logo é a imagem destacada do cliente.',
+			),
+
 			array(
 				'key'   => 'field_solucao_casos_tab',
-				'label' => '4 · Casos de Uso',
+				'label' => '5 · Casos de Uso',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -891,7 +925,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 5 · Diferencial Técnico --------------------------------
 			array(
 				'key'   => 'field_solucao_dif_tab',
-				'label' => '6 · Diferencial',
+				'label' => '7 · Diferencial',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -945,7 +979,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 4 · Selos -------------------------------------------
 			array(
 				'key'   => 'field_solucao_selos_tab',
-				'label' => '5 · Selos',
+				'label' => '6 · Selos',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -973,7 +1007,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 7 · Aceleradores ------------------------------------
 			array(
 				'key'   => 'field_solucao_acel_tab',
-				'label' => '8 · Aceleradores',
+				'label' => '9 · Aceleradores',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -1046,7 +1080,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 6 · Plataforma Única --------------------------------
 			array(
 				'key'   => 'field_solucao_plat_tab',
-				'label' => '7 · Plataforma',
+				'label' => '8 · Plataforma',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -1100,7 +1134,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 8 · FAQ ---------------------------------------------
 			array(
 				'key'   => 'field_solucao_faq_tab',
-				'label' => '9 · FAQ',
+				'label' => '10 · FAQ',
 				'name'  => '',
 				'type'  => 'tab',
 			),
