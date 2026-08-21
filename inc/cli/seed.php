@@ -193,6 +193,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo CISS Poder ERP…' );
 		$this->preencher_solucao_ciss_poder_erp();
 
+		WP_CLI::log( '— Preenchendo IFS Cloud…' );
+		$this->preencher_solucao_ifs_cloud();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1153,6 +1156,7 @@ class Cliconnect_Seed {
 				'totvs-rm'                       => 'TOTVS RM',
 				'arius-erp'                      => 'Arius ERP',
 				'ciss-poder-erp'                 => 'CISS Poder ERP',
+				'ifs-cloud'                      => 'IFS Cloud',
 				),
 			),
 			'industria'      => array(
@@ -8087,6 +8091,167 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  CISS Poder ERP FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   IFS CLOUD
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "IFS Cloud".
+	 */
+	protected function preencher_solucao_ifs_cloud() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:ifs-cloud',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "ifs-cloud" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu IFS Cloud',
+			'solucao_hero_titulo'     => 'Conecte o IFS Cloud ao restante da operação industrial',
+			'solucao_hero_corpo'      => 'Integre ERP, gestão de ativos e field service com MES, IoT e sistemas corporativos para transformar dados operacionais em decisões mais rápidas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/ifs-cloud/',
+			'solucao_hero_imagem'     => $this->img( 'ifs-cloud-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'      => 'Amplie o potencial do IFS Cloud',
+			'solucao_pilares_1_icone'     => $this->img( 'ifs-cloud-pilar-1' ),
+			'solucao_pilares_1_titulo'    => 'Use APIs nativas do IFS',
+			'solucao_pilares_1_desc'      => 'Conecte sistemas utilizando a REST API oficial do IFS Cloud.',
+			'solucao_pilares_2_icone'     => $this->img( 'ifs-cloud-pilar-2' ),
+			'solucao_pilares_2_titulo'    => 'Conecte ativos industriais',
+			'solucao_pilares_2_desc'      => 'Integre manutenção, sensores e dados operacionais em tempo real.',
+			'solucao_pilares_3_icone'     => $this->img( 'ifs-cloud-pilar-3' ),
+			'solucao_pilares_3_titulo'    => 'Escale field service',
+			'solucao_pilares_3_desc'      => 'Conecte equipes externas, CRM e processos de atendimento.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'        => 'Automatize processos com IFS Cloud',
+			'solucao_casos_1_icone'       => $this->img( 'ifs-cloud-caso-1' ),
+			'solucao_casos_1_titulo'      => 'Integre manutenção e IoT',
+			'solucao_casos_1_desc'        => 'Conecte ordens EAM com sensores e dados industriais.',
+			'solucao_casos_2_icone'       => $this->img( 'ifs-cloud-caso-2' ),
+			'solucao_casos_2_titulo'      => 'Conecte field service ao CRM',
+			'solucao_casos_2_desc'        => 'Sincronize atendimentos externos com processos comerciais.',
+			'solucao_casos_3_icone'       => $this->img( 'ifs-cloud-caso-3' ),
+			'solucao_casos_3_titulo'      => 'Consolide dados financeiros',
+			'solucao_casos_3_desc'        => 'Integre IFS e ERP corporativo para visão financeira única.',
+			'solucao_casos_4_icone'       => $this->img( 'ifs-cloud-caso-4' ),
+			'solucao_casos_4_titulo'      => 'Exponha dados para IA',
+			'solucao_casos_4_desc'        => 'Disponibilize ativos como ferramentas para agentes inteligentes.',
+			'solucao_casos_5_icone'       => $this->img( 'ifs-cloud-caso-5' ),
+			'solucao_casos_5_titulo'      => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'        => 'Disponibilize dados operacionais para agentes administrativos sem expor o core do IFS.',
+			'solucao_casos_cta_texto'     => 'Agende uma demonstração',
+			'solucao_casos_cta_url'       => '/contato/',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para IFS Cloud',
+			'solucao_dif_corpo'    => 'Conecte aplicações corporativas utilizando autenticação OAuth2 pela REST API do IFS Cloud com segurança e controle.',
+			'solucao_dif_topico_1' => 'Utilize OAuth2 seguro',
+			'solucao_dif_topico_2' => 'Conecte APIs oficiais',
+			'solucao_dif_topico_3' => 'Proteja dados industriais',
+			'solucao_dif_imagem'   => $this->img( 'ifs-cloud-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize dados de ativos industriais',
+			'solucao_plat_corpo'    => 'Conecte manutenção, ERP e inteligência artificial em uma única camada sem alterar o core do IFS Cloud.',
+			'solucao_plat_topico_1' => 'Integre sistemas corporativos',
+			'solucao_plat_topico_2' => 'Evite customizar o IFS',
+			'solucao_plat_topico_3' => 'Escale operações industriais',
+			'solucao_plat_imagem'   => $this->img( 'ifs-cloud-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com ativos conectados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar IFS EAM/FSM ao ERP corporativo e plataformas IoT.',
+			'solucao_acel_topico_1'  => 'Conecte IoT rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos industriais',
+			'solucao_acel_topico_3'  => 'Acelere novos projetos',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'ifs-cloud-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_ifs_cloud();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  IFS Cloud: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução IFS Cloud.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_ifs_cloud(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:ifs-cloud-ia-preditiva',
+				'titulo'   => 'Como conectar dados de manutenção do IFS a um agente de IA preditiva?',
+				'corpo'    => 'A CLI Connect expõe os dados de EAM do IFS Cloud como ferramentas consumíveis por agentes de IA, permitindo que modelos preditivos acessem histórico de ordens, status de ativos e alertas de sensores IoT sem acoplar diretamente ao core do sistema.',
+			),
+			array(
+				'seed_key' => 'faq:ifs-cloud-fsm-crm',
+				'titulo'   => 'É possível integrar field service (FSM) com o CRM?',
+				'corpo'    => 'Sim. A integração conecta o módulo FSM do IFS Cloud ao CRM da operação, sincronizando chamados, agendamentos e histórico de atendimento. Isso garante que as equipes comerciais e de suporte tenham visibilidade unificada do cliente sem duplicar registros.',
+			),
+			array(
+				'seed_key' => 'faq:ifs-cloud-consolidacao-financeira',
+				'titulo'   => 'Como funciona a consolidação financeira entre IFS e ERP corporativo?',
+				'corpo'    => 'A CLI Connect coleta lançamentos, centros de custo e dados contábeis do IFS Cloud e os envia automaticamente ao ERP corporativo, eliminando exportações manuais. O processo é auditado e configurável por período de fechamento, garantindo consistência nos relatórios financeiros consolidados.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+
+		WP_CLI::log( sprintf( '  IFS Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
