@@ -2748,6 +2748,19 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'de ganho de eficiência',
 			'solucao_metrica_3_numero'     => '30s',
 			'solucao_metrica_3_rotulo'     => 'para o processamento automatizado de pedidos',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Modernize sua operação industrial com integrações preparadas para escala',
+			'solucao_pilares_1_icone'      => $this->img( 'manufatura-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Visualize toda a operação em tempo real',
+			'solucao_pilares_1_desc'       => 'Conecte produção, estoque e logística para acompanhar indicadores atualizados em toda a fábrica.',
+			'solucao_pilares_2_icone'      => $this->img( 'manufatura-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Conecte fábrica e nuvem com segurança',
+			'solucao_pilares_2_desc'       => 'Integre ambientes industriais à nuvem utilizando arquitetura zero-trust sem comprometer a operação.',
+			'solucao_pilares_3_icone'      => $this->img( 'manufatura-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Alimente iniciativas de IA continuamente',
+			'solucao_pilares_3_desc'       => 'Disponibilize dados da produção em tempo real para analytics, IA e automações inteligentes.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
