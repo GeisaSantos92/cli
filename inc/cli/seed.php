@@ -187,6 +187,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo TOTVS RM…' );
 		$this->preencher_solucao_totvs_rm();
 
+		WP_CLI::log( '— Preenchendo Arius ERP…' );
+		$this->preencher_solucao_arius_erp();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1145,6 +1148,7 @@ class Cliconnect_Seed {
 				'totvs-consinco'                 => 'TOTVS Consinco',
 				'totvs-linx'                     => 'TOTVS Linx',
 				'totvs-rm'                       => 'TOTVS RM',
+				'arius-erp'                      => 'Arius ERP',
 				),
 			),
 			'industria'      => array(
@@ -7763,6 +7767,152 @@ class Cliconnect_Seed {
 			}
 		}
 		WP_CLI::log( sprintf( '  TOTVS RM FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   ARIUS ERP
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Arius ERP".
+	 */
+	protected function preencher_solucao_arius_erp() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:arius-erp',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "arius-erp" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Arius',
+			'solucao_hero_titulo'     => 'Sincronize o Arius ERP com todo o seu ecossistema de vendas',
+			'solucao_hero_corpo'      => 'Integre gestão de lojas, PDV e retaguarda financeira para eliminar controles manuais e garantir visibilidade total sobre o seu varejo em tempo real.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/arius-erp/',
+			'solucao_hero_imagem'     => $this->img( 'arius-erp-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'    => 'Escale sua operação industrial conectada',
+			'solucao_pilar_1_titulo'    => 'Conecte sistemas industriais',
+			'solucao_pilar_1_corpo'     => 'Integre o Arius ERP com MES e aplicações do chão de fábrica.',
+			'solucao_pilar_1_icone'     => $this->img( 'arius-erp-pilar-1' ),
+			'solucao_pilar_2_titulo'    => 'Automatize produção e gestão',
+			'solucao_pilar_2_corpo'     => 'Sincronize ordens de produção e dados operacionais automaticamente.',
+			'solucao_pilar_2_icone'     => $this->img( 'arius-erp-pilar-2' ),
+			'solucao_pilar_3_titulo'    => 'Reduza controles manuais',
+			'solucao_pilar_3_corpo'     => 'Substitua planilhas por processos conectados entre áreas.',
+			'solucao_pilar_3_icone'     => $this->img( 'arius-erp-pilar-3' ),
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'      => 'Automatize processos industriais com Arius',
+			'solucao_caso_1_titulo'     => 'Conecte produção ao ERP',
+			'solucao_caso_1_corpo'      => 'Sincronize ordens de produção entre MES e Arius.',
+			'solucao_caso_1_icone'      => $this->img( 'arius-erp-caso-1' ),
+			'solucao_caso_2_titulo'     => 'Integre processos fiscais',
+			'solucao_caso_2_corpo'      => 'Automatize emissão fiscal e dados financeiros do ERP.',
+			'solucao_caso_2_icone'      => $this->img( 'arius-erp-caso-2' ),
+			'solucao_caso_3_titulo'     => 'Consolide estoques industriais',
+			'solucao_caso_3_corpo'      => 'Centralize informações de estoque entre múltiplas plantas.',
+			'solucao_caso_3_icone'      => $this->img( 'arius-erp-caso-3' ),
+			'solucao_caso_4_titulo'     => 'Conecte CRM ao Arius',
+			'solucao_caso_4_corpo'      => 'Integre pedidos comerciais ao planejamento industrial.',
+			'solucao_caso_4_icone'      => $this->img( 'arius-erp-caso-4' ),
+			'solucao_caso_5_titulo'     => 'Conecte agentes de IA',
+			'solucao_caso_5_corpo'      => 'Disponibilize dados industriais para agentes administrativos sem expor o core operacional.',
+			'solucao_caso_5_icone'      => $this->img( 'arius-erp-caso-5' ),
+			'solucao_casos_cta_texto'   => 'Agende uma demonstração',
+			'solucao_casos_cta_url'     => '/contato/',
+
+			// 4 · Diferencial técnico.
+			'solucao_dif_titulo'        => 'Integrações dedicadas para Arius ERP',
+			'solucao_dif_corpo'         => 'Utilize conectores adaptados ao protocolo do Arius com implantação dentro do ambiente do cliente para maior controle operacional.',
+			'solucao_dif_topico_1'      => 'Use conectores dedicados',
+			'solucao_dif_topico_2'      => 'Implante no ambiente interno',
+			'solucao_dif_topico_3'      => 'Controle integrações industriais',
+			'solucao_dif_imagem'        => $this->img( 'arius-erp-dif' ),
+
+			// 5 · Plataforma única.
+			'solucao_plat_titulo'       => 'Conecte sua indústria em evolução',
+			'solucao_plat_corpo'        => 'Centralize integrações entre Arius, MES, CRM e novos sistemas sem depender de desenvolvedores especializados no ERP.',
+			'solucao_plat_topico_1'     => 'Reduza dependência técnica',
+			'solucao_plat_topico_2'     => 'Centralize novos sistemas',
+			'solucao_plat_topico_3'     => 'Escale processos industriais',
+			'solucao_plat_imagem'       => $this->img( 'arius-erp-plat' ),
+
+			// 6 · Aceleradores.
+			'solucao_acel_titulo'       => 'Comece com Arius integrado',
+			'solucao_acel_corpo'        => 'Utilize um modelo pronto para conectar Arius ERP ao MES e CRM com fluxos industriais estruturados.',
+			'solucao_acel_topico_1'     => 'Conecte MES rapidamente',
+			'solucao_acel_topico_2'     => 'Reutilize integrações industriais',
+			'solucao_acel_topico_3'     => 'Acelere novos projetos',
+			'solucao_acel_imagem'       => $this->img( 'arius-erp-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_arius_erp();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+		WP_CLI::log( sprintf( '  Arius ERP FAQ: %d perguntas vinculadas.', count( $faq_ids ) ) );
+		WP_CLI::log( '  Arius ERP: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria (ou reutiliza) os FAQs do Arius ERP.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_arius_erp(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:arius-erp-mes',
+				'titulo'   => 'Como conectar o Arius ao chão de fábrica (MES)?',
+				'corpo'    => 'A CLI Connect oferece conectores nativos para integrar o Arius ERP com sistemas MES, sincronizando ordens de produção, consumo de materiais e status de linha em tempo real, sem customizações no ERP.',
+			),
+			array(
+				'seed_key' => 'faq:arius-erp-crm-pedidos',
+				'titulo'   => 'É possível integrar com CRM para automatizar pedidos de venda?',
+				'corpo'    => 'Sim. A integração entre CRM e Arius ERP permite que pedidos gerados no CRM sejam automaticamente criados no ERP, eliminando redigitação e reduzindo o tempo de ciclo de venda.',
+			),
+			array(
+				'seed_key' => 'faq:arius-erp-estoque-multiplanta',
+				'titulo'   => 'Como funciona a consolidação de estoque multi-planta?',
+				'corpo'    => 'A CLI Connect centraliza dados de estoque de múltiplas plantas do Arius ERP em uma visão única, com sincronização automática de movimentações e disponibilidade em tempo real.',
+			),
+		);
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$ids[] = (int) $existing[0];
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'   => 'cli_faq',
+				'post_title'  => $item['titulo'],
+				'post_status' => 'publish',
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				update_field( 'faq_corpo', $item['corpo'], $faq_id );
+				$ids[] = $faq_id;
+			}
+		}
 		return $ids;
 	}
 
