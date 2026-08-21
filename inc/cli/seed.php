@@ -184,6 +184,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo TOTVS Linx…' );
 		$this->preencher_solucao_totvs_linx();
 
+		WP_CLI::log( '— Preenchendo TOTVS RM…' );
+		$this->preencher_solucao_totvs_rm();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1141,6 +1144,7 @@ class Cliconnect_Seed {
 				'oracle-netsuite'                => 'Oracle NetSuite',
 				'totvs-consinco'                 => 'TOTVS Consinco',
 				'totvs-linx'                     => 'TOTVS Linx',
+				'totvs-rm'                       => 'TOTVS RM',
 				),
 			),
 			'industria'      => array(
@@ -7609,6 +7613,156 @@ class Cliconnect_Seed {
 			}
 		}
 		WP_CLI::log( sprintf( '  TOTVS Linx FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   TOTVS RM
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "TOTVS RM".
+	 */
+	protected function preencher_solucao_totvs_rm() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:totvs-rm',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "totvs-rm" não encontrado.' );
+			return;
+		}
+		$post_id = $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu TOTVS RM',
+			'solucao_hero_titulo'     => 'Conecte o TOTVS RM a todos os sistemas satélites',
+			'solucao_hero_corpo'      => 'Integre RH, educação e backoffice com folha, ponto, portais e aplicações corporativas para automatizar jornadas completas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/totvs-rm/',
+			'solucao_hero_imagem'     => $this->img( 'totvs-rm-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Amplie o potencial do TOTVS RM',
+			'solucao_pilares_1_icone'  => $this->img( 'totvs-rm-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte módulos RM',
+			'solucao_pilares_1_desc'   => 'Integre RM Folha, RM Núcleo e RM Backoffice aos sistemas externos.',
+			'solucao_pilares_2_icone'  => $this->img( 'totvs-rm-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Automatize jornadas completas',
+			'solucao_pilares_2_desc'   => 'Orquestre ciclos de colaboradores e alunos entre diferentes plataformas.',
+			'solucao_pilares_3_icone'  => $this->img( 'totvs-rm-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Use webservices nativos',
+			'solucao_pilares_3_desc'   => 'Conecte aplicações utilizando os recursos oficiais do TOTVS RM.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do TOTVS RM',
+			'solucao_casos_1_icone'   => $this->img( 'totvs-rm-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Orquestre admissão e desligamento',
+			'solucao_casos_1_desc'    => 'Conecte RM a AD, benefícios e LMS automaticamente.',
+			'solucao_casos_2_icone'   => $this->img( 'totvs-rm-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Integre jornada acadêmica',
+			'solucao_casos_2_desc'    => 'Sincronize RM Núcleo com portais e plataformas educacionais.',
+			'solucao_casos_3_icone'   => $this->img( 'totvs-rm-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Conecte financeiro e bancos',
+			'solucao_casos_3_desc'    => 'Automatize processos financeiros do backoffice com instituições bancárias.',
+			'solucao_casos_4_icone'   => $this->img( 'totvs-rm-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide dados para BI',
+			'solucao_casos_4_desc'    => 'Unifique informações de RH e educação para análises estratégicas.',
+			'solucao_casos_5_icone'   => $this->img( 'totvs-rm-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados de RH para agentes administrativos sem expor o core do sistema.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para TOTVS RM',
+			'solucao_dif_corpo'    => 'Proteja dados de colaboradores e alunos com mascaramento de informações em trânsito e auditoria completa dos processos.',
+			'solucao_dif_topico_1' => 'Proteja dados pessoais sensíveis',
+			'solucao_dif_topico_2' => 'Audite todas as movimentações',
+			'solucao_dif_topico_3' => 'Controle informações compartilhadas',
+			'solucao_dif_imagem'   => $this->img( 'totvs-rm-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize jornadas de negócio',
+			'solucao_plat_corpo'    => 'Substitua integrações pontuais entre RM e sistemas satélites por uma camada única de processos reutilizáveis.',
+			'solucao_plat_topico_1' => 'Reutilize pipelines existentes',
+			'solucao_plat_topico_2' => 'Conecte múltiplos sistemas',
+			'solucao_plat_topico_3' => 'Simplifique arquiteturas complexas',
+			'solucao_plat_imagem'   => $this->img( 'totvs-rm-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com RM conectado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para integrar RM de RH e educação aos sistemas satélites da organização.',
+			'solucao_acel_topico_1'  => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'  => 'Reaproveite processos prontos',
+			'solucao_acel_topico_3'  => 'Acelere novas automações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'totvs-rm-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+		$faq_ids = $this->criar_faq_totvs_rm();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+		WP_CLI::log( '  TOTVS RM: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria (ou reutiliza) os FAQs do TOTVS RM.
+	 */
+	protected function criar_faq_totvs_rm() {
+		$itens = array(
+			array(
+				'faq:totvs-rm-admissao',
+				'Como orquestrar admissão e desligamento entre o RM e outros sistemas?',
+				'<p>A CLI Connect cria um processo centralizado que dispara automaticamente quando uma admissão ou desligamento é registrado no RM Folha. O fluxo provisiona ou desativa o colaborador no Active Directory, notifica a plataforma de benefícios e sincroniza o perfil no LMS — tudo sem intervenção manual. Cada etapa é auditada e pode ser monitorada em tempo real pelo painel da plataforma.</p>',
+			),
+			array(
+				'faq:totvs-rm-nucleo',
+				'É possível conectar o RM Núcleo a um portal do aluno de terceiros?',
+				'<p>Sim. A CLI Connect utiliza os webservices nativos do RM Núcleo para expor dados acadêmicos de forma segura a portais de terceiros. Matrícula, notas, frequência e histórico são sincronizados automaticamente, sem necessidade de exportações manuais ou integrações customizadas. O portal externo recebe sempre os dados atualizados diretamente do sistema de origem.</p>',
+			),
+			array(
+				'faq:totvs-rm-dados-rh',
+				'Como o RM protege dados sensíveis de RH?',
+				'<p>A CLI Connect aplica mascaramento de dados em trânsito para informações sensíveis como CPF, salário e dados médicos dos colaboradores. Todas as movimentações são registradas em log de auditoria com identificação do usuário, timestamp e dados trafegados. O acesso é controlado por perfis de permissão, garantindo que cada sistema satélite receba apenas as informações necessárias para sua operação.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $itens as [ $seed_key, $titulo, $conteudo ] ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $seed_key,
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$ids[] = $existing[0];
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $titulo,
+				'post_content' => $conteudo,
+				'post_status'  => 'publish',
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $seed_key );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  TOTVS RM FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
