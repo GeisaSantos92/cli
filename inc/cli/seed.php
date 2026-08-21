@@ -214,6 +214,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Propz…' );
 		$this->preencher_solucao_propz();
 
+		WP_CLI::log( '— Preenchendo Microsoft Teams…' );
+		$this->preencher_solucao_microsoft_teams();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1181,6 +1184,7 @@ class Cliconnect_Seed {
 				'viasoft'                        => 'Viasoft',
 				'onclick-erp'                    => 'Onclick ERP',
 				'propz'                          => 'Propz',
+				'microsoft-teams'                => 'Microsoft Teams',
 				),
 			),
 			'industria'      => array(
@@ -8908,6 +8912,169 @@ class Cliconnect_Seed {
 			}
 		}
 		WP_CLI::log( sprintf( '  Propz FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   MICROSOFT TEAMS
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Microsoft Teams".
+	 */
+	protected function preencher_solucao_microsoft_teams() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:microsoft-teams',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "microsoft-teams" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Microsoft Teams',
+			'solucao_hero_titulo'     => 'Transforme o Microsoft Teams em canal de ação para processos',
+			'solucao_hero_corpo'      => 'Conecte aprovações, notificações e agentes de IA aos sistemas internos para acelerar decisões sem depender de e-mails ou processos manuais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/microsoft-teams/',
+			'solucao_hero_imagem'     => $this->img( 'microsoft-teams-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Leve processos para onde as equipes trabalham',
+			'solucao_pilares_1_icone'  => $this->img( 'microsoft-teams-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Aprove processos no Teams',
+			'solucao_pilares_1_desc'   => 'Execute aprovações diretamente em cards adaptativos.',
+			'solucao_pilares_2_icone'  => $this->img( 'microsoft-teams-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Converse com sistemas internos',
+			'solucao_pilares_2_desc'   => 'Permita bots consultarem dados corporativos no Teams.',
+			'solucao_pilares_3_icone'  => $this->img( 'microsoft-teams-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza trocas manuais',
+			'solucao_pilares_3_desc'   => 'Substitua e-mails por ações automatizadas.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos dentro do Teams',
+			'solucao_casos_1_icone'   => $this->img( 'microsoft-teams-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Aprove pedidos no Teams',
+			'solucao_casos_1_desc'    => 'Envie aprovações de compras ou férias ao ERP.',
+			'solucao_casos_2_icone'   => $this->img( 'microsoft-teams-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Alerte incidentes automaticamente',
+			'solucao_casos_2_desc'    => 'Notifique equipes sobre eventos de ServiceNow ou Freshservice.',
+			'solucao_casos_3_icone'   => $this->img( 'microsoft-teams-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consulte sistemas com IA',
+			'solucao_casos_3_desc'    => 'Permita bots consultarem estoque e pedidos.',
+			'solucao_casos_4_icone'   => $this->img( 'microsoft-teams-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Monitore eventos críticos',
+			'solucao_casos_4_desc'    => 'Dispare alertas de SLA e operações importantes.',
+			'solucao_casos_5_icone'   => $this->img( 'microsoft-teams-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados corporativos para agentes de IA via Teams utilizando APIs governadas e servidores MCP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras com Microsoft Teams',
+			'solucao_dif_corpo'    => 'Conecte Teams via Microsoft Graph API e Bot Framework usando autenticação Azure AD com controle por equipe e canal.',
+			'solucao_dif_topico_1' => 'Utilize Microsoft Graph API.',
+			'solucao_dif_topico_2' => 'Autentique via Azure AD.',
+			'solucao_dif_topico_3' => 'Controle acessos por canal.',
+			'solucao_dif_imagem'   => $this->img( 'microsoft-teams-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte comunicação e operação',
+			'solucao_plat_corpo'    => 'Centralize eventos de negócio em uma plataforma única para aproximar equipes dos sistemas corporativos.',
+			'solucao_plat_topico_1' => 'Integre sistemas internos.',
+			'solucao_plat_topico_2' => 'Centralize notificações operacionais.',
+			'solucao_plat_topico_3' => 'Automatize ações no Teams.',
+			'solucao_plat_imagem'   => $this->img( 'microsoft-teams-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com processos conectados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para transformar processos corporativos em aprovações e notificações dentro do Teams.',
+			'solucao_acel_topico_1'  => 'Configure fluxos rapidamente.',
+			'solucao_acel_topico_2'  => 'Reutilize modelos aprovados.',
+			'solucao_acel_topico_3'  => 'Acelere decisões operacionais.',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'microsoft-teams-acel' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_microsoft_teams();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  Microsoft Teams: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Microsoft Teams.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_microsoft_teams(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:microsoft-teams-aprovacao-card',
+				'titulo'   => 'Como criar uma aprovação de processo direto em um card do Teams?',
+				'corpo'    => '<p>A CLI Connect conecta seus sistemas corporativos — ERP, CRM ou ITSM — ao Microsoft Teams via Bot Framework e Microsoft Graph API. Ao disparar um evento de aprovação (compra, férias, proposta), a plataforma envia automaticamente um card adaptativo no canal configurado. O aprovador clica "Aprovar" ou "Rejeitar" diretamente no Teams e a resposta é gravada no sistema de origem sem nenhuma troca de e-mails.</p>',
+			),
+			array(
+				'seed_key' => 'faq:microsoft-teams-bot-erp',
+				'titulo'   => 'É possível ter um bot de IA no Teams consultando o ERP?',
+				'corpo'    => '<p>Sim. A CLI Connect expõe dados do ERP como estoque, pedidos e status de clientes como endpoints seguros consumíveis por bots do Teams. Com autenticação via Azure AD, membros da equipe consultam informações corporativas conversando com o bot no Teams — sem precisar acessar o sistema legado diretamente. O bot pode também acionar ações, como abrir ordens de serviço ou atualizar registros.</p>',
+			),
+			array(
+				'seed_key' => 'faq:microsoft-teams-azure-ad',
+				'titulo'   => 'Como funciona a autenticação via Azure AD?',
+				'corpo'    => '<p>A CLI Connect utiliza o fluxo OAuth 2.0 do Azure Active Directory para autenticar chamadas entre o Teams e os sistemas integrados. Cada integração é registrada como um aplicativo no Azure AD com escopos de permissão específicos por equipe e canal. Isso garante que apenas usuários autorizados consigam disparar ações ou consultar dados, respeitando as políticas de segurança corporativa sem expor credenciais nos fluxos.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  Microsoft Teams FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
