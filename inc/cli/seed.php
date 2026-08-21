@@ -166,6 +166,18 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Neogrid…' );
 		$this->preencher_solucao_neogrid();
 
+		WP_CLI::log( '— Preenchendo Target Sistemas (ERP Distribuição)…' );
+		$this->preencher_solucao_target_sistemas();
+
+		WP_CLI::log( '— Preenchendo SAP Business One…' );
+		$this->preencher_solucao_sap_business_one();
+
+		WP_CLI::log( '— Preenchendo SAP ECC…' );
+		$this->preencher_solucao_sap_ecc();
+
+		WP_CLI::log( '— Preenchendo Oracle NetSuite…' );
+		$this->preencher_solucao_oracle_netsuite();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1117,6 +1129,10 @@ class Cliconnect_Seed {
 				'onblox'                         => 'OnBlox (WMS/TMS)',
 				'narwal'                         => 'Narwal (Comex)',
 				'neogrid'                        => 'Neogrid',
+				'target-sistemas'                => 'Target Sistemas (ERP Distribuição)',
+				'sap-business-one'               => 'SAP Business One',
+				'sap-ecc'                        => 'SAP ECC',
+				'oracle-netsuite'                => 'Oracle NetSuite',
 				),
 			),
 			'industria'      => array(
@@ -6706,6 +6722,585 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Neogrid FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   TARGET SISTEMAS (ERP DISTRIBUIÇÃO)
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Target Sistemas (ERP Distribuição)".
+	 */
+	protected function preencher_solucao_target_sistemas() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:target-sistemas',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "target-sistemas" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Target',
+			'solucao_hero_titulo'     => 'Conecte seu ERP de distribuição à indústria, clientes e financeiro',
+			'solucao_hero_corpo'      => 'Integre o Target ERP aos parceiros industriais, força de vendas, bancos e sistemas logísticos para automatizar operações de distribuição com escala.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/target-sistemas/',
+			'solucao_hero_imagem'     => $this->img( 'target-sistemas-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale sua operação de distribuição conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'target-sistemas-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte fluxos de distribuição',
+			'solucao_pilares_1_desc'   => 'Integre processos fiscais, logísticos e comerciais do atacado ao ecossistema corporativo.',
+			'solucao_pilares_2_icone'  => $this->img( 'target-sistemas-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Automatize integrações EDI',
+			'solucao_pilares_2_desc'   => 'Conecte fornecedores industriais ao Target com troca automática de informações.',
+			'solucao_pilares_3_icone'  => $this->img( 'target-sistemas-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Sincronize força de vendas',
+			'solucao_pilares_3_desc'   => 'Mantenha pedidos móveis atualizados no ERP em tempo real.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos de distribuição',
+			'solucao_casos_1_icone'   => $this->img( 'target-sistemas-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Conecte EDI com indústrias',
+			'solucao_casos_1_desc'    => 'Automatize troca de dados Sell Out com fornecedores parceiros.',
+			'solucao_casos_2_icone'   => $this->img( 'target-sistemas-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Sincronize pedidos móveis',
+			'solucao_casos_2_desc'    => 'Envie pedidos da força de vendas diretamente ao Target ERP.',
+			'solucao_casos_3_icone'   => $this->img( 'target-sistemas-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Concilie operações financeiras',
+			'solucao_casos_3_desc'    => 'Integre bancos e processos financeiros entre múltiplas empresas.',
+			'solucao_casos_4_icone'   => $this->img( 'target-sistemas-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Conecte logística ao ERP',
+			'solucao_casos_4_desc'    => 'Integre WMS e roteirização para controlar operações de entrega.',
+			'solucao_casos_5_icone'   => $this->img( 'target-sistemas-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados de distribuição para agentes automatizarem atendimento e análises.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações para escala distributiva',
+			'solucao_dif_corpo'    => 'Conecte operações com alto volume transacional mantendo performance em múltiplas filiais, SKUs e integrações simultâneas.',
+			'solucao_dif_topico_1' => 'Suporte alto volume de dados',
+			'solucao_dif_topico_2' => 'Conecte múltiplas filiais',
+			'solucao_dif_topico_3' => 'Escalone operações comerciais',
+			'solucao_dif_imagem'   => $this->img( 'target-sistemas-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique conexões da distribuição',
+			'solucao_plat_corpo'    => 'Centralize integrações EDI, força de vendas e sistemas logísticos para reduzir esforço de conexão com novos parceiros.',
+			'solucao_plat_topico_1' => 'Centralize integrações industriais',
+			'solucao_plat_topico_2' => 'Acelere novos fornecedores',
+			'solucao_plat_topico_3' => 'Reduza projetos repetitivos',
+			'solucao_plat_imagem'   => $this->img( 'target-sistemas-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com distribuição conectada',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Target ERP aos parceiros industriais e aplicativos de força de vendas.',
+			'solucao_acel_topico_1'  => 'Conecte fornecedores rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos EDI',
+			'solucao_acel_topico_3'  => 'Acelere novos parceiros',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'target-sistemas-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_target_sistemas( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Target Sistemas: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Target Sistemas.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_target_sistemas( $post_id ) {
+		$itens = array(
+			array(
+				'faq:target-sistemas-edi-onboarding',
+				'Como acelerar o onboarding de um novo fornecedor via EDI?',
+				'<p>A CLI Connect disponibiliza um acelerador de integração pronto para EDI que reduz o tempo de onboarding de fornecedores no Target ERP. O modelo inclui mapeamentos pré-configurados para os principais formatos de pedido, nota fiscal e confirmação de entrega, eliminando o desenvolvimento do zero e permitindo que novos parceiros sejam conectados em dias em vez de semanas.</p>',
+			),
+			array(
+				'faq:target-sistemas-forca-vendas',
+				'É possível integrar múltiplos aplicativos de força de vendas ao Target?',
+				'<p>Sim. A plataforma CLI Connect opera como hub central entre o Target ERP e diferentes aplicativos de força de vendas simultaneamente. Os pedidos capturados em campo são transmitidos em tempo real ao ERP, com sincronização de estoque, tabela de preços e condições comerciais por equipe ou região, sem necessidade de customização individual em cada aplicativo.</p>',
+			),
+			array(
+				'faq:target-sistemas-financeiro-multi-empresa',
+				'Como funciona a consolidação financeira multi-empresa?',
+				'<p>A CLI Connect centraliza o fluxo de dados financeiros entre filiais e a holding por meio de integrações governadas com o Target ERP. Conciliações bancárias, transferências entre empresas e relatórios consolidados são automatizados, garantindo que os sistemas financeiros de cada entidade estejam sincronizados sem intervenção manual e com rastreabilidade completa de cada transação.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Target Sistemas FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   SAP BUSINESS ONE
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "SAP Business One".
+	 */
+	protected function preencher_solucao_sap_business_one() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:sap-business-one',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "sap-business-one" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu SAP B1',
+			'solucao_hero_titulo'     => 'Conecte o SAP Business One sem exigir uma equipe SAP dedicada',
+			'solucao_hero_corpo'      => 'Integre o SAP B1 ao e-commerce, CRM e sistemas fiscais para ampliar sua operação com uma camada de integração preparada para empresas em crescimento.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/sap-business-one/',
+			'solucao_hero_imagem'     => $this->img( 'sap-business-one-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale seu SAP Business One conectado',
+			'solucao_pilares_1_icone'  => $this->img( 'sap-business-one-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Use APIs nativas do SAP B1',
+			'solucao_pilares_1_desc'   => 'Conecte sistemas através do Service Layer REST e DI API oficial.',
+			'solucao_pilares_2_icone'  => $this->img( 'sap-business-one-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Simplifique operações sem equipe SAP',
+			'solucao_pilares_2_desc'   => 'Automatize processos do SAP B1 sem depender de especialistas dedicados.',
+			'solucao_pilares_3_icone'  => $this->img( 'sap-business-one-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reaproveite integrações SAP',
+			'solucao_pilares_3_desc'   => 'Adapte componentes já utilizados em projetos S/4HANA para o B1.',
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do SAP Business One',
+			'solucao_casos_1_icone'   => $this->img( 'sap-business-one-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Integre pedidos do e-commerce',
+			'solucao_casos_1_desc'    => 'Envie pedidos digitais ao SAP B1 sem registros manuais.',
+			'solucao_casos_2_icone'   => $this->img( 'sap-business-one-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Automatize processos fiscais',
+			'solucao_casos_2_desc'    => 'Conecte emissão fiscal brasileira ao SAP Business One.',
+			'solucao_casos_3_icone'   => $this->img( 'sap-business-one-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Consolide estoque multi-filial',
+			'solucao_casos_3_desc'    => 'Centralize informações de estoque entre diferentes unidades.',
+			'solucao_casos_4_icone'   => $this->img( 'sap-business-one-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Conecte CRM ao ERP',
+			'solucao_casos_4_desc'    => 'Sincronize vendas entre Salesforce, HubSpot e SAP B1.',
+			'solucao_casos_5_icone'   => $this->img( 'sap-business-one-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do SAP B1 para agentes automatizarem atendimento e análises.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações nativas para SAP B1',
+			'solucao_dif_corpo'    => 'Utilize o Service Layer REST/OData do SAP Business One com autenticação segura para conectar aplicações corporativas.',
+			'solucao_dif_topico_1' => 'Utilize Service Layer oficial',
+			'solucao_dif_topico_2' => 'Conecte via REST e OData',
+			'solucao_dif_topico_3' => 'Proteja sessões autenticadas',
+			'solucao_dif_imagem'   => $this->img( 'sap-business-one-dif' ),
+			// 6 · Plataforma Única
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Prepare seu SAP para crescer',
+			'solucao_plat_corpo'    => 'Mantenha a mesma camada de integração ao evoluir do SAP Business One para S/4HANA ou operar diferentes versões simultaneamente.',
+			'solucao_plat_topico_1' => 'Reaproveite integrações SAP',
+			'solucao_plat_topico_2' => 'Evite reconstruções futuras',
+			'solucao_plat_topico_3' => 'Padronize arquiteturas corporativas',
+			'solucao_plat_imagem'   => $this->img( 'sap-business-one-plat' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com SAP Business One conectado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para integrar SAP B1 ao e-commerce, CRM e sistemas fiscais com fluxos estruturados.',
+			'solucao_acel_topico_1'  => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize integrações SAP',
+			'solucao_acel_topico_3'  => 'Acelere novos projetos',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'sap-business-one-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_sap_business_one( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  SAP Business One: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq do SAP Business One e retorna seus IDs.
+	 *
+	 * @param int $post_id ID do post cli_solucao pai (não utilizado diretamente).
+	 * @return int[]
+	 */
+	protected function criar_faq_sap_business_one( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sap-business-one-service-layer',
+				'Como funciona a integração via Service Layer do SAP B1?',
+				'<p>A CLI Connect utiliza o Service Layer REST/OData oficial do SAP Business One para conectar aplicações corporativas sem depender de customizações frágeis. A autenticação segura por sessão garante que cada requisição seja validada antes do acesso ao banco de dados do SAP B1, e o modelo de integração abstrai a complexidade da API nativa, entregando mapeamentos prontos para pedidos, clientes, produtos e documentos fiscais.</p>',
+			),
+			array(
+				'faq:sap-business-one-migracao-s4hana',
+				'É possível migrar as integrações quando a empresa evoluir para S/4HANA?',
+				'<p>Sim. A camada de integração da CLI Connect é agnóstica à versão do SAP. Ao migrar do Business One para o S/4HANA, os fluxos de dados permanecem na plataforma e apenas o conector de destino é reconfigurado, preservando todo o histórico de mapeamentos, regras de negócio e conexões com sistemas externos sem reconstrução do zero.</p>',
+			),
+			array(
+				'faq:sap-business-one-multiplas-filiais',
+				'Como lidar com múltiplas filiais no SAP B1?',
+				'<p>A CLI Connect opera com múltiplas empresas no SAP Business One simultaneamente, roteando transações para a filial correta com base em regras de negócio configuráveis. É possível consolidar pedidos de diferentes canais em filiais específicas, sincronizar tabelas de preços e estoques entre unidades e gerar relatórios financeiros integrados sem customizações adicionais no SAP.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  SAP Business One FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   SAP ECC
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "SAP ECC".
+	 */
+	protected function preencher_solucao_sap_ecc() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:sap-ecc',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "sap-ecc" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu SAP ECC',
+			'solucao_hero_titulo'     => 'Conecte seu SAP ECC à nuvem sem esperar a migração para S/4HANA',
+			'solucao_hero_corpo'      => 'Modernize a conectividade do SAP ECC 6.0 integrando sistemas SaaS, e-commerce e aplicações corporativas sem substituir o ERP atual.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/sap-ecc/',
+			'solucao_hero_imagem'     => $this->img( 'sap-ecc-hero' ),
+			// 2 · Pilares
+			'solucao_pilares_titulo'   => 'Modernize seu SAP ECC em produção',
+			'solucao_pilares_1_icone'  => $this->img( 'sap-ecc-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Aproveite integrações nativas SAP',
+			'solucao_pilares_1_desc'   => 'Conecte ECC usando RFC, BAPI e IDoc sem alterar processos existentes.',
+			'solucao_pilares_2_icone'  => $this->img( 'sap-ecc-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Proteja seu ambiente legado',
+			'solucao_pilares_2_desc'   => 'Conecte sistemas externos sem expor o ECC on-premises à internet.',
+			'solucao_pilares_3_icone'  => $this->img( 'sap-ecc-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Conecte aplicações modernas',
+			'solucao_pilares_3_desc'   => 'Integre Salesforce, e-commerce e SaaS enquanto o ECC continua operando.',
+			// 3 · Casos de Uso
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Conecte processos do SAP ECC',
+			'solucao_casos_1_icone'   => $this->img( 'sap-ecc-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos digitais',
+			'solucao_casos_1_desc'    => 'Integre e-commerce ao ECC para automatizar entrada de pedidos.',
+			'solucao_casos_2_icone'   => $this->img( 'sap-ecc-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Conecte ECC ao CRM',
+			'solucao_casos_2_desc'    => 'Sincronize dados comerciais entre Salesforce, CRM e ERP.',
+			'solucao_casos_3_icone'   => $this->img( 'sap-ecc-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Migre sem interromper operações',
+			'solucao_casos_3_desc'    => 'Execute cenários paralelos entre ECC e S/4HANA durante transição.',
+			'solucao_casos_4_icone'   => $this->img( 'sap-ecc-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Disponibilize dados do ECC',
+			'solucao_casos_4_desc'    => 'Exponha informações legadas como APIs modernas para aplicações.',
+			'solucao_casos_5_icone'   => $this->img( 'sap-ecc-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do ECC para agentes de IA sem expor o core do sistema.',
+			// 4 · Selos
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Conectividade segura para SAP ECC',
+			'solucao_dif_corpo'    => 'Utilize RFC, BAPI e IDoc com Runtime seguro para integrar o ECC sem expor ambientes legados à internet.',
+			'solucao_dif_topico_1' => 'Utilize protocolos SAP nativos',
+			'solucao_dif_topico_2' => 'Proteja conexões on-premises',
+			'solucao_dif_topico_3' => 'Evite exposição externa',
+			'solucao_dif_imagem'   => $this->img( 'sap-ecc-dif' ),
+			// 6 · Plataforma Única
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Modernize antes do S/4HANA',
+			'solucao_plat_corpo'    => 'A mesma plataforma que conecta seu futuro S/4HANA conecta seu ECC atual, garantindo evolução contínua sem reconstruções.',
+			'solucao_plat_topico_1' => 'Conecte ECC hoje',
+			'solucao_plat_topico_2' => 'Prepare migração futura',
+			'solucao_plat_topico_3' => 'Reaproveite integrações existentes',
+			'solucao_plat_imagem'   => $this->img( 'sap-ecc-plat' ),
+			// 7 · Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com SAP ECC conectado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar ECC a sistemas SaaS modernos como Salesforce e e-commerce.',
+			'solucao_acel_topico_1'  => 'Conecte SaaS rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize padrões SAP',
+			'solucao_acel_topico_3'  => 'Acelere modernização',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'sap-ecc-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_sap_ecc( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  SAP ECC: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq do SAP ECC e retorna seus IDs.
+	 *
+	 * @param int $post_id ID do post cli_solucao pai.
+	 * @return int[]
+	 */
+	protected function criar_faq_sap_ecc( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sap-ecc-firewall',
+				'É possível conectar o ECC sem abrir portas de firewall?',
+				'<p>Sim. A CLI Connect utiliza o Boomi Atom instalado dentro da rede on-premises do ECC, que estabelece conexões de saída seguras sem exigir a abertura de portas de entrada no firewall. O Runtime local se comunica com a plataforma em nuvem de forma criptografada, permitindo que o SAP ECC permaneça completamente isolado da internet enquanto troca dados com sistemas externos.</p>',
+			),
+			array(
+				'faq:sap-ecc-cutover-s4hana',
+				'Como funciona o cutover em paralelo com o S/4HANA?',
+				'<p>Durante a migração para S/4HANA, a CLI Connect opera os dois sistemas simultaneamente na mesma plataforma de integração. Os fluxos de dados podem ser roteados para ECC, S/4HANA ou ambos, conforme a fase do projeto, eliminando a necessidade de reconstruir integrações após o cutover. O histórico de transações e as regras de mapeamento são preservados durante toda a transição.</p>',
+			),
+			array(
+				'faq:sap-ecc-pos-migracao',
+				'O que muda na integração depois da migração para S/4HANA?',
+				'<p>Com a CLI Connect, praticamente nada precisa ser reconstruído. A plataforma abstrai as diferenças entre RFC/BAPI do ECC e os OData/BAPIs do S/4HANA, adaptando os conectores automaticamente. As integrações com sistemas externos como Salesforce, e-commerce e sistemas fiscais continuam funcionando sem alteração nos fluxos de negócio já configurados.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  SAP ECC FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   ORACLE NETSUITE
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Oracle NetSuite".
+	 */
+	protected function preencher_solucao_oracle_netsuite() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:oracle-netsuite',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "oracle-netsuite" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu NetSuite',
+			'solucao_hero_titulo'     => 'Conecte o NetSuite ao seu stack sem depender só de SuiteScript',
+			'solucao_hero_corpo'      => 'Integre NetSuite a e-commerce, CRM e sistemas financeiros usando APIs nativas sem customizações excessivas de SuiteScript.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/oracle-netsuite/',
+			'solucao_hero_imagem'     => $this->img( 'oracle-netsuite-hero' ),
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Escale seu NetSuite conectado',
+			'solucao_pilares_1_icone'  => $this->img( 'oracle-netsuite-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Use APIs nativas do NetSuite',
+			'solucao_pilares_1_desc'   => 'Integre via SuiteTalk REST/SOAP e RESTlets sem código customizado excessivo.',
+			'solucao_pilares_2_icone'  => $this->img( 'oracle-netsuite-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Simplifique operações globais',
+			'solucao_pilares_2_desc'   => 'Gerencie integrações multi-subsidiária com padronização de processos financeiros.',
+			'solucao_pilares_3_icone'  => $this->img( 'oracle-netsuite-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reduza customizações SuiteScript',
+			'solucao_pilares_3_desc'   => 'Substitua scripts específicos por integrações reutilizáveis e sem manutenção.',
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do NetSuite',
+			'solucao_casos_1_icone'   => $this->img( 'oracle-netsuite-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos digitais',
+			'solucao_casos_1_desc'    => 'Integre e-commerce ao NetSuite para automatizar entrada de pedidos.',
+			'solucao_casos_2_icone'   => $this->img( 'oracle-netsuite-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Consolide finanças globais',
+			'solucao_casos_2_desc'    => 'Sincronize dados financeiros entre subsidiárias automaticamente.',
+			'solucao_casos_3_icone'   => $this->img( 'oracle-netsuite-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Integre CRM ao financeiro',
+			'solucao_casos_3_desc'    => 'Conecte Salesforce ao NetSuite para unificar dados comerciais e financeiros.',
+			'solucao_casos_4_icone'   => $this->img( 'oracle-netsuite-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize reconhecimento de receita',
+			'solucao_casos_4_desc'    => 'Processe eventos de venda no NetSuite sem intervenção manual.',
+			'solucao_casos_5_icone'   => $this->img( 'oracle-netsuite-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do NetSuite para agentes de IA sem expor o core.',
+			// 4 · Selos.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para NetSuite',
+			'solucao_dif_corpo'    => 'Utilize TBA e OAuth 2.0 para autenticar integrações NetSuite com segurança corporativa sem expor credenciais.',
+			'solucao_dif_topico_1' => 'Utilize TBA e OAuth 2.0',
+			'solucao_dif_topico_2' => 'Proteja acessos corporativos',
+			'solucao_dif_topico_3' => 'Integre APIs oficiais',
+			'solucao_dif_imagem'   => $this->img( 'oracle-netsuite-dif' ),
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Escale operações multi-subsidiária',
+			'solucao_plat_corpo'    => 'A mesma plataforma que conecta uma subsidiária replica integrações NetSuite OneWorld para todo o grupo corporativo.',
+			'solucao_plat_topico_1' => 'Replique integrações globais',
+			'solucao_plat_topico_2' => 'Padronize processos financeiros',
+			'solucao_plat_topico_3' => 'Reduza desenvolvimento específico',
+			'solucao_plat_imagem'   => $this->img( 'oracle-netsuite-plat' ),
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com NetSuite integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para integrar NetSuite a e-commerce, CRM e sistemas financeiros com fluxos estruturados.',
+			'solucao_acel_topico_1'  => 'Conecte sistemas rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize integrações NetSuite',
+			'solucao_acel_topico_3'  => 'Acelere novos projetos',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'oracle-netsuite-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_oracle_netsuite( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Oracle NetSuite: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq do Oracle NetSuite e retorna seus IDs.
+	 *
+	 * @param int $post_id ID do post cli_solucao pai.
+	 * @return int[]
+	 */
+	protected function criar_faq_oracle_netsuite( $post_id ) {
+		$itens = array(
+			array(
+				'faq:oracle-netsuite-suiteScript',
+				'Como reduzir a dependência de SuiteScript customizado?',
+				'<p>A CLI Connect utiliza as APIs nativas do NetSuite — SuiteTalk REST/SOAP e RESTlets — para criar integrações reutilizáveis sem precisar de scripts específicos por projeto. Em vez de desenvolver e manter SuiteScript para cada integração, a plataforma centraliza os fluxos em conectores configuráveis, reduzindo o volume de código customizado e o esforço de manutenção ao longo do tempo.</p>',
+			),
+			array(
+				'faq:oracle-netsuite-subsidiarias',
+				'É possível replicar a mesma integração para novas subsidiárias?',
+				'<p>Sim. Com o NetSuite OneWorld, a CLI Connect permite replicar integrações entre subsidiárias sem reconstrução. A plataforma gerencia a segmentação por subsidiária, aplica as regras de negócio específicas de cada entidade e padroniza os fluxos de dados financeiros e operacionais globalmente, garantindo consistência sem desenvolvimento adicional para cada nova subsidiária incorporada.</p>',
+			),
+			array(
+				'faq:oracle-netsuite-tba-oauth2',
+				'Como funciona a autenticação via TBA/OAuth2?',
+				'<p>O NetSuite suporta Token-Based Authentication (TBA) e OAuth 2.0 como mecanismos de autenticação para integrações via API. A CLI Connect utiliza essas credenciais para estabelecer conexões seguras sem armazenar senhas de usuário, seguindo as melhores práticas de segurança corporativa. O acesso é controlado por papéis e permissões do NetSuite, garantindo que cada integração opere apenas dentro do escopo autorizado.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Oracle NetSuite FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
