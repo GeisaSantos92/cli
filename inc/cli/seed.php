@@ -208,6 +208,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Viasoft…' );
 		$this->preencher_solucao_viasoft();
 
+		WP_CLI::log( '— Preenchendo Onclick ERP…' );
+		$this->preencher_solucao_onclick_erp();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1173,6 +1176,7 @@ class Cliconnect_Seed {
 				'qad-redzone'                    => 'QAD Redzone',
 				'rp-info'                        => 'RP Info',
 				'viasoft'                        => 'Viasoft',
+				'onclick-erp'                    => 'Onclick ERP',
 				),
 			),
 			'industria'      => array(
@@ -8583,6 +8587,160 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Viasoft FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	// -------------------------------------------------------------------------
+	// ONCLICK ERP
+	// -------------------------------------------------------------------------
+
+	protected function preencher_solucao_onclick_erp() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:onclick-erp',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "onclick-erp" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Onclick',
+			'solucao_hero_titulo'     => 'Conecte o ERP Onclick ao e-commerce, indústria e distribuição',
+			'solucao_hero_corpo'      => 'Integre varejo, marketplaces, vendas e processos fiscais para manter estoque, pedidos e operações sincronizados em todos os canais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/onclick-erp/',
+			'solucao_hero_imagem'     => $this->img( 'onclick-erp-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Amplie o potencial do Onclick',
+			'solucao_pilares_1_icone'  => $this->img( 'onclick-erp-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte todos os módulos',
+			'solucao_pilares_1_desc'   => 'Integre varejo, e-commerce, indústria, distribuição e serviços.',
+			'solucao_pilares_2_icone'  => $this->img( 'onclick-erp-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Sincronize estoques omnichannel',
+			'solucao_pilares_2_desc'   => 'Mantenha lojas físicas e canais digitais sempre atualizados.',
+			'solucao_pilares_3_icone'  => $this->img( 'onclick-erp-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Centralize processos fiscais',
+			'solucao_pilares_3_desc'   => 'Integre informações fiscais e contábeis automaticamente.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos com Onclick',
+			'solucao_casos_1_icone'   => $this->img( 'onclick-erp-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize pedidos digitais',
+			'solucao_casos_1_desc'    => 'Envie pedidos de e-commerce diretamente para o ERP.',
+			'solucao_casos_2_icone'   => $this->img( 'onclick-erp-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Integre marketplaces',
+			'solucao_casos_2_desc'    => 'Centralize estoque e vendas de múltiplos canais.',
+			'solucao_casos_3_icone'   => $this->img( 'onclick-erp-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize força de vendas',
+			'solucao_casos_3_desc'    => 'Conecte vendedores móveis aos processos do ERP.',
+			'solucao_casos_4_icone'   => $this->img( 'onclick-erp-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide ordens de serviço',
+			'solucao_casos_4_desc'    => 'Centralize operações de serviços em um único fluxo.',
+			'solucao_casos_5_icone'   => $this->img( 'onclick-erp-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do ERP para agentes de IA utilizando APIs governadas e servidores MCP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações adaptadas ao Onclick',
+			'solucao_dif_corpo'    => 'Conecte diferentes módulos do Onclick com uma arquitetura preparada para varejo, indústria, distribuição e serviços.',
+			'solucao_dif_topico_1' => 'Integre módulos especializados.',
+			'solucao_dif_topico_2' => 'Adapte fluxos operacionais.',
+			'solucao_dif_topico_3' => 'Conecte múltiplos canais.',
+			'solucao_dif_imagem'   => $this->img( 'onclick-erp-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique sua operação omnichannel',
+			'solucao_plat_corpo'    => 'Centralize lojas, e-commerce e marketplaces em uma única camada de integração para evitar estoques desatualizados.',
+			'solucao_plat_topico_1' => 'Sincronize canais de venda.',
+			'solucao_plat_topico_2' => 'Centralize dados comerciais.',
+			'solucao_plat_topico_3' => 'Evite processos desconectados.',
+			'solucao_plat_imagem'   => $this->img( 'onclick-erp-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com e-commerce integrado',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Onclick aos principais canais digitais e marketplaces.',
+			'solucao_acel_topico_1'  => 'Conecte canais rapidamente.',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos comerciais.',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações.',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'onclick-erp-acel' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_onclick_erp();
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Onclick ERP: todas as seções preenchidas.' );
+	}
+
+	protected function criar_faq_onclick_erp(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:onclick-erp-estoque-omnichannel',
+				'titulo'   => 'Como sincronizar estoque entre loja física e e-commerce no Onclick?',
+				'corpo'    => '<p>A CLI Connect monitora eventos de movimentação de estoque no Onclick ERP e replica as atualizações em tempo real para os canais digitais configurados — e-commerce próprio, marketplaces e PDV. O fluxo é bidirecional: vendas digitais também debitam o estoque do ERP automaticamente, eliminando divergências e rupturas.</p>',
+			),
+			array(
+				'seed_key' => 'faq:onclick-erp-marketplaces',
+				'titulo'   => 'É possível integrar múltiplos marketplaces simultaneamente?',
+				'corpo'    => '<p>Sim. A CLI Connect suporta conexões simultâneas com múltiplos marketplaces — como Mercado Livre, Amazon, Shopee e outros — todos integrados ao Onclick ERP em um único projeto. Cada canal opera com seu próprio mapeamento de categorias, preços e regras de frete, com monitoramento centralizado na plataforma.</p>',
+			),
+			array(
+				'seed_key' => 'faq:onclick-erp-forca-de-vendas',
+				'titulo'   => 'Como funciona a automação da força de vendas?',
+				'corpo'    => '<p>A CLI Connect conecta o aplicativo de força de vendas ao Onclick ERP, sincronizando pedidos, tabelas de preço, limites de crédito e disponibilidade de estoque em tempo real. Vendedores externos operam com informações atualizadas e os pedidos são transmitidos automaticamente para o ERP, sem necessidade de redigitação ou conciliação manual.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  Onclick ERP FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
