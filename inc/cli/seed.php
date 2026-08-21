@@ -2635,6 +2635,68 @@ class Cliconnect_Seed {
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+
+		$this->preencher_servicos_financeiros_faq( $post_id );
+
+		WP_CLI::log( "  Serviços Financeiros preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Serviços Financeiros e vincula à solução.
+	 *
+	 * O Figma mostra apenas as perguntas (accordion fechado); as respostas
+	 * foram redigidas a partir do que a própria landing afirma e seguem
+	 * pendentes de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Serviços Financeiros.
+	 * @return void
+	 */
+	protected function preencher_servicos_financeiros_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sf-fin-core-banking',
+				'Quanto tempo leva para integrar um core banking?',
+				'<p>Os primeiros fluxos costumam entrar em produção em semanas, não em meses. O prazo depende do core utilizado, do volume de dados e das validações de segurança exigidas, mas a implementação é feita por etapas: as integrações críticas sobem primeiro e as demais entram em ondas seguintes, sem travar a operação.</p>',
+			),
+			array(
+				'faq:sf-fin-legados',
+				'A CLI funciona com sistemas legados?',
+				'<p>Sim. Além das APIs REST e SOAP, a plataforma se conecta a bancos de dados, arquivos, filas de mensageria e serviços internos que não expõem API. Para ambientes on-premises, a comunicação é feita por um agente instalado dentro da rede corporativa, sem abrir portas de entrada no firewall.</p>',
+			),
+			array(
+				'faq:sf-fin-open-finance',
+				'Como as integrações acompanham iniciativas de Open Finance?',
+				'<p>As integrações são construídas sobre uma camada de APIs governada, com versionamento, controle de acessos e rastreabilidade de ponta a ponta. Isso permite expor e consumir serviços de parceiros no ritmo em que a regulação e as fases do Open Finance avançam, sem reescrever a arquitetura a cada mudança.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-ia',
+				'É possível utilizar dados legados em projetos de IA?',
+				'<p>Sim. As integrações normalizam e conectam informações que hoje estão dispersas entre sistemas, deixando-as em um formato confiável e rastreável. É esse conjunto tratado que alimenta agentes inteligentes, motores de decisão e análises avançadas.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-sensiveis',
+				'Como a CLI protege dados sensíveis durante as integrações?',
+				'<p>Os dados trafegam criptografados, as credenciais ficam em cofre e cada acesso é registrado para auditoria. A operação segue os padrões de compliance da plataforma — SOC 2, ISO 27001, PCI DSS e LGPD/GDPR, entre outros — e os fluxos são desenhados para expor apenas as informações necessárias a cada sistema.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Serviços Financeiros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**

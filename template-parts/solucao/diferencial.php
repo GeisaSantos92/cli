@@ -4,7 +4,7 @@
  *
  * Fundo branco (var(--cor-fundo)), diferente das outras seções.
  *
- * Campos ACF (group_cli_solucao, aba "5 · Diferencial"):
+ * Campos ACF (group_cli_solucao, aba "7 · Diferencial"):
  *   solucao_dif_eyebrow, solucao_dif_titulo, solucao_dif_corpo,
  *   solucao_dif_topico_{1,2,3}, solucao_dif_imagem (image ID).
  *
