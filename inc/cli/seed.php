@@ -98,6 +98,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Salesforce…' );
 		$this->preencher_solucao_salesforce();
 
+		WP_CLI::log( '— Preenchendo Serviços Financeiros…' );
+		$this->preencher_solucao_servicos_financeiros();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -2504,6 +2507,51 @@ class Cliconnect_Seed {
 	/* =====================================================================
 	   SOLUÇÕES — LANDING PAGES
 	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Serviços Financeiros".
+	 *
+	 * Landing page da indústria de serviços financeiros. Por enquanto apenas a
+	 * seção 1 (Hero); as demais seções ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_servicos_financeiros() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:servicos-financeiros', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Serviços Financeiros: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para serviços financeiros',
+			'solucao_hero_titulo'          => 'Da implementação à produção em semanas.',
+			'solucao_hero_titulo_destaque' => 'Porque bancos não esperam.',
+			'solucao_hero_corpo'           => 'Conecte sistemas bancários, plataformas digitais e soluções de segurança em uma única arquitetura de integração preparada para evoluir continuamente.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'servicos-financeiros-hero' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+	}
 
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Salesforce".
