@@ -7249,6 +7249,9 @@ class Cliconnect_Seed {
 			'solucao_acel_btn_texto' => 'Começar agora',
 			'solucao_acel_btn_url'   => '/contato/',
 			'solucao_acel_imagem'    => $this->img( 'oracle-netsuite-acel' ),
+			// CTA card azul (casos de uso).
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
 		);
 		foreach ( $campos as $chave => $valor ) {
 			update_field( $chave, $valor, $post_id );
