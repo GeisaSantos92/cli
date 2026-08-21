@@ -2511,8 +2511,8 @@ class Cliconnect_Seed {
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Serviços Financeiros".
 	 *
-	 * Landing page da indústria de serviços financeiros. Por enquanto apenas a
-	 * seção 1 (Hero); as demais seções ficam vazias e, portanto, invisíveis.
+	 * Landing page da indústria de serviços financeiros. Preenchida seção a
+	 * seção; as ainda não preenchidas ficam vazias e, portanto, invisíveis.
 	 *
 	 * @return void
 	 */
@@ -2546,6 +2546,14 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'servicos-financeiros-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '95%',
+			'solucao_metrica_1_rotulo'     => 'mais rápida a verificação de identidade',
+			'solucao_metrica_2_numero'     => '24.000',
+			'solucao_metrica_2_rotulo'     => 'horas de trabalho manual eliminadas',
+			'solucao_metrica_3_numero'     => '5%',
+			'solucao_metrica_3_rotulo'     => 'de aumento no NPS',
 		);
 
 		foreach ( $campos as $nome => $valor ) {

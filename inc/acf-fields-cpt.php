@@ -599,10 +599,67 @@ function cliconnect_acf_fields_cpt() {
 					'instructions'  => 'Visual da solução — logos conectados, diagrama, etc. Proporção quadrada.',
 				),
 
-				// ----- Aba: 2 · Pilares ----------------------------------------
+				// ----- Aba: 2 · Métricas ---------------------------------------
+				array(
+					'key'   => 'field_solucao_metricas_tab',
+					'label' => '2 · Métricas',
+					'name'  => '',
+					'type'  => 'tab',
+				),
+				array(
+					'key'     => 'field_solucao_metricas_msg',
+					'label'   => '',
+					'name'    => '',
+					'type'    => 'message',
+					'message' => 'Faixa de números logo abaixo do hero. Deixe o número em branco para esconder a métrica; sem nenhum número, a faixa inteira some.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_1_numero',
+					'label'        => 'Métrica 1 — Número',
+					'name'         => 'solucao_metrica_1_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_1_rotulo',
+					'label'        => 'Métrica 1 — Rótulo',
+					'name'         => 'solucao_metrica_1_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_2_numero',
+					'label'        => 'Métrica 2 — Número',
+					'name'         => 'solucao_metrica_2_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_2_rotulo',
+					'label'        => 'Métrica 2 — Rótulo',
+					'name'         => 'solucao_metrica_2_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_3_numero',
+					'label'        => 'Métrica 3 — Número',
+					'name'         => 'solucao_metrica_3_numero',
+					'type'         => 'text',
+					'instructions' => 'Ex.: "95%", "24.000".',
+				),
+				array(
+					'key'          => 'field_solucao_metrica_3_rotulo',
+					'label'        => 'Métrica 3 — Rótulo',
+					'name'         => 'solucao_metrica_3_rotulo',
+					'type'         => 'text',
+					'instructions' => 'Frase curta ao lado do número.',
+				),
+
+				// ----- Aba: 3 · Pilares ----------------------------------------
 				array(
 					'key'   => 'field_solucao_pilares_tab',
-					'label' => '2 · Pilares',
+					'label' => '3 · Pilares',
 					'name'  => '',
 					'type'  => 'tab',
 				),
@@ -689,7 +746,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 3 · Casos de Uso ---------------------------------------
 			array(
 				'key'   => 'field_solucao_casos_tab',
-				'label' => '3 · Casos de Uso',
+				'label' => '4 · Casos de Uso',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -834,7 +891,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 5 · Diferencial Técnico --------------------------------
 			array(
 				'key'   => 'field_solucao_dif_tab',
-				'label' => '5 · Diferencial',
+				'label' => '6 · Diferencial',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -888,7 +945,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 4 · Selos -------------------------------------------
 			array(
 				'key'   => 'field_solucao_selos_tab',
-				'label' => '4 · Selos',
+				'label' => '5 · Selos',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -916,7 +973,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 7 · Aceleradores ------------------------------------
 			array(
 				'key'   => 'field_solucao_acel_tab',
-				'label' => '7 · Aceleradores',
+				'label' => '8 · Aceleradores',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -989,7 +1046,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 6 · Plataforma Única --------------------------------
 			array(
 				'key'   => 'field_solucao_plat_tab',
-				'label' => '6 · Plataforma',
+				'label' => '7 · Plataforma',
 				'name'  => '',
 				'type'  => 'tab',
 			),
@@ -1043,7 +1100,7 @@ function cliconnect_acf_fields_cpt() {
 			// ----- Aba: 8 · FAQ ---------------------------------------------
 			array(
 				'key'   => 'field_solucao_faq_tab',
-				'label' => '8 · FAQ',
+				'label' => '9 · FAQ',
 				'name'  => '',
 				'type'  => 'tab',
 			),
