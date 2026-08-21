@@ -139,6 +139,9 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( '— Preenchendo RD Station Marketing…' );
 		$this->preencher_solucao_rd_station_marketing();
+
+		WP_CLI::log( '— Preenchendo HubSpot CRM…' );
+		$this->preencher_solucao_hubspot_crm();
 		$this->preencher_solucao_thomson_reuters_tax_one();
 		$this->preencher_solucao_freshservice();
 		$this->preencher_solucao_servicenow();
@@ -1142,6 +1145,7 @@ class Cliconnect_Seed {
 					'dynamics-365'                   => 'Dynamics 365',
 					'rd-station-crm'                 => 'RD Station CRM',
 					'rd-station-marketing'           => 'RD Station Marketing',
+					'hubspot-crm'                    => 'HubSpot CRM',
 					'thomson-reuters-tax-one'        => 'Thomson Reuters Tax One',
 					'freshservice'                   => 'Freshservice',
 					'servicenow'                     => 'ServiceNow',
@@ -4613,6 +4617,160 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		update_field( 'solucao_faq_itens',  $ids, $post_id );
 		WP_CLI::log( sprintf( '  RD Station Marketing FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	// -------------------------------------------------------------------------
+	// HUBSPOT CRM
+	// -------------------------------------------------------------------------
+
+	protected function preencher_solucao_hubspot_crm() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:hubspot-crm',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "hubspot-crm" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu HubSpot',
+			'solucao_hero_titulo'     => 'Conecte o HubSpot ao ERP e ao restante do funil comercial',
+			'solucao_hero_corpo'      => 'Integre CRM, marketing, e-commerce e faturamento para transformar oportunidades em operações conectadas sem depender apenas dos apps do Marketplace.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/hubspot-crm/',
+			'solucao_hero_imagem'     => $this->img( 'hubspot-crm-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Amplie o potencial do HubSpot CRM',
+			'solucao_pilares_1_icone'  => $this->img( 'hubspot-crm-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Converta vendas automaticamente',
+			'solucao_pilares_1_desc'   => 'Transforme negócios fechados em pedidos no ERP sem retrabalho.',
+			'solucao_pilares_2_icone'  => $this->img( 'hubspot-crm-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Enriqueça dados comerciais',
+			'solucao_pilares_2_desc'   => 'Atualize contatos e empresas com informações de outros sistemas.',
+			'solucao_pilares_3_icone'  => $this->img( 'hubspot-crm-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Supere limitações do Marketplace',
+			'solucao_pilares_3_desc'   => 'Crie integrações para cenários específicos do seu negócio.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos do HubSpot CRM',
+			'solucao_casos_1_icone'   => $this->img( 'hubspot-crm-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Envie vendas ao ERP',
+			'solucao_casos_1_desc'    => 'Crie pedidos automaticamente após fechamento de negócios.',
+			'solucao_casos_2_icone'   => $this->img( 'hubspot-crm-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Enriqueça contatos automaticamente',
+			'solucao_casos_2_desc'    => 'Combine dados de produto, suporte e comportamento do cliente.',
+			'solucao_casos_3_icone'   => $this->img( 'hubspot-crm-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Integre e-commerce ao CRM',
+			'solucao_casos_3_desc'    => 'Disponibilize histórico de compras no relacionamento comercial.',
+			'solucao_casos_4_icone'   => $this->img( 'hubspot-crm-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide dados de marketing',
+			'solucao_casos_4_desc'    => 'Centralize funil comercial e campanhas para análise estratégica.',
+			'solucao_casos_5_icone'   => $this->img( 'hubspot-crm-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados do CRM para agentes de IA utilizando APIs governadas e servidores MCP.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 5 · Diferencial técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações seguras para HubSpot',
+			'solucao_dif_corpo'    => 'Utilize a API REST oficial do HubSpot com controle de acesso, tokens privados e permissões definidas por escopo.',
+			'solucao_dif_topico_1' => 'Utilize APIs oficiais.',
+			'solucao_dif_topico_2' => 'Controle permissões por escopo.',
+			'solucao_dif_topico_3' => 'Proteja dados comerciais.',
+			'solucao_dif_imagem'   => $this->img( 'hubspot-crm-dif' ),
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte todo seu ecossistema comercial',
+			'solucao_plat_corpo'    => 'Centralize CRM, ERP e sistemas operacionais em uma única camada de integração para acompanhar o crescimento da empresa.',
+			'solucao_plat_topico_1' => 'Integre múltiplos sistemas.',
+			'solucao_plat_topico_2' => 'Escale processos comerciais.',
+			'solucao_plat_topico_3' => 'Evite conexões isoladas.',
+			'solucao_plat_imagem'   => $this->img( 'hubspot-crm-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'  => 'Aceleradores de integração',
+			'solucao_acel_titulo'   => 'Comece com vendas conectadas',
+			'solucao_acel_corpo'    => 'Utilize um modelo pronto para transformar negócios fechados no HubSpot em pedidos no ERP.',
+			'solucao_acel_topico_1' => 'Automatize vendas rapidamente.',
+			'solucao_acel_topico_2' => 'Reutilize fluxos comerciais.',
+			'solucao_acel_topico_3' => 'Acelere novas integrações.',
+			'solucao_acel_topico_4' => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'hubspot-crm-acel' ),
+		);
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_hubspot_crm();
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( "  HubSpot CRM preenchido (ID: {$post_id})." );
+	}
+
+	protected function criar_faq_hubspot_crm(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:hubspot-crm-erp',
+				'titulo'   => 'Como sincronizar negócios fechados do HubSpot direto com o ERP?',
+				'corpo'    => '<p>Ao fechar um negócio no HubSpot CRM, a CLI Connect detecta o evento via webhook e aciona automaticamente o fluxo de integração configurado — criando o pedido, contrato ou cadastro de cliente no ERP sem intervenção manual. O mapeamento de campos é definido uma vez e pode ser ajustado conforme as regras do seu processo comercial.</p>',
+			),
+			array(
+				'seed_key' => 'faq:hubspot-crm-multiplos-portais',
+				'titulo'   => 'É possível conectar múltiplos portais HubSpot de unidades diferentes?',
+				'corpo'    => '<p>Sim. A CLI Connect suporta múltiplas conexões simultâneas com portais distintos do HubSpot CRM. Cada unidade de negócio opera com seu próprio conjunto de credenciais e fluxos independentes, centralizados em uma única plataforma de integração para facilitar a governança.</p>',
+			),
+			array(
+				'seed_key' => 'faq:hubspot-crm-rate-limit',
+				'titulo'   => 'Como lidar com limites de taxa (rate limit) da API?',
+				'corpo'    => '<p>A CLI Connect gerencia automaticamente os limites de taxa da API do HubSpot por meio de filas e mecanismos de retry com backoff exponencial. Em picos de volume — como importações em lote ou campanhas de grande escala — os dados são processados de forma controlada, sem erros ou perda de registros.</p>',
+			),
+		);
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+		WP_CLI::log( sprintf( '  HubSpot CRM FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
 	}
 
 	protected function preencher_solucao_thomson_reuters_tax_one() {
