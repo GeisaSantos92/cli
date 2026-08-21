@@ -202,6 +202,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo RP Info…' );
 		$this->preencher_solucao_rp_info();
 
+		WP_CLI::log( '— Preenchendo Viasoft…' );
+		$this->preencher_solucao_viasoft();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1165,6 +1168,7 @@ class Cliconnect_Seed {
 				'ifs-cloud'                      => 'IFS Cloud',
 				'qad-redzone'                    => 'QAD Redzone',
 				'rp-info'                        => 'RP Info',
+				'viasoft'                        => 'Viasoft',
 				),
 			),
 			'industria'      => array(
@@ -8260,6 +8264,167 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  IFS Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/* =====================================================================
+	   VIASOFT
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Viasoft".
+	 */
+	protected function preencher_solucao_viasoft() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:viasoft',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "viasoft" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Viasoft',
+			'solucao_hero_titulo'     => 'Conecte o Viasoft ao restante da operação',
+			'solucao_hero_corpo'      => 'Integre ERPs especializados em agro, combustíveis e indústria com bancos, fiscal e sistemas comerciais para unificar processos.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/viasoft/',
+			'solucao_hero_imagem'     => $this->img( 'viasoft-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'      => 'Amplie o potencial do Viasoft',
+			'solucao_pilares_1_icone'     => $this->img( 'viasoft-pilar-1' ),
+			'solucao_pilares_1_titulo'    => 'Conecte verticais especializadas',
+			'solucao_pilares_1_desc'      => 'Integre Agrotitan, Filt IA+ e soluções Viasoft por segmento.',
+			'solucao_pilares_2_icone'     => $this->img( 'viasoft-pilar-2' ),
+			'solucao_pilares_2_titulo'    => 'Automatize processos fiscais',
+			'solucao_pilares_2_desc'      => 'Conecte obrigações fiscais conforme cada vertical de negócio.',
+			'solucao_pilares_3_icone'     => $this->img( 'viasoft-pilar-3' ),
+			'solucao_pilares_3_titulo'    => 'Integre operações financeiras',
+			'solucao_pilares_3_desc'      => 'Sincronize bancos e processos financeiros automaticamente.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_titulo'        => 'Automatize processos do Viasoft',
+			'solucao_casos_1_icone'       => $this->img( 'viasoft-caso-1' ),
+			'solucao_casos_1_titulo'      => 'Integre vendas ao financeiro',
+			'solucao_casos_1_desc'        => 'Sincronize vendas agrícolas e operações comerciais com financeiro.',
+			'solucao_casos_2_icone'       => $this->img( 'viasoft-caso-2' ),
+			'solucao_casos_2_titulo'      => 'Automatize processos fiscais',
+			'solucao_casos_2_desc'        => 'Conecte NF-e e SPED conforme cada segmento.',
+			'solucao_casos_3_icone'       => $this->img( 'viasoft-caso-3' ),
+			'solucao_casos_3_titulo'      => 'Concilie operações bancárias',
+			'solucao_casos_3_desc'        => 'Automatize conciliações de revendas e cooperativas.',
+			'solucao_casos_4_icone'       => $this->img( 'viasoft-caso-4' ),
+			'solucao_casos_4_titulo'      => 'Consolide dados operacionais',
+			'solucao_casos_4_desc'        => 'Unifique informações multi-filial para análises estratégicas.',
+			'solucao_casos_5_icone'       => $this->img( 'viasoft-caso-5' ),
+			'solucao_casos_5_titulo'      => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'        => 'Disponibilize dados operacionais para agentes inteligentes sem expor o core do Viasoft.',
+			'solucao_casos_cta_texto'     => 'Agende uma demonstração',
+			'solucao_casos_cta_url'       => '/contato/',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integrações adaptadas ao seu segmento',
+			'solucao_dif_corpo'    => 'Conecte operações com regras fiscais e regulatórias específicas para agro, combustíveis e demais verticais atendidas pelo Viasoft.',
+			'solucao_dif_topico_1' => 'Adapte integrações por vertical',
+			'solucao_dif_topico_2' => 'Atenda regras regulatórias específicas',
+			'solucao_dif_topico_3' => 'Conecte operações especializadas',
+			'solucao_dif_imagem'   => $this->img( 'viasoft-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Unifique diferentes verticais Viasoft',
+			'solucao_plat_corpo'    => 'Centralize dados financeiros e fiscais de diferentes operações em uma única camada de integração.',
+			'solucao_plat_topico_1' => 'Integre múltiplos negócios',
+			'solucao_plat_topico_2' => 'Centralize informações corporativas',
+			'solucao_plat_topico_3' => 'Evite integrações isoladas',
+			'solucao_plat_imagem'   => $this->img( 'viasoft-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com operações conectadas',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar Viasoft ao financeiro e fiscal com rapidez.',
+			'solucao_acel_topico_1'  => 'Conecte dados rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize fluxos validados',
+			'solucao_acel_topico_3'  => 'Acelere novas integrações',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'viasoft-acel' ),
+		);
+		foreach ( $campos as $key => $value ) {
+			update_field( $key, $value, $post_id );
+		}
+		$faq_ids = $this->criar_faq_viasoft();
+		if ( ! empty( $faq_ids ) ) {
+			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+		}
+
+		WP_CLI::log( '  Viasoft: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Viasoft.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_viasoft(): array {
+		$items = array(
+			array(
+				'seed_key' => 'faq:viasoft-consolidacao-financeira',
+				'titulo'   => 'Como consolidar dados financeiros entre diferentes verticais Viasoft?',
+				'corpo'    => 'A CLI Connect centraliza dados financeiros e fiscais de múltiplas verticais do Viasoft — agro, combustíveis, indústria — em uma única camada de integração conectada ao BI corporativo. Isso permite análises consolidadas por negócio sem depender de exportações manuais por sistema.',
+			),
+			array(
+				'seed_key' => 'faq:viasoft-defensivos-agricolas',
+				'titulo'   => 'É possível integrar controle de validade de defensivos agrícolas ao ERP?',
+				'corpo'    => 'Sim. A CLI Connect integra os dados de controle de defensivos agrícolas do Agrotitan ao Viasoft ERP, sincronizando validade, movimentação de estoque e alertas regulatórios automaticamente. Isso garante conformidade com as exigências do setor sem processos manuais.',
+			),
+			array(
+				'seed_key' => 'faq:viasoft-integracao-fiscal',
+				'titulo'   => 'Como funciona a integração fiscal por vertical?',
+				'corpo'    => 'A CLI Connect adapta os fluxos de integração fiscal conforme as regras específicas de cada vertical do Viasoft. Para agro, combustíveis e indústria, os processos de NF-e, SPED e obrigações acessórias são conectados automaticamente ao ERP, respeitando as particularidades tributárias de cada segmento.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $items as $item ) {
+			$existing = get_posts( array(
+				'post_type'  => 'cli_faq',
+				'meta_key'   => '_cliconnect_seed',
+				'meta_value' => $item['seed_key'],
+				'fields'     => 'ids',
+			) );
+			if ( ! empty( $existing ) ) {
+				$faq_id = (int) $existing[0];
+				wp_update_post( array(
+					'ID'           => $faq_id,
+					'post_title'   => $item['titulo'],
+					'post_content' => $item['corpo'],
+				) );
+				$ids[] = $faq_id;
+				continue;
+			}
+			$faq_id = wp_insert_post( array(
+				'post_type'    => 'cli_faq',
+				'post_title'   => $item['titulo'],
+				'post_status'  => 'publish',
+				'post_content' => $item['corpo'],
+			) );
+			if ( $faq_id && ! is_wp_error( $faq_id ) ) {
+				update_post_meta( $faq_id, '_cliconnect_seed', $item['seed_key'] );
+				$ids[] = $faq_id;
+			}
+		}
+
+		WP_CLI::log( sprintf( '  Viasoft FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 
