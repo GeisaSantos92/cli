@@ -435,7 +435,6 @@
 
 /* Coluna de imagem */
 .sd-dif__imagem-wrap {
-	aspect-ratio: 1 / 1;
 	border-radius: var(--raio);
 	overflow: hidden;
 	flex-shrink: 0;
@@ -443,8 +442,7 @@
 
 .sd-dif__imagem {
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	height: auto;
 	display: block;
 }
 
@@ -637,7 +635,6 @@
 
 /* Coluna de imagem */
 .sacel-acel__imagem-wrap {
-	aspect-ratio: 1 / 1;
 	border-radius: var(--raio);
 	overflow: hidden;
 	flex-shrink: 0;
@@ -645,8 +642,7 @@
 
 .sacel-acel__imagem {
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	height: auto;
 	display: block;
 }
 
@@ -733,7 +729,6 @@
 
 /* Coluna de imagem */
 .spu-plat__imagem-wrap {
-	aspect-ratio: 1 / 1;
 	border-radius: var(--raio);
 	overflow: hidden;
 	flex-shrink: 0;
@@ -741,8 +736,7 @@
 
 .spu-plat__imagem {
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	height: auto;
 	display: block;
 }
 
