@@ -116,6 +116,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Seguros…' );
 		$this->preencher_solucao_seguros();
 
+		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
+		$this->preencher_solucao_hotelaria_e_turismo();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -477,6 +480,7 @@ class Cliconnect_Seed {
 			array( 'B2List', 'cliente-b2list', false ),
 			array( 'Peixoto', 'cliente-peixoto', false ),
 			array( 'SEG Imob', 'cliente-seg-imob', false ),
+			array( 'Utrip', 'cliente-utrip', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -3566,6 +3570,172 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Varejo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Hotelaria e Turismo".
+	 *
+	 * Landing da indústria de hotelaria. Cresce uma seção por rodada, na ordem
+	 * do Figma; as seções ainda não preenchidas ficam vazias e, portanto,
+	 * invisíveis no front.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_hotelaria_e_turismo() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:hotelaria-e-turismo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Hotelaria e Turismo: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para hotelaria',
+			'solucao_hero_titulo'          => 'Conecte dados, propriedades e hóspedes',
+			'solucao_hero_titulo_destaque' => 'em uma experiência integrada',
+			'solucao_hero_corpo'           => 'Integre PMS, CRM, motores de reservas e sistemas operacionais para eliminar overbooking, personalizar o atendimento e acelerar a expansão da rede hoteleira.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'hotelaria-e-turismo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '17.000+',
+			'solucao_metrica_1_rotulo'     => 'hóspedes e residentes gerenciados por fluxos sincronizados',
+			'solucao_metrica_2_numero'     => '100%',
+			'solucao_metrica_2_rotulo'     => 'de automação alcançada no trabalho manual para alterações de reservas',
+			'solucao_metrica_3_numero'     => '10x',
+			'solucao_metrica_3_rotulo'     => 'mais rápido o tempo de lançamento de novos serviços',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Conecte toda a operação hoteleira em uma única plataforma',
+			'solucao_pilares_1_icone'      => $this->img( 'hotelaria-e-turismo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize inventários em tempo real',
+			'solucao_pilares_1_desc'       => 'Mantenha disponibilidade de quartos atualizada entre canais para evitar overbooking e retrabalho.',
+			'solucao_pilares_2_icone'      => $this->img( 'hotelaria-e-turismo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Personalize a experiência do hóspede',
+			'solucao_pilares_2_desc'       => 'Unifique perfis de hóspedes para oferecer atendimento personalizado utilizando inteligência artificial.',
+			'solucao_pilares_3_icone'      => $this->img( 'hotelaria-e-turismo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Expanda novas unidades rapidamente',
+			'solucao_pilares_3_desc'       => 'Padronize integrações reutilizando componentes em novas propriedades e franquias da rede.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a hotelaria de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:utrip', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da hotelaria',
+			'solucao_casos_1_icone'        => $this->img( 'hotelaria-e-turismo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte PMS e CRM',
+			'solucao_casos_1_desc'         => 'Sincronize reservas, preferências e histórico dos hóspedes entre sistemas automaticamente.',
+			'solucao_casos_2_icone'        => $this->img( 'hotelaria-e-turismo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize programas de fidelidade',
+			'solucao_casos_2_desc'         => 'Integre POS, reservas e loyalty para oferecer benefícios em todos os canais.',
+			'solucao_casos_3_icone'        => $this->img( 'hotelaria-e-turismo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Unifique relatórios das propriedades',
+			'solucao_casos_3_desc'         => 'Centralize indicadores operacionais e financeiros de todas as unidades em um painel.',
+			'solucao_casos_4_icone'        => $this->img( 'hotelaria-e-turismo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atualize preços dinamicamente',
+			'solucao_casos_4_desc'         => 'Utilize dados de ocupação para automatizar estratégias de precificação em tempo real.',
+			'solucao_casos_5_icone'        => $this->img( 'hotelaria-e-turismo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Automatize a governança dos quartos',
+			'solucao_casos_5_desc'         => 'Integre housekeeping, reservas e operação para agilizar liberações e limpeza dos apartamentos.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_hotelaria_e_turismo_faq( $post_id );
+
+		WP_CLI::log( "  Hotelaria e Turismo preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Hotelaria e Turismo e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Hotelaria e Turismo.
+	 * @return void
+	 */
+	protected function preencher_hotelaria_e_turismo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ht-pms-legado',
+				'É possível integrar PMS legados instalados localmente?',
+				'<p>Sim. PMS antigos rodando no servidor da propriedade continuam sendo o caso mais comum na hotelaria, e não é preciso trocá-los para integrar. A conexão é feita por um agente instalado dentro da própria rede do hotel, que fala com o sistema pelo recurso que ele já oferece — banco de dados, arquivo, serviço web ou fila — e abre a comunicação de dentro para fora, sem expor portas de entrada no firewall. O PMS segue como está e passa a alimentar os demais sistemas.</p>',
+			),
+			array(
+				'faq:ht-pos-fidelidade',
+				'Como integrar sistemas de POS ao programa de fidelidade em tempo real?',
+				'<p>Cada consumo registrado no POS — restaurante, bar, spa, frigobar — vira um evento que a plataforma envia na hora ao programa de fidelidade, já associado ao perfil do hóspede pela reserva ativa. O caminho de volta também é automático: saldo, categoria e benefícios voltam ao POS e ao PMS, de modo que o desconto ou a cortesia aparecem no mesmo atendimento, sem o operador consultar outro sistema.</p>',
+			),
+			array(
+				'faq:ht-tempo-producao',
+				'Quanto tempo leva para colocar uma integração em produção?',
+				'<p>Depende muito menos do prazo de desenvolvimento do que do acesso aos sistemas. Fluxos que usam conectores já prontos e uma API documentada costumam entrar em semanas; o que estica o cronograma é liberação de credencial, homologação com o fornecedor do PMS e limpeza de cadastro. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:ht-alta-demanda',
+				'A plataforma suporta grandes volumes de reservas em períodos de alta demanda?',
+				'<p>Sim, e é justamente para o pico que a arquitetura foi pensada. O processamento é elástico e trabalha sobre filas, então feriado, alta temporada ou uma promoção relâmpago aumentam a fila sem derrubar o fluxo nem perder mensagem. Se um sistema de destino fica lento ou indisponível, as mensagens ficam retidas e são reprocessadas automaticamente quando ele volta, preservando a ordem dos eventos de cada reserva.</p>',
+			),
+			array(
+				'faq:ht-franquias-padronizacao',
+				'Como padronizar integrações entre franquias com sistemas diferentes?',
+				'<p>A padronização acontece no meio do caminho, não nas pontas. Define-se um formato único para reserva, hóspede e consumo, e cada propriedade ganha apenas o trecho de tradução do seu sistema para esse formato — o restante do fluxo é o mesmo para toda a rede. Uma unidade nova entra reaproveitando o modelo, e quem opera a rede passa a enxergar todas as propriedades pelos mesmos indicadores, mesmo com PMS diferentes em cada uma.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Hotelaria e Turismo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
