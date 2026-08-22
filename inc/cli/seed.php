@@ -2918,6 +2918,14 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'hotelaria-e-turismo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '17.000+',
+			'solucao_metrica_1_rotulo'     => 'hóspedes e residentes gerenciados por fluxos sincronizados',
+			'solucao_metrica_2_numero'     => '100%',
+			'solucao_metrica_2_rotulo'     => 'de automação alcançada no trabalho manual para alterações de reservas',
+			'solucao_metrica_3_numero'     => '10x',
+			'solucao_metrica_3_rotulo'     => 'mais rápido o tempo de lançamento de novos serviços',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
