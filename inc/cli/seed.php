@@ -2925,6 +2925,19 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'mais rápido o cadastro de fornecedores',
 			'solucao_metrica_3_numero'     => '1600%',
 			'solucao_metrica_3_rotulo'     => 'de ROI em 10 meses',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme dados conectados em melhores experiências de compra',
+			'solucao_pilares_1_icone'      => $this->img( 'varejo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Unifique a visão do cliente',
+			'solucao_pilares_1_desc'       => 'Centralize informações de vendas, atendimento e logística para personalizar cada interação com consumidores.',
+			'solucao_pilares_2_icone'      => $this->img( 'varejo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Migre plataformas sem interromper vendas',
+			'solucao_pilares_2_desc'       => 'Troque plataformas de e-commerce mantendo operações, pedidos e integrações funcionando normalmente.',
+			'solucao_pilares_3_icone'      => $this->img( 'varejo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize entregas com inteligência artificial',
+			'solucao_pilares_3_desc'       => 'Otimize rotas, decisões logísticas e processos de entrega utilizando dados em tempo real.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
