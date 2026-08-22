@@ -2952,6 +2952,27 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos logísticos',
+			'solucao_casos_1_icone'        => $this->img( 'logistica-3pl-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Sincronize posições de estoque',
+			'solucao_casos_1_desc'         => 'Atualize saldos automaticamente entre WMS, ERP e sistemas dos clientes em tempo real.',
+			'solucao_casos_2_icone'        => $this->img( 'logistica-3pl-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize pedidos multicanal',
+			'solucao_casos_2_desc'         => 'Receba pedidos de marketplaces e direcione automaticamente para separação e expedição.',
+			'solucao_casos_3_icone'        => $this->img( 'logistica-3pl-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Conecte múltiplas transportadoras',
+			'solucao_casos_3_desc'         => 'Centralize integrações com transportadoras sem desenvolver conexões individuais para cada operação.',
+			'solucao_casos_4_icone'        => $this->img( 'logistica-3pl-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Automatize devoluções',
+			'solucao_casos_4_desc'         => 'Gerencie processos de RMA entre clientes, transportadoras e centros de distribuição automaticamente.',
+			'solucao_casos_5_icone'        => $this->img( 'logistica-3pl-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Preveja picos de demanda com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados operacionais para antecipar volumes e melhorar o planejamento logístico.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
