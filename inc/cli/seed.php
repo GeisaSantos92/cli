@@ -119,6 +119,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
 		$this->preencher_solucao_hotelaria_e_turismo();
 
+		WP_CLI::log( '— Preenchendo Financeiro…' );
+		$this->preencher_solucao_financeiro();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -3736,6 +3739,183 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Hotelaria e Turismo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Financeiro" (Departamento).
+	 *
+	 * Landing do departamento financeiro. O design inverte Diferencial e Selos
+	 * em relação à ordem padrão — daí `solucao_dif_antes_selos`.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_financeiro() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:financeiro', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Financeiro: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'      => 'para o seu financeiro',
+			'solucao_hero_titulo'       => 'Conecte todo o ecossistema financeiro.',
+			'solucao_hero_corpo'        => 'Integre ERPs, bancos e plataformas de planejamento para acelerar fechamentos, automatizar auditorias e manter todas as unidades de negócio sincronizadas.',
+			'solucao_hero_btn1_texto'   => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'     => '/contato/',
+			'solucao_hero_btn2_texto'   => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'     => '/plataforma/',
+			'solucao_hero_imagem'       => $this->img( 'financeiro-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'  => '7 dias',
+			'solucao_metrica_1_rotulo'  => 'de tempo do fechamento contábil mensal',
+			'solucao_metrica_2_numero'  => '5x',
+			'solucao_metrica_2_rotulo'  => 'de aumento no processamento de pedidos',
+			'solucao_metrica_3_numero'  => '50%',
+			'solucao_metrica_3_rotulo'  => 'redução do tempo de fechamento mensal',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'   => 'Pilares',
+			'solucao_pilares_titulo'    => 'Mais controle para a operação financeira',
+			'solucao_pilares_1_icone'   => $this->img( 'financeiro-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Acelere o fechamento contábil',
+			'solucao_pilares_1_desc'    => 'Sincronize informações entre ERPs e sistemas financeiros para reduzir atividades manuais e concluir o fechamento com mais rapidez.',
+			'solucao_pilares_2_icone'   => $this->img( 'financeiro-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Automatize a auditoria',
+			'solucao_pilares_2_desc'    => 'Registre todas as movimentações com rastreabilidade completa para simplificar auditorias e aumentar a confiabilidade dos processos.',
+			'solucao_pilares_3_icone'   => $this->img( 'financeiro-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Unifique os seus ERPs',
+			'solucao_pilares_3_desc'    => 'Mantenha dados financeiros consistentes entre diferentes unidades de negócio, filiais e sistemas corporativos.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'       => 'Integramos os principais ERPs, bancos e plataformas financeiras utilizados por grandes empresas.',
+			'solucao_logos_clientes'    => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unidas', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:seculus', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'     => 'Casos de uso',
+			'solucao_casos_titulo'      => 'Automatize os principais processos financeiros',
+			'solucao_casos_1_icone'     => $this->img( 'financeiro-caso-1' ),
+			'solucao_casos_1_titulo'    => 'Consolide dados contábeis',
+			'solucao_casos_1_desc'      => 'Sincronize informações entre diferentes ERPs para consolidar balancetes e obter uma visão financeira unificada.',
+			'solucao_casos_2_icone'     => $this->img( 'financeiro-caso-2' ),
+			'solucao_casos_2_titulo'    => 'Automatize conciliações bancárias',
+			'solucao_casos_2_desc'      => 'Integre bancos via host-to-host para realizar conciliações diárias com mais agilidade e menos intervenção manual.',
+			'solucao_casos_3_icone'     => $this->img( 'financeiro-caso-3' ),
+			'solucao_casos_3_titulo'    => 'Otimize contas a pagar',
+			'solucao_casos_3_desc'      => 'Conecte plataformas de compras e ERP para automatizar o matching de três vias e reduzir retrabalho operacional.',
+			'solucao_casos_4_icone'     => $this->img( 'financeiro-caso-4' ),
+			'solucao_casos_4_titulo'    => 'Reconheça receitas automaticamente',
+			'solucao_casos_4_desc'      => 'Envie vendas aprovadas para o ERP em tempo real e acelere os processos de contabilização da receita.',
+			'solucao_casos_5_icone'     => $this->img( 'financeiro-caso-5' ),
+			'solucao_casos_5_titulo'    => 'Alimente o planejamento financeiro',
+			'solucao_casos_5_desc'      => 'Atualize plataformas de FP&A automaticamente com dados do ERP para melhorar previsões e análises financeiras.',
+			'solucao_casos_6_icone'     => $this->img( 'financeiro-caso-6' ),
+			'solucao_casos_6_titulo'    => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'      => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'       => 'diferencial técnico',
+			'solucao_dif_titulo'        => 'Integrações sob seu controle',
+			'solucao_dif_corpo'         => 'Execute integrações dentro da infraestrutura da sua empresa para garantir soberania dos dados, maior controle operacional e conformidade com políticas corporativas.',
+			'solucao_dif_topico_1'      => 'Execute integrações na sua própria nuvem',
+			'solucao_dif_topico_2'      => 'Mantenha dados sob governança corporativa',
+			'solucao_dif_topico_3'      => 'Reduza riscos de conformidade financeira',
+			'solucao_dif_imagem'        => $this->img( 'financeiro-diferencial' ),
+			'solucao_dif_antes_selos'   => 1,
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'     => 'compliance & segurança',
+			'solucao_selos_titulo'      => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'       => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_financeiro_faq( $post_id );
+
+		WP_CLI::log( "  Financeiro preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Financeiro e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Financeiro.
+	 * @return void
+	 */
+	protected function preencher_financeiro_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:fin-tempo-erp',
+				'Quanto tempo leva para integrar SAP, Oracle ou NetSuite?',
+				'<p>Os três já contam com conectores prontos, então o cronograma depende menos do desenvolvimento e mais do acesso ao ambiente. Fluxos comuns do financeiro — balancete, lançamentos contábeis, contas a pagar — costumam entrar em semanas, contadas a partir da liberação de credencial e do aceite do desenho pelo time contábil. O que estica o prazo é customização pesada no ERP e divergência de plano de contas entre unidades, não a conexão em si.</p>',
+			),
+			array(
+				'faq:fin-autonomia-financeiro',
+				'O time financeiro consegue acompanhar as integrações sem depender da TI?',
+				'<p>Sim. O acompanhamento do dia a dia — se o lote da noite rodou, quantos lançamentos entraram, qual registro falhou e por quê — fica em um painel de operação que a área financeira acessa direto, com reprocessamento do que deu erro sem abrir chamado. O que continua com a TI é a mudança estrutural: criar um fluxo novo, alterar credencial ou mexer em regra de negócio.</p>',
+			),
+			array(
+				'faq:fin-nativa-vs-ipaas',
+				'Qual a diferença entre integrações nativas do ERP e uma iPaaS?',
+				'<p>A integração nativa resolve bem o par de sistemas para o qual foi feita, mas cada nova ponta vira um projeto isolado, com sua própria regra, seu próprio log e sua própria manutenção. A iPaaS coloca uma camada única entre todos os sistemas: as regras de transformação, o histórico de execução, o tratamento de erro e a governança de acesso ficam em um só lugar, e uma unidade de negócio nova reaproveita o que já foi construído em vez de recomeçar.</p>',
+			),
+			array(
+				'faq:fin-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para Finanças?',
+				'<p>Comece pela rastreabilidade: toda movimentação precisa ter registro completo do que entrou, do que saiu e de quem alterou, porque é isso que sustenta a auditoria. Depois verifique o catálogo de conectores para os ERPs e bancos que você já usa, o comportamento em caso de falha (reprocessamento sem duplicar lançamento), o controle de acessos por perfil e onde a execução acontece — dentro da sua infraestrutura, quando a política corporativa exigir. Por último, avalie o modelo de evolução: integração financeira muda o tempo todo, e depender de um novo projeto a cada ajuste sai caro.</p>',
+			),
+			array(
+				'faq:fin-atualizacao-apis',
+				'Como atualizações de APIs dos ERPs impactam as integrações?',
+				'<p>O impacto fica contido na camada de conexão. Quando o fornecedor publica uma versão nova, é o conector que é atualizado — os fluxos, as regras e os destinos seguem como estão. Mudanças anunciadas com antecedência são homologadas em ambiente separado antes de entrar em produção; quando algo quebra sem aviso, as mensagens ficam retidas e são reprocessadas depois da correção, sem perda de lançamento nem duplicidade.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**

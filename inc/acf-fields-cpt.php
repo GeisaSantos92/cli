@@ -1004,6 +1004,15 @@ function cliconnect_acf_fields_cpt() {
 				'return_format' => 'id',
 				'preview_size'  => 'medium',
 			),
+			array(
+				'key'           => 'field_solucao_dif_antes_selos',
+				'label'         => 'Exibir antes dos Selos',
+				'name'          => 'solucao_dif_antes_selos',
+				'type'          => 'true_false',
+				'instructions'  => 'Por padrão a seção Selos aparece antes do Diferencial. Marque quando o design da solução inverter as duas.',
+				'ui'            => 1,
+				'default_value' => 0,
+			),
 
 			// ----- Aba: 4 · Selos -------------------------------------------
 			array(
