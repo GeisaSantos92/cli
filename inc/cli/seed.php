@@ -119,6 +119,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
 		$this->preencher_solucao_hotelaria_e_turismo();
 
+		WP_CLI::log( '— Preenchendo Recursos Humanos (RH)…' );
+		$this->preencher_solucao_recursos_humanos_rh();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -3983,6 +3986,169 @@ class Cliconnect_Seed {
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Recursos Humanos (RH)".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_recursos_humanos_rh() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:recursos-humanos-rh', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Recursos Humanos (RH): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o seu RH',
+			'solucao_hero_titulo'          => 'Conecte todo o ciclo de vida do colaborador em',
+			'solucao_hero_titulo_destaque' => 'uma única operação',
+			'solucao_hero_corpo'           => 'Integre HRIS, folha de pagamento, ATS e sistemas corporativos para automatizar a jornada do colaborador e manter informações sempre sincronizadas.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'recursos-humanos-rh-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'de redução no tempo de processamento da folha de pagamento',
+			'solucao_metrica_2_numero'     => '90%',
+			'solucao_metrica_2_rotulo'     => 'de economia projetada em custos contínuos de manutenção',
+			'solucao_metrica_3_numero'     => '40%',
+			'solucao_metrica_3_rotulo'     => 'de diminuição no tempo gasto com entrada manual de dados',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Automatize toda a operação de RH',
+			'solucao_pilares_1_icone'      => $this->img( 'recursos-humanos-rh-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Automatize a jornada do colaborador',
+			'solucao_pilares_1_desc'       => 'Sincronize admissões, movimentações e desligamentos entre todos os sistemas para eliminar tarefas manuais e garantir dados consistentes.',
+			'solucao_pilares_2_icone'      => $this->img( 'recursos-humanos-rh-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Mantenha a folha sincronizada',
+			'solucao_pilares_2_desc'       => 'Atualize automaticamente dados entre HRIS e folha de pagamento para reduzir inconsistências e simplificar o fechamento mensal.',
+			'solucao_pilares_3_icone'      => $this->img( 'recursos-humanos-rh-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Proteja dados sensíveis',
+			'solucao_pilares_3_desc'       => 'Aplique mascaramento de informações pessoais durante as integrações para atender requisitos de LGPD e fortalecer a governança.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Automatize processos críticos de RH',
+			'solucao_casos_1_icone'        => $this->img( 'recursos-humanos-rh-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Orquestre o ciclo do funcionário',
+			'solucao_casos_1_desc'         => 'Atualize HRIS, identidade, folha e plataformas de treinamento simultaneamente sempre que um colaborador entrar ou sair da empresa.',
+			'solucao_casos_2_icone'        => $this->img( 'recursos-humanos-rh-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Sincronize HRIS e folha',
+			'solucao_casos_2_desc'         => 'Garanta que alterações cadastrais e movimentações sejam refletidas automaticamente na folha de pagamento.',
+			'solucao_casos_3_icone'        => $this->img( 'recursos-humanos-rh-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Automatize novas contratações',
+			'solucao_casos_3_desc'         => 'Envie candidatos aprovados do ATS para o HRIS automaticamente, eliminando cadastros duplicados e atividades manuais.',
+			'solucao_casos_4_icone'        => $this->img( 'recursos-humanos-rh-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Revogue acessos automaticamente',
+			'solucao_casos_4_desc'         => 'Remova permissões e contas poucos minutos após o desligamento para aumentar a segurança e reduzir riscos operacionais.',
+			'solucao_casos_5_icone'        => $this->img( 'recursos-humanos-rh-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Antecipe riscos de desligamento',
+			'solucao_casos_5_desc'         => 'Utilize agentes de IA para identificar sinais de retenção e apoiar decisões antes da perda de talentos.',
+			'solucao_casos_6_icone'        => $this->img( 'recursos-humanos-rh-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'         => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 5 · Diferencial Técnico (o design do RH inverte Diferencial e Selos).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Privacidade integrada às automações',
+			'solucao_dif_corpo'            => 'Proteja informações sensíveis durante toda a movimentação entre sistemas com detecção e mascaramento automático de dados pessoais antes da integração.',
+			'solucao_dif_topico_1'         => 'Detecte dados sensíveis automaticamente',
+			'solucao_dif_topico_2'         => 'Mascare informações antes da integração',
+			'solucao_dif_topico_3'         => 'Atenda requisitos de LGPD com governança',
+			'solucao_dif_imagem'           => $this->img( 'recursos-humanos-rh-dif' ),
+			'solucao_dif_antes_selos'      => true,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_recursos_humanos_rh_faq( $post_id );
+
+		WP_CLI::log( "  Recursos Humanos (RH) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Recursos Humanos (RH) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Recursos Humanos (RH).
+	 * @return void
+	 */
+	protected function preencher_recursos_humanos_rh_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:rh-hris-folha-prazo',
+				'Quanto tempo leva para integrar o HRIS à folha de pagamento?',
+				'<p>O prazo depende bem menos do desenvolvimento do que do acesso aos sistemas e da qualidade do cadastro. Quando o HRIS e a folha expõem APIs documentadas e as credenciais já estão liberadas, o fluxo de admissões, movimentações e desligamentos costuma entrar em produção em semanas. O que estica o cronograma é a conciliação de cadastros divergentes entre os dois sistemas e a homologação com o fornecedor. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:rh-autonomia-do-time',
+				'O RH consegue gerenciar integrações sem depender da equipe de desenvolvimento?',
+				'<p>No dia a dia, sim. O time de RH acompanha as execuções, vê onde um registro parou e reprocessa o que falhou por um painel próprio, sem abrir chamado. Mudanças estruturais — incluir um sistema novo no fluxo ou alterar as regras de um campo — continuam passando por quem mantém a integração, mas partem de componentes prontos, então são ajustes de configuração e não de projeto.</p>',
+			),
+			array(
+				'faq:rh-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para RH?',
+				'<p>Três pontos pesam mais do que a lista de conectores. O primeiro é o tratamento de dados pessoais: a plataforma precisa detectar e mascarar informações sensíveis antes de movimentá-las, não depois. O segundo é a rastreabilidade — cada admissão, movimentação e desligamento deve deixar registro de quando passou, para onde foi e o que aconteceu se falhou. O terceiro é o reaproveitamento: fluxos montados como componentes reduzem o custo de cada nova integração, enquanto integrações ponto a ponto crescem em manutenção a cada sistema adicionado.</p>',
+			),
+			array(
+				'faq:rh-dados-sensiveis',
+				'Como os dados sensíveis dos colaboradores são protegidos durante as integrações?',
+				'<p>A proteção acontece dentro do próprio fluxo. Campos como CPF, dados bancários e informações de saúde são identificados automaticamente e mascarados antes de seguirem para o sistema de destino, de modo que apenas quem precisa do dado completo o recebe. O tráfego é criptografado ponta a ponta, o acesso é concedido por perfil e cada movimentação fica registrada em trilha de auditoria — é o que sustenta o atendimento aos requisitos de LGPD sem depender de disciplina manual.</p>',
+			),
+			array(
+				'faq:rh-mudanca-de-api',
+				'Como mudanças nas APIs dos fornecedores de HRIS impactam as integrações?',
+				'<p>O impacto fica contido na camada de tradução. Cada sistema conversa com um formato interno comum, então uma versão nova da API do HRIS exige ajustar apenas o trecho que fala com ele — o restante do fluxo, incluindo folha, identidade e treinamento, segue inalterado. As versões novas são homologadas em ambiente separado antes de entrar em produção, e o monitoramento avisa quando um endpoint muda de comportamento, em vez de a falha aparecer no fechamento da folha.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Recursos Humanos (RH) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 }
 
