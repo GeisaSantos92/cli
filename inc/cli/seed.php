@@ -2982,7 +2982,68 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 
+		$this->preencher_hotelaria_e_turismo_faq( $post_id );
+
 		WP_CLI::log( "  Hotelaria e Turismo preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Hotelaria e Turismo e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Hotelaria e Turismo.
+	 * @return void
+	 */
+	protected function preencher_hotelaria_e_turismo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ht-pms-legado',
+				'É possível integrar PMS legados instalados localmente?',
+				'<p>Sim. PMS antigos rodando no servidor da propriedade continuam sendo o caso mais comum na hotelaria, e não é preciso trocá-los para integrar. A conexão é feita por um agente instalado dentro da própria rede do hotel, que fala com o sistema pelo recurso que ele já oferece — banco de dados, arquivo, serviço web ou fila — e abre a comunicação de dentro para fora, sem expor portas de entrada no firewall. O PMS segue como está e passa a alimentar os demais sistemas.</p>',
+			),
+			array(
+				'faq:ht-pos-fidelidade',
+				'Como integrar sistemas de POS ao programa de fidelidade em tempo real?',
+				'<p>Cada consumo registrado no POS — restaurante, bar, spa, frigobar — vira um evento que a plataforma envia na hora ao programa de fidelidade, já associado ao perfil do hóspede pela reserva ativa. O caminho de volta também é automático: saldo, categoria e benefícios voltam ao POS e ao PMS, de modo que o desconto ou a cortesia aparecem no mesmo atendimento, sem o operador consultar outro sistema.</p>',
+			),
+			array(
+				'faq:ht-tempo-producao',
+				'Quanto tempo leva para colocar uma integração em produção?',
+				'<p>Depende muito menos do prazo de desenvolvimento do que do acesso aos sistemas. Fluxos que usam conectores já prontos e uma API documentada costumam entrar em semanas; o que estica o cronograma é liberação de credencial, homologação com o fornecedor do PMS e limpeza de cadastro. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:ht-alta-demanda',
+				'A plataforma suporta grandes volumes de reservas em períodos de alta demanda?',
+				'<p>Sim, e é justamente para o pico que a arquitetura foi pensada. O processamento é elástico e trabalha sobre filas, então feriado, alta temporada ou uma promoção relâmpago aumentam a fila sem derrubar o fluxo nem perder mensagem. Se um sistema de destino fica lento ou indisponível, as mensagens ficam retidas e são reprocessadas automaticamente quando ele volta, preservando a ordem dos eventos de cada reserva.</p>',
+			),
+			array(
+				'faq:ht-franquias-padronizacao',
+				'Como padronizar integrações entre franquias com sistemas diferentes?',
+				'<p>A padronização acontece no meio do caminho, não nas pontas. Define-se um formato único para reserva, hóspede e consumo, e cada propriedade ganha apenas o trecho de tradução do seu sistema para esse formato — o restante do fluxo é o mesmo para toda a rede. Uma unidade nova entra reaproveitando o modelo, e quem opera a rede passa a enxergar todas as propriedades pelos mesmos indicadores, mesmo com PMS diferentes em cada uma.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Hotelaria e Turismo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
