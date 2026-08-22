@@ -2812,7 +2812,68 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 
+		$this->preencher_manufatura_faq( $post_id );
+
 		WP_CLI::log( "  Manufatura preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Manufatura e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Manufatura.
+	 * @return void
+	 */
+	protected function preencher_manufatura_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mf-ipaas-vs-sap',
+				'Qual a diferença entre uma iPaaS e o SAP Integration Suite ou SAP MII?',
+				'<p>O SAP Integration Suite e o SAP MII resolvem muito bem o que nasce e termina dentro do mundo SAP. Uma iPaaS trata a integração como uma camada independente: o mesmo ambiente conecta SAP S/4HANA, MES, WMS, Salesforce, sistemas industriais e serviços de nuvem, com governança e monitoramento únicos. Na prática, os dois convivem — a iPaaS assume os fluxos que atravessam fronteiras entre sistemas e evita que cada novo projeto vire uma integração ponto a ponto.</p>',
+			),
+			array(
+				'faq:mf-ot-nuvem-seguranca',
+				'É possível conectar equipamentos industriais à nuvem com segurança?',
+				'<p>Sim. A comunicação com o ambiente industrial é feita por um agente instalado dentro da própria rede, que abre a conexão de dentro para fora — não é preciso expor portas de entrada no firewall. Sobre isso funciona uma arquitetura zero-trust: dados criptografados em trânsito, credenciais em cofre e cada acesso registrado, com cada fluxo enxergando apenas as informações de que precisa.</p>',
+			),
+			array(
+				'faq:mf-mulesoft',
+				'O CLI Connect pode substituir plataformas como MuleSoft?',
+				'<p>Sim, esse tipo de substituição é um cenário comum de projeto. A avaliação passa por mapear as integrações existentes, o volume processado e as necessidades de governança, e a migração é feita por ondas: os fluxos críticos entram primeiro e os demais seguem em etapas, mantendo os dois ambientes em paralelo até o corte. O ganho costuma estar no custo de manutenção e na velocidade de criar fluxos novos.</p>',
+			),
+			array(
+				'faq:mf-compliance-industrial',
+				'A plataforma atende requisitos de compliance industrial?',
+				'<p>A plataforma opera sob os padrões de segurança e privacidade listados nesta página — SOC 2, ISO 27001, ISO 27701, ISO 27018, PCI DSS e GDPR/LGPD, entre outros. Para a indústria, o que costuma pesar é a rastreabilidade: cada execução de fluxo fica registrada, com histórico de versões e trilha de auditoria, o que sustenta exigências de qualidade e de validação de processos.</p>',
+			),
+			array(
+				'faq:mf-iot-volume',
+				'Como a plataforma lida com grandes volumes de dados de sensores IoT?',
+				'<p>O processamento é elástico e trabalha em fluxo contínuo, com filas que absorvem picos de coleta sem perder mensagem. Em vez de despejar o dado bruto no destino, os fluxos filtram, agregam e normalizam ainda no caminho — assim só o que tem uso analítico chega às plataformas de dados e aos modelos de IA, reduzindo custo de armazenamento e tempo de resposta.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
