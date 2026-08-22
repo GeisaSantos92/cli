@@ -2780,6 +2780,27 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da manufatura',
+			'solucao_casos_1_icone'        => $this->img( 'manufatura-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Migre para SAP S/4HANA sem downtime',
+			'solucao_casos_1_desc'         => 'Conecte sistemas durante a migração preservando a continuidade das operações industriais.',
+			'solucao_casos_2_icone'        => $this->img( 'manufatura-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize o ciclo Order-to-Cash',
+			'solucao_casos_2_desc'         => 'Integre pedidos, faturamento e logística para reduzir atrasos e retrabalho operacional.',
+			'solucao_casos_3_icone'        => $this->img( 'manufatura-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Digitalize o Procure-to-Pay',
+			'solucao_casos_3_desc'         => 'Conecte SAP Ariba, ERP e fornecedores para acelerar compras e aprovações.',
+			'solucao_casos_4_icone'        => $this->img( 'manufatura-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Alimente IA com dados da produção',
+			'solucao_casos_4_desc'         => 'Envie dados industriais continuamente para plataformas analíticas e modelos de inteligência artificial.',
+			'solucao_casos_5_icone'        => $this->img( 'manufatura-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte OT e cloud com segurança',
+			'solucao_casos_5_desc'         => 'Integre MES, IoT e equipamentos industriais às plataformas de dados sem abrir o firewall.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
