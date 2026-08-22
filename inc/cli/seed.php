@@ -2984,7 +2984,68 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 
+		$this->preencher_logistica_3pl_faq( $post_id );
+
 		WP_CLI::log( "  Logística (3PL) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Logística (3PL) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Logística (3PL).
+	 * @return void
+	 */
+	protected function preencher_logistica_3pl_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:lg-onboarding-cliente',
+				'Quanto tempo leva para integrar um novo cliente?',
+				'<p>O prazo depende de quantos sistemas entram no fluxo, mas o ganho vem da reutilização: os conectores para ERPs e WMS já existem e são reaproveitados de um contrato para o outro. Na prática, o que era um projeto de integração do zero passa a ser a configuração de um fluxo já validado — é o que sustenta a redução de 50% no tempo de integração de parceiros e sistemas citada nesta página.</p>',
+			),
+			array(
+				'faq:lg-avaliar-plataforma-3pl',
+				'O que avaliar em uma plataforma para operadores logísticos 3PL?',
+				'<p>Três pontos costumam decidir a escolha: se a plataforma reaproveita integrações entre clientes ou obriga a começar do zero a cada contrato; se governa no mesmo ambiente os sistemas em nuvem e os instalados na infraestrutura do cliente; e se o modelo acompanha picos sazonais sem exigir capacidade contratada o ano inteiro. Vale olhar também a trilha de auditoria, já que o operador responde por dados de terceiros.</p>',
+			),
+			array(
+				'faq:lg-erp-on-premises',
+				'A plataforma conecta ERPs instalados on-premises?',
+				'<p>Sim. A conexão com ERPs e WMS instalados na rede do cliente é feita por um agente dentro da própria infraestrutura, que abre a comunicação de dentro para fora — sem expor portas de entrada no firewall. Fluxos em nuvem e on-premises ficam sob o mesmo ambiente de governança e monitoramento.</p>',
+			),
+			array(
+				'faq:lg-custo-alto-volume',
+				'Como funciona o custo para operações com alto volume?',
+				'<p>O dimensionamento considera o volume processado e a quantidade de integrações ativas, não o número de usuários. Como os fluxos filtram e agregam os dados ainda no caminho, o custo de operações grandes tende a crescer menos que proporcionalmente ao número de pedidos e eventos, e os picos sazonais são absorvidos pelo processamento elástico.</p>',
+			),
+			array(
+				'faq:lg-multiplas-transportadoras',
+				'É possível integrar várias transportadoras sem criar uma integração para cada uma?',
+				'<p>Sim — é um dos casos de uso desta página. Em vez de uma conexão dedicada por transportadora, a integração é centralizada: coleta, rastreio e entrega passam por um fluxo comum e cada transportadora entra como mais uma configuração. Incluir uma nova deixa de ser um projeto de desenvolvimento.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Logística (3PL) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
