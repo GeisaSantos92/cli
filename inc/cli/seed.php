@@ -2954,6 +2954,27 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Entregue integrações como parte do seu produto',
+			'solucao_casos_1_icone'        => $this->img( 'software-isv-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Disponibilize integrações nativas',
+			'solucao_casos_1_desc'         => 'Utilize componentes reutilizáveis para conectar seu software aos principais sistemas corporativos.',
+			'solucao_casos_2_icone'        => $this->img( 'software-isv-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Crie agentes de IA com MCP',
+			'solucao_casos_2_desc'         => 'Desenvolva agentes inteligentes expostos como servidores MCP integrados ao seu produto.',
+			'solucao_casos_3_icone'        => $this->img( 'software-isv-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Implante no ambiente do cliente',
+			'solucao_casos_3_desc'         => 'Execute integrações na infraestrutura do cliente sem VPN ou portas abertas.',
+			'solucao_casos_4_icone'        => $this->img( 'software-isv-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Monitore todos os clientes',
+			'solucao_casos_4_desc'         => 'Centralize métricas, execuções e integrações em um único painel operacional.',
+			'solucao_casos_5_icone'        => $this->img( 'software-isv-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte qualquer modelo de IA',
+			'solucao_casos_5_desc'         => 'Orquestre diferentes provedores de LLM diretamente nos fluxos de integração do produto.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
