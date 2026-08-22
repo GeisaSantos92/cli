@@ -107,6 +107,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Varejo…' );
 		$this->preencher_solucao_varejo();
 
+		WP_CLI::log( '— Preenchendo Seguros…' );
+		$this->preencher_solucao_seguros();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -463,6 +466,7 @@ class Cliconnect_Seed {
 			array( 'Sustentare', 'cliente-sustentare', false ),
 			array( 'Clamper', 'cliente-clamper', false ),
 			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'SEG Imob', 'cliente-seg-imob', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2924,6 +2928,175 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Seguros".
+	 *
+	 * Landing page da indústria de seguros, montada a partir dos frames
+	 * "Seção - Hero" a "Seção - FAQ" do Figma. Cresce uma seção por rodada, na
+	 * ordem do Figma; as não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_seguros() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:seguros', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Seguros: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para seguros',
+			'solucao_hero_titulo'          => 'Conecte sistemas legados e',
+			'solucao_hero_titulo_destaque' => 'acelere o lançamento',
+			'solucao_hero_titulo_fim'      => 'de novos produtos de seguros',
+			'solucao_hero_corpo'           => 'Integre Guidewire, Duck Creek, Salesforce e outras aplicações sem substituir seu core, modernizando operações com segurança e velocidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'seguros-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '10 min',
+			'solucao_metrica_1_rotulo'     => 'de tempo total na subscrição de riscos',
+			'solucao_metrica_2_numero'     => '6',
+			'solucao_metrica_2_rotulo'     => 'para o retorno financeiro de sistemas legados de seguros',
+			'solucao_metrica_3_numero'     => '100%',
+			'solucao_metrica_3_rotulo'     => 'de conformidade regulatória alcançada na troca de dados sigilosos',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Sua operação seguradora pronta para o futuro',
+			'solucao_pilares_1_icone'      => $this->img( 'seguros-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize dados em tempo real',
+			'solucao_pilares_1_desc'       => 'Conecte apólices, sinistros e canais de distribuição com informações sempre atualizadas.',
+			'solucao_pilares_2_icone'      => $this->img( 'seguros-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Automatize decisões com IA',
+			'solucao_pilares_2_desc'       => 'Utilize inteligência artificial para agilizar underwriting e triagem inicial de sinistros.',
+			'solucao_pilares_3_icone'      => $this->img( 'seguros-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Conecte corretores em tempo real',
+			'solucao_pilares_3_desc'       => 'Disponibilize informações atualizadas para parceiros comerciais por meio de portais integrados.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos os sistemas de seguros de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:seg-imob', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:bnp-paribas-cardif', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:hsbc', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos do mercado segurador',
+			'solucao_casos_1_icone'        => $this->img( 'seguros-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte sistemas core ao CRM',
+			'solucao_casos_1_desc'         => 'Integre Guidewire, Duck Creek e outras plataformas aos sistemas comerciais da seguradora.',
+			'solucao_casos_2_icone'        => $this->img( 'seguros-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize a gestão de sinistros',
+			'solucao_casos_2_desc'         => 'Integre abertura, análise, prevenção à fraude e pagamento em um único fluxo.',
+			'solucao_casos_3_icone'        => $this->img( 'seguros-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Sincronize portais de corretores',
+			'solucao_casos_3_desc'         => 'Mantenha agentes e parceiros atualizados com informações consistentes sobre clientes e apólices.',
+			'solucao_casos_4_icone'        => $this->img( 'seguros-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atenda requisitos do Open Insurance',
+			'solucao_casos_4_desc'         => 'Integre sistemas seguindo padrões regulatórios e requisitos definidos pela SUSEP.',
+			'solucao_casos_5_icone'        => $this->img( 'seguros-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Acelere o underwriting com IA',
+			'solucao_casos_5_desc'         => 'Utilize modelos inteligentes para apoiar análises de risco e emissão de novas apólices.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_seguros_faq( $post_id );
+
+		WP_CLI::log( "  Seguros preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Seguros e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Seguros.
+	 * @return void
+	 */
+	protected function preencher_seguros_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sg-prazo-guidewire-duck-creek',
+				'Quanto tempo leva para integrar Guidewire ou Duck Creek?',
+				'<p>O prazo depende de quantos processos entram na primeira onda, não do tamanho do core. Como a conexão é feita por uma camada de integração sobre APIs já existentes, um fluxo bem delimitado — emissão de apólice ou abertura de sinistro, por exemplo — costuma sair em semanas, e não em meses. O caminho usual é começar por um processo de alto volume, colocá-lo em produção e seguir ampliando a partir dele.</p>',
+			),
+			array(
+				'faq:sg-plataforma-vs-conectores',
+				'Qual a vantagem de utilizar uma plataforma em vez de conectores nativos?',
+				'<p>Conectores nativos resolvem bem um par de sistemas por vez, mas cada nova ponta vira um projeto próprio, com seu próprio monitoramento e sua própria manutenção. Uma plataforma trata a integração como camada única: o mesmo ambiente conecta o core de seguros, o CRM, os portais de corretores e os serviços de nuvem, com governança, versionamento e trilha de auditoria centralizados. O ganho aparece quando o número de integrações cresce.</p>',
+			),
+			array(
+				'faq:sg-criterios-escolha',
+				'O que as seguradoras devem avaliar ao escolher uma plataforma de integração?',
+				'<p>Quatro pontos costumam decidir: se a plataforma conversa com os sistemas core do mercado sem desenvolvimento sob medida; se atende às exigências regulatórias de tratamento de dados sigilosos; se registra cada execução de forma auditável; e se a equipe interna consegue criar fluxos novos sem depender de terceiros. O quinto ponto, menos citado, é o custo de manter as integrações vivas ao longo dos anos.</p>',
+			),
+			array(
+				'faq:sg-modernizar-sem-trocar-core',
+				'É possível modernizar a operação sem substituir o sistema core?',
+				'<p>Sim — é justamente a proposta desta abordagem. O core continua sendo a fonte da verdade para apólices e sinistros, e a camada de integração expõe esses dados para os canais digitais, o CRM e os parceiros. Na prática, a seguradora lança produtos e experiências novas sobre o sistema que já tem, sem carregar o risco e o prazo de uma substituição completa.</p>',
+			),
+			array(
+				'faq:sg-open-insurance',
+				'Como a plataforma atende aos requisitos do Open Insurance brasileiro?',
+				'<p>O Open Insurance exige expor e consumir dados por APIs padronizadas, com consentimento do cliente e rastreabilidade de cada troca. A plataforma cobre esse desenho: publica APIs nos padrões definidos pela SUSEP, controla autenticação e escopo de cada consentimento e mantém registro de todas as chamadas. Assim, a adequação regulatória se apoia na mesma camada que já conecta os sistemas internos.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Seguros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
