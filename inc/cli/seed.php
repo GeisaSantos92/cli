@@ -2974,6 +2974,12 @@ class Cliconnect_Seed {
 			'solucao_casos_6_icone'        => $this->img( 'varejo-caso-6' ),
 			'solucao_casos_6_titulo'       => 'Automatize a logística reversa',
 			'solucao_casos_6_desc'         => 'Gerencie devoluções, reembolsos e viabilidade de revenda com fluxos inteligentes automatizados.',
+
+			// 6 · Selos. Os 10 badges são assets estáticos do tema; a seção só
+			// traz o texto.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
@@ -2982,6 +2988,7 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
 	}
+
 
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Salesforce".
