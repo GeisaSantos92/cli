@@ -3267,11 +3267,76 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'varejo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'Redução no tempo de entrega.',
+			'solucao_metrica_2_numero'     => '40%',
+			'solucao_metrica_2_rotulo'     => 'mais rápido o cadastro de fornecedores',
+			'solucao_metrica_3_numero'     => '1600%',
+			'solucao_metrica_3_rotulo'     => 'de ROI em 10 meses',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme dados conectados em melhores experiências de compra',
+			'solucao_pilares_1_icone'      => $this->img( 'varejo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Unifique a visão do cliente',
+			'solucao_pilares_1_desc'       => 'Centralize informações de vendas, atendimento e logística para personalizar cada interação com consumidores.',
+			'solucao_pilares_2_icone'      => $this->img( 'varejo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Migre plataformas sem interromper vendas',
+			'solucao_pilares_2_desc'       => 'Troque plataformas de e-commerce mantendo operações, pedidos e integrações funcionando normalmente.',
+			'solucao_pilares_3_icone'      => $this->img( 'varejo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize entregas com inteligência artificial',
+			'solucao_pilares_3_desc'       => 'Otimize rotas, decisões logísticas e processos de entrega utilizando dados em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos o varejo de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:indiana', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso. O frame não traz o card CTA azul, então
+			// solucao_casos_cta_* fica vazio e o template o omite.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize toda a operação do varejo',
+			'solucao_casos_1_icone'        => $this->img( 'varejo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte experiências de compra',
+			'solucao_casos_1_desc'         => 'Integre canais físicos e digitais para oferecer jornadas consistentes em todos os pontos de contato.',
+			'solucao_casos_2_icone'        => $this->img( 'varejo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Otimize a última milha',
+			'solucao_casos_2_desc'         => 'Automatize entregas utilizando dados operacionais para reduzir custos e melhorar prazos.',
+			'solucao_casos_3_icone'        => $this->img( 'varejo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Integre canais de social commerce',
+			'solucao_casos_3_desc'         => 'Conecte pedidos originados nas redes sociais aos sistemas comerciais e logísticos.',
+			'solucao_casos_4_icone'        => $this->img( 'varejo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Migre seu ERP para a nuvem',
+			'solucao_casos_4_desc'         => 'Modernize sua arquitetura preservando integrações e continuidade das operações comerciais.',
+			'solucao_casos_5_icone'        => $this->img( 'varejo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Personalize recomendações com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados integrados para recomendar produtos conforme comportamento e histórico de compras.',
+			'solucao_casos_6_icone'        => $this->img( 'varejo-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize a logística reversa',
+			'solucao_casos_6_desc'         => 'Gerencie devoluções, reembolsos e viabilidade de revenda com fluxos inteligentes automatizados.',
+
+			// 6 · Selos. Os 10 badges são assets estáticos do tema; a seção só
+			// traz o texto.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+
+		$this->preencher_varejo_faq( $post_id );
 
 		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
 	}
@@ -3443,6 +3508,64 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Seguros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Cria os cli_faq do Varejo e vincula ao relationship da seção 7.
+	 *
+	 * As cinco perguntas vêm do Figma, mas o accordion está fechado no desenho —
+	 * as respostas abaixo são RASCUNHO redigido aqui e precisam de revisão do
+	 * cliente antes de ir ao ar.
+	 *
+	 * @param int $post_id ID do post cli_solucao.
+	 * @return void
+	 */
+	protected function preencher_varejo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:vj-composable-commerce',
+				'Por que a integração é essencial para uma estratégia de composable commerce?',
+				'<p>Composable commerce troca a plataforma única por peças escolhidas a dedo — vitrine, carrinho, busca, pagamento, OMS — e é justamente isso que transfere o peso para a camada de integração. Sem ela, cada peça nova vira uma conexão ponto a ponto com todas as outras. Com uma camada de integração no meio, cada sistema conversa uma vez só com essa camada, e trocar um componente deixa de significar refazer a arquitetura inteira.</p>',
+			),
+			array(
+				'faq:vj-experiencia-cliente',
+				'Como a integração melhora a experiência do cliente?',
+				'<p>A maior parte da fricção percebida pelo consumidor nasce de dado desencontrado: estoque que não bate entre loja e site, pedido que o atendimento não enxerga, promoção que só vale em um canal. Quando vendas, atendimento, estoque e logística compartilham a mesma informação atualizada, a jornada fica consistente em qualquer ponto de contato — e o atendimento passa a responder com o histórico completo em mãos.</p>',
+			),
+			array(
+				'faq:vj-cadeia-suprimentos',
+				'Como reduzir os impactos das incertezas na cadeia de suprimentos?',
+				'<p>Reduzindo o tempo entre o que acontece na cadeia e o que a operação enxerga. Com fornecedores, ERP, WMS e transportadoras integrados, ruptura de estoque, atraso de fornecimento e mudança de prazo aparecem enquanto ainda dá para reagir — remanejar estoque entre lojas, acionar um fornecedor alternativo ou reprogramar a reposição — em vez de virarem surpresa no fechamento do mês.</p>',
+			),
+			array(
+				'faq:vj-ultima-milha',
+				'O CLI Connect ajuda na otimização da última milha?',
+				'<p>Sim. A plataforma conecta o pedido aos sistemas de logística, transportadoras e roteirizadores, de modo que a decisão de origem da entrega, a escolha da transportadora e o roteiro considerem estoque real, prazo prometido e custo. O rastreamento volta pelo mesmo caminho e alimenta o acompanhamento do cliente e os indicadores da operação, sem planilha no meio.</p>',
+			),
+			array(
+				'faq:vj-visao-360',
+				'Quais os benefícios de construir uma visão 360º do cliente?',
+				'<p>Reunir compras, atendimentos, devoluções e interações de marketing em um perfil único muda o que a operação consegue fazer: recomendação baseada em histórico real, campanhas que não repetem oferta de produto já comprado, atendimento que não pede a mesma informação duas vezes e uma leitura confiável de recorrência e valor do cliente ao longo do tempo.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Varejo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
