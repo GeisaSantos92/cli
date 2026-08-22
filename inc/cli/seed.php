@@ -456,6 +456,10 @@ class Cliconnect_Seed {
 			array( 'BRZ', 'cliente-brz', false ),
 			array( 'SBC', 'cliente-sbc', false ),
 			array( 'Indiana', 'cliente-indiana', false ),
+			array( 'Moura', 'cliente-moura', false ),
+			array( 'Sustentare', 'cliente-sustentare', false ),
+			array( 'Clamper', 'cliente-clamper', false ),
+			array( 'Legrand', 'cliente-legrand', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2761,6 +2765,21 @@ class Cliconnect_Seed {
 			'solucao_pilares_3_icone'      => $this->img( 'manufatura-pilar-3' ),
 			'solucao_pilares_3_titulo'     => 'Alimente iniciativas de IA continuamente',
 			'solucao_pilares_3_desc'       => 'Disponibilize dados da produção em tempo real para analytics, IA e automações inteligentes.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a manufatura de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:seculus', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:moura', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:sustentare', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:clamper', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:legrand', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:culligan', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
