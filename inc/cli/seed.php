@@ -104,6 +104,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Manufatura…' );
 		$this->preencher_solucao_manufatura();
 
+		WP_CLI::log( '— Preenchendo Logística (3PL)…' );
+		$this->preencher_solucao_logistica_3pl();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -2874,6 +2877,53 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Logística (3PL)".
+	 *
+	 * Landing page da indústria de logística. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_logistica_3pl() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:logistica-3pl', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Logística (3PL): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para logística',
+			'solucao_hero_titulo'          => 'Conecte clientes, transportadoras e sistemas logísticos',
+			'solucao_hero_titulo_destaque' => 'em uma única plataforma',
+			'solucao_hero_corpo'           => 'Integre ERPs, WMS, transportadoras e marketplaces para acelerar o onboarding de novos clientes, automatizar operações e escalar sua logística com previsibilidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'logistica-3pl-hero' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  Logística (3PL) preenchido (ID: {$post_id})." );
 	}
 
 	/**
