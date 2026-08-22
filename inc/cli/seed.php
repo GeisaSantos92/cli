@@ -2950,6 +2950,27 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da hotelaria',
+			'solucao_casos_1_icone'        => $this->img( 'hotelaria-e-turismo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte PMS e CRM',
+			'solucao_casos_1_desc'         => 'Sincronize reservas, preferências e histórico dos hóspedes entre sistemas automaticamente.',
+			'solucao_casos_2_icone'        => $this->img( 'hotelaria-e-turismo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize programas de fidelidade',
+			'solucao_casos_2_desc'         => 'Integre POS, reservas e loyalty para oferecer benefícios em todos os canais.',
+			'solucao_casos_3_icone'        => $this->img( 'hotelaria-e-turismo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Unifique relatórios das propriedades',
+			'solucao_casos_3_desc'         => 'Centralize indicadores operacionais e financeiros de todas as unidades em um painel.',
+			'solucao_casos_4_icone'        => $this->img( 'hotelaria-e-turismo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atualize preços dinamicamente',
+			'solucao_casos_4_desc'         => 'Utilize dados de ocupação para automatizar estratégias de precificação em tempo real.',
+			'solucao_casos_5_icone'        => $this->img( 'hotelaria-e-turismo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Automatize a governança dos quartos',
+			'solucao_casos_5_desc'         => 'Integre housekeeping, reservas e operação para agilizar liberações e limpeza dos apartamentos.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
