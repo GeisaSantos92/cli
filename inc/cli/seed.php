@@ -2986,9 +2986,68 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 
+		$this->preencher_varejo_faq( $post_id );
+
 		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
 	}
 
+	/**
+	 * Cria os cli_faq do Varejo e vincula ao relationship da seção 7.
+	 *
+	 * As cinco perguntas vêm do Figma, mas o accordion está fechado no desenho —
+	 * as respostas abaixo são RASCUNHO redigido aqui e precisam de revisão do
+	 * cliente antes de ir ao ar.
+	 *
+	 * @param int $post_id ID do post cli_solucao.
+	 * @return void
+	 */
+	protected function preencher_varejo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:vj-composable-commerce',
+				'Por que a integração é essencial para uma estratégia de composable commerce?',
+				'<p>Composable commerce troca a plataforma única por peças escolhidas a dedo — vitrine, carrinho, busca, pagamento, OMS — e é justamente isso que transfere o peso para a camada de integração. Sem ela, cada peça nova vira uma conexão ponto a ponto com todas as outras. Com uma camada de integração no meio, cada sistema conversa uma vez só com essa camada, e trocar um componente deixa de significar refazer a arquitetura inteira.</p>',
+			),
+			array(
+				'faq:vj-experiencia-cliente',
+				'Como a integração melhora a experiência do cliente?',
+				'<p>A maior parte da fricção percebida pelo consumidor nasce de dado desencontrado: estoque que não bate entre loja e site, pedido que o atendimento não enxerga, promoção que só vale em um canal. Quando vendas, atendimento, estoque e logística compartilham a mesma informação atualizada, a jornada fica consistente em qualquer ponto de contato — e o atendimento passa a responder com o histórico completo em mãos.</p>',
+			),
+			array(
+				'faq:vj-cadeia-suprimentos',
+				'Como reduzir os impactos das incertezas na cadeia de suprimentos?',
+				'<p>Reduzindo o tempo entre o que acontece na cadeia e o que a operação enxerga. Com fornecedores, ERP, WMS e transportadoras integrados, ruptura de estoque, atraso de fornecimento e mudança de prazo aparecem enquanto ainda dá para reagir — remanejar estoque entre lojas, acionar um fornecedor alternativo ou reprogramar a reposição — em vez de virarem surpresa no fechamento do mês.</p>',
+			),
+			array(
+				'faq:vj-ultima-milha',
+				'O CLI Connect ajuda na otimização da última milha?',
+				'<p>Sim. A plataforma conecta o pedido aos sistemas de logística, transportadoras e roteirizadores, de modo que a decisão de origem da entrega, a escolha da transportadora e o roteiro considerem estoque real, prazo prometido e custo. O rastreamento volta pelo mesmo caminho e alimenta o acompanhamento do cliente e os indicadores da operação, sem planilha no meio.</p>',
+			),
+			array(
+				'faq:vj-visao-360',
+				'Quais os benefícios de construir uma visão 360º do cliente?',
+				'<p>Reunir compras, atendimentos, devoluções e interações de marketing em um perfil único muda o que a operação consegue fazer: recomendação baseada em histórico real, campanhas que não repetem oferta de produto já comprado, atendimento que não pede a mesma informação duas vezes e uma leitura confiável de recorrência e valor do cliente ao longo do tempo.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Varejo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
 
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Salesforce".
