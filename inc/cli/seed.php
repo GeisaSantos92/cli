@@ -463,6 +463,7 @@ class Cliconnect_Seed {
 			array( 'Sustentare', 'cliente-sustentare', false ),
 			array( 'Clamper', 'cliente-clamper', false ),
 			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'Peixoto', 'cliente-peixoto', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2938,6 +2939,19 @@ class Cliconnect_Seed {
 			'solucao_pilares_3_icone'      => $this->img( 'logistica-3pl-pilar-3' ),
 			'solucao_pilares_3_titulo'     => 'Automatize documentos com IA',
 			'solucao_pilares_3_desc'       => 'Extraia informações de PDFs e e-mails para iniciar processos logísticos automaticamente.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a logística de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:peixoto', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
