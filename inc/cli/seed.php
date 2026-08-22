@@ -2986,7 +2986,68 @@ class Cliconnect_Seed {
 			update_field( $nome, $valor, $post_id );
 		}
 
+		$this->preencher_software_isv_faq( $post_id );
+
 		WP_CLI::log( "  Software (ISV) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Software (ISV) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Software (ISV).
+	 * @return void
+	 */
+	protected function preencher_software_isv_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:isv-tempo-primeira-integracao',
+				'Quanto tempo leva para criar uma integração nativa com Salesforce ou SAP?',
+				'<p>A primeira integração costuma entrar no ar em cerca de cinco dias. O ganho vem de não começar do zero: os conectores para Salesforce, SAP e demais sistemas corporativos já existem, e o trabalho fica concentrado em mapear campos e regras de negócio em ambiente low-code. As integrações seguintes são ainda mais rápidas, porque reaproveitam os componentes construídos na primeira.</p>',
+			),
+			array(
+				'faq:isv-mudanca-api-parceiro',
+				'O que acontece quando a API de um parceiro é alterada?',
+				'<p>A atualização acontece na camada de integração, não dentro do seu produto. Como o conector é mantido na plataforma e compartilhado por todos os clientes que o utilizam, a mudança é aplicada uma vez e vale para toda a base — em vez de virar uma correção por cliente. O monitoramento centralizado mostra quais fluxos foram afetados antes que isso chegue ao usuário final.</p>',
+			),
+			array(
+				'faq:isv-isolamento-multi-tenant',
+				'Como funciona o isolamento de dados em ambientes multi-tenant?',
+				'<p>Cada cliente opera com credenciais e ambiente de execução próprios, e um fluxo só enxerga os dados do tenant a que pertence. Quando o cenário exige, a execução acontece dentro da infraestrutura do próprio cliente, sem VPN nem portas abertas — o dado sensível não sai do perímetro dele, e o painel central recebe apenas os registros de execução.</p>',
+			),
+			array(
+				'faq:isv-custo-conectores-internos',
+				'Qual o custo real de manter conectores desenvolvidos internamente?',
+				'<p>O custo visível é o da construção; o que pesa é a manutenção. Cada conector interno vira código proprietário que precisa acompanhar mudanças de API, autenticação e volume, e esse esforço cresce junto com a base de clientes. Com integrações reutilizáveis, o time de produto para de manter conectores individuais e a operação escala conforme o consumo da plataforma.</p>',
+			),
+			array(
+				'faq:isv-cargas-elevadas',
+				'A plataforma suporta cargas de processamento muito elevadas?',
+				'<p>Sim. O processamento é elástico e trabalha com filas que absorvem picos sem perder mensagem, o que permite atender desde um cliente pequeno até operações com milhões de execuções por mês no mesmo ambiente. O painel operacional acompanha volume, latência e falhas por cliente, e a capacidade acompanha o consumo sem exigir reescrita dos fluxos.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Software (ISV) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
