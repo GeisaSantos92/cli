@@ -565,6 +565,15 @@ function cliconnect_acf_fields_cpt() {
 					'instructions' => 'Opcional. Preenchido, o título passa a correr como uma frase só e o trecho azul fica no meio dela; vazio, as duas primeiras partes seguem em linhas separadas.',
 				),
 				array(
+					'key'           => 'field_solucao_hero_titulo_fluido',
+					'label'         => 'Título em frase corrida',
+					'name'          => 'solucao_hero_titulo_fluido',
+					'type'          => 'true_false',
+					'instructions'  => 'Marque quando o trecho azul encerra a frase mas deve continuar na mesma linha do texto escuro. Com a continuação preenchida o modo já é automático.',
+					'ui'            => 1,
+					'default_value' => 0,
+				),
+				array(
 					'key'    => 'field_solucao_hero_corpo',
 					'label'  => 'Corpo',
 					'name'   => 'solucao_hero_corpo',
