@@ -2925,6 +2925,19 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'de aumento no ROI em ambientes de tecnologia',
 			'solucao_metrica_3_numero'     => '5 dias',
 			'solucao_metrica_3_rotulo'     => 'para a primeira integração',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme integrações em vantagem competitiva',
+			'solucao_pilares_1_icone'      => $this->img( 'software-isv-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Conecte qualquer ERP ou CRM',
+			'solucao_pilares_1_desc'       => 'Amplie a compatibilidade do seu produto com integrações prontas para diferentes plataformas corporativas.',
+			'solucao_pilares_2_icone'      => $this->img( 'software-isv-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Entregue integrações em minutos',
+			'solucao_pilares_2_desc'       => 'Implemente a primeira pipeline rapidamente utilizando conectores reutilizáveis e arquitetura low-code.',
+			'solucao_pilares_3_icone'      => $this->img( 'software-isv-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Escalone sem aumentar custos',
+			'solucao_pilares_3_desc'       => 'Cresça conforme o consumo da plataforma sem cobrar ou manter conectores individuais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
