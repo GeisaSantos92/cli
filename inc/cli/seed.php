@@ -463,6 +463,7 @@ class Cliconnect_Seed {
 			array( 'Sustentare', 'cliente-sustentare', false ),
 			array( 'Clamper', 'cliente-clamper', false ),
 			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'Utrip', 'cliente-utrip', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2939,6 +2940,16 @@ class Cliconnect_Seed {
 			'solucao_pilares_3_icone'      => $this->img( 'hotelaria-e-turismo-pilar-3' ),
 			'solucao_pilares_3_titulo'     => 'Expanda novas unidades rapidamente',
 			'solucao_pilares_3_desc'       => 'Padronize integrações reutilizando componentes em novas propriedades e franquias da rede.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a hotelaria de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:utrip', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
