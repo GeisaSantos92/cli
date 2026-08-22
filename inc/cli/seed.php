@@ -2971,6 +2971,11 @@ class Cliconnect_Seed {
 			'solucao_casos_5_desc'         => 'Integre housekeeping, reservas e operação para agilizar liberações e limpeza dos apartamentos.',
 			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
 			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
