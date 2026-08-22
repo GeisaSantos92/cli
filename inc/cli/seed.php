@@ -104,6 +104,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Manufatura…' );
 		$this->preencher_solucao_manufatura();
 
+		WP_CLI::log( '— Preenchendo Software (ISV)…' );
+		$this->preencher_solucao_software_isv();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -460,6 +463,9 @@ class Cliconnect_Seed {
 			array( 'Sustentare', 'cliente-sustentare', false ),
 			array( 'Clamper', 'cliente-clamper', false ),
 			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'Neogrid', 'cliente-neogrid', false ),
+			array( 'Zukkin', 'cliente-zukkin', false ),
+			array( 'B2List', 'cliente-b2list', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2874,6 +2880,174 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Software (ISV)".
+	 *
+	 * Landing page da indústria de software. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_software_isv() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:software-isv', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Software (ISV): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para softwares',
+			'solucao_hero_titulo'          => 'Entregue integrações nativas para seus clientes',
+			'solucao_hero_titulo_destaque' => 'sem reconstruir conectores a cada projeto',
+			'solucao_hero_corpo'           => 'Conecte seu produto a ERPs, CRMs e aplicações corporativas utilizando integrações reutilizáveis, APIs nativas e uma plataforma preparada para escalar seu software.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'software-isv-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '4x',
+			'solucao_metrica_1_rotulo'     => 'mais rápido para entrega de projetos de integração e desenvolvimento',
+			'solucao_metrica_2_numero'     => '350%',
+			'solucao_metrica_2_rotulo'     => 'de aumento no ROI em ambientes de tecnologia',
+			'solucao_metrica_3_numero'     => '5 dias',
+			'solucao_metrica_3_rotulo'     => 'para a primeira integração',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme integrações em vantagem competitiva',
+			'solucao_pilares_1_icone'      => $this->img( 'software-isv-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Conecte qualquer ERP ou CRM',
+			'solucao_pilares_1_desc'       => 'Amplie a compatibilidade do seu produto com integrações prontas para diferentes plataformas corporativas.',
+			'solucao_pilares_2_icone'      => $this->img( 'software-isv-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Entregue integrações em minutos',
+			'solucao_pilares_2_desc'       => 'Implemente a primeira pipeline rapidamente utilizando conectores reutilizáveis e arquitetura low-code.',
+			'solucao_pilares_3_icone'      => $this->img( 'software-isv-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Escalone sem aumentar custos',
+			'solucao_pilares_3_desc'       => 'Cresça conforme o consumo da plataforma sem cobrar ou manter conectores individuais.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos softwares de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:neogrid', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:zukkin', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:b2list', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:thomson-reuters', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Entregue integrações como parte do seu produto',
+			'solucao_casos_1_icone'        => $this->img( 'software-isv-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Disponibilize integrações nativas',
+			'solucao_casos_1_desc'         => 'Utilize componentes reutilizáveis para conectar seu software aos principais sistemas corporativos.',
+			'solucao_casos_2_icone'        => $this->img( 'software-isv-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Crie agentes de IA com MCP',
+			'solucao_casos_2_desc'         => 'Desenvolva agentes inteligentes expostos como servidores MCP integrados ao seu produto.',
+			'solucao_casos_3_icone'        => $this->img( 'software-isv-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Implante no ambiente do cliente',
+			'solucao_casos_3_desc'         => 'Execute integrações na infraestrutura do cliente sem VPN ou portas abertas.',
+			'solucao_casos_4_icone'        => $this->img( 'software-isv-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Monitore todos os clientes',
+			'solucao_casos_4_desc'         => 'Centralize métricas, execuções e integrações em um único painel operacional.',
+			'solucao_casos_5_icone'        => $this->img( 'software-isv-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte qualquer modelo de IA',
+			'solucao_casos_5_desc'         => 'Orquestre diferentes provedores de LLM diretamente nos fluxos de integração do produto.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_software_isv_faq( $post_id );
+
+		WP_CLI::log( "  Software (ISV) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Software (ISV) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Software (ISV).
+	 * @return void
+	 */
+	protected function preencher_software_isv_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:isv-tempo-primeira-integracao',
+				'Quanto tempo leva para criar uma integração nativa com Salesforce ou SAP?',
+				'<p>A primeira integração costuma entrar no ar em cerca de cinco dias. O ganho vem de não começar do zero: os conectores para Salesforce, SAP e demais sistemas corporativos já existem, e o trabalho fica concentrado em mapear campos e regras de negócio em ambiente low-code. As integrações seguintes são ainda mais rápidas, porque reaproveitam os componentes construídos na primeira.</p>',
+			),
+			array(
+				'faq:isv-mudanca-api-parceiro',
+				'O que acontece quando a API de um parceiro é alterada?',
+				'<p>A atualização acontece na camada de integração, não dentro do seu produto. Como o conector é mantido na plataforma e compartilhado por todos os clientes que o utilizam, a mudança é aplicada uma vez e vale para toda a base — em vez de virar uma correção por cliente. O monitoramento centralizado mostra quais fluxos foram afetados antes que isso chegue ao usuário final.</p>',
+			),
+			array(
+				'faq:isv-isolamento-multi-tenant',
+				'Como funciona o isolamento de dados em ambientes multi-tenant?',
+				'<p>Cada cliente opera com credenciais e ambiente de execução próprios, e um fluxo só enxerga os dados do tenant a que pertence. Quando o cenário exige, a execução acontece dentro da infraestrutura do próprio cliente, sem VPN nem portas abertas — o dado sensível não sai do perímetro dele, e o painel central recebe apenas os registros de execução.</p>',
+			),
+			array(
+				'faq:isv-custo-conectores-internos',
+				'Qual o custo real de manter conectores desenvolvidos internamente?',
+				'<p>O custo visível é o da construção; o que pesa é a manutenção. Cada conector interno vira código proprietário que precisa acompanhar mudanças de API, autenticação e volume, e esse esforço cresce junto com a base de clientes. Com integrações reutilizáveis, o time de produto para de manter conectores individuais e a operação escala conforme o consumo da plataforma.</p>',
+			),
+			array(
+				'faq:isv-cargas-elevadas',
+				'A plataforma suporta cargas de processamento muito elevadas?',
+				'<p>Sim. O processamento é elástico e trabalha com filas que absorvem picos sem perder mensagem, o que permite atender desde um cliente pequeno até operações com milhões de execuções por mês no mesmo ambiente. O painel operacional acompanha volume, latência e falhas por cliente, e a capacidade acompanha o consumo sem exigir reescrita dos fluxos.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Software (ISV) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
