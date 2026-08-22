@@ -2917,6 +2917,14 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'software-isv-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '4x',
+			'solucao_metrica_1_rotulo'     => 'mais rápido para entrega de projetos de integração e desenvolvimento',
+			'solucao_metrica_2_numero'     => '350%',
+			'solucao_metrica_2_rotulo'     => 'de aumento no ROI em ambientes de tecnologia',
+			'solucao_metrica_3_numero'     => '5 dias',
+			'solucao_metrica_3_rotulo'     => 'para a primeira integração',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
