@@ -2801,6 +2801,11 @@ class Cliconnect_Seed {
 			'solucao_casos_5_desc'         => 'Integre MES, IoT e equipamentos industriais às plataformas de dados sem abrir o firewall.',
 			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
 			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
