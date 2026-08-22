@@ -101,6 +101,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Serviços Financeiros…' );
 		$this->preencher_solucao_servicos_financeiros();
 
+		WP_CLI::log( '— Preenchendo Manufatura…' );
+		$this->preencher_solucao_manufatura();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -453,6 +456,10 @@ class Cliconnect_Seed {
 			array( 'BRZ', 'cliente-brz', false ),
 			array( 'SBC', 'cliente-sbc', false ),
 			array( 'Indiana', 'cliente-indiana', false ),
+			array( 'Moura', 'cliente-moura', false ),
+			array( 'Sustentare', 'cliente-sustentare', false ),
+			array( 'Clamper', 'cliente-clamper', false ),
+			array( 'Legrand', 'cliente-legrand', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2697,6 +2704,176 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Serviços Financeiros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Manufatura".
+	 *
+	 * Landing page da indústria de manufatura. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_manufatura() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:manufatura', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Manufatura: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para manufatura',
+			'solucao_hero_titulo'          => 'Conecte sua fábrica do chão de produção à nuvem',
+			'solucao_hero_titulo_destaque' => 'sem interromper a operação.',
+			'solucao_hero_corpo'           => 'Integre SAP S/4HANA, MES, WMS, Salesforce e sistemas industriais para acelerar projetos, aumentar a visibilidade operacional e modernizar a manufatura com segurança.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'manufatura-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '4x',
+			'solucao_metrica_1_rotulo'     => 'mais rápido o cadastro de fornecedores',
+			'solucao_metrica_2_numero'     => '50%',
+			'solucao_metrica_2_rotulo'     => 'de ganho de eficiência',
+			'solucao_metrica_3_numero'     => '30s',
+			'solucao_metrica_3_rotulo'     => 'para o processamento automatizado de pedidos',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Modernize sua operação industrial com integrações preparadas para escala',
+			'solucao_pilares_1_icone'      => $this->img( 'manufatura-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Visualize toda a operação em tempo real',
+			'solucao_pilares_1_desc'       => 'Conecte produção, estoque e logística para acompanhar indicadores atualizados em toda a fábrica.',
+			'solucao_pilares_2_icone'      => $this->img( 'manufatura-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Conecte fábrica e nuvem com segurança',
+			'solucao_pilares_2_desc'       => 'Integre ambientes industriais à nuvem utilizando arquitetura zero-trust sem comprometer a operação.',
+			'solucao_pilares_3_icone'      => $this->img( 'manufatura-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Alimente iniciativas de IA continuamente',
+			'solucao_pilares_3_desc'       => 'Disponibilize dados da produção em tempo real para analytics, IA e automações inteligentes.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a manufatura de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:seculus', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:moura', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:sustentare', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:clamper', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:legrand', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:culligan', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da manufatura',
+			'solucao_casos_1_icone'        => $this->img( 'manufatura-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Migre para SAP S/4HANA sem downtime',
+			'solucao_casos_1_desc'         => 'Conecte sistemas durante a migração preservando a continuidade das operações industriais.',
+			'solucao_casos_2_icone'        => $this->img( 'manufatura-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize o ciclo Order-to-Cash',
+			'solucao_casos_2_desc'         => 'Integre pedidos, faturamento e logística para reduzir atrasos e retrabalho operacional.',
+			'solucao_casos_3_icone'        => $this->img( 'manufatura-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Digitalize o Procure-to-Pay',
+			'solucao_casos_3_desc'         => 'Conecte SAP Ariba, ERP e fornecedores para acelerar compras e aprovações.',
+			'solucao_casos_4_icone'        => $this->img( 'manufatura-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Alimente IA com dados da produção',
+			'solucao_casos_4_desc'         => 'Envie dados industriais continuamente para plataformas analíticas e modelos de inteligência artificial.',
+			'solucao_casos_5_icone'        => $this->img( 'manufatura-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte OT e cloud com segurança',
+			'solucao_casos_5_desc'         => 'Integre MES, IoT e equipamentos industriais às plataformas de dados sem abrir o firewall.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_manufatura_faq( $post_id );
+
+		WP_CLI::log( "  Manufatura preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Manufatura e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Manufatura.
+	 * @return void
+	 */
+	protected function preencher_manufatura_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mf-ipaas-vs-sap',
+				'Qual a diferença entre uma iPaaS e o SAP Integration Suite ou SAP MII?',
+				'<p>O SAP Integration Suite e o SAP MII resolvem muito bem o que nasce e termina dentro do mundo SAP. Uma iPaaS trata a integração como uma camada independente: o mesmo ambiente conecta SAP S/4HANA, MES, WMS, Salesforce, sistemas industriais e serviços de nuvem, com governança e monitoramento únicos. Na prática, os dois convivem — a iPaaS assume os fluxos que atravessam fronteiras entre sistemas e evita que cada novo projeto vire uma integração ponto a ponto.</p>',
+			),
+			array(
+				'faq:mf-ot-nuvem-seguranca',
+				'É possível conectar equipamentos industriais à nuvem com segurança?',
+				'<p>Sim. A comunicação com o ambiente industrial é feita por um agente instalado dentro da própria rede, que abre a conexão de dentro para fora — não é preciso expor portas de entrada no firewall. Sobre isso funciona uma arquitetura zero-trust: dados criptografados em trânsito, credenciais em cofre e cada acesso registrado, com cada fluxo enxergando apenas as informações de que precisa.</p>',
+			),
+			array(
+				'faq:mf-mulesoft',
+				'O CLI Connect pode substituir plataformas como MuleSoft?',
+				'<p>Sim, esse tipo de substituição é um cenário comum de projeto. A avaliação passa por mapear as integrações existentes, o volume processado e as necessidades de governança, e a migração é feita por ondas: os fluxos críticos entram primeiro e os demais seguem em etapas, mantendo os dois ambientes em paralelo até o corte. O ganho costuma estar no custo de manutenção e na velocidade de criar fluxos novos.</p>',
+			),
+			array(
+				'faq:mf-compliance-industrial',
+				'A plataforma atende requisitos de compliance industrial?',
+				'<p>A plataforma opera sob os padrões de segurança e privacidade listados nesta página — SOC 2, ISO 27001, ISO 27701, ISO 27018, PCI DSS e GDPR/LGPD, entre outros. Para a indústria, o que costuma pesar é a rastreabilidade: cada execução de fluxo fica registrada, com histórico de versões e trilha de auditoria, o que sustenta exigências de qualidade e de validação de processos.</p>',
+			),
+			array(
+				'faq:mf-iot-volume',
+				'Como a plataforma lida com grandes volumes de dados de sensores IoT?',
+				'<p>O processamento é elástico e trabalha em fluxo contínuo, com filas que absorvem picos de coleta sem perder mensagem. Em vez de despejar o dado bruto no destino, os fluxos filtram, agregam e normalizam ainda no caminho — assim só o que tem uso analítico chega às plataformas de dados e aos modelos de IA, reduzindo custo de armazenamento e tempo de resposta.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
