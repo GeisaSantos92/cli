@@ -2951,6 +2951,29 @@ class Cliconnect_Seed {
 					)
 				)
 			),
+
+			// 5 · Casos de Uso. O frame não traz o card CTA azul, então
+			// solucao_casos_cta_* fica vazio e o template o omite.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize toda a operação do varejo',
+			'solucao_casos_1_icone'        => $this->img( 'varejo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte experiências de compra',
+			'solucao_casos_1_desc'         => 'Integre canais físicos e digitais para oferecer jornadas consistentes em todos os pontos de contato.',
+			'solucao_casos_2_icone'        => $this->img( 'varejo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Otimize a última milha',
+			'solucao_casos_2_desc'         => 'Automatize entregas utilizando dados operacionais para reduzir custos e melhorar prazos.',
+			'solucao_casos_3_icone'        => $this->img( 'varejo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Integre canais de social commerce',
+			'solucao_casos_3_desc'         => 'Conecte pedidos originados nas redes sociais aos sistemas comerciais e logísticos.',
+			'solucao_casos_4_icone'        => $this->img( 'varejo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Migre seu ERP para a nuvem',
+			'solucao_casos_4_desc'         => 'Modernize sua arquitetura preservando integrações e continuidade das operações comerciais.',
+			'solucao_casos_5_icone'        => $this->img( 'varejo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Personalize recomendações com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados integrados para recomendar produtos conforme comportamento e histórico de compras.',
+			'solucao_casos_6_icone'        => $this->img( 'varejo-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize a logística reversa',
+			'solucao_casos_6_desc'         => 'Gerencie devoluções, reembolsos e viabilidade de revenda com fluxos inteligentes automatizados.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
