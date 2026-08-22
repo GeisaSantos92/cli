@@ -463,6 +463,9 @@ class Cliconnect_Seed {
 			array( 'Sustentare', 'cliente-sustentare', false ),
 			array( 'Clamper', 'cliente-clamper', false ),
 			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'Neogrid', 'cliente-neogrid', false ),
+			array( 'Zukkin', 'cliente-zukkin', false ),
+			array( 'B2List', 'cliente-b2list', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2938,6 +2941,19 @@ class Cliconnect_Seed {
 			'solucao_pilares_3_icone'      => $this->img( 'software-isv-pilar-3' ),
 			'solucao_pilares_3_titulo'     => 'Escalone sem aumentar custos',
 			'solucao_pilares_3_desc'       => 'Cresça conforme o consumo da plataforma sem cobrar ou manter conectores individuais.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos softwares de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:neogrid', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:zukkin', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:b2list', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:thomson-reuters', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
