@@ -2938,6 +2938,19 @@ class Cliconnect_Seed {
 			'solucao_pilares_3_icone'      => $this->img( 'varejo-pilar-3' ),
 			'solucao_pilares_3_titulo'     => 'Automatize entregas com inteligência artificial',
 			'solucao_pilares_3_desc'       => 'Otimize rotas, decisões logísticas e processos de entrega utilizando dados em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos o varejo de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:indiana', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
