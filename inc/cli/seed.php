@@ -104,6 +104,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Manufatura…' );
 		$this->preencher_solucao_manufatura();
 
+		WP_CLI::log( '— Preenchendo Software (ISV)…' );
+		$this->preencher_solucao_software_isv();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -2874,6 +2877,53 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Software (ISV)".
+	 *
+	 * Landing page da indústria de software. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_software_isv() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:software-isv', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Software (ISV): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para softwares',
+			'solucao_hero_titulo'          => 'Entregue integrações nativas para seus clientes',
+			'solucao_hero_titulo_destaque' => 'sem reconstruir conectores a cada projeto',
+			'solucao_hero_corpo'           => 'Conecte seu produto a ERPs, CRMs e aplicações corporativas utilizando integrações reutilizáveis, APIs nativas e uma plataforma preparada para escalar seu software.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'software-isv-hero' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  Software (ISV) preenchido (ID: {$post_id})." );
 	}
 
 	/**
