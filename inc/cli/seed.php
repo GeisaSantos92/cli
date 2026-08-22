@@ -2917,6 +2917,14 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'logistica-3pl-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '80%',
+			'solucao_metrica_1_rotulo'     => 'de aumento na precisão de dados em tempo real',
+			'solucao_metrica_2_numero'     => '50%',
+			'solucao_metrica_2_rotulo'     => 'de redução do tempo de integração de parceiros e sistemas',
+			'solucao_metrica_3_numero'     => '1',
+			'solucao_metrica_3_rotulo'     => 'única plataforma para conectar todos os clientes',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
