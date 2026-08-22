@@ -2917,6 +2917,14 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
 			'solucao_hero_btn2_url'        => '/plataforma/',
 			'solucao_hero_imagem'          => $this->img( 'varejo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'Redução no tempo de entrega.',
+			'solucao_metrica_2_numero'     => '40%',
+			'solucao_metrica_2_rotulo'     => 'mais rápido o cadastro de fornecedores',
+			'solucao_metrica_3_numero'     => '1600%',
+			'solucao_metrica_3_rotulo'     => 'de ROI em 10 meses',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
