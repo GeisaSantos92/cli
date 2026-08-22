@@ -2926,6 +2926,19 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'de automação alcançada no trabalho manual para alterações de reservas',
 			'solucao_metrica_3_numero'     => '10x',
 			'solucao_metrica_3_rotulo'     => 'mais rápido o tempo de lançamento de novos serviços',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Conecte toda a operação hoteleira em uma única plataforma',
+			'solucao_pilares_1_icone'      => $this->img( 'hotelaria-e-turismo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize inventários em tempo real',
+			'solucao_pilares_1_desc'       => 'Mantenha disponibilidade de quartos atualizada entre canais para evitar overbooking e retrabalho.',
+			'solucao_pilares_2_icone'      => $this->img( 'hotelaria-e-turismo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Personalize a experiência do hóspede',
+			'solucao_pilares_2_desc'       => 'Unifique perfis de hóspedes para oferecer atendimento personalizado utilizando inteligência artificial.',
+			'solucao_pilares_3_icone'      => $this->img( 'hotelaria-e-turismo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Expanda novas unidades rapidamente',
+			'solucao_pilares_3_desc'       => 'Padronize integrações reutilizando componentes em novas propriedades e franquias da rede.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
