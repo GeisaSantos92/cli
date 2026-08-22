@@ -2925,6 +2925,19 @@ class Cliconnect_Seed {
 			'solucao_metrica_2_rotulo'     => 'de redução do tempo de integração de parceiros e sistemas',
 			'solucao_metrica_3_numero'     => '1',
 			'solucao_metrica_3_rotulo'     => 'única plataforma para conectar todos os clientes',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Escale sua operação logística sem aumentar a complexidade',
+			'solucao_pilares_1_icone'      => $this->img( 'logistica-3pl-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Acelere o onboarding de novos clientes',
+			'solucao_pilares_1_desc'       => 'Reutilize integrações entre ERPs e WMS para reduzir o tempo de implantação de novos contratos.',
+			'solucao_pilares_2_icone'      => $this->img( 'logistica-3pl-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Sincronize estoques automaticamente',
+			'solucao_pilares_2_desc'       => 'Mantenha posições de estoque atualizadas entre clientes, operadores logísticos e sistemas corporativos.',
+			'solucao_pilares_3_icone'      => $this->img( 'logistica-3pl-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize documentos com IA',
+			'solucao_pilares_3_desc'       => 'Extraia informações de PDFs e e-mails para iniciar processos logísticos automaticamente.',
 		);
 
 		foreach ( $campos as $nome => $valor ) {
