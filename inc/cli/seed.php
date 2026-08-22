@@ -107,6 +107,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Software (ISV)…' );
 		$this->preencher_solucao_software_isv();
 
+		WP_CLI::log( '— Preenchendo Logística (3PL)…' );
+		$this->preencher_solucao_logistica_3pl();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -466,6 +469,7 @@ class Cliconnect_Seed {
 			array( 'Neogrid', 'cliente-neogrid', false ),
 			array( 'Zukkin', 'cliente-zukkin', false ),
 			array( 'B2List', 'cliente-b2list', false ),
+			array( 'Peixoto', 'cliente-peixoto', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -3048,6 +3052,174 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Software (ISV) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Logística (3PL)".
+	 *
+	 * Landing page da indústria de logística. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_logistica_3pl() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:logistica-3pl', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Logística (3PL): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para logística',
+			'solucao_hero_titulo'          => 'Conecte clientes, transportadoras e sistemas logísticos',
+			'solucao_hero_titulo_destaque' => 'em uma única plataforma',
+			'solucao_hero_corpo'           => 'Integre ERPs, WMS, transportadoras e marketplaces para acelerar o onboarding de novos clientes, automatizar operações e escalar sua logística com previsibilidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'logistica-3pl-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '80%',
+			'solucao_metrica_1_rotulo'     => 'de aumento na precisão de dados em tempo real',
+			'solucao_metrica_2_numero'     => '50%',
+			'solucao_metrica_2_rotulo'     => 'de redução do tempo de integração de parceiros e sistemas',
+			'solucao_metrica_3_numero'     => '1',
+			'solucao_metrica_3_rotulo'     => 'única plataforma para conectar todos os clientes',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Escale sua operação logística sem aumentar a complexidade',
+			'solucao_pilares_1_icone'      => $this->img( 'logistica-3pl-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Acelere o onboarding de novos clientes',
+			'solucao_pilares_1_desc'       => 'Reutilize integrações entre ERPs e WMS para reduzir o tempo de implantação de novos contratos.',
+			'solucao_pilares_2_icone'      => $this->img( 'logistica-3pl-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Sincronize estoques automaticamente',
+			'solucao_pilares_2_desc'       => 'Mantenha posições de estoque atualizadas entre clientes, operadores logísticos e sistemas corporativos.',
+			'solucao_pilares_3_icone'      => $this->img( 'logistica-3pl-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize documentos com IA',
+			'solucao_pilares_3_desc'       => 'Extraia informações de PDFs e e-mails para iniciar processos logísticos automaticamente.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a logística de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:peixoto', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos logísticos',
+			'solucao_casos_1_icone'        => $this->img( 'logistica-3pl-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Sincronize posições de estoque',
+			'solucao_casos_1_desc'         => 'Atualize saldos automaticamente entre WMS, ERP e sistemas dos clientes em tempo real.',
+			'solucao_casos_2_icone'        => $this->img( 'logistica-3pl-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize pedidos multicanal',
+			'solucao_casos_2_desc'         => 'Receba pedidos de marketplaces e direcione automaticamente para separação e expedição.',
+			'solucao_casos_3_icone'        => $this->img( 'logistica-3pl-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Conecte múltiplas transportadoras',
+			'solucao_casos_3_desc'         => 'Centralize integrações com transportadoras sem desenvolver conexões individuais para cada operação.',
+			'solucao_casos_4_icone'        => $this->img( 'logistica-3pl-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Automatize devoluções',
+			'solucao_casos_4_desc'         => 'Gerencie processos de RMA entre clientes, transportadoras e centros de distribuição automaticamente.',
+			'solucao_casos_5_icone'        => $this->img( 'logistica-3pl-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Preveja picos de demanda com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados operacionais para antecipar volumes e melhorar o planejamento logístico.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_logistica_3pl_faq( $post_id );
+
+		WP_CLI::log( "  Logística (3PL) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Logística (3PL) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Logística (3PL).
+	 * @return void
+	 */
+	protected function preencher_logistica_3pl_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:lg-onboarding-cliente',
+				'Quanto tempo leva para integrar um novo cliente?',
+				'<p>O prazo depende de quantos sistemas entram no fluxo, mas o ganho vem da reutilização: os conectores para ERPs e WMS já existem e são reaproveitados de um contrato para o outro. Na prática, o que era um projeto de integração do zero passa a ser a configuração de um fluxo já validado — é o que sustenta a redução de 50% no tempo de integração de parceiros e sistemas citada nesta página.</p>',
+			),
+			array(
+				'faq:lg-avaliar-plataforma-3pl',
+				'O que avaliar em uma plataforma para operadores logísticos 3PL?',
+				'<p>Três pontos costumam decidir a escolha: se a plataforma reaproveita integrações entre clientes ou obriga a começar do zero a cada contrato; se governa no mesmo ambiente os sistemas em nuvem e os instalados na infraestrutura do cliente; e se o modelo acompanha picos sazonais sem exigir capacidade contratada o ano inteiro. Vale olhar também a trilha de auditoria, já que o operador responde por dados de terceiros.</p>',
+			),
+			array(
+				'faq:lg-erp-on-premises',
+				'A plataforma conecta ERPs instalados on-premises?',
+				'<p>Sim. A conexão com ERPs e WMS instalados na rede do cliente é feita por um agente dentro da própria infraestrutura, que abre a comunicação de dentro para fora — sem expor portas de entrada no firewall. Fluxos em nuvem e on-premises ficam sob o mesmo ambiente de governança e monitoramento.</p>',
+			),
+			array(
+				'faq:lg-custo-alto-volume',
+				'Como funciona o custo para operações com alto volume?',
+				'<p>O dimensionamento considera o volume processado e a quantidade de integrações ativas, não o número de usuários. Como os fluxos filtram e agregam os dados ainda no caminho, o custo de operações grandes tende a crescer menos que proporcionalmente ao número de pedidos e eventos, e os picos sazonais são absorvidos pelo processamento elástico.</p>',
+			),
+			array(
+				'faq:lg-multiplas-transportadoras',
+				'É possível integrar várias transportadoras sem criar uma integração para cada uma?',
+				'<p>Sim — é um dos casos de uso desta página. Em vez de uma conexão dedicada por transportadora, a integração é centralizada: coleta, rastreio e entrega passam por um fluxo comum e cada transportadora entra como mais uma configuração. Incluir uma nova deixa de ser um projeto de desenvolvimento.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Logística (3PL) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
