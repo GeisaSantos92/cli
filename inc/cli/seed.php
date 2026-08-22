@@ -104,6 +104,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Manufatura…' );
 		$this->preencher_solucao_manufatura();
 
+		WP_CLI::log( '— Preenchendo Varejo…' );
+		$this->preencher_solucao_varejo();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -2874,6 +2877,53 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Varejo".
+	 *
+	 * Cresce uma seção por rodada, na ordem do Figma.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_varejo() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:varejo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Varejo: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o varejo',
+			'solucao_hero_titulo'          => 'Conecte',
+			'solucao_hero_titulo_destaque' => 'toda a jornada',
+			'solucao_hero_titulo_fim'      => 'de compra, do carrinho à entrega.',
+			'solucao_hero_corpo'           => 'Integre e-commerce, ERP, logística, CRM e marketplaces para oferecer experiências consistentes, acelerar entregas e evoluir sua operação sem interrupções.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'varejo-hero' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
 	}
 
 	/**

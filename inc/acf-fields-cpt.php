@@ -558,6 +558,13 @@ function cliconnect_acf_fields_cpt() {
 					'type'  => 'text',
 				),
 				array(
+					'key'          => 'field_solucao_hero_titulo_fim',
+					'label'        => 'Título — continuação (escuro)',
+					'name'         => 'solucao_hero_titulo_fim',
+					'type'         => 'text',
+					'instructions' => 'Opcional. Preenchido, o título passa a correr como uma frase só e o trecho azul fica no meio dela; vazio, as duas primeiras partes seguem em linhas separadas.',
+				),
+				array(
 					'key'    => 'field_solucao_hero_corpo',
 					'label'  => 'Corpo',
 					'name'   => 'solucao_hero_corpo',

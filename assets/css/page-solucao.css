@@ -53,6 +53,20 @@
 	color: var(--cor-primaria);
 }
 
+/*
+ * Variante fluida: quando a solução preenche a continuação do título, as partes
+ * deixam de ser linhas empilhadas e correm como uma frase só, com o destaque azul
+ * no meio dela. O espaço entre as partes vem da quebra de linha da marcação.
+ */
+.sh-hero__titulo--fluido {
+	display: block;
+}
+
+.sh-hero__titulo--fluido .sh-hero__titulo-linha,
+.sh-hero__titulo--fluido .sh-hero__titulo-destaque {
+	display: inline;
+}
+
 .sh-hero__corpo {
 	font-family: var(--fonte-base);
 	font-size: 18px;
