@@ -119,6 +119,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
 		$this->preencher_solucao_hotelaria_e_turismo();
 
+		WP_CLI::log( '— Preenchendo Recursos Humanos (RH)…' );
+		$this->preencher_solucao_recursos_humanos_rh();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -3983,6 +3986,50 @@ class Cliconnect_Seed {
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Recursos Humanos (RH)".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_recursos_humanos_rh() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:recursos-humanos-rh', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Recursos Humanos (RH): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o seu RH',
+			'solucao_hero_titulo'          => 'Conecte todo o ciclo de vida do colaborador em',
+			'solucao_hero_titulo_destaque' => 'uma única operação',
+			'solucao_hero_corpo'           => 'Integre HRIS, folha de pagamento, ATS e sistemas corporativos para automatizar a jornada do colaborador e manter informações sempre sincronizadas.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'recursos-humanos-rh-hero' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		WP_CLI::log( "  Recursos Humanos (RH) preenchido (ID: {$post_id})." );
 	}
 }
 
