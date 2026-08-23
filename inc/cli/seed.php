@@ -146,6 +146,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Visão 360° do Cliente…' );
 		$this->preencher_solucao_visao_360_do_cliente();
 
+		WP_CLI::log( '— Preenchendo Soberania de Dados…' );
+		$this->preencher_solucao_soberania_de_dados();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -5080,6 +5083,163 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Compras ao Pagamento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Soberania de Dados".
+	 *
+	 * O design cobre sete seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Aceleradores, Selos e FAQ. Métricas, Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_soberania_de_dados() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:soberania-de-dados', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Soberania de Dados: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'soberania de dados',
+			'solucao_hero_titulo'      => 'Processe e armazene dados onde sua operação exige.',
+			'solucao_hero_corpo'       => 'Execute a CLI Connect powered by Boomi dentro do ambiente do próprio cliente, garantindo que dados sensíveis permaneçam na jurisdição definida pelo negócio e pela regulamentação.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'soberania-de-dados-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Controle total sobre a residência dos dados',
+			'solucao_pilares_1_icone'  => $this->img( 'soberania-de-dados-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Implante no seu ambiente',
+			'solucao_pilares_1_desc'   => 'Execute integrações na nuvem ou infraestrutura própria do cliente, usando AWS, Azure, GCP ou datacenter interno.',
+			'solucao_pilares_2_icone'  => $this->img( 'soberania-de-dados-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Mantenha dados sob seu controle',
+			'solucao_pilares_2_desc'   => 'Garanta que informações sensíveis não transitem ou sejam armazenadas em ambientes compartilhados.',
+			'solucao_pilares_3_icone'  => $this->img( 'soberania-de-dados-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Atenda regulações de dados',
+			'solucao_pilares_3_desc'   => 'Cumpra requisitos de residência de dados para setores como financeiro, saúde e setor público.',
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Aplique soberania de dados na prática',
+			'solucao_casos_1_icone'    => $this->img( 'soberania-de-dados-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Implante por região regulatória',
+			'solucao_casos_1_desc'     => 'Execute pipelines dentro da nuvem ou região exigida por regulamentações locais de dados.',
+			'solucao_casos_2_icone'    => $this->img( 'soberania-de-dados-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Proteja dados sensíveis',
+			'solucao_casos_2_desc'     => 'Processe informações financeiras e de saúde sem remover dados da jurisdição definida.',
+			'solucao_casos_3_icone'    => $this->img( 'soberania-de-dados-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Opere em múltiplos países',
+			'solucao_casos_3_desc'     => 'Crie arquiteturas multi-região para atender diferentes leis de dados em cada mercado.',
+			'solucao_casos_4_icone'    => $this->img( 'soberania-de-dados-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Comprove conformidade',
+			'solucao_casos_4_desc'     => 'Audite onde cada dado foi processado para demonstrar controle e atender requisitos regulatórios.',
+			'solucao_casos_5_icone'    => $this->img( 'soberania-de-dados-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Controle ambientes críticos',
+			'solucao_casos_5_desc'     => 'Mantenha integrações executando dentro da infraestrutura escolhida pela sua organização.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Soberania garantida pela arquitetura',
+			'solucao_dif_corpo'        => 'Diferente de ambientes compartilhados, a plataforma executa dentro do ambiente do cliente, garantindo controle sobre dados e processamento.',
+			'solucao_dif_topico_1'     => 'Ambiente dedicado ao cliente',
+			'solucao_dif_topico_2'     => 'Controle sobre processamento e armazenamento',
+			'solucao_dif_topico_3'     => 'Arquitetura sem compartilhamento de dados',
+			'solucao_dif_imagem'       => $this->img( 'soberania-de-dados-dif' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 9 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Escolha da região de implantação',
+			'solucao_acel_topico_2'    => 'Modelo pronto para ambientes regulados',
+			'solucao_acel_topico_3'    => 'Execução em AWS, Azure ou GCP',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'soberania-de-dados-acel' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_soberania_de_dados_faq( $post_id );
+
+		WP_CLI::log( "  Soberania de Dados preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Soberania de Dados e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Soberania de Dados.
+	 * @return void
+	 */
+	protected function preencher_soberania_de_dados_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:soberania-jurisdicao',
+				'Como a CLI Connect powered by Boomi garante que os dados não saiam da jurisdição exigida?',
+				'<p>O motor de execução roda dentro do ambiente que você indicar — a sua conta na AWS, Azure ou GCP, ou o datacenter interno da empresa. É lá que o dado é lido, transformado e gravado; o plano de controle da plataforma cuida de configuração, versionamento e monitoramento, e não do conteúdo que trafega. Na prática, um registro que nasce em uma região só sai dela se um fluxo que você mesmo desenhou mandar sair.</p>',
+			),
+			array(
+				'faq:soberania-multi-regiao',
+				'É possível ter deploy multi-região para operações em vários países?',
+				'<p>Sim, e é o desenho mais comum em operações internacionais: um ambiente de execução por país ou bloco regulatório, cada um com a sua própria fronteira de dados, todos administrados de um único lugar. Os fluxos são construídos uma vez e distribuídos para cada região, o que evita manter times paralelos cuidando de integrações quase idênticas — e permite que uma regra local, quando existe, apareça como exceção explícita e não como uma cópia inteira do projeto.</p>',
+			),
+			array(
+				'faq:soberania-auditoria',
+				'Como funciona a auditoria de onde os dados foram processados?',
+				'<p>Cada execução deixa registro de qual ambiente a processou, quando, com qual versão do fluxo e com que resultado. Esse histórico é o que sustenta a resposta a um auditor: em vez de uma declaração de política, você mostra o rastro de execução por região. Os registros podem ser mantidos no seu próprio ambiente e exportados para a ferramenta de observabilidade ou de compliance que a empresa já usa.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Soberania de Dados FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
