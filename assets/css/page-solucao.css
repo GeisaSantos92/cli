@@ -327,6 +327,50 @@
 	margin: 0;
 }
 
+/* --- 11. Seção Diagrama ----------------------------------------------------- */
+
+/*
+ * Título centralizado sobre uma ilustração fechada (texto embutido na arte).
+ * Renderiza logo depois dos Pilares; o número é a ordem de entrada no catálogo.
+ * A textura de pontos do Figma é um grid regular — vem de radial-gradient em vez
+ * de um PNG de 2.560 px.
+ */
+.sdg-diagrama {
+	padding-block: 80px;
+	background-color: var(--cor-fundo-suave);
+	background-image: radial-gradient(rgba(163, 171, 185, 0.3) 1px, transparent 1px);
+	background-size: 16px 16px;
+}
+
+.sdg-diagrama__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 40px;
+}
+
+.sdg-diagrama__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	text-align: center;
+	margin: 0;
+}
+
+.sdg-diagrama__imagem-wrap {
+	width: 100%;
+}
+
+.sdg-diagrama__imagem {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 18px;
+}
+
 /* --- 4. Seção Logos ------------------------------------------------------- */
 
 /*

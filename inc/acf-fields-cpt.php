@@ -1206,6 +1206,32 @@ function cliconnect_acf_fields_cpt() {
 				'instructions'  => 'Selecione os FAQs que devem aparecer nesta solução (máx. 10). O título do post é a pergunta; o conteúdo do post é a resposta.',
 			),
 
+			// ----- Aba: 11 · Diagrama ---------------------------------------
+			// Renderiza logo depois dos Pilares; o número da aba é só a ordem
+			// em que a seção entrou no catálogo, não a posição na página.
+			array(
+				'key'   => 'field_solucao_diagrama_tab',
+				'label' => '11 · Diagrama',
+				'name'  => '',
+				'type'  => 'tab',
+			),
+			array(
+				'key'          => 'field_solucao_diagrama_titulo',
+				'label'        => 'Título da seção',
+				'name'         => 'solucao_diagrama_titulo',
+				'type'         => 'text',
+				'instructions' => 'Deixe vazio para ocultar a seção.',
+			),
+			array(
+				'key'           => 'field_solucao_diagrama_imagem',
+				'label'         => 'Ilustração',
+				'name'          => 'solucao_diagrama_imagem',
+				'type'          => 'image',
+				'return_format' => 'id',
+				'preview_size'  => 'medium',
+				'instructions'  => 'Ilustração fechada, com o texto já embutido na arte, exportada do Figma em 2x.',
+			),
+
 			),
 		)
 	);
