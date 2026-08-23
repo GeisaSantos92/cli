@@ -125,6 +125,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Marketing…' );
 		$this->preencher_solucao_marketing();
 
+		WP_CLI::log( '— Preenchendo Operações de Receita (RevOps)…' );
+		$this->preencher_solucao_operacoes_de_receita_revops();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -3915,6 +3918,175 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Marketing FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Operações de Receita (RevOps)".
+	 *
+	 * Landing do departamento de RevOps. O design não traz a faixa de métricas
+	 * nem as seções de Plataforma e Aceleradores: esses campos ficam vazios e,
+	 * portanto, invisíveis no front.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_operacoes_de_receita_revops() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:operacoes-de-receita-revops', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Operações de Receita (RevOps): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'Para suas operações de receita',
+			'solucao_hero_titulo'      => 'Conecte toda a operação de receita.',
+			'solucao_hero_corpo'       => 'Sincronize CRM, marketing e customer success em tempo real para eliminar gargalos, acelerar handoffs e manter todo o funil sempre atualizado.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_imagem'      => $this->img( 'operacoes-de-receita-revops-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'Pilares',
+			'solucao_pilares_titulo'   => 'Uma operação de receita conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Unifique dados de receita',
+			'solucao_pilares_1_desc'   => 'Conecte marketing, vendas e customer success para priorizar oportunidades com informações consistentes em todo o ciclo comercial.',
+			'solucao_pilares_2_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Automatize os handoffs',
+			'solucao_pilares_2_desc'   => 'Transfira clientes entre vendas e customer success automaticamente, reduzindo atrasos e eliminando processos manuais.',
+			'solucao_pilares_3_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Mantenha o pipeline limpo',
+			'solucao_pilares_3_desc'   => 'Atualize registros continuamente para evitar duplicidades, inconsistências e decisões baseadas em informações desatualizadas.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'      => 'Integramos as principais plataformas de CRM, marketing, vendas e customer success utilizadas por grandes empresas.',
+			'solucao_logos_clientes'   => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unimed', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cocamar', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'Casos de uso',
+			'solucao_casos_titulo'     => 'Automatize todo o fluxo de receita',
+			'solucao_casos_1_icone'    => $this->img( 'operacoes-de-receita-revops-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Priorize leads automaticamente',
+			'solucao_casos_1_desc'     => 'Combine dados de CRM, automação de marketing e enriquecimento para qualificar oportunidades com mais precisão.',
+			'solucao_casos_2_icone'    => $this->img( 'operacoes-de-receita-revops-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Unifique múltiplos CRMs',
+			'solucao_casos_2_desc'     => 'Consolide informações comerciais de diferentes CRMs para obter uma visão única do pipeline.',
+			'solucao_casos_3_icone'    => $this->img( 'operacoes-de-receita-revops-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Ative o pós-venda',
+			'solucao_casos_3_desc'     => 'Dispare automaticamente processos de customer success quando uma oportunidade for ganha e preserve todo o contexto da venda.',
+			'solucao_casos_4_icone'    => $this->img( 'operacoes-de-receita-revops-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Corrija dados comerciais',
+			'solucao_casos_4_desc'     => 'Identifique e atualize registros inconsistentes para manter oportunidades, contatos e previsões comerciais confiáveis.',
+			'solucao_casos_5_icone'    => $this->img( 'operacoes-de-receita-revops-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Monitore a saúde dos clientes',
+			'solucao_casos_5_desc'     => 'Combine dados de produto, suporte e NPS para identificar riscos e oportunidades de expansão.',
+			'solucao_casos_6_icone'    => $this->img( 'operacoes-de-receita-revops-caso-6' ),
+			'solucao_casos_6_titulo'   => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'     => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 7 · Diferencial.
+			'solucao_dif_eyebrow'      => 'Diferencial técnico',
+			'solucao_dif_titulo'       => 'Mais autonomia para RevOps',
+			'solucao_dif_corpo'        => 'Permita que a equipe de RevOps crie, ajuste e monitore integrações utilizando um builder visual com IA, sem depender de desenvolvimento dedicado.',
+			'solucao_dif_topico_1'     => 'Crie integrações com builder visual',
+			'solucao_dif_topico_2'     => 'Automatize fluxos com apoio de IA',
+			'solucao_dif_topico_3'     => 'Reduza a dependência da equipe de TI',
+			'solucao_dif_imagem'       => $this->img( 'operacoes-de-receita-revops-dif' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_operacoes_de_receita_revops_faq( $post_id );
+
+		WP_CLI::log( "  Operações de Receita (RevOps) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Operações de Receita (RevOps) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Operações de Receita (RevOps).
+	 * @return void
+	 */
+	protected function preencher_operacoes_de_receita_revops_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:revops-crm-automacao-prazo',
+				'Quanto tempo leva para conectar CRM e plataforma de automação de marketing?',
+				'<p>O desenvolvimento costuma ser a parte curta: CRM e ferramentas de automação de marketing têm APIs bem documentadas e conectores prontos, então um fluxo de leads e oportunidades entra no ar em poucas semanas. O que estica o cronograma é a decisão de negócio — definir qual sistema manda em cada campo, o que caracteriza um lead qualificado e como tratar a base duplicada que já existe. Vale começar por um fluxo só, colocá-lo em produção e ampliar a partir dele.</p>',
+			),
+			array(
+				'faq:revops-sem-desenvolvedor',
+				'O time de RevOps consegue criar integrações sem desenvolvedores dedicados?',
+				'<p>Sim, para a maior parte do dia a dia. O builder visual monta o fluxo arrastando e conectando etapas, com apoio de IA na hora de mapear campos e sugerir tratamentos, e quem conhece o processo comercial consegue criar, ajustar e monitorar as automações sem escrever código. A TI continua entrando onde faz sentido — liberação de credenciais, revisão de fluxos críticos e casos que exigem lógica mais elaborada —, mas deixa de ser gargalo para cada pequeno ajuste.</p>',
+			),
+			array(
+				'faq:revops-ponto-a-ponto-ipaas',
+				'Qual a diferença entre uma integração ponto a ponto e uma iPaaS?',
+				'<p>Uma integração ponto a ponto liga dois sistemas diretamente e resolve bem enquanto são dois. O problema aparece na escala: cada nova ferramenta multiplica as conexões, cada uma com sua própria lógica e seu próprio tratamento de erro, e ninguém enxerga o conjunto. Uma iPaaS coloca uma camada no meio — os sistemas conversam com ela, não entre si. Isso centraliza o monitoramento, reaproveita mapeamentos e faz com que trocar uma ferramenta signifique refazer um trecho, não a teia inteira.</p>',
+			),
+			array(
+				'faq:revops-mudanca-api',
+				'Como mudanças nas APIs dos sistemas impactam as integrações?',
+				'<p>Mudanças de versão são esperadas e tratadas na camada de integração, não em cada fluxo. Como o mapeamento entre o formato de cada sistema e o formato interno fica isolado, uma alteração de API costuma exigir ajuste em um ponto só, sem tocar nos fluxos que dependem dele. O monitoramento acusa a falha assim que ela acontece, as mensagens afetadas ficam retidas em fila e são reprocessadas depois da correção, sem perda de registro.</p>',
+			),
+			array(
+				'faq:revops-protecao-dados',
+				'Como os dados comerciais são protegidos durante as integrações?',
+				'<p>O tráfego é criptografado ponta a ponta e as credenciais de cada sistema ficam em cofre, nunca dentro do fluxo. O acesso é concedido por perfil, de modo que quem opera as automações não precisa enxergar o conteúdo sensível que passa por elas, e todo movimento fica registrado em trilha de auditoria — quem alterou o quê, quando e com qual resultado. A operação segue os padrões de compliance e segurança listados nesta página.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Operações de Receita (RevOps) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
