@@ -4373,6 +4373,7 @@ class Cliconnect_Seed {
 			'solucao_hero_eyebrow'         => 'Para o seu RH',
 			'solucao_hero_titulo'          => 'Conecte todo o ciclo de vida do colaborador em',
 			'solucao_hero_titulo_destaque' => 'uma única operação',
+			'solucao_hero_titulo_fluido'   => true,
 			'solucao_hero_corpo'           => 'Integre HRIS, folha de pagamento, ATS e sistemas corporativos para automatizar a jornada do colaborador e manter informações sempre sincronizadas.',
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
