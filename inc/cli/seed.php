@@ -119,6 +119,12 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
 		$this->preencher_solucao_hotelaria_e_turismo();
 
+		WP_CLI::log( '— Preenchendo Recursos Humanos (RH)…' );
+		$this->preencher_solucao_recursos_humanos_rh();
+
+		WP_CLI::log( '— Preenchendo Marketing…' );
+		$this->preencher_solucao_marketing();
+
 		WP_CLI::log( '— Preenchendo Financeiro…' );
 		$this->preencher_solucao_financeiro();
 
@@ -3742,6 +3748,179 @@ class Cliconnect_Seed {
 	}
 
 	/**
+	 * Preenche os campos ACF do post cli_solucao "Marketing".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_marketing() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:marketing', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Marketing: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'Para o seu marketing',
+			'solucao_hero_titulo'      => 'Conecte marketing, CRM e analytics em tempo real',
+			'solucao_hero_corpo'       => 'Elimine filas de TI, sincronize informações em tempo real e entregue campanhas mais relevantes com automação inteligente entre todas as plataformas do seu ecossistema.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_imagem'      => $this->img( 'marketing-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '127%',
+			'solucao_metrica_1_rotulo' => 'de crescimento em reconhecimento de marca',
+			'solucao_metrica_2_numero' => '50%',
+			'solucao_metrica_2_rotulo' => 'de aumento na geração de pipeline',
+			'solucao_metrica_3_numero' => '22%',
+			'solucao_metrica_3_rotulo' => 'de crescimento médio mensal no funil de vendas',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'Pilares',
+			'solucao_pilares_titulo'   => 'Marketing conectado do início ao fim',
+			'solucao_pilares_1_icone'  => $this->img( 'marketing-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Leads sempre sincronizados',
+			'solucao_pilares_1_desc'   => 'Mantenha CRM e plataforma de automação alinhados em tempo real para evitar contatos desatualizados e aumentar a eficiência das campanhas.',
+			'solucao_pilares_2_icone'  => $this->img( 'marketing-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Escalabilidade sob demanda',
+			'solucao_pilares_2_desc'   => 'Absorva grandes volumes de leads em lançamentos e campanhas sazonais sem comprometer desempenho ou exigir intervenção manual.',
+			'solucao_pilares_3_icone'  => $this->img( 'marketing-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Personalização com governança',
+			'solucao_pilares_3_desc'   => 'Utilize IA para enriquecer audiências e segmentações mantendo conformidade com LGPD, GDPR e políticas corporativas de dados.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'      => 'Grandes empresas integram o seu Marketing com o CLI Connect',
+			'solucao_logos_clientes'   => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unimed', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cocamar', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'Casos de uso',
+			'solucao_casos_titulo'     => 'Automatize todo o ciclo das campanhas',
+			'solucao_casos_1_icone'    => $this->img( 'marketing-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Sincronize leads em tempo real',
+			'solucao_casos_1_desc'     => 'Envie novos leads entre plataformas de automação e CRM em segundos, mantendo equipes de marketing e vendas sempre alinhadas.',
+			'solucao_casos_2_icone'    => $this->img( 'marketing-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Centralize atribuição de campanhas',
+			'solucao_casos_2_desc'     => 'Conecte Google Ads, LinkedIn e plataformas de automação para consolidar resultados e atribuições em um único fluxo.',
+			'solucao_casos_3_icone'    => $this->img( 'marketing-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Enriqueça leads com IA',
+			'solucao_casos_3_desc'     => 'Dispare agentes de IA após o envio de formulários para pesquisar informações e qualificar contatos automaticamente.',
+			'solucao_casos_4_icone'    => $this->img( 'marketing-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Orquestre audiências inteligentes',
+			'solucao_casos_4_desc'     => 'Atualize segmentos automaticamente utilizando IA e dados de múltiplos sistemas para campanhas mais relevantes.',
+			'solucao_casos_5_icone'    => $this->img( 'marketing-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Feche o ciclo de atribuição',
+			'solucao_casos_5_desc'     => 'Conecte marketing, CRM e ERP para medir a contribuição das campanhas até a geração efetiva de receita.',
+			'solucao_casos_6_icone'    => $this->img( 'marketing-caso-6' ),
+			'solucao_casos_6_titulo'   => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'     => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Diferencial Técnico.
+			'solucao_dif_eyebrow'      => 'Diferencial técnico',
+			'solucao_dif_titulo'       => 'Dados prontos para agir',
+			'solucao_dif_corpo'        => 'Substitua sincronizações em lote por integrações em tempo real para acelerar campanhas, reduzir inconsistências e manter marketing e vendas trabalhando com os mesmos dados.',
+			'solucao_dif_topico_1'     => 'Sincronize leads em menos de 60 segundos',
+			'solucao_dif_topico_2'     => 'Elimine atrasos entre marketing e CRM',
+			'solucao_dif_topico_3'     => 'Monitore integrações em tempo real',
+			'solucao_dif_imagem'       => $this->img( 'marketing-dif' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_marketing_faq( $post_id );
+
+		WP_CLI::log( "  Marketing preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Marketing e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Marketing.
+	 * @return void
+	 */
+	protected function preencher_marketing_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mkt-velocidade-sincronizacao',
+				'Qual é a velocidade da sincronização entre a plataforma de marketing e o CRM?',
+				'<p>Os fluxos trabalham por evento, não por lote: assim que um lead é criado ou atualizado, a mensagem entra na fila e chega ao outro sistema em poucos segundos — a referência de projeto é manter o ciclo abaixo de um minuto. O que costuma pesar nesse tempo não é a plataforma de integração e sim os limites de API do sistema de destino, que são respeitados automaticamente para evitar bloqueio por excesso de chamadas.</p>',
+			),
+			array(
+				'faq:mkt-marketing-operations',
+				'O time de Marketing Operations consegue gerenciar as integrações sem depender da TI?',
+				'<p>Em grande parte, sim. O desenho dos fluxos é low-code e os painéis de acompanhamento mostram volume, erros e reprocessamento sem exigir leitura de log técnico, então ajustes de mapeamento, campos e regras de segmentação ficam com o próprio time de marketing. A TI continua no circuito para o que é de sua alçada — liberar credenciais, aprovar acessos a sistemas internos e definir políticas de dados —, mas deixa de ser fila para cada mudança de campanha.</p>',
+			),
+			array(
+				'faq:mkt-ipaas-vs-nativas',
+				'Qual a diferença entre uma iPaaS e as integrações nativas das plataformas de automação de marketing?',
+				'<p>As integrações nativas resolvem bem o par de sistemas para o qual foram feitas, com o mapeamento que o fornecedor decidiu oferecer. Uma iPaaS trabalha no meio do caminho: conecta marketing, CRM, ERP, mídia paga e analytics com a mesma lógica, permite transformar e enriquecer o dado em trânsito, aplica regras próprias de deduplicação e deixa todo o histórico auditável em um só lugar. Na prática, a nativa é suficiente enquanto o ecossistema é pequeno; a iPaaS é o que sustenta o crescimento sem multiplicar conexões ponto a ponto.</p>',
+			),
+			array(
+				'faq:mkt-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para Marketing?',
+				'<p>Vale olhar cinco pontos: a cobertura de conectores para as ferramentas que já estão em uso; a capacidade de processar picos de lançamento e campanhas sazonais sem perder mensagem; a autonomia que o time de marketing ganha para operar sem abrir chamado; a visibilidade sobre erros e reprocessamento; e o tratamento de dados pessoais, incluindo por onde eles trafegam e onde ficam armazenados. O custo total também conta — além da licença, considere quem vai operar e monitorar a plataforma no dia a dia.</p>',
+			),
+			array(
+				'faq:mkt-lgpd-gdpr',
+				'Como a plataforma garante conformidade com LGPD e GDPR durante o trânsito dos dados?',
+				'<p>Os dados trafegam criptografados de ponta a ponta e a conexão com sistemas internos é feita por um agente que se comunica de dentro para fora, sem expor portas de entrada no firewall. Cada fluxo registra quem acessou o quê e quando, o que sustenta pedidos de auditoria e de exclusão previstos nas duas leis. Campos sensíveis podem ser mascarados ou simplesmente não transitar, e as regras de consentimento e opt-out são aplicadas no próprio fluxo, de modo que um contato que revogou a permissão deixa de ser distribuído para as demais plataformas.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Marketing FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
 	 * Preenche os campos ACF do post cli_solucao "Financeiro" (Departamento).
 	 *
 	 * Landing do departamento financeiro. O design inverte Diferencial e Selos
@@ -4163,6 +4342,169 @@ class Cliconnect_Seed {
 		foreach ( $campos as $nome => $valor ) {
 			update_field( $nome, $valor, $post_id );
 		}
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Recursos Humanos (RH)".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_recursos_humanos_rh() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:recursos-humanos-rh', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Recursos Humanos (RH): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o seu RH',
+			'solucao_hero_titulo'          => 'Conecte todo o ciclo de vida do colaborador em',
+			'solucao_hero_titulo_destaque' => 'uma única operação',
+			'solucao_hero_corpo'           => 'Integre HRIS, folha de pagamento, ATS e sistemas corporativos para automatizar a jornada do colaborador e manter informações sempre sincronizadas.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'recursos-humanos-rh-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'de redução no tempo de processamento da folha de pagamento',
+			'solucao_metrica_2_numero'     => '90%',
+			'solucao_metrica_2_rotulo'     => 'de economia projetada em custos contínuos de manutenção',
+			'solucao_metrica_3_numero'     => '40%',
+			'solucao_metrica_3_rotulo'     => 'de diminuição no tempo gasto com entrada manual de dados',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Automatize toda a operação de RH',
+			'solucao_pilares_1_icone'      => $this->img( 'recursos-humanos-rh-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Automatize a jornada do colaborador',
+			'solucao_pilares_1_desc'       => 'Sincronize admissões, movimentações e desligamentos entre todos os sistemas para eliminar tarefas manuais e garantir dados consistentes.',
+			'solucao_pilares_2_icone'      => $this->img( 'recursos-humanos-rh-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Mantenha a folha sincronizada',
+			'solucao_pilares_2_desc'       => 'Atualize automaticamente dados entre HRIS e folha de pagamento para reduzir inconsistências e simplificar o fechamento mensal.',
+			'solucao_pilares_3_icone'      => $this->img( 'recursos-humanos-rh-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Proteja dados sensíveis',
+			'solucao_pilares_3_desc'       => 'Aplique mascaramento de informações pessoais durante as integrações para atender requisitos de LGPD e fortalecer a governança.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Automatize processos críticos de RH',
+			'solucao_casos_1_icone'        => $this->img( 'recursos-humanos-rh-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Orquestre o ciclo do funcionário',
+			'solucao_casos_1_desc'         => 'Atualize HRIS, identidade, folha e plataformas de treinamento simultaneamente sempre que um colaborador entrar ou sair da empresa.',
+			'solucao_casos_2_icone'        => $this->img( 'recursos-humanos-rh-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Sincronize HRIS e folha',
+			'solucao_casos_2_desc'         => 'Garanta que alterações cadastrais e movimentações sejam refletidas automaticamente na folha de pagamento.',
+			'solucao_casos_3_icone'        => $this->img( 'recursos-humanos-rh-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Automatize novas contratações',
+			'solucao_casos_3_desc'         => 'Envie candidatos aprovados do ATS para o HRIS automaticamente, eliminando cadastros duplicados e atividades manuais.',
+			'solucao_casos_4_icone'        => $this->img( 'recursos-humanos-rh-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Revogue acessos automaticamente',
+			'solucao_casos_4_desc'         => 'Remova permissões e contas poucos minutos após o desligamento para aumentar a segurança e reduzir riscos operacionais.',
+			'solucao_casos_5_icone'        => $this->img( 'recursos-humanos-rh-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Antecipe riscos de desligamento',
+			'solucao_casos_5_desc'         => 'Utilize agentes de IA para identificar sinais de retenção e apoiar decisões antes da perda de talentos.',
+			'solucao_casos_6_icone'        => $this->img( 'recursos-humanos-rh-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'         => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 5 · Diferencial Técnico (o design do RH inverte Diferencial e Selos).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Privacidade integrada às automações',
+			'solucao_dif_corpo'            => 'Proteja informações sensíveis durante toda a movimentação entre sistemas com detecção e mascaramento automático de dados pessoais antes da integração.',
+			'solucao_dif_topico_1'         => 'Detecte dados sensíveis automaticamente',
+			'solucao_dif_topico_2'         => 'Mascare informações antes da integração',
+			'solucao_dif_topico_3'         => 'Atenda requisitos de LGPD com governança',
+			'solucao_dif_imagem'           => $this->img( 'recursos-humanos-rh-dif' ),
+			'solucao_dif_antes_selos'      => true,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_recursos_humanos_rh_faq( $post_id );
+
+		WP_CLI::log( "  Recursos Humanos (RH) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Recursos Humanos (RH) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Recursos Humanos (RH).
+	 * @return void
+	 */
+	protected function preencher_recursos_humanos_rh_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:rh-hris-folha-prazo',
+				'Quanto tempo leva para integrar o HRIS à folha de pagamento?',
+				'<p>O prazo depende bem menos do desenvolvimento do que do acesso aos sistemas e da qualidade do cadastro. Quando o HRIS e a folha expõem APIs documentadas e as credenciais já estão liberadas, o fluxo de admissões, movimentações e desligamentos costuma entrar em produção em semanas. O que estica o cronograma é a conciliação de cadastros divergentes entre os dois sistemas e a homologação com o fornecedor. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:rh-autonomia-do-time',
+				'O RH consegue gerenciar integrações sem depender da equipe de desenvolvimento?',
+				'<p>No dia a dia, sim. O time de RH acompanha as execuções, vê onde um registro parou e reprocessa o que falhou por um painel próprio, sem abrir chamado. Mudanças estruturais — incluir um sistema novo no fluxo ou alterar as regras de um campo — continuam passando por quem mantém a integração, mas partem de componentes prontos, então são ajustes de configuração e não de projeto.</p>',
+			),
+			array(
+				'faq:rh-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para RH?',
+				'<p>Três pontos pesam mais do que a lista de conectores. O primeiro é o tratamento de dados pessoais: a plataforma precisa detectar e mascarar informações sensíveis antes de movimentá-las, não depois. O segundo é a rastreabilidade — cada admissão, movimentação e desligamento deve deixar registro de quando passou, para onde foi e o que aconteceu se falhou. O terceiro é o reaproveitamento: fluxos montados como componentes reduzem o custo de cada nova integração, enquanto integrações ponto a ponto crescem em manutenção a cada sistema adicionado.</p>',
+			),
+			array(
+				'faq:rh-dados-sensiveis',
+				'Como os dados sensíveis dos colaboradores são protegidos durante as integrações?',
+				'<p>A proteção acontece dentro do próprio fluxo. Campos como CPF, dados bancários e informações de saúde são identificados automaticamente e mascarados antes de seguirem para o sistema de destino, de modo que apenas quem precisa do dado completo o recebe. O tráfego é criptografado ponta a ponta, o acesso é concedido por perfil e cada movimentação fica registrada em trilha de auditoria — é o que sustenta o atendimento aos requisitos de LGPD sem depender de disciplina manual.</p>',
+			),
+			array(
+				'faq:rh-mudanca-de-api',
+				'Como mudanças nas APIs dos fornecedores de HRIS impactam as integrações?',
+				'<p>O impacto fica contido na camada de tradução. Cada sistema conversa com um formato interno comum, então uma versão nova da API do HRIS exige ajustar apenas o trecho que fala com ele — o restante do fluxo, incluindo folha, identidade e treinamento, segue inalterado. As versões novas são homologadas em ambiente separado antes de entrar em produção, e o monitoramento avisa quando um endpoint muda de comportamento, em vez de a falha aparecer no fechamento da folha.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Recursos Humanos (RH) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 }
 
