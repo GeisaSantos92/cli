@@ -131,6 +131,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Financeiro…' );
 		$this->preencher_solucao_financeiro();
 
+		WP_CLI::log( '— Preenchendo Atualização de Sistemas Legados…' );
+		$this->preencher_solucao_atualizacao_de_sistemas_legados();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -4267,6 +4270,166 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Atualização de Sistemas
+	 * Legados" (Por Iniciativa — Legacy Modernization).
+	 *
+	 * O design cobre seis seções: Hero, Pilares, Casos de Uso, Diferencial
+	 * Técnico, Selos e FAQ. Métricas, Logos, Plataforma e Aceleradores ficam
+	 * vazios de propósito e os template-parts os omitem. Como no Financeiro,
+	 * o Diferencial vem antes dos Selos — daí `solucao_dif_antes_selos`.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_atualizacao_de_sistemas_legados() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:atualizacao-de-sistemas-legados', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Atualização de Sistemas Legados: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero (o segundo botão está oculto no Figma).
+			'solucao_hero_eyebrow'         => 'substituição do sistema legado',
+			'solucao_hero_titulo'          => 'Reconstrua sua arquitetura.',
+			'solucao_hero_titulo_destaque' => 'Preserve sua operação.',
+			'solucao_hero_corpo'           => 'Substitua plataformas legadas como TIBCO e IBM MQ por uma arquitetura moderna de integração, preservando seus sistemas existentes e mantendo a operação funcionando durante toda a transição.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => '',
+			'solucao_hero_btn2_url'        => '',
+			'solucao_hero_imagem'          => $this->img( 'atualizacao-de-sistemas-legados-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'pilares',
+			'solucao_pilares_titulo'       => 'Reconstrua sua camada de integração sem reconstruir seus sistemas',
+			'solucao_pilares_1_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Democratize a integração',
+			'solucao_pilares_1_desc'       => 'Reduza a dependência de especialistas em tecnologias legadas com uma plataforma visual, mais simples de evoluir e manter.',
+			'solucao_pilares_2_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Construa sobre padrões abertos',
+			'solucao_pilares_2_desc'       => 'Desenvolva integrações utilizando padrões modernos e portáveis, evitando criar uma nova dependência tecnológica.',
+			'solucao_pilares_3_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Evolua para eventos em tempo real',
+			'solucao_pilares_3_desc'       => 'Substitua processos em lote por uma arquitetura orientada a eventos, preparada para aplicações modernas e integrações distribuídas.',
+
+			// 5 · Casos de Uso (cinco cards + o card azul de CTA).
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Reconstrua rotas do TIBCO BusinessWorks',
+			'solucao_casos_1_desc'         => 'Transforme integrações existentes em fluxos visuais mais simples de manter e evoluir.',
+			'solucao_casos_2_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Conecte mainframes sem VPN',
+			'solucao_casos_2_desc'         => 'Integre ambientes z/OS e AS/400 utilizando Runtime, sem alterar a infraestrutura de rede.',
+			'solucao_casos_3_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Substitua IBM MQ por eventos',
+			'solucao_casos_3_desc'         => 'Converta integrações baseadas em filas para uma arquitetura orientada a eventos com Kafka.',
+			'solucao_casos_4_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Exponha ERPs legados por APIs',
+			'solucao_casos_4_desc'         => 'Disponibilize SAP ECC e Oracle EBS através de APIs modernas sem alterar o core das aplicações.',
+			'solucao_casos_5_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte aplicações SaaS no primeiro dia',
+			'solucao_casos_5_desc'         => 'Integre Salesforce, ServiceNow, Workday e outras plataformas à nova arquitetura sem depender do antigo ESB.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Seu próximo projeto não deveria começar pelo legado',
+			'solucao_dif_corpo'            => 'Reconstrua a camada de integração em uma arquitetura moderna sem exigir que os sistemas existentes sejam substituídos.',
+			'solucao_dif_topico_1'         => 'Evolua a arquitetura sem expor sistemas críticos',
+			'solucao_dif_topico_2'         => 'Modernize mainframes sem comprometer a segurança',
+			'solucao_dif_topico_3'         => 'Conecte aplicações legadas com isolamento do core',
+			'solucao_dif_imagem'           => $this->img( 'atualizacao-de-sistemas-legados-diferencial' ),
+			'solucao_dif_antes_selos'      => 1,
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_atualizacao_de_sistemas_legados_faq( $post_id );
+
+		WP_CLI::log( "  Atualização de Sistemas Legados preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Atualização de Sistemas Legados e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Atualização de Sistemas Legados.
+	 * @return void
+	 */
+	protected function preencher_atualizacao_de_sistemas_legados_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:legado-mainframe-rede',
+				'É possível conectar mainframes sem alterar a infraestrutura de rede?',
+				'<p>Sim. O Runtime é instalado dentro do próprio ambiente, do mesmo lado do firewall em que o mainframe já vive, e é ele que abre a conexão para fora — não o contrário. Ambientes z/OS e AS/400 continuam onde estão, com as mesmas regras de rede, sem VPN dedicada nem porta nova exposta para a internet. O que muda é apenas quem passa a conversar com esses sistemas: a camada de integração, em vez de cada aplicação isoladamente.</p>',
+			),
+			array(
+				'faq:legado-esb-transicao',
+				'As integrações continuam funcionando durante a substituição do ESB?',
+				'<p>Continuam. A transição é feita rota a rota: a nova arquitetura sobe em paralelo ao ESB atual e cada fluxo só é redirecionado depois de rodar em produção com o mesmo resultado do antigo. Enquanto uma rota está sendo reconstruída, a versão legada segue ativa, o que permite voltar atrás sem parar a operação. O ESB só é desligado quando não resta nenhum fluxo dependendo dele.</p>',
+			),
+			array(
+				'faq:legado-esb-vs-ipaas',
+				'Qual a diferença entre substituir um ESB por uma plataforma moderna de integração?',
+				'<p>O ESB tradicional concentra as regras em código proprietário, exige especialistas na tecnologia específica e trata cada mudança como um novo projeto. A plataforma moderna coloca os mesmos fluxos em um ambiente visual, sobre padrões abertos e portáveis, com histórico de execução, tratamento de erro e governança de acesso em um só lugar. Na prática, o ganho não é só de tecnologia: é a redução da dependência de um grupo pequeno de pessoas para manter a integração de pé.</p>',
+			),
+			array(
+				'faq:legado-prazo-reconstrucao',
+				'Quanto tempo leva para reconstruir integrações existentes?',
+				'<p>Depende muito mais da quantidade de regras de negócio embutidas na rota antiga do que da tecnologia de origem. Fluxos diretos — uma leitura, uma transformação, uma entrega — costumam ser reconstruídos e homologados em semanas. O que estica o prazo é a arqueologia: rotas sem documentação, transformações escritas em código dentro do ESB e regras que ninguém mais conhece precisam ser mapeadas antes de serem reescritas. Por isso a substituição é feita por ondas, começando pelas rotas de maior volume e menor complexidade.</p>',
+			),
+			array(
+				'faq:legado-pos-desativacao',
+				'O que acontece depois que o ESB é completamente desativado?',
+				'<p>A operação passa a viver na nova camada, e o custo de licença e sustentação da plataforma antiga sai da conta. A partir daí, integração deixa de ser projeto e vira rotina: novas conexões, mudanças de regra e ajustes de fluxo entram pelo mesmo ambiente, com monitoramento centralizado e sem precisar de um especialista da tecnologia legada. É também o momento em que a arquitetura orientada a eventos começa a render — aplicações novas se conectam ao que já existe em vez de abrir mais uma integração ponto a ponto.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Atualização de Sistemas Legados FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
