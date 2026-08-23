@@ -5257,6 +5257,11 @@ class Cliconnect_Seed {
 	 * Os Selos fecham a página logo antes do FAQ — daí `solucao_dif_antes_selos`,
 	 * que no template joga a faixa de selos para depois dos Aceleradores.
 	 *
+	 * ATENÇÃO — o corpo da seção Aceleradores está exatamente como no Figma
+	 * ("conecta pedido, faturamento, cobrança e conciliação financeira"), texto
+	 * herdado da landing de Compras ao Pagamento e provavelmente um resíduo do
+	 * design. Mantido fiel à referência, pendente de decisão do cliente.
+	 *
 	 * @return void
 	 */
 	protected function preencher_solucao_centro_de_excelencia_em_integracao() {
