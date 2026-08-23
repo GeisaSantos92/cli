@@ -143,6 +143,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo IA Corporativa…' );
 		$this->preencher_solucao_ia_corporativa();
 
+		WP_CLI::log( '— Preenchendo Jornada do Colaborador (H2R)…' );
+		$this->preencher_solucao_jornada_do_colaborador();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -4919,6 +4922,176 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Compras ao Pagamento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Jornada do Colaborador (H2R)".
+	 *
+	 * O design cobre oito seções — Hero, Métricas, Pilares, Casos de Uso,
+	 * Diferencial, Aceleradores, Selos e FAQ. Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * ATENÇÃO — o corpo da seção Aceleradores está exatamente como no Figma
+	 * ("conecta pedido, faturamento, cobrança e conciliação financeira"), texto
+	 * herdado da landing de Compras ao Pagamento e provavelmente um resíduo do
+	 * design. Mantido fiel à referência, pendente de decisão do cliente.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_jornada_do_colaborador() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:jornada-do-colaborador', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Jornada do Colaborador: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'jornada do colaborador (h2r)',
+			'solucao_hero_titulo'      => 'Do primeiro dia ao desligamento, todos os sistemas de RH atualizados.',
+			'solucao_hero_corpo'       => 'Orquestre o ciclo de vida completo do colaborador conectando RH, folha, acessos e benefícios em um único fluxo automatizado.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'jornada-do-colaborador-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '5x',
+			'solucao_metrica_1_rotulo' => 'mais rápida a tomada de decisão da contratação',
+			'solucao_metrica_2_numero' => '75%',
+			'solucao_metrica_2_rotulo' => 'mais rápida a integração da força de trabalho',
+			'solucao_metrica_3_numero' => '95%',
+			'solucao_metrica_3_rotulo' => 'menos trabalho manual por parte dos usuários',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Automatize cada momento da jornada do colaborador',
+			'solucao_pilares_1_icone'  => $this->img( 'jornada-do-colaborador-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize eventos automaticamente',
+			'solucao_pilares_1_desc'   => 'Atualize todos os sistemas satélites a partir de eventos como admissão, promoção e desligamento.',
+			'solucao_pilares_2_icone'  => $this->img( 'jornada-do-colaborador-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Acelere o onboarding',
+			'solucao_pilares_2_desc'   => 'Reduza o tempo de ativação de novos colaboradores de dias para horas com processos conectados.',
+			'solucao_pilares_3_icone'  => $this->img( 'jornada-do-colaborador-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Revogue acessos no desligamento',
+			'solucao_pilares_3_desc'   => 'Elimine riscos garantindo que acessos físicos e digitais sejam removidos automaticamente.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize o ciclo de vida do colaborador',
+			'solucao_casos_1_icone'    => $this->img( 'jornada-do-colaborador-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Automatize admissões completas',
+			'solucao_casos_1_desc'     => 'Conecte HRIS, folha, e-mail, acessos, benefícios e LMS em uma única ativação.',
+			'solucao_casos_2_icone'    => $this->img( 'jornada-do-colaborador-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Atualize mudanças de cargo',
+			'solucao_casos_2_desc'     => 'Sincronize nível de acesso e faixa salarial automaticamente durante promoções e movimentações internas.',
+			'solucao_casos_3_icone'    => $this->img( 'jornada-do-colaborador-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Execute desligamentos seguros',
+			'solucao_casos_3_desc'     => 'Revogue acessos físicos e lógicos em minutos, reduzindo riscos após a saída do colaborador.',
+			'solucao_casos_4_icone'    => $this->img( 'jornada-do-colaborador-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Analise dados de colaboradores',
+			'solucao_casos_4_desc'     => 'Consolide informações do ciclo de vida para análises de turnover e tempo de casa.',
+			'solucao_casos_5_icone'    => $this->img( 'jornada-do-colaborador-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Conecte sistemas satélites de RH',
+			'solucao_casos_5_desc'     => 'Garanta que todos os sistemas relacionados recebam atualizações sem depender de checklists manuais.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Segurança em cada mudança de status',
+			'solucao_dif_corpo'        => 'Proteja dados sensíveis de colaboradores com controles de segurança e rastreabilidade em cada atualização.',
+			'solucao_dif_topico_1'     => 'Mascaramento de PII em trânsito',
+			'solucao_dif_topico_2'     => 'Auditoria completa de alterações',
+			'solucao_dif_topico_3'     => 'Rastreabilidade de cada evento',
+			'solucao_dif_imagem'       => $this->img( 'jornada-do-colaborador-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Evento RH → todos os sistemas',
+			'solucao_acel_topico_2'    => 'Admissão automatizada ponta a ponta',
+			'solucao_acel_topico_3'    => 'Promoção e desligamento sincronizados',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '',
+			'solucao_acel_imagem'      => $this->img( 'jornada-do-colaborador-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_jornada_do_colaborador_faq( $post_id );
+
+		WP_CLI::log( "  Jornada do Colaborador preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Jornada do Colaborador (H2R) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Jornada do Colaborador.
+	 * @return void
+	 */
+	protected function preencher_jornada_do_colaborador_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:h2r-desligamento-acessos',
+				'Como garantir que o desligamento revogue todos os acessos automaticamente?',
+				'<p>O desligamento registrado no sistema de RH vira um evento único que a integração distribui para todos os sistemas ligados àquele colaborador — diretório de identidade, e-mail, VPN, ERP, benefícios, controle de acesso físico e as ferramentas de negócio que ele usava. Cada revogação devolve uma confirmação, e o que não confirma fica visível como pendência em vez de passar despercebido. A janela entre a saída e o corte de acesso passa a ser medida em minutos, não em dias de checklist manual.</p>',
+			),
+			array(
+				'faq:h2r-admissao-multiplos-sistemas',
+				'É possível orquestrar admissão em múltiplos sistemas simultaneamente?',
+				'<p>Sim. A admissão aprovada no HRIS dispara uma única ativação que cria o colaborador na folha, abre a conta de e-mail, provisiona os acessos conforme o cargo, matricula nos benefícios e inscreve nas trilhas do LMS. As etapas que não dependem umas das outras acontecem em paralelo, e as que dependem respeitam a ordem — o crachá só é solicitado depois que a identidade existe, por exemplo. O RH acompanha o andamento em um lugar só e o novo colaborador chega no primeiro dia com tudo liberado.</p>',
+			),
+			array(
+				'faq:h2r-auditoria-ciclo-de-vida',
+				'Como funciona a auditoria de mudanças no ciclo de vida do colaborador?',
+				'<p>Toda mudança de status — admissão, promoção, transferência, alteração de faixa salarial e desligamento — é registrada com o evento que a originou, os sistemas atualizados, o horário de cada atualização e o resultado devolvido por cada um. Dados pessoais sensíveis trafegam mascarados, de modo que o histórico permanece auditável sem expor PII. Esse registro fica disponível para auditoria interna e externa e é a mesma base usada para análises de turnover e tempo de casa.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Jornada do Colaborador FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
