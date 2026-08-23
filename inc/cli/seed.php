@@ -143,6 +143,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo IA Corporativa…' );
 		$this->preencher_solucao_ia_corporativa();
 
+		WP_CLI::log( '— Preenchendo Visão 360° do Cliente…' );
+		$this->preencher_solucao_visao_360_do_cliente();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -4595,6 +4598,164 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Integração Pós-Fusão FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Visão 360° do Cliente".
+	 *
+	 * O design cobre sete seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Aceleradores, Selos e FAQ. Métricas, Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 * O Diferencial vem antes dos Selos (solucao_dif_antes_selos).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_visao_360_do_cliente() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:visao-360-do-cliente', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Visão 360° do Cliente: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'visão 360°',
+			'solucao_hero_titulo'      => 'Uma única visão do cliente em todos os sistemas',
+			'solucao_hero_corpo'       => 'Consolide dados de CRM, ERP, suporte e produto em uma visão 360º atualizada em tempo real para equipes e agentes de IA.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'visao-360-do-cliente-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Transforme dados dispersos em contexto completo',
+			'solucao_pilares_1_icone'  => $this->img( 'visao-360-do-cliente-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Unifique a identidade do cliente',
+			'solucao_pilares_1_desc'   => 'Consolide informações de CRM, ERP, suporte e produto para criar um perfil único e consistente.',
+			'solucao_pilares_2_icone'  => $this->img( 'visao-360-do-cliente-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Atualize informações em tempo real',
+			'solucao_pilares_2_desc'   => 'Mantenha a visão do cliente sempre sincronizada, sem depender de cargas batch ou relatórios defasados.',
+			'solucao_pilares_3_icone'  => $this->img( 'visao-360-do-cliente-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Compartilhe o mesmo contexto',
+			'solucao_pilares_3_desc'   => 'Disponibilize uma visão unificada para vendas, suporte, customer success e agentes de inteligência artificial.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Coloque o cliente no centro das operações',
+			'solucao_casos_1_icone'    => $this->img( 'visao-360-do-cliente-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Resolva identidades duplicadas',
+			'solucao_casos_1_desc'     => 'Reconcilie múltiplos identificadores entre CRM, ERP e suporte para criar um único perfil de cliente.',
+			'solucao_casos_2_icone'    => $this->img( 'visao-360-do-cliente-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Unifique o histórico do cliente',
+			'solucao_casos_2_desc'     => 'Reúna pedidos, chamados e uso do produto em uma única visão para customer success.',
+			'solucao_casos_3_icone'    => $this->img( 'visao-360-do-cliente-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Forneça contexto para agentes de IA',
+			'solucao_casos_3_desc'     => 'Entregue informações completas do cliente antes de cada interação automatizada ou assistida.',
+			'solucao_casos_4_icone'    => $this->img( 'visao-360-do-cliente-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Segmente campanhas em tempo real',
+			'solucao_casos_4_desc'     => 'Atualize públicos de marketing utilizando dados consolidados de todos os sistemas conectados.',
+			'solucao_casos_5_icone'    => $this->img( 'visao-360-do-cliente-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Melhore decisões de atendimento',
+			'solucao_casos_5_desc'     => 'Permita que equipes consultem o contexto completo do cliente durante qualquer atendimento.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 4 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança para dados unificados',
+			'solucao_dif_corpo'        => 'Controle como cada sistema acessa o perfil unificado do cliente, garantindo conformidade e qualidade dos dados.',
+			'solucao_dif_topico_1'     => 'Governança compatível com LGPD e GDPR',
+			'solucao_dif_topico_2'     => 'Controle de leitura e escrita por sistema',
+			'solucao_dif_topico_3'     => 'Gestão centralizada dos atributos do cliente',
+			'solucao_dif_imagem'       => $this->img( 'visao-360-do-cliente-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 5 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Resolução automática de identidade',
+			'solucao_acel_topico_2'    => 'Visão 360º atualizada em tempo real',
+			'solucao_acel_topico_3'    => 'Contexto único para equipes e IA',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'visao-360-do-cliente-aceleradores' ),
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_visao_360_do_cliente_faq( $post_id );
+
+		WP_CLI::log( "  Visão 360° do Cliente preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Visão 360° do Cliente e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Visão 360° do Cliente.
+	 * @return void
+	 */
+	protected function preencher_visao_360_do_cliente_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:v360-resolucao-identidade',
+				'Como resolver a identidade de um cliente entre sistemas diferentes?',
+				'<p>Cada sistema guarda o cliente com a sua própria chave — código no ERP, ID no CRM, e-mail no suporte — e é por isso que a mesma empresa aparece três vezes com dados diferentes. A resolução de identidade cruza esses identificadores por regras de correspondência (documento, domínio de e-mail, razão social) e mantém uma tabela de equivalências entre eles. O perfil unificado passa a ser a referência, e cada sistema continua funcionando com a chave que já usa, sem migração de cadastro.</p>',
+			),
+			array(
+				'faq:v360-tempo-real-ou-batch',
+				'A visão 360º é atualizada em tempo real ou em batch?',
+				'<p>Em tempo real: cada alteração relevante em um sistema conectado — um pedido faturado, um chamado encerrado, um dado cadastral corrigido — dispara a atualização do perfil unificado no momento em que acontece, sem esperar a janela da noite. Cargas em lote continuam disponíveis para o que faz sentido processar em bloco, como a carga inicial de histórico ou bases legadas, mas a operação do dia a dia não depende delas.</p>',
+			),
+			array(
+				'faq:v360-contexto-agente-ia',
+				'Como um agente de IA utiliza essa visão unificada?',
+				'<p>O agente consulta o perfil unificado antes de responder ou agir, e recebe de uma vez o que estaria espalhado entre CRM, ERP, suporte e produto: contratos vigentes, pedidos em aberto, chamados recentes e uso do produto. Com esse contexto, a resposta deixa de ser genérica e as ações executadas — abrir um chamado, atualizar um cadastro, escalar um caso — acontecem sobre dados atuais. Os mesmos controles de leitura e escrita por sistema valem para o agente, então ele só enxerga e altera o que foi autorizado.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Visão 360° do Cliente FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
