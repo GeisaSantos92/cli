@@ -131,6 +131,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Financeiro…' );
 		$this->preencher_solucao_financeiro();
 
+		WP_CLI::log( '— Preenchendo IA Corporativa…' );
+		$this->preencher_solucao_ia_corporativa();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -4267,6 +4270,165 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "IA Corporativa".
+	 *
+	 * Landing sem Métricas, Logos, Plataforma e Aceleradores: o Figma dessa
+	 * solução vai de Hero → Pilares → Diagrama → Casos de Uso → Diferencial →
+	 * Selos → FAQ. O Diferencial vem antes dos Selos (solucao_dif_antes_selos).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_ia_corporativa() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:ia-corporativa', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  IA Corporativa: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'      => 'IA corporativa',
+			'solucao_hero_titulo'       => 'Seus dados corporativos prontos para agentes de IA',
+			'solucao_hero_corpo'        => 'Conecte Salesforce, SAP, TOTVS, Senior, ServiceNow e outros sistemas empresariais a qualquer LLM para criar agentes inteligentes que entendem dados e executam ações.',
+			'solucao_hero_btn1_texto'   => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'     => '/contato/',
+			'solucao_hero_imagem'       => $this->img( 'ia-corporativa-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'   => 'pilares',
+			'solucao_pilares_titulo'    => 'Transforme dados em inteligência operacional',
+			'solucao_pilares_1_icone'   => $this->img( 'ia-corporativa-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Trabalhe com dados ao vivo',
+			'solucao_pilares_1_desc'    => 'Permita que agentes de IA consultem informações atuais dos seus sistemas, substituindo decisões baseadas em dados desatualizados.',
+			'solucao_pilares_2_icone'   => $this->img( 'ia-corporativa-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Automatize workflows complexos',
+			'solucao_pilares_2_desc'    => 'Crie agentes capazes de executar múltiplas etapas de processos, reduzindo tarefas manuais e acelerando operações.',
+			'solucao_pilares_3_icone'   => $this->img( 'ia-corporativa-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Aplique segurança desde o início',
+			'solucao_pilares_3_desc'    => 'Use controles de PII e guardrails para garantir que agentes atuem dentro das regras da empresa.',
+
+			// 11 · Diagrama (renderiza logo depois dos Pilares).
+			'solucao_diagrama_titulo'   => 'Um novo jeito de conectar IA aos seus sistemas',
+			'solucao_diagrama_imagem'   => $this->img( 'ia-corporativa-diagrama' ),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'     => 'casos de uso',
+			'solucao_casos_titulo'      => 'Aplique IA nos processos do negócio',
+			'solucao_casos_1_icone'     => $this->img( 'ia-corporativa-caso-1' ),
+			'solucao_casos_1_titulo'    => 'Crie agentes em tempo real',
+			'solucao_casos_1_desc'      => 'Gere resumos inteligentes para vendedores usando informações atualizadas de clientes, operações e sistemas corporativos.',
+			'solucao_casos_2_icone'     => $this->img( 'ia-corporativa-caso-2' ),
+			'solucao_casos_2_titulo'    => 'Conecte IA ao conhecimento interno',
+			'solucao_casos_2_desc'      => 'Use RAG com Confluence e SharePoint para criar respostas baseadas no conhecimento da sua empresa.',
+			'solucao_casos_3_icone'     => $this->img( 'ia-corporativa-caso-3' ),
+			'solucao_casos_3_titulo'    => 'Exponha ferramentas via MCP',
+			'solucao_casos_3_desc'      => 'Transforme recursos de Salesforce e SAP em ferramentas disponíveis para agentes de IA autenticados.',
+			'solucao_casos_4_icone'     => $this->img( 'ia-corporativa-caso-4' ),
+			'solucao_casos_4_titulo'    => 'Automatize operações com IA',
+			'solucao_casos_4_desc'      => 'Automatize tarefas como abertura de incidentes no ServiceNow sem depender de processos manuais.',
+			'solucao_casos_5_icone'     => $this->img( 'ia-corporativa-caso-5' ),
+			'solucao_casos_5_titulo'    => 'Dispare IA por eventos',
+			'solucao_casos_5_desc'      => 'Execute modelos de linguagem automaticamente quando eventos acontecerem, sem depender de consultas constantes.',
+			'solucao_casos_cta_texto'   => 'Agende uma demonstração',
+			'solucao_casos_cta_url'     => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'       => 'diferencial técnico',
+			'solucao_dif_titulo'        => 'IA conectada com segurança corporativa',
+			'solucao_dif_corpo'         => 'Acesse ambientes críticos sem depender de VPNs complexas',
+			'solucao_dif_topico_1'      => 'Runtime para conexão direta com mainframes',
+			'solucao_dif_topico_2'      => 'Menos aprovações de infraestrutura',
+			'solucao_dif_topico_3'      => 'Migração mais rápida de sistemas legados',
+			'solucao_dif_imagem'        => $this->img( 'ia-corporativa-dif' ),
+			'solucao_dif_antes_selos'   => 1,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'     => 'compliance & segurança',
+			'solucao_selos_titulo'      => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'       => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_ia_corporativa_faq( $post_id );
+
+		WP_CLI::log( "  IA Corporativa preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da IA Corporativa e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da IA Corporativa.
+	 * @return void
+	 */
+	protected function preencher_ia_corporativa_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ia-provedores-llm',
+				'Quais provedores de LLM são suportados nativamente?',
+				'<p>A conexão com o modelo é só mais uma ponta da integração, então vale para qualquer provedor que exponha API — os grandes fornecedores de nuvem e os modelos abertos hospedados na sua própria infraestrutura inclusive. Na prática isso significa que o agente conversa com o modelo pelo mesmo caminho por onde conversa com o ERP: credencial guardada em um só lugar, chamada registrada e limite de custo aplicado antes de a requisição sair.</p>',
+			),
+			array(
+				'faq:ia-pipelines-mcp',
+				'Como pipelines de integração viram ferramentas MCP?',
+				'<p>Um fluxo que já existe — consultar um pedido no SAP, abrir um chamado no ServiceNow, buscar a ficha de um cliente no Salesforce — é publicado como ferramenta, com a descrição do que faz, os parâmetros que aceita e o retorno que devolve. O agente passa a enxergar essa ferramenta no catálogo e a chamar quando precisar, sem acesso direto ao sistema de origem: a autenticação, o controle de permissão por perfil e o registro da execução continuam na camada de integração.</p>',
+			),
+			array(
+				'faq:ia-vs-data-factory-glue',
+				'Qual a diferença entre essa abordagem e Azure Data Factory ou AWS Glue?',
+				'<p>Data Factory e Glue são ferramentas de pipeline de dados: movem volume de um ponto a outro em lote, para alimentar um data warehouse. O que a IA corporativa exige é diferente — resposta ao vivo, para uma pergunta específica, no instante em que o agente pergunta, e a capacidade de executar uma ação de volta no sistema de origem. É por isso que a camada aqui é de integração de aplicações e não de ETL, e por isso ela expõe ferramentas e eventos além de tabelas.</p>',
+			),
+			array(
+				'faq:ia-tempo-rag',
+				'Quanto tempo leva para colocar RAG em produção?',
+				'<p>Com os conectores de Confluence e SharePoint já prontos, o cronograma depende menos do desenvolvimento e mais do acesso e da curadoria: liberar credencial, decidir quais espaços entram na base e definir quem pode ver o quê. Um primeiro escopo bem delimitado costuma entrar em semanas. O que estica o prazo é base documental desorganizada e permissão herdada de forma inconsistente na origem — nesses casos o trabalho de limpeza é maior que o de integração.</p>',
+			),
+			array(
+				'faq:ia-troca-de-provedor',
+				'Minha arquitetura continua flexível ao trocar o provedor de IA?',
+				'<p>Sim, porque o modelo fica atrás da camada de integração, não no meio dela. As regras de negócio, as ferramentas publicadas, os guardrails e o histórico de execução pertencem à plataforma; trocar de provedor é trocar a credencial e o endpoint de uma ponta, mantendo tudo o mais no lugar. Isso também permite rodar mais de um modelo em paralelo — um para tarefas simples, outro para as caras — sem duplicar a integração.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  IA Corporativa FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
