@@ -149,6 +149,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Soberania de Dados…' );
 		$this->preencher_solucao_soberania_de_dados();
 
+		WP_CLI::log( '— Preenchendo Centro de Excelência em Integração…' );
+		$this->preencher_solucao_centro_de_excelencia_em_integracao();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1130,6 +1133,7 @@ class Cliconnect_Seed {
 					'visao-360-do-cliente'            => 'Visão 360° do Cliente',
 					'modernizacao-de-erp'             => 'Modernização de ERP',
 					'integracao-pos-fusao'            => 'Integração Pós-Fusão',
+					'centro-de-excelencia-em-integracao' => 'Centro de Excelência em Integração',
 				),
 			),
 		);
@@ -5240,6 +5244,165 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Soberania de Dados FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Centro de Excelência em Integração".
+	 *
+	 * Landing sem Métricas, Logos, Diagrama e Plataforma: o Figma vai de
+	 * Hero → Pilares → Casos de Uso → Diferencial → Aceleradores → Selos → FAQ.
+	 * Os Selos fecham a página logo antes do FAQ — daí `solucao_dif_antes_selos`,
+	 * que no template joga a faixa de selos para depois dos Aceleradores.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_centro_de_excelencia_em_integracao() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:centro-de-excelencia-em-integracao', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Centro de Excelência em Integração: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+		$prefixo = 'centro-de-excelencia-em-integracao';
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'centro de excelência em integração',
+			'solucao_hero_titulo'      => 'Transforme integrações em um ativo reutilizável da empresa',
+			'solucao_hero_corpo'       => 'Crie um Centro de Excelência de Integração com catálogo compartilhado, padrões de desenvolvimento e governança para acelerar novos projetos.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( $prefixo . '-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Padronize integrações em toda a organização',
+			'solucao_pilares_1_icone'  => $this->img( $prefixo . '-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Reutilize integrações existentes',
+			'solucao_pilares_1_desc'   => 'Centralize pipelines e cápsulas reutilizáveis para reduzir retrabalho e acelerar novos projetos.',
+			'solucao_pilares_2_icone'  => $this->img( $prefixo . '-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Padronize o desenvolvimento',
+			'solucao_pilares_2_desc'   => 'Defina padrões únicos para nomenclatura, autenticação e tratamento de erros em todas as integrações.',
+			'solucao_pilares_3_icone'  => $this->img( $prefixo . '-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Fortaleça a governança',
+			'solucao_pilares_3_desc'   => 'Controle quem cria, altera e publica integrações críticas com processos padronizados de aprovação.',
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Escalone integrações com governança',
+			'solucao_casos_1_icone'    => $this->img( $prefixo . '-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Centralize integrações reutilizáveis',
+			'solucao_casos_1_desc'     => 'Disponibilize um catálogo interno de integrações para acelerar qualquer novo projeto.',
+			'solucao_casos_2_icone'    => $this->img( $prefixo . '-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Padronize erros e retentativas',
+			'solucao_casos_2_desc'     => 'Garanta que todos os pipelines utilizem as mesmas regras de tratamento e recuperação de falhas.',
+			'solucao_casos_3_icone'    => $this->img( $prefixo . '-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Aprove integrações antes da produção',
+			'solucao_casos_3_desc'     => 'Implemente fluxos de revisão e aprovação para garantir qualidade e conformidade antes do deploy.',
+			'solucao_casos_4_icone'    => $this->img( $prefixo . '-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Monitore custo e desempenho',
+			'solucao_casos_4_desc'     => 'Centralize métricas de uso, performance e consumo para otimizar continuamente suas integrações.',
+			'solucao_casos_5_icone'    => $this->img( $prefixo . '-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Evite integrações duplicadas',
+			'solucao_casos_5_desc'     => 'Permita que equipes reutilizem componentes existentes em vez de reconstruir fluxos já desenvolvidos.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança para integrações críticas',
+			'solucao_dif_corpo'        => 'Implemente controles que garantem segurança, rastreabilidade e qualidade durante todo o ciclo de desenvolvimento das integrações.',
+			'solucao_dif_topico_1'     => 'Controle de acesso por função',
+			'solucao_dif_topico_2'     => 'Fluxo de revisão e aprovação',
+			'solucao_dif_topico_3'     => 'Auditoria de alterações em pipelines',
+			'solucao_dif_imagem'       => $this->img( $prefixo . '-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 9 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Catálogo de cápsulas reutilizáveis',
+			'solucao_acel_topico_2'    => 'Padrões únicos para novos projetos',
+			'solucao_acel_topico_3'    => 'Governança pronta para escalar',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( $prefixo . '-aceleradores' ),
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_centro_de_excelencia_em_integracao_faq( $post_id );
+
+		WP_CLI::log( "  Centro de Excelência em Integração preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Centro de Excelência em Integração e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Centro de Excelência em Integração.
+	 * @return void
+	 */
+	protected function preencher_centro_de_excelencia_em_integracao_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:cei-catalogo-reutilizavel',
+				'Como estruturar um catálogo interno de integrações reutilizáveis?',
+				'<p>O catálogo começa pelo inventário do que já existe: cada pipeline em produção vira uma entrada com dono, sistemas conectados, contrato de entrada e saída e nível de criticidade. A partir daí, os trechos que se repetem entre projetos — autenticação, tratamento de erro, transformação de um mesmo objeto de negócio — são extraídos em cápsulas versionadas, publicadas para toda a organização. O ganho aparece no segundo projeto: em vez de reconstruir a conexão do zero, a equipe monta a integração a partir de peças já homologadas.</p>',
+			),
+			array(
+				'faq:cei-governanca-aprovacao',
+				'Como funciona a governança de aprovação de novas integrações?',
+				'<p>Toda integração passa por um fluxo de revisão antes de chegar à produção: quem constrói não é quem aprova, e a promoção entre ambientes exige o aceite de um responsável técnico do Centro de Excelência. O que é verificado nessa etapa é sempre o mesmo conjunto — aderência ao padrão de nomenclatura, credenciais guardadas no cofre, tratamento de erro e retentativa configurados, e ausência de duplicidade em relação ao catálogo. O acesso é controlado por função, de forma que criar, alterar e publicar sejam permissões distintas.</p>',
+			),
+			array(
+				'faq:cei-custo-e-performance',
+				'É possível medir custo e performance de cada integração centralizadamente?',
+				'<p>Sim. Como todas as integrações rodam sob a mesma plataforma e seguem o mesmo padrão de instrumentação, volume processado, tempo de execução, taxa de erro e consumo de recursos ficam disponíveis em um painel único, com corte por integração, por sistema conectado e por área responsável. É esse dado que sustenta as decisões seguintes do Centro de Excelência: quais fluxos otimizar, quais consolidar e quais aposentar por baixo uso.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Centro de Excelência em Integração FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
