@@ -131,6 +131,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Financeiro…' );
 		$this->preencher_solucao_financeiro();
 
+		WP_CLI::log( '— Preenchendo Integração Pós-Fusão…' );
+		$this->preencher_solucao_integracao_pos_fusao();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1111,6 +1114,7 @@ class Cliconnect_Seed {
 					'soberania-de-dados'              => 'Soberania de Dados',
 					'visao-360-do-cliente'            => 'Visão 360° do Cliente',
 					'modernizacao-de-erp'             => 'Modernização de ERP',
+					'integracao-pos-fusao'            => 'Integração Pós-Fusão',
 				),
 			),
 		);
@@ -4267,6 +4271,161 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Integração Pós-Fusão".
+	 *
+	 * O design cobre seis seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Selos e FAQ. Métricas, Logos, Plataforma e Aceleradores não existem
+	 * neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_integracao_pos_fusao() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:integracao-pos-fusao', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Integração Pós-Fusão: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'integração pós-fusão',
+			'solucao_hero_titulo'      => 'Integre empresas adquiridas desde o primeiro dia',
+			'solucao_hero_corpo'       => 'Conecte sistemas críticos sem abrir portas de firewall e acelere a captura de sinergias enquanto a consolidação de TI acontece.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'integracao-pos-fusao-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Acelere resultados após uma aquisição',
+			'solucao_pilares_1_icone'  => $this->img( 'integracao-pos-fusao-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Ative sistemas antes do fechamento',
+			'solucao_pilares_1_desc'   => 'Disponibilize identidade, folha e ERP antes da conclusão do negócio para garantir continuidade operacional.',
+			'solucao_pilares_2_icone'  => $this->img( 'integracao-pos-fusao-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Entregue sinergias no prazo',
+			'solucao_pilares_2_desc'   => 'Conecte ambientes com dual-ERP e cumpra objetivos de integração sem esperar uma consolidação completa.',
+			'solucao_pilares_3_icone'  => $this->img( 'integracao-pos-fusao-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reutilize integrações em aquisições',
+			'solucao_pilares_3_desc'   => 'Crie cápsulas reutilizáveis para acelerar novas integrações mantendo padrões consistentes entre empresas.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Integre operações sem atrasar o negócio',
+			'solucao_casos_1_icone'    => $this->img( 'integracao-pos-fusao-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Unifique identidades corporativas',
+			'solucao_casos_1_desc'     => 'Conecte Entra ID e Okta para habilitar acesso único aos colaboradores das empresas integradas.',
+			'solucao_casos_2_icone'    => $this->img( 'integracao-pos-fusao-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Sincronize múltiplos ERPs',
+			'solucao_casos_2_desc'     => 'Integre SAP e Oracle Fusion durante a transição sem depender da consolidação definitiva dos sistemas.',
+			'solucao_casos_3_icone'    => $this->img( 'integracao-pos-fusao-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Consolide dados de RH',
+			'solucao_casos_3_desc'     => 'Conecte Workday e Oracle HCM para unificar processos e informações após a fusão.',
+			'solucao_casos_4_icone'    => $this->img( 'integracao-pos-fusao-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Migre seu CRM',
+			'solucao_casos_4_desc'     => 'Transfira informações comerciais entre plataformas mantendo continuidade no relacionamento com clientes.',
+			'solucao_casos_5_icone'    => $this->img( 'integracao-pos-fusao-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Unifique dados analíticos',
+			'solucao_casos_5_desc'     => 'Conecte Snowflake e BigQuery para criar uma visão consolidada das operações combinadas.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 4 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Integração segura desde o Dia 1',
+			'solucao_dif_corpo'        => 'Conecte sistemas adquiridos rapidamente com uma arquitetura preparada para ambientes corporativos, sem depender de alterações complexas na infraestrutura.',
+			'solucao_dif_topico_1'     => 'Runtime com conexão outbound-only',
+			'solucao_dif_topico_2'     => 'Deploy multi-cloud ou Kubernetes gerenciado',
+			'solucao_dif_topico_3'     => '300+ conectores sem custo adicional',
+			'solucao_dif_imagem'       => $this->img( 'integracao-pos-fusao-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 5 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_integracao_pos_fusao_faq( $post_id );
+
+		WP_CLI::log( "  Integração Pós-Fusão preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Integração Pós-Fusão e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Integração Pós-Fusão.
+	 * @return void
+	 */
+	protected function preencher_integracao_pos_fusao_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ipf-runtime-firewall',
+				'Como o Runtime elimina o problema de firewall no Dia 1?',
+				'<p>O runtime roda dentro do ambiente da empresa adquirida e abre a conexão de dentro para fora — é ele que procura a plataforma, nunca o contrário. Como não existe porta de entrada a ser publicada, não há regra de borda nova, IP fixo a negociar nem exceção a ser aprovada pelo time de segurança da outra companhia. É justamente esse ponto que costuma travar as primeiras semanas de uma aquisição, quando as duas redes ainda são independentes e ninguém quer flexibilizar o perímetro.</p>',
+			),
+			array(
+				'faq:ipf-antes-consolidacao-ti',
+				'É possível conectar sistemas antes da consolidação de TI?',
+				'<p>Sim, e é o cenário mais comum. A integração acontece na camada de dados e processos, sobre os sistemas como eles estão hoje — dois ERPs, dois diretórios de identidade, duas folhas. Identidade, RH e ERP podem ser conectados antes mesmo do fechamento do negócio, para que a operação continue de pé no primeiro dia. A consolidação definitiva segue seu próprio cronograma, sem bloquear a captura de sinergias.</p>',
+			),
+			array(
+				'faq:ipf-velocidade-deploy',
+				'Qual a velocidade de deploy para deixar a operação pronta no Dia 1?',
+				'<p>O runtime sobe em multi-cloud ou em Kubernetes gerenciado, então o provisionamento do ambiente é questão de horas, não de projeto. O que define o cronograma é o acesso: liberação de credencial nos sistemas de origem e destino, e o aceite do desenho pelas áreas envolvidas. Com mais de 300 conectores prontos e sem custo adicional, os fluxos críticos do Dia 1 — acesso, folha, pedidos — normalmente entram em semanas, e não em meses.</p>',
+			),
+			array(
+				'faq:ipf-pipelines-pos-projeto',
+				'Os pipelines continuam gerando valor após o projeto de integração?',
+				'<p>Continuam. Cada integração é construída como cápsula reutilizável, com o padrão de mapeamento, tratamento de erro e governança já definidos. Terminada a incorporação, essas cápsulas viram o repertório da empresa para a próxima aquisição: o que foi feito para conectar um ERP ou um diretório de identidade é reaproveitado, em vez de recomeçar do zero. Elas também seguem sustentando a operação corrente — sincronização de cadastros, dados analíticos e processos entre as unidades combinadas.</p>',
+			),
+			array(
+				'faq:ipf-substituir-middleware-legado',
+				'Como substituir o middleware legado da empresa adquirida?',
+				'<p>A troca é feita fluxo a fluxo, sem big bang. O primeiro passo é inventariar o que o middleware antigo realmente executa e com que frequência; em seguida os fluxos são reconstruídos na plataforma e rodam em paralelo com o legado, com comparação de resultados antes do corte. Cada fluxo migrado é desligado do lado antigo só depois de estável, o que mantém a operação funcionando durante toda a transição e evita concentrar risco em uma única data.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Integração Pós-Fusão FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
