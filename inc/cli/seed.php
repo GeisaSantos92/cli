@@ -137,6 +137,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Integração Pós-Fusão…' );
 		$this->preencher_solucao_integracao_pos_fusao();
 
+		WP_CLI::log( '— Preenchendo Compras ao Pagamento (S2P)…' );
+		$this->preencher_solucao_compras_ao_pagamento();
+
 		WP_CLI::log( '— Preenchendo IA Corporativa…' );
 		$this->preencher_solucao_ia_corporativa();
 
@@ -4751,6 +4754,171 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  IA Corporativa FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Compras ao Pagamento (S2P)".
+	 *
+	 * O design cobre oito seções — Hero, Métricas, Pilares, Casos de Uso,
+	 * Diferencial, Aceleradores, Selos e FAQ. Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_compras_ao_pagamento() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:compras-ao-pagamento', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Compras ao Pagamento: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'das compras ao pagamento (s2p)',
+			'solucao_hero_titulo'      => 'Do fornecedor ao pagamento, sem planilhas no meio',
+			'solucao_hero_corpo'       => 'Conecte compras, ERP, contratos e bancos em um fluxo único para controlar cada etapa do ciclo de suprimentos com rastreabilidade.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'compras-ao-pagamento-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '26.000',
+			'solucao_metrica_1_rotulo' => 'horas de compras eliminadas',
+			'solucao_metrica_2_numero' => '80x',
+			'solucao_metrica_2_rotulo' => 'mais rápido no processamento de faturas',
+			'solucao_metrica_3_numero' => '70%',
+			'solucao_metrica_3_rotulo' => 'mais rápido no cadastro de fornecedores',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Controle total do ciclo de compras',
+			'solucao_pilares_1_icone'  => $this->img( 'compras-ao-pagamento-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte todo o fluxo de compras',
+			'solucao_pilares_1_desc'   => 'Integre cotação, aprovação, pedido e pagamento em um único processo rastreável e conectado.',
+			'solucao_pilares_2_icone'  => $this->img( 'compras-ao-pagamento-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Elimine aprovações manuais',
+			'solucao_pilares_2_desc'   => 'Reduza o tempo do ciclo de compras removendo dependências de e-mails e processos manuais.',
+			'solucao_pilares_3_icone'  => $this->img( 'compras-ao-pagamento-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Tenha visão dos gastos',
+			'solucao_pilares_3_desc'   => 'Acompanhe despesas em tempo real para tomar decisões financeiras com mais precisão.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize cada etapa do suprimento',
+			'solucao_casos_1_icone'    => $this->img( 'compras-ao-pagamento-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Gere pedidos automaticamente',
+			'solucao_casos_1_desc'     => 'Transforme requisições aprovadas em pedidos de compra no ERP sem intervenções manuais.',
+			'solucao_casos_2_icone'    => $this->img( 'compras-ao-pagamento-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Automatize o matching de 3 vias',
+			'solucao_casos_2_desc'     => 'Valide pedido, recebimento e nota fiscal automaticamente antes de liberar pagamentos.',
+			'solucao_casos_3_icone'    => $this->img( 'compras-ao-pagamento-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Dispare pagamentos automaticamente',
+			'solucao_casos_3_desc'     => 'Execute pagamentos a fornecedores após aprovação e conferência dos documentos necessários.',
+			'solucao_casos_4_icone'    => $this->img( 'compras-ao-pagamento-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Consolide gastos estratégicos',
+			'solucao_casos_4_desc'     => 'Unifique despesas por categoria e fornecedor para melhorar negociações e decisões de compra.',
+			'solucao_casos_5_icone'    => $this->img( 'compras-ao-pagamento-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Rastreie todo o ciclo de compras',
+			'solucao_casos_5_desc'     => 'Acompanhe cada etapa da requisição ao pagamento com histórico completo e visão operacional.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança em cada transação',
+			'solucao_dif_corpo'        => 'Garanta controle sobre aprovações e pagamentos com rastreabilidade completa e separação entre funções críticas.',
+			'solucao_dif_topico_1'     => 'Histórico completo de aprovações',
+			'solucao_dif_topico_2'     => 'Segregação entre aprovar e pagar',
+			'solucao_dif_topico_3'     => 'Controle sobre todo o fluxo financeiro',
+			'solucao_dif_imagem'       => $this->img( 'compras-ao-pagamento-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Requisição → aprovação → pedido',
+			'solucao_acel_topico_2'    => 'Matching de 3 vias automatizado',
+			'solucao_acel_topico_3'    => 'Pagamento após conferência',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '',
+			'solucao_acel_imagem'      => $this->img( 'compras-ao-pagamento-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_compras_ao_pagamento_faq( $post_id );
+
+		WP_CLI::log( "  Compras ao Pagamento preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Compras ao Pagamento (S2P) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Compras ao Pagamento.
+	 * @return void
+	 */
+	protected function preencher_compras_ao_pagamento_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:s2p-matching-3-vias',
+				'Como automatizar o matching de 3 vias entre pedido, recebimento e nota fiscal?',
+				'<p>A integração lê os três documentos onde eles nascem — o pedido de compra no ERP, o registro de recebimento no almoxarifado ou no WMS e a nota fiscal enviada pelo fornecedor — e compara item a item quantidade, preço e condição comercial. Quando os três batem dentro das tolerâncias definidas pela empresa, a fatura segue direto para pagamento; quando há divergência, o fluxo para e aciona o responsável com o motivo exato da diferença. O time financeiro deixa de conferir planilha por planilha e passa a tratar apenas as exceções.</p>',
+			),
+			array(
+				'faq:s2p-visibilidade-gastos',
+				'É possível dar visibilidade de gastos em tempo real ao financeiro?',
+				'<p>Sim. Como cada etapa do ciclo passa pela integração, o compromisso financeiro é registrado no momento em que acontece: a requisição aprovada, o pedido emitido, o recebimento confirmado e a fatura liberada. Esses dados são consolidados por categoria, centro de custo e fornecedor e enviados ao ERP ou à ferramenta de BI da empresa, o que permite acompanhar o gasto comprometido antes de ele virar despesa contabilizada — e negociar com base no volume real por fornecedor.</p>',
+			),
+			array(
+				'faq:s2p-segregacao-funcoes',
+				'Como funciona a segregação de funções entre aprovação e pagamento?',
+				'<p>Aprovar e pagar são etapas distintas do fluxo, com permissões distintas: quem autoriza a compra não é quem executa a liberação financeira, e a integração respeita os papéis já definidos no ERP e no sistema de aprovação. Cada transição registra quem agiu, quando e sobre qual documento, formando um histórico completo de aprovações disponível para auditoria. Nenhum pagamento é disparado sem que a etapa anterior tenha sido concluída pelo perfil autorizado.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Compras ao Pagamento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
