@@ -217,6 +217,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Microsoft Teams…' );
 		$this->preencher_solucao_microsoft_teams();
 
+		WP_CLI::log( '— Preenchendo Snowflake…' );
+		$this->preencher_solucao_snowflake();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1185,6 +1188,7 @@ class Cliconnect_Seed {
 				'onclick-erp'                    => 'Onclick ERP',
 				'propz'                          => 'Propz',
 				'microsoft-teams'                => 'Microsoft Teams',
+				'snowflake'                      => 'Snowflake',
 				),
 			),
 			'industria'      => array(
@@ -9548,6 +9552,153 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Magento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/**
+	 * Preenche os campos ACF da solução Snowflake.
+	 */
+	protected function preencher_solucao_snowflake() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:snowflake',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "snowflake" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Snowflake',
+			'solucao_hero_titulo'     => 'Conecte Snowflake ao core do negócio com dados sempre prontos para análise',
+			'solucao_hero_corpo'      => 'Integre Snowflake aos seus sistemas transacionais, CRM e ERP para alimentar pipelines analíticos em tempo real e eliminar silos de dados que travam decisões estratégicas.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/snowflake/',
+			'solucao_hero_imagem'     => $this->img( 'snowflake-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Dados unificados, decisões mais rápidas',
+			'solucao_pilares_1_icone'  => $this->img( 'snowflake-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Ingestão contínua de dados',
+			'solucao_pilares_1_desc'   => 'Alimente o Snowflake com dados de ERP, CRM e sistemas legados de forma automatizada e confiável.',
+			'solucao_pilares_2_icone'  => $this->img( 'snowflake-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Transformações sem código extra',
+			'solucao_pilares_2_desc'   => 'Processe, normalize e enriqueça dados antes de carregá-los no Snowflake usando fluxos visuais da Boomi.',
+			'solucao_pilares_3_icone'  => $this->img( 'snowflake-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Governança centralizada',
+			'solucao_pilares_3_desc'   => 'Controle quais dados chegam ao Snowflake, com rastreabilidade de origem e conformidade com LGPD e GDPR.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Transforme dados em vantagem competitiva',
+			'solucao_casos_1_icone'   => $this->img( 'snowflake-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Sincronize ERP com o Data Cloud',
+			'solucao_casos_1_desc'    => 'Transfira transações financeiras e operacionais do ERP para o Snowflake em tempo real para análises atualizadas.',
+			'solucao_casos_2_icone'   => $this->img( 'snowflake-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Unifique dados de CRM',
+			'solucao_casos_2_desc'    => 'Consolide leads, oportunidades e histórico de clientes no Snowflake para visões 360° do pipeline comercial.',
+			'solucao_casos_3_icone'   => $this->img( 'snowflake-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize pipelines de marketing',
+			'solucao_casos_3_desc'    => 'Alimente modelos de atribuição e segmentação com dados de campanhas centralizados no Snowflake.',
+			'solucao_casos_4_icone'   => $this->img( 'snowflake-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Integre dados de e-commerce',
+			'solucao_casos_4_desc'    => 'Envie pedidos, devoluções e comportamento de navegação para o Snowflake e alimente dashboards de vendas em tempo real.',
+			'solucao_casos_5_icone'   => $this->img( 'snowflake-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Alimente agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados estruturados do Snowflake para modelos de machine learning e agentes de IA que automatizam decisões operacionais.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Integração nativa com a Snowflake Data Cloud',
+			'solucao_dif_corpo'    => 'Conecte o Snowflake usando o conector certificado da Boomi com suporte a autenticação OAuth 2.0 e key-pair, garantindo segurança máxima no transporte de dados.',
+			'solucao_dif_topico_1' => 'Conector certificado Boomi para Snowflake',
+			'solucao_dif_topico_2' => 'Autenticação OAuth 2.0 e key-pair',
+			'solucao_dif_topico_3' => 'Suporte a bulk load e streaming',
+			'solucao_dif_imagem'   => $this->img( 'snowflake-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Um hub central para todos os seus dados',
+			'solucao_plat_corpo'    => 'Com a Boomi como camada de integração, você conecta qualquer sistema ao Snowflake sem scripts ETL customizados, acelerando a entrega de insights e reduzindo a dívida técnica de pipelines fragmentados.',
+			'solucao_plat_topico_1' => 'Elimine pipelines ETL fragmentados',
+			'solucao_plat_topico_2' => 'Conecte qualquer sistema ao Snowflake',
+			'solucao_plat_topico_3' => 'Acelere time-to-insight da equipe de dados',
+			'solucao_plat_imagem'   => $this->img( 'snowflake-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece a ingerir dados no Snowflake hoje',
+			'solucao_acel_corpo'     => 'Use modelos prontos para conectar ERP, CRM e sistemas operacionais ao Snowflake com fluxos estruturados e rastreabilidade de ponta a ponta.',
+			'solucao_acel_topico_1'  => 'Conecte ERP e CRM rapidamente',
+			'solucao_acel_topico_2'  => 'Reutilize pipelines de dados',
+			'solucao_acel_topico_3'  => 'Acelere projetos de Data Cloud',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'snowflake-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_snowflake( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Snowflake: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Snowflake.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_snowflake( $post_id ) {
+		$itens = array(
+			array(
+				'faq:snowflake-ingestao',
+				'Como a CLI Connect alimenta o Snowflake com dados do ERP?',
+				'<p>A integração usa o conector certificado da Boomi para o Snowflake, transferindo dados transacionais do ERP — como pedidos, faturamento e estoque — de forma contínua e rastreável. Os fluxos são configurados visualmente, sem necessidade de scripts ETL customizados, e suportam bulk load para grandes volumes e streaming para dados em tempo real.</p>',
+			),
+			array(
+				'faq:snowflake-seguranca',
+				'Quais mecanismos de segurança são usados na conexão com o Snowflake?',
+				'<p>A CLI Connect utiliza autenticação OAuth 2.0 e key-pair para garantir que apenas sistemas autorizados acessem o Snowflake. Todo tráfego é criptografado em trânsito e os acessos são auditados, mantendo conformidade com LGPD, GDPR e as políticas internas de governança de dados da empresa.</p>',
+			),
+			array(
+				'faq:snowflake-transformacoes',
+				'É possível transformar dados antes de carregá-los no Snowflake?',
+				'<p>Sim. Os fluxos de integração da Boomi permitem normalizar, enriquecer e filtrar dados antes de enviá-los ao Snowflake. Isso inclui conversões de formato, deduplicação, validação de campos e mapeamento de esquemas, garantindo que apenas dados de qualidade cheguem ao Data Warehouse para análise.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Snowflake FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 }
