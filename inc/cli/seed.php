@@ -220,6 +220,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Snowflake…' );
 		$this->preencher_solucao_snowflake();
 
+		WP_CLI::log( '— Preenchendo Databricks…' );
+		$this->preencher_solucao_databricks();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1189,6 +1192,7 @@ class Cliconnect_Seed {
 				'propz'                          => 'Propz',
 				'microsoft-teams'                => 'Microsoft Teams',
 				'snowflake'                      => 'Snowflake',
+				'databricks'                     => 'Databricks',
 				),
 			),
 			'industria'      => array(
@@ -9699,6 +9703,152 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Snowflake FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	/**
+	 * Preenche os campos ACF da solução Databricks.
+	 */
+	protected function preencher_solucao_databricks() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:databricks',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Post cli_solucao "databricks" não encontrado.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+		$campos  = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'para o seu Databricks',
+			'solucao_hero_titulo'     => 'Conecte o Databricks ao core do negócio com dados sempre prontos para IA',
+			'solucao_hero_corpo'      => 'Integre Databricks aos seus sistemas transacionais, ERP e CRM para alimentar modelos de machine learning em tempo real e transformar dados corporativos em decisões inteligentes.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/databricks/',
+
+			// 2 · Pilares.
+			'solucao_pilares_titulo'   => 'Prepare dados para inteligência avançada',
+			'solucao_pilares_1_icone'  => $this->img( 'databricks-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Ingestione dados continuamente',
+			'solucao_pilares_1_desc'   => 'Conecte sistemas operacionais ao Databricks em tempo real.',
+			'solucao_pilares_2_icone'  => $this->img( 'databricks-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Alimente modelos de IA',
+			'solucao_pilares_2_desc'   => 'Disponibilize dados atualizados para machine learning e agentes inteligentes.',
+			'solucao_pilares_3_icone'  => $this->img( 'databricks-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Transforme previsões em ações',
+			'solucao_pilares_3_desc'   => 'Retorne resultados analíticos para ERP e CRM automaticamente.',
+
+			// 3 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Aplique inteligência com dados conectados',
+			'solucao_casos_1_icone'   => $this->img( 'databricks-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Treine modelos preditivos',
+			'solucao_casos_1_desc'    => 'Use dados de ERP e CRM para prever churn, demanda e riscos.',
+			'solucao_casos_2_icone'   => $this->img( 'databricks-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Dê contexto aos agentes de IA',
+			'solucao_casos_2_desc'    => 'Alimente agentes inteligentes com informações corporativas atualizadas.',
+			'solucao_casos_3_icone'   => $this->img( 'databricks-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Envie scores para sistemas',
+			'solucao_casos_3_desc'    => 'Retorne resultados de modelos para apoiar decisões operacionais.',
+			'solucao_casos_4_icone'   => $this->img( 'databricks-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Consolide dados analíticos',
+			'solucao_casos_4_desc'    => 'Una múltiplas fontes para análises corporativas avançadas.',
+			'solucao_casos_5_icone'   => $this->img( 'databricks-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
+			'solucao_casos_5_desc'    => 'Disponibilize dados corporativos para agentes de IA sem expor o core dos sistemas.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 · Selos.
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 · Diferencial Técnico.
+			'solucao_dif_eyebrow'  => 'diferencial técnico',
+			'solucao_dif_titulo'   => 'Dados preparados para IA com segurança',
+			'solucao_dif_corpo'    => 'Conecte o Databricks via APIs e Delta Sharing mantendo autenticação segura, governança e proteção dos dados sensíveis utilizados pelos modelos.',
+			'solucao_dif_topico_1' => 'Utilize APIs oficiais do Databricks',
+			'solucao_dif_topico_2' => 'Proteja dados sensíveis',
+			'solucao_dif_topico_3' => 'Controle acessos por token',
+			'solucao_dif_imagem'   => $this->img( 'databricks-dif' ),
+
+			// 6 · Plataforma Única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Conecte dados e decisões em uma plataforma',
+			'solucao_plat_corpo'    => 'Centralize a conexão entre sistemas operacionais, Databricks e aplicações de negócio para fechar o ciclo entre dados e ações.',
+			'solucao_plat_topico_1' => 'Integre dados corporativos',
+			'solucao_plat_topico_2' => 'Reutilize pipelines existentes',
+			'solucao_plat_topico_3' => 'Aplique IA nos processos',
+			'solucao_plat_imagem'   => $this->img( 'databricks-plat' ),
+
+			// 7 · Aceleradores.
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com fluxos de IA estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para levar dados ao Databricks, gerar resultados analíticos e devolver ações aos sistemas corporativos.',
+			'solucao_acel_topico_1'  => 'Conecte dados rapidamente',
+			'solucao_acel_topico_2'  => 'Acelere treinamentos de modelos',
+			'solucao_acel_topico_3'  => 'Automatize ações inteligentes',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'databricks-acel' ),
+		);
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		// 8 · FAQ.
+		$faq_ids = $this->criar_faq_databricks( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Databricks: todas as seções preenchidas.' );
+	}
+
+	/**
+	 * Cria/atualiza os posts cli_faq para a solução Databricks.
+	 *
+	 * @return int[]
+	 */
+	protected function criar_faq_databricks( $post_id ) {
+		$itens = array(
+			array(
+				'faq:databricks-ingestao',
+				'Como levar dados operacionais para o Databricks em tempo real?',
+				'<p>A CLI Connect usa o conector certificado da Boomi para o Databricks, transferindo dados de ERP, CRM e sistemas legados de forma contínua e rastreável. Os fluxos são configurados visualmente, sem scripts ETL customizados, e suportam ingestão em lote e streaming para manter os dados sempre atualizados para os modelos de machine learning.</p>',
+			),
+			array(
+				'faq:databricks-writeback',
+				'É possível devolver o resultado de um modelo de IA para o ERP automaticamente?',
+				'<p>Sim. Após o Databricks gerar scores, previsões ou recomendações, a integração escreve os resultados de volta nos sistemas de origem — ERP, CRM ou plataformas operacionais — de forma automatizada. Isso fecha o ciclo entre dado e ação sem intervenção manual, acelerando decisões em vendas, supply chain e finanças.</p>',
+			),
+			array(
+				'faq:databricks-governanca',
+				'Como funciona a governança de dados sensíveis nesse fluxo?',
+				'<p>A CLI Connect utiliza as APIs oficiais do Databricks com autenticação por token e Delta Sharing para controlar precisamente quais dados chegam aos modelos. Campos sensíveis podem ser mascarados ou excluídos antes da ingestão, garantindo conformidade com LGPD e GDPR e mantendo auditoria completa de cada acesso ao ambiente analítico.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Databricks FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 }
