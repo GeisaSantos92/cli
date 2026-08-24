@@ -9730,6 +9730,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
 			'solucao_hero_btn2_url'   => '/solucao/databricks/',
+			'solucao_hero_imagem'     => $this->img( 'databricks-hero' ),
 
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Prepare dados para inteligência avançada',
