@@ -5,7 +5,7 @@
  * Fundo branco (var(--cor-fundo)). Layout: coluna de texto à esquerda
  * (eyebrow, título, corpo, 4 tópicos, botão CTA) + imagem à direita.
  *
- * Campos ACF (group_cli_solucao, aba "7 · Aceleradores"):
+ * Campos ACF (group_cli_solucao, aba "9 · Aceleradores"):
  *   solucao_acel_eyebrow, solucao_acel_titulo, solucao_acel_corpo,
  *   solucao_acel_topico_{1,2,3,4}, solucao_acel_btn_texto,
  *   solucao_acel_btn_url, solucao_acel_imagem (image ID).

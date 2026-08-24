@@ -4,7 +4,8 @@
  *
  * Campos ACF (group_cli_solucao, aba "1 · Hero"):
  *   solucao_hero_eyebrow, solucao_hero_titulo, solucao_hero_titulo_destaque,
- *   solucao_hero_corpo, solucao_hero_btn1_texto, solucao_hero_btn1_url,
+ *   solucao_hero_titulo_fim, solucao_hero_titulo_fluido, solucao_hero_corpo,
+ *   solucao_hero_btn1_texto, solucao_hero_btn1_url,
  *   solucao_hero_btn2_texto, solucao_hero_btn2_url, solucao_hero_imagem.
  *
  * @package Cliconnect
@@ -17,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $eyebrow         = cliconnect_campo_pagina( 'solucao_hero_eyebrow' );
 $titulo          = cliconnect_campo_pagina( 'solucao_hero_titulo' );
 $titulo_destaque = cliconnect_campo_pagina( 'solucao_hero_titulo_destaque' );
+$titulo_fim      = cliconnect_campo_pagina( 'solucao_hero_titulo_fim' );
+$titulo_fluido   = cliconnect_campo_pagina( 'solucao_hero_titulo_fluido' );
 $corpo           = cliconnect_campo_pagina( 'solucao_hero_corpo' );
 $btn1_texto      = cliconnect_campo_pagina( 'solucao_hero_btn1_texto' );
 $btn1_url        = cliconnect_campo_pagina( 'solucao_hero_btn1_url' );
@@ -27,6 +30,10 @@ $imagem_id       = cliconnect_campo_pagina( 'solucao_hero_imagem', 0 );
 if ( ! $titulo && ! $titulo_destaque ) {
 	return;
 }
+
+// Em frase corrida as partes deixam de ser linhas empilhadas. A continuação preenchida
+// já implica esse modo; sem ela, quem decide é o campo próprio.
+$titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__titulo--fluido' : 'sh-hero__titulo';
 ?>
 <section class="sh-hero" aria-label="<?php esc_attr_e( 'Apresentação', 'cli' ); ?>">
 	<div class="container">
@@ -39,12 +46,15 @@ if ( ! $titulo && ! $titulo_destaque ) {
 					<p class="eyebrow sh-hero__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
 				<?php endif; ?>
 
-				<h1 class="sh-hero__titulo">
+				<h1 class="<?php echo esc_attr( $titulo_classe ); ?>">
 					<?php if ( $titulo ) : ?>
 						<span class="sh-hero__titulo-linha"><?php echo esc_html( $titulo ); ?></span>
 					<?php endif; ?>
 					<?php if ( $titulo_destaque ) : ?>
 						<span class="sh-hero__titulo-destaque"><?php echo esc_html( $titulo_destaque ); ?></span>
+					<?php endif; ?>
+					<?php if ( $titulo_fim ) : ?>
+						<span class="sh-hero__titulo-linha"><?php echo esc_html( $titulo_fim ); ?></span>
 					<?php endif; ?>
 				</h1>
 

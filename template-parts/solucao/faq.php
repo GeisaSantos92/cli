@@ -4,7 +4,7 @@
  *
  * Accordion nativo com <details>/<summary>. Fundo branco.
  *
- * Campos ACF (group_cli_solucao, aba "8 · FAQ"):
+ * Campos ACF (group_cli_solucao, aba "10 · FAQ"):
  *   solucao_faq_titulo  — título da seção (padrão: "Dúvidas Frequentes")
  *   solucao_faq_itens   — relationship com cli_faq (obj WP_Post)
  *

@@ -17,7 +17,10 @@ get_header();
 
 $cliconnect_secoes = array(
 	'hero',
+	'metricas',
 	'pilares',
+	'diagrama',
+	'logos',
 	'casos',
 	'selos',
 	'diferencial',
@@ -25,6 +28,24 @@ $cliconnect_secoes = array(
 	'aceleradores',
 	'faq',
 );
+
+/*
+ * Parte das soluções coloca o Diferencial antes dos Selos (campo da aba
+ * Diferencial). Nesses designs a faixa de selos fecha a página, logo antes do
+ * FAQ — depois também de Plataforma e Aceleradores, quando existirem.
+ */
+if ( cliconnect_campo_pagina( 'solucao_dif_antes_selos' ) ) {
+	$cliconnect_pos_selos = array_search( 'selos', $cliconnect_secoes, true );
+	$cliconnect_pos_faq   = array_search( 'faq', $cliconnect_secoes, true );
+
+	if ( false !== $cliconnect_pos_selos && false !== $cliconnect_pos_faq ) {
+		unset( $cliconnect_secoes[ $cliconnect_pos_selos ] );
+		$cliconnect_secoes = array_values( $cliconnect_secoes );
+
+		$cliconnect_pos_faq = array_search( 'faq', $cliconnect_secoes, true );
+		array_splice( $cliconnect_secoes, $cliconnect_pos_faq, 0, array( 'selos' ) );
+	}
+}
 
 foreach ( $cliconnect_secoes as $cliconnect_secao ) {
 	get_template_part( 'template-parts/solucao/' . $cliconnect_secao );

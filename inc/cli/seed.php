@@ -232,6 +232,66 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Google Cloud…' );
 		$this->preencher_solucao_google_cloud();
 
+		WP_CLI::log( '— Preenchendo Serviços Financeiros…' );
+		$this->preencher_solucao_servicos_financeiros();
+
+		WP_CLI::log( '— Preenchendo Manufatura…' );
+		$this->preencher_solucao_manufatura();
+
+		WP_CLI::log( '— Preenchendo Software (ISV)…' );
+		$this->preencher_solucao_software_isv();
+
+		WP_CLI::log( '— Preenchendo Logística (3PL)…' );
+		$this->preencher_solucao_logistica_3pl();
+
+		WP_CLI::log( '— Preenchendo Varejo…' );
+		$this->preencher_solucao_varejo();
+
+		WP_CLI::log( '— Preenchendo Seguros…' );
+		$this->preencher_solucao_seguros();
+
+		WP_CLI::log( '— Preenchendo Hotelaria e Turismo…' );
+		$this->preencher_solucao_hotelaria_e_turismo();
+
+		WP_CLI::log( '— Preenchendo Recursos Humanos (RH)…' );
+		$this->preencher_solucao_recursos_humanos_rh();
+
+		WP_CLI::log( '— Preenchendo Marketing…' );
+		$this->preencher_solucao_marketing();
+
+		WP_CLI::log( '— Preenchendo Operações de Receita (RevOps)…' );
+		$this->preencher_solucao_operacoes_de_receita_revops();
+
+		WP_CLI::log( '— Preenchendo Financeiro…' );
+		$this->preencher_solucao_financeiro();
+
+		WP_CLI::log( '— Preenchendo Atualização de Sistemas Legados…' );
+		$this->preencher_solucao_atualizacao_de_sistemas_legados();
+
+		WP_CLI::log( '— Preenchendo Integração Pós-Fusão…' );
+		$this->preencher_solucao_integracao_pos_fusao();
+
+		WP_CLI::log( '— Preenchendo Compras ao Pagamento (S2P)…' );
+		$this->preencher_solucao_compras_ao_pagamento();
+
+		WP_CLI::log( '— Preenchendo IA Corporativa…' );
+		$this->preencher_solucao_ia_corporativa();
+
+		WP_CLI::log( '— Preenchendo Visão 360° do Cliente…' );
+		$this->preencher_solucao_visao_360_do_cliente();
+
+		WP_CLI::log( '— Preenchendo Soberania de Dados…' );
+		$this->preencher_solucao_soberania_de_dados();
+
+		WP_CLI::log( '— Preenchendo Centro de Excelência em Integração…' );
+		$this->preencher_solucao_centro_de_excelencia_em_integracao();
+
+		WP_CLI::log( '— Preenchendo Jornada do Colaborador (H2R)…' );
+		$this->preencher_solucao_jornada_do_colaborador();
+
+		WP_CLI::log( '— Preenchendo Pedido ao Recebimento (O2C)…' );
+		$this->preencher_solucao_pedido_ao_recebimento();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -439,6 +499,28 @@ class Cliconnect_Seed {
 		return $this->midia[ $nome ] ?? 0;
 	}
 
+	/**
+	 * Busca o ID de um post criado por upsert() a partir do slug do seed.
+	 *
+	 * @param string $slug      Identificador estável do seed (ex.: 'cliente:hsbc').
+	 * @param string $post_type Tipo do post.
+	 * @return int ID do post, ou 0 se não existir.
+	 */
+	protected function id_do_seed( $slug, $post_type ) {
+		$posts = get_posts(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $slug,      // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		return $posts ? (int) $posts[0] : 0;
+	}
+
 	/* =====================================================================
 	   PÁGINAS
 	   ===================================================================== */
@@ -565,6 +647,16 @@ class Cliconnect_Seed {
 			array( 'BRZ', 'cliente-brz', false ),
 			array( 'SBC', 'cliente-sbc', false ),
 			array( 'Indiana', 'cliente-indiana', false ),
+			array( 'Moura', 'cliente-moura', false ),
+			array( 'Sustentare', 'cliente-sustentare', false ),
+			array( 'Clamper', 'cliente-clamper', false ),
+			array( 'Legrand', 'cliente-legrand', false ),
+			array( 'Neogrid', 'cliente-neogrid', false ),
+			array( 'Zukkin', 'cliente-zukkin', false ),
+			array( 'B2List', 'cliente-b2list', false ),
+			array( 'Peixoto', 'cliente-peixoto', false ),
+			array( 'SEG Imob', 'cliente-seg-imob', false ),
+			array( 'Utrip', 'cliente-utrip', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -1247,6 +1339,8 @@ class Cliconnect_Seed {
 					'soberania-de-dados'              => 'Soberania de Dados',
 					'visao-360-do-cliente'            => 'Visão 360° do Cliente',
 					'modernizacao-de-erp'             => 'Modernização de ERP',
+					'integracao-pos-fusao'            => 'Integração Pós-Fusão',
+					'centro-de-excelencia-em-integracao' => 'Centro de Excelência em Integração',
 				),
 			),
 		);
@@ -2828,6 +2922,3173 @@ class Cliconnect_Seed {
 	/* =====================================================================
 	   SOLUÇÕES — LANDING PAGES
 	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Serviços Financeiros".
+	 *
+	 * Landing page da indústria de serviços financeiros. Preenchida seção a
+	 * seção; as ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_servicos_financeiros() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:servicos-financeiros', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Serviços Financeiros: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para serviços financeiros',
+			'solucao_hero_titulo'          => 'Da implementação à produção em semanas.',
+			'solucao_hero_titulo_destaque' => 'Porque bancos não esperam.',
+			'solucao_hero_corpo'           => 'Conecte sistemas bancários, plataformas digitais e soluções de segurança em uma única arquitetura de integração preparada para evoluir continuamente.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'servicos-financeiros-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '95%',
+			'solucao_metrica_1_rotulo'     => 'mais rápida a verificação de identidade',
+			'solucao_metrica_2_numero'     => '24.000',
+			'solucao_metrica_2_rotulo'     => 'horas de trabalho manual eliminadas',
+			'solucao_metrica_3_numero'     => '5%',
+			'solucao_metrica_3_rotulo'     => 'de aumento no NPS',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_pilares_1_icone'      => $this->img( 'servicos-financeiros-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Compliance desde a arquitetura',
+			'solucao_pilares_1_desc'       => 'Controle de acessos, rastreabilidade e governança para ambientes altamente regulados.',
+			'solucao_pilares_2_icone'      => $this->img( 'servicos-financeiros-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Integrações que evoluem junto com o negócio',
+			'solucao_pilares_2_desc'       => 'Novos fluxos, alterações e melhorias fazem parte da operação, sem iniciar um novo projeto a cada mudança.',
+			'solucao_pilares_3_icone'      => $this->img( 'servicos-financeiros-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Dados preparados para automação e IA',
+			'solucao_pilares_3_desc'       => 'Transforme informações dispersas em processos conectados, prontos para alimentar agentes inteligentes e análises em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos os serviços financeiros de grandes empresas',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:bnp-paribas-cardif', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:hsbc', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'servicos-financeiros-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Core Banking conectado',
+			'solucao_casos_1_desc'         => 'Integre sistemas bancários a ERPs, CRMs e plataformas digitais.',
+			'solucao_casos_2_icone'        => $this->img( 'servicos-financeiros-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Pagamentos em tempo real',
+			'solucao_casos_2_desc'         => 'Automatize a troca de informações entre instituições financeiras e sistemas internos.',
+			'solucao_casos_3_icone'        => $this->img( 'servicos-financeiros-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Prevenção à fraude',
+			'solucao_casos_3_desc'         => 'Conecte motores antifraude, plataformas analíticas e canais digitais.',
+			'solucao_casos_4_icone'        => $this->img( 'servicos-financeiros-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Crédito automatizado',
+			'solucao_casos_4_desc'         => 'Orquestre validações, documentos e aprovações entre múltiplos sistemas.',
+			'solucao_casos_5_icone'        => $this->img( 'servicos-financeiros-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Visão 360º do cliente',
+			'solucao_casos_5_desc'         => 'Centralize dados financeiros, comerciais e operacionais em uma única jornada.',
+			'solucao_casos_6_icone'        => $this->img( 'servicos-financeiros-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Dados para Inteligência Artificial',
+			'solucao_casos_6_desc'         => 'Disponibilize informações confiáveis para agentes inteligentes e análises avançadas.',
+			// Sem card CTA azul nesta landing — os seis cards fecham duas linhas.
+			'solucao_casos_cta_texto'      => '',
+			'solucao_casos_cta_url'        => '',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_servicos_financeiros_faq( $post_id );
+
+		WP_CLI::log( "  Serviços Financeiros preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Serviços Financeiros e vincula à solução.
+	 *
+	 * O Figma mostra apenas as perguntas (accordion fechado); as respostas
+	 * foram redigidas a partir do que a própria landing afirma e seguem
+	 * pendentes de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Serviços Financeiros.
+	 * @return void
+	 */
+	protected function preencher_servicos_financeiros_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sf-fin-core-banking',
+				'Quanto tempo leva para integrar um core banking?',
+				'<p>Os primeiros fluxos costumam entrar em produção em semanas, não em meses. O prazo depende do core utilizado, do volume de dados e das validações de segurança exigidas, mas a implementação é feita por etapas: as integrações críticas sobem primeiro e as demais entram em ondas seguintes, sem travar a operação.</p>',
+			),
+			array(
+				'faq:sf-fin-legados',
+				'A CLI funciona com sistemas legados?',
+				'<p>Sim. Além das APIs REST e SOAP, a plataforma se conecta a bancos de dados, arquivos, filas de mensageria e serviços internos que não expõem API. Para ambientes on-premises, a comunicação é feita por um agente instalado dentro da rede corporativa, sem abrir portas de entrada no firewall.</p>',
+			),
+			array(
+				'faq:sf-fin-open-finance',
+				'Como as integrações acompanham iniciativas de Open Finance?',
+				'<p>As integrações são construídas sobre uma camada de APIs governada, com versionamento, controle de acessos e rastreabilidade de ponta a ponta. Isso permite expor e consumir serviços de parceiros no ritmo em que a regulação e as fases do Open Finance avançam, sem reescrever a arquitetura a cada mudança.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-ia',
+				'É possível utilizar dados legados em projetos de IA?',
+				'<p>Sim. As integrações normalizam e conectam informações que hoje estão dispersas entre sistemas, deixando-as em um formato confiável e rastreável. É esse conjunto tratado que alimenta agentes inteligentes, motores de decisão e análises avançadas.</p>',
+			),
+			array(
+				'faq:sf-fin-dados-sensiveis',
+				'Como a CLI protege dados sensíveis durante as integrações?',
+				'<p>Os dados trafegam criptografados, as credenciais ficam em cofre e cada acesso é registrado para auditoria. A operação segue os padrões de compliance da plataforma — SOC 2, ISO 27001, PCI DSS e LGPD/GDPR, entre outros — e os fluxos são desenhados para expor apenas as informações necessárias a cada sistema.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Serviços Financeiros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Manufatura".
+	 *
+	 * Landing page da indústria de manufatura. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_manufatura() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:manufatura', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Manufatura: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para manufatura',
+			'solucao_hero_titulo'          => 'Conecte sua fábrica do chão de produção à nuvem',
+			'solucao_hero_titulo_destaque' => 'sem interromper a operação.',
+			'solucao_hero_corpo'           => 'Integre SAP S/4HANA, MES, WMS, Salesforce e sistemas industriais para acelerar projetos, aumentar a visibilidade operacional e modernizar a manufatura com segurança.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'manufatura-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '4x',
+			'solucao_metrica_1_rotulo'     => 'mais rápido o cadastro de fornecedores',
+			'solucao_metrica_2_numero'     => '50%',
+			'solucao_metrica_2_rotulo'     => 'de ganho de eficiência',
+			'solucao_metrica_3_numero'     => '30s',
+			'solucao_metrica_3_rotulo'     => 'para o processamento automatizado de pedidos',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Modernize sua operação industrial com integrações preparadas para escala',
+			'solucao_pilares_1_icone'      => $this->img( 'manufatura-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Visualize toda a operação em tempo real',
+			'solucao_pilares_1_desc'       => 'Conecte produção, estoque e logística para acompanhar indicadores atualizados em toda a fábrica.',
+			'solucao_pilares_2_icone'      => $this->img( 'manufatura-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Conecte fábrica e nuvem com segurança',
+			'solucao_pilares_2_desc'       => 'Integre ambientes industriais à nuvem utilizando arquitetura zero-trust sem comprometer a operação.',
+			'solucao_pilares_3_icone'      => $this->img( 'manufatura-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Alimente iniciativas de IA continuamente',
+			'solucao_pilares_3_desc'       => 'Disponibilize dados da produção em tempo real para analytics, IA e automações inteligentes.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a manufatura de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:seculus', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:moura', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:sustentare', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:clamper', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:legrand', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:culligan', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da manufatura',
+			'solucao_casos_1_icone'        => $this->img( 'manufatura-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Migre para SAP S/4HANA sem downtime',
+			'solucao_casos_1_desc'         => 'Conecte sistemas durante a migração preservando a continuidade das operações industriais.',
+			'solucao_casos_2_icone'        => $this->img( 'manufatura-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize o ciclo Order-to-Cash',
+			'solucao_casos_2_desc'         => 'Integre pedidos, faturamento e logística para reduzir atrasos e retrabalho operacional.',
+			'solucao_casos_3_icone'        => $this->img( 'manufatura-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Digitalize o Procure-to-Pay',
+			'solucao_casos_3_desc'         => 'Conecte SAP Ariba, ERP e fornecedores para acelerar compras e aprovações.',
+			'solucao_casos_4_icone'        => $this->img( 'manufatura-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Alimente IA com dados da produção',
+			'solucao_casos_4_desc'         => 'Envie dados industriais continuamente para plataformas analíticas e modelos de inteligência artificial.',
+			'solucao_casos_5_icone'        => $this->img( 'manufatura-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte OT e cloud com segurança',
+			'solucao_casos_5_desc'         => 'Integre MES, IoT e equipamentos industriais às plataformas de dados sem abrir o firewall.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_manufatura_faq( $post_id );
+
+		WP_CLI::log( "  Manufatura preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Manufatura e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Manufatura.
+	 * @return void
+	 */
+	protected function preencher_manufatura_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mf-ipaas-vs-sap',
+				'Qual a diferença entre uma iPaaS e o SAP Integration Suite ou SAP MII?',
+				'<p>O SAP Integration Suite e o SAP MII resolvem muito bem o que nasce e termina dentro do mundo SAP. Uma iPaaS trata a integração como uma camada independente: o mesmo ambiente conecta SAP S/4HANA, MES, WMS, Salesforce, sistemas industriais e serviços de nuvem, com governança e monitoramento únicos. Na prática, os dois convivem — a iPaaS assume os fluxos que atravessam fronteiras entre sistemas e evita que cada novo projeto vire uma integração ponto a ponto.</p>',
+			),
+			array(
+				'faq:mf-ot-nuvem-seguranca',
+				'É possível conectar equipamentos industriais à nuvem com segurança?',
+				'<p>Sim. A comunicação com o ambiente industrial é feita por um agente instalado dentro da própria rede, que abre a conexão de dentro para fora — não é preciso expor portas de entrada no firewall. Sobre isso funciona uma arquitetura zero-trust: dados criptografados em trânsito, credenciais em cofre e cada acesso registrado, com cada fluxo enxergando apenas as informações de que precisa.</p>',
+			),
+			array(
+				'faq:mf-mulesoft',
+				'O CLI Connect pode substituir plataformas como MuleSoft?',
+				'<p>Sim, esse tipo de substituição é um cenário comum de projeto. A avaliação passa por mapear as integrações existentes, o volume processado e as necessidades de governança, e a migração é feita por ondas: os fluxos críticos entram primeiro e os demais seguem em etapas, mantendo os dois ambientes em paralelo até o corte. O ganho costuma estar no custo de manutenção e na velocidade de criar fluxos novos.</p>',
+			),
+			array(
+				'faq:mf-compliance-industrial',
+				'A plataforma atende requisitos de compliance industrial?',
+				'<p>A plataforma opera sob os padrões de segurança e privacidade listados nesta página — SOC 2, ISO 27001, ISO 27701, ISO 27018, PCI DSS e GDPR/LGPD, entre outros. Para a indústria, o que costuma pesar é a rastreabilidade: cada execução de fluxo fica registrada, com histórico de versões e trilha de auditoria, o que sustenta exigências de qualidade e de validação de processos.</p>',
+			),
+			array(
+				'faq:mf-iot-volume',
+				'Como a plataforma lida com grandes volumes de dados de sensores IoT?',
+				'<p>O processamento é elástico e trabalha em fluxo contínuo, com filas que absorvem picos de coleta sem perder mensagem. Em vez de despejar o dado bruto no destino, os fluxos filtram, agregam e normalizam ainda no caminho — assim só o que tem uso analítico chega às plataformas de dados e aos modelos de IA, reduzindo custo de armazenamento e tempo de resposta.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Manufatura FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Software (ISV)".
+	 *
+	 * Landing page da indústria de software. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_software_isv() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:software-isv', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Software (ISV): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para softwares',
+			'solucao_hero_titulo'          => 'Entregue integrações nativas para seus clientes',
+			'solucao_hero_titulo_destaque' => 'sem reconstruir conectores a cada projeto',
+			'solucao_hero_corpo'           => 'Conecte seu produto a ERPs, CRMs e aplicações corporativas utilizando integrações reutilizáveis, APIs nativas e uma plataforma preparada para escalar seu software.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'software-isv-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '4x',
+			'solucao_metrica_1_rotulo'     => 'mais rápido para entrega de projetos de integração e desenvolvimento',
+			'solucao_metrica_2_numero'     => '350%',
+			'solucao_metrica_2_rotulo'     => 'de aumento no ROI em ambientes de tecnologia',
+			'solucao_metrica_3_numero'     => '5 dias',
+			'solucao_metrica_3_rotulo'     => 'para a primeira integração',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme integrações em vantagem competitiva',
+			'solucao_pilares_1_icone'      => $this->img( 'software-isv-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Conecte qualquer ERP ou CRM',
+			'solucao_pilares_1_desc'       => 'Amplie a compatibilidade do seu produto com integrações prontas para diferentes plataformas corporativas.',
+			'solucao_pilares_2_icone'      => $this->img( 'software-isv-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Entregue integrações em minutos',
+			'solucao_pilares_2_desc'       => 'Implemente a primeira pipeline rapidamente utilizando conectores reutilizáveis e arquitetura low-code.',
+			'solucao_pilares_3_icone'      => $this->img( 'software-isv-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Escalone sem aumentar custos',
+			'solucao_pilares_3_desc'       => 'Cresça conforme o consumo da plataforma sem cobrar ou manter conectores individuais.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos softwares de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:neogrid', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:zukkin', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:b2list', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:thomson-reuters', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Entregue integrações como parte do seu produto',
+			'solucao_casos_1_icone'        => $this->img( 'software-isv-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Disponibilize integrações nativas',
+			'solucao_casos_1_desc'         => 'Utilize componentes reutilizáveis para conectar seu software aos principais sistemas corporativos.',
+			'solucao_casos_2_icone'        => $this->img( 'software-isv-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Crie agentes de IA com MCP',
+			'solucao_casos_2_desc'         => 'Desenvolva agentes inteligentes expostos como servidores MCP integrados ao seu produto.',
+			'solucao_casos_3_icone'        => $this->img( 'software-isv-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Implante no ambiente do cliente',
+			'solucao_casos_3_desc'         => 'Execute integrações na infraestrutura do cliente sem VPN ou portas abertas.',
+			'solucao_casos_4_icone'        => $this->img( 'software-isv-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Monitore todos os clientes',
+			'solucao_casos_4_desc'         => 'Centralize métricas, execuções e integrações em um único painel operacional.',
+			'solucao_casos_5_icone'        => $this->img( 'software-isv-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte qualquer modelo de IA',
+			'solucao_casos_5_desc'         => 'Orquestre diferentes provedores de LLM diretamente nos fluxos de integração do produto.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_software_isv_faq( $post_id );
+
+		WP_CLI::log( "  Software (ISV) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Software (ISV) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Software (ISV).
+	 * @return void
+	 */
+	protected function preencher_software_isv_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:isv-tempo-primeira-integracao',
+				'Quanto tempo leva para criar uma integração nativa com Salesforce ou SAP?',
+				'<p>A primeira integração costuma entrar no ar em cerca de cinco dias. O ganho vem de não começar do zero: os conectores para Salesforce, SAP e demais sistemas corporativos já existem, e o trabalho fica concentrado em mapear campos e regras de negócio em ambiente low-code. As integrações seguintes são ainda mais rápidas, porque reaproveitam os componentes construídos na primeira.</p>',
+			),
+			array(
+				'faq:isv-mudanca-api-parceiro',
+				'O que acontece quando a API de um parceiro é alterada?',
+				'<p>A atualização acontece na camada de integração, não dentro do seu produto. Como o conector é mantido na plataforma e compartilhado por todos os clientes que o utilizam, a mudança é aplicada uma vez e vale para toda a base — em vez de virar uma correção por cliente. O monitoramento centralizado mostra quais fluxos foram afetados antes que isso chegue ao usuário final.</p>',
+			),
+			array(
+				'faq:isv-isolamento-multi-tenant',
+				'Como funciona o isolamento de dados em ambientes multi-tenant?',
+				'<p>Cada cliente opera com credenciais e ambiente de execução próprios, e um fluxo só enxerga os dados do tenant a que pertence. Quando o cenário exige, a execução acontece dentro da infraestrutura do próprio cliente, sem VPN nem portas abertas — o dado sensível não sai do perímetro dele, e o painel central recebe apenas os registros de execução.</p>',
+			),
+			array(
+				'faq:isv-custo-conectores-internos',
+				'Qual o custo real de manter conectores desenvolvidos internamente?',
+				'<p>O custo visível é o da construção; o que pesa é a manutenção. Cada conector interno vira código proprietário que precisa acompanhar mudanças de API, autenticação e volume, e esse esforço cresce junto com a base de clientes. Com integrações reutilizáveis, o time de produto para de manter conectores individuais e a operação escala conforme o consumo da plataforma.</p>',
+			),
+			array(
+				'faq:isv-cargas-elevadas',
+				'A plataforma suporta cargas de processamento muito elevadas?',
+				'<p>Sim. O processamento é elástico e trabalha com filas que absorvem picos sem perder mensagem, o que permite atender desde um cliente pequeno até operações com milhões de execuções por mês no mesmo ambiente. O painel operacional acompanha volume, latência e falhas por cliente, e a capacidade acompanha o consumo sem exigir reescrita dos fluxos.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Software (ISV) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Logística (3PL)".
+	 *
+	 * Landing page da indústria de logística. Preenchida seção a seção; as
+	 * ainda não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_logistica_3pl() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:logistica-3pl', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Logística (3PL): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para logística',
+			'solucao_hero_titulo'          => 'Conecte clientes, transportadoras e sistemas logísticos',
+			'solucao_hero_titulo_destaque' => 'em uma única plataforma',
+			'solucao_hero_corpo'           => 'Integre ERPs, WMS, transportadoras e marketplaces para acelerar o onboarding de novos clientes, automatizar operações e escalar sua logística com previsibilidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'logistica-3pl-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '80%',
+			'solucao_metrica_1_rotulo'     => 'de aumento na precisão de dados em tempo real',
+			'solucao_metrica_2_numero'     => '50%',
+			'solucao_metrica_2_rotulo'     => 'de redução do tempo de integração de parceiros e sistemas',
+			'solucao_metrica_3_numero'     => '1',
+			'solucao_metrica_3_rotulo'     => 'única plataforma para conectar todos os clientes',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Escale sua operação logística sem aumentar a complexidade',
+			'solucao_pilares_1_icone'      => $this->img( 'logistica-3pl-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Acelere o onboarding de novos clientes',
+			'solucao_pilares_1_desc'       => 'Reutilize integrações entre ERPs e WMS para reduzir o tempo de implantação de novos contratos.',
+			'solucao_pilares_2_icone'      => $this->img( 'logistica-3pl-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Sincronize estoques automaticamente',
+			'solucao_pilares_2_desc'       => 'Mantenha posições de estoque atualizadas entre clientes, operadores logísticos e sistemas corporativos.',
+			'solucao_pilares_3_icone'      => $this->img( 'logistica-3pl-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize documentos com IA',
+			'solucao_pilares_3_desc'       => 'Extraia informações de PDFs e e-mails para iniciar processos logísticos automaticamente.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a logística de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:peixoto', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos logísticos',
+			'solucao_casos_1_icone'        => $this->img( 'logistica-3pl-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Sincronize posições de estoque',
+			'solucao_casos_1_desc'         => 'Atualize saldos automaticamente entre WMS, ERP e sistemas dos clientes em tempo real.',
+			'solucao_casos_2_icone'        => $this->img( 'logistica-3pl-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize pedidos multicanal',
+			'solucao_casos_2_desc'         => 'Receba pedidos de marketplaces e direcione automaticamente para separação e expedição.',
+			'solucao_casos_3_icone'        => $this->img( 'logistica-3pl-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Conecte múltiplas transportadoras',
+			'solucao_casos_3_desc'         => 'Centralize integrações com transportadoras sem desenvolver conexões individuais para cada operação.',
+			'solucao_casos_4_icone'        => $this->img( 'logistica-3pl-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Automatize devoluções',
+			'solucao_casos_4_desc'         => 'Gerencie processos de RMA entre clientes, transportadoras e centros de distribuição automaticamente.',
+			'solucao_casos_5_icone'        => $this->img( 'logistica-3pl-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Preveja picos de demanda com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados operacionais para antecipar volumes e melhorar o planejamento logístico.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_logistica_3pl_faq( $post_id );
+
+		WP_CLI::log( "  Logística (3PL) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Logística (3PL) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Logística (3PL).
+	 * @return void
+	 */
+	protected function preencher_logistica_3pl_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:lg-onboarding-cliente',
+				'Quanto tempo leva para integrar um novo cliente?',
+				'<p>O prazo depende de quantos sistemas entram no fluxo, mas o ganho vem da reutilização: os conectores para ERPs e WMS já existem e são reaproveitados de um contrato para o outro. Na prática, o que era um projeto de integração do zero passa a ser a configuração de um fluxo já validado — é o que sustenta a redução de 50% no tempo de integração de parceiros e sistemas citada nesta página.</p>',
+			),
+			array(
+				'faq:lg-avaliar-plataforma-3pl',
+				'O que avaliar em uma plataforma para operadores logísticos 3PL?',
+				'<p>Três pontos costumam decidir a escolha: se a plataforma reaproveita integrações entre clientes ou obriga a começar do zero a cada contrato; se governa no mesmo ambiente os sistemas em nuvem e os instalados na infraestrutura do cliente; e se o modelo acompanha picos sazonais sem exigir capacidade contratada o ano inteiro. Vale olhar também a trilha de auditoria, já que o operador responde por dados de terceiros.</p>',
+			),
+			array(
+				'faq:lg-erp-on-premises',
+				'A plataforma conecta ERPs instalados on-premises?',
+				'<p>Sim. A conexão com ERPs e WMS instalados na rede do cliente é feita por um agente dentro da própria infraestrutura, que abre a comunicação de dentro para fora — sem expor portas de entrada no firewall. Fluxos em nuvem e on-premises ficam sob o mesmo ambiente de governança e monitoramento.</p>',
+			),
+			array(
+				'faq:lg-custo-alto-volume',
+				'Como funciona o custo para operações com alto volume?',
+				'<p>O dimensionamento considera o volume processado e a quantidade de integrações ativas, não o número de usuários. Como os fluxos filtram e agregam os dados ainda no caminho, o custo de operações grandes tende a crescer menos que proporcionalmente ao número de pedidos e eventos, e os picos sazonais são absorvidos pelo processamento elástico.</p>',
+			),
+			array(
+				'faq:lg-multiplas-transportadoras',
+				'É possível integrar várias transportadoras sem criar uma integração para cada uma?',
+				'<p>Sim — é um dos casos de uso desta página. Em vez de uma conexão dedicada por transportadora, a integração é centralizada: coleta, rastreio e entrega passam por um fluxo comum e cada transportadora entra como mais uma configuração. Incluir uma nova deixa de ser um projeto de desenvolvimento.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Logística (3PL) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Varejo".
+	 *
+	 * Cresce uma seção por rodada, na ordem do Figma.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_varejo() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:varejo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Varejo: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o varejo',
+			'solucao_hero_titulo'          => 'Conecte',
+			'solucao_hero_titulo_destaque' => 'toda a jornada',
+			'solucao_hero_titulo_fim'      => 'de compra, do carrinho à entrega.',
+			'solucao_hero_corpo'           => 'Integre e-commerce, ERP, logística, CRM e marketplaces para oferecer experiências consistentes, acelerar entregas e evoluir sua operação sem interrupções.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'varejo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'Redução no tempo de entrega.',
+			'solucao_metrica_2_numero'     => '40%',
+			'solucao_metrica_2_rotulo'     => 'mais rápido o cadastro de fornecedores',
+			'solucao_metrica_3_numero'     => '1600%',
+			'solucao_metrica_3_rotulo'     => 'de ROI em 10 meses',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Transforme dados conectados em melhores experiências de compra',
+			'solucao_pilares_1_icone'      => $this->img( 'varejo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Unifique a visão do cliente',
+			'solucao_pilares_1_desc'       => 'Centralize informações de vendas, atendimento e logística para personalizar cada interação com consumidores.',
+			'solucao_pilares_2_icone'      => $this->img( 'varejo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Migre plataformas sem interromper vendas',
+			'solucao_pilares_2_desc'       => 'Troque plataformas de e-commerce mantendo operações, pedidos e integrações funcionando normalmente.',
+			'solucao_pilares_3_icone'      => $this->img( 'varejo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Automatize entregas com inteligência artificial',
+			'solucao_pilares_3_desc'       => 'Otimize rotas, decisões logísticas e processos de entrega utilizando dados em tempo real.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos o varejo de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:indiana', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:arcom', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:martins', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:real', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso. O frame não traz o card CTA azul, então
+			// solucao_casos_cta_* fica vazio e o template o omite.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize toda a operação do varejo',
+			'solucao_casos_1_icone'        => $this->img( 'varejo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte experiências de compra',
+			'solucao_casos_1_desc'         => 'Integre canais físicos e digitais para oferecer jornadas consistentes em todos os pontos de contato.',
+			'solucao_casos_2_icone'        => $this->img( 'varejo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Otimize a última milha',
+			'solucao_casos_2_desc'         => 'Automatize entregas utilizando dados operacionais para reduzir custos e melhorar prazos.',
+			'solucao_casos_3_icone'        => $this->img( 'varejo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Integre canais de social commerce',
+			'solucao_casos_3_desc'         => 'Conecte pedidos originados nas redes sociais aos sistemas comerciais e logísticos.',
+			'solucao_casos_4_icone'        => $this->img( 'varejo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Migre seu ERP para a nuvem',
+			'solucao_casos_4_desc'         => 'Modernize sua arquitetura preservando integrações e continuidade das operações comerciais.',
+			'solucao_casos_5_icone'        => $this->img( 'varejo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Personalize recomendações com IA',
+			'solucao_casos_5_desc'         => 'Utilize dados integrados para recomendar produtos conforme comportamento e histórico de compras.',
+			'solucao_casos_6_icone'        => $this->img( 'varejo-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize a logística reversa',
+			'solucao_casos_6_desc'         => 'Gerencie devoluções, reembolsos e viabilidade de revenda com fluxos inteligentes automatizados.',
+
+			// 6 · Selos. Os 10 badges são assets estáticos do tema; a seção só
+			// traz o texto.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_varejo_faq( $post_id );
+
+		WP_CLI::log( sprintf( '  Varejo: %d campos preenchidos.', count( $campos ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Seguros".
+	 *
+	 * Landing page da indústria de seguros, montada a partir dos frames
+	 * "Seção - Hero" a "Seção - FAQ" do Figma. Cresce uma seção por rodada, na
+	 * ordem do Figma; as não preenchidas ficam vazias e, portanto, invisíveis.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_seguros() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:seguros', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Seguros: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para seguros',
+			'solucao_hero_titulo'          => 'Conecte sistemas legados e',
+			'solucao_hero_titulo_destaque' => 'acelere o lançamento',
+			'solucao_hero_titulo_fim'      => 'de novos produtos de seguros',
+			'solucao_hero_corpo'           => 'Integre Guidewire, Duck Creek, Salesforce e outras aplicações sem substituir seu core, modernizando operações com segurança e velocidade.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'seguros-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '10 min',
+			'solucao_metrica_1_rotulo'     => 'de tempo total na subscrição de riscos',
+			'solucao_metrica_2_numero'     => '6',
+			'solucao_metrica_2_rotulo'     => 'para o retorno financeiro de sistemas legados de seguros',
+			'solucao_metrica_3_numero'     => '100%',
+			'solucao_metrica_3_rotulo'     => 'de conformidade regulatória alcançada na troca de dados sigilosos',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Sua operação seguradora pronta para o futuro',
+			'solucao_pilares_1_icone'      => $this->img( 'seguros-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize dados em tempo real',
+			'solucao_pilares_1_desc'       => 'Conecte apólices, sinistros e canais de distribuição com informações sempre atualizadas.',
+			'solucao_pilares_2_icone'      => $this->img( 'seguros-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Automatize decisões com IA',
+			'solucao_pilares_2_desc'       => 'Utilize inteligência artificial para agilizar underwriting e triagem inicial de sinistros.',
+			'solucao_pilares_3_icone'      => $this->img( 'seguros-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Conecte corretores em tempo real',
+			'solucao_pilares_3_desc'       => 'Disponibilize informações atualizadas para parceiros comerciais por meio de portais integrados.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos os sistemas de seguros de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:seg-imob', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:bnp-paribas-cardif', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:hsbc', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos do mercado segurador',
+			'solucao_casos_1_icone'        => $this->img( 'seguros-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte sistemas core ao CRM',
+			'solucao_casos_1_desc'         => 'Integre Guidewire, Duck Creek e outras plataformas aos sistemas comerciais da seguradora.',
+			'solucao_casos_2_icone'        => $this->img( 'seguros-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize a gestão de sinistros',
+			'solucao_casos_2_desc'         => 'Integre abertura, análise, prevenção à fraude e pagamento em um único fluxo.',
+			'solucao_casos_3_icone'        => $this->img( 'seguros-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Sincronize portais de corretores',
+			'solucao_casos_3_desc'         => 'Mantenha agentes e parceiros atualizados com informações consistentes sobre clientes e apólices.',
+			'solucao_casos_4_icone'        => $this->img( 'seguros-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atenda requisitos do Open Insurance',
+			'solucao_casos_4_desc'         => 'Integre sistemas seguindo padrões regulatórios e requisitos definidos pela SUSEP.',
+			'solucao_casos_5_icone'        => $this->img( 'seguros-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Acelere o underwriting com IA',
+			'solucao_casos_5_desc'         => 'Utilize modelos inteligentes para apoiar análises de risco e emissão de novas apólices.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_seguros_faq( $post_id );
+
+		WP_CLI::log( "  Seguros preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Seguros e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Seguros.
+	 * @return void
+	 */
+	protected function preencher_seguros_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:sg-prazo-guidewire-duck-creek',
+				'Quanto tempo leva para integrar Guidewire ou Duck Creek?',
+				'<p>O prazo depende de quantos processos entram na primeira onda, não do tamanho do core. Como a conexão é feita por uma camada de integração sobre APIs já existentes, um fluxo bem delimitado — emissão de apólice ou abertura de sinistro, por exemplo — costuma sair em semanas, e não em meses. O caminho usual é começar por um processo de alto volume, colocá-lo em produção e seguir ampliando a partir dele.</p>',
+			),
+			array(
+				'faq:sg-plataforma-vs-conectores',
+				'Qual a vantagem de utilizar uma plataforma em vez de conectores nativos?',
+				'<p>Conectores nativos resolvem bem um par de sistemas por vez, mas cada nova ponta vira um projeto próprio, com seu próprio monitoramento e sua própria manutenção. Uma plataforma trata a integração como camada única: o mesmo ambiente conecta o core de seguros, o CRM, os portais de corretores e os serviços de nuvem, com governança, versionamento e trilha de auditoria centralizados. O ganho aparece quando o número de integrações cresce.</p>',
+			),
+			array(
+				'faq:sg-criterios-escolha',
+				'O que as seguradoras devem avaliar ao escolher uma plataforma de integração?',
+				'<p>Quatro pontos costumam decidir: se a plataforma conversa com os sistemas core do mercado sem desenvolvimento sob medida; se atende às exigências regulatórias de tratamento de dados sigilosos; se registra cada execução de forma auditável; e se a equipe interna consegue criar fluxos novos sem depender de terceiros. O quinto ponto, menos citado, é o custo de manter as integrações vivas ao longo dos anos.</p>',
+			),
+			array(
+				'faq:sg-modernizar-sem-trocar-core',
+				'É possível modernizar a operação sem substituir o sistema core?',
+				'<p>Sim — é justamente a proposta desta abordagem. O core continua sendo a fonte da verdade para apólices e sinistros, e a camada de integração expõe esses dados para os canais digitais, o CRM e os parceiros. Na prática, a seguradora lança produtos e experiências novas sobre o sistema que já tem, sem carregar o risco e o prazo de uma substituição completa.</p>',
+			),
+			array(
+				'faq:sg-open-insurance',
+				'Como a plataforma atende aos requisitos do Open Insurance brasileiro?',
+				'<p>O Open Insurance exige expor e consumir dados por APIs padronizadas, com consentimento do cliente e rastreabilidade de cada troca. A plataforma cobre esse desenho: publica APIs nos padrões definidos pela SUSEP, controla autenticação e escopo de cada consentimento e mantém registro de todas as chamadas. Assim, a adequação regulatória se apoia na mesma camada que já conecta os sistemas internos.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Seguros FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Cria os cli_faq do Varejo e vincula ao relationship da seção 7.
+	 *
+	 * As cinco perguntas vêm do Figma, mas o accordion está fechado no desenho —
+	 * as respostas abaixo são RASCUNHO redigido aqui e precisam de revisão do
+	 * cliente antes de ir ao ar.
+	 *
+	 * @param int $post_id ID do post cli_solucao.
+	 * @return void
+	 */
+	protected function preencher_varejo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:vj-composable-commerce',
+				'Por que a integração é essencial para uma estratégia de composable commerce?',
+				'<p>Composable commerce troca a plataforma única por peças escolhidas a dedo — vitrine, carrinho, busca, pagamento, OMS — e é justamente isso que transfere o peso para a camada de integração. Sem ela, cada peça nova vira uma conexão ponto a ponto com todas as outras. Com uma camada de integração no meio, cada sistema conversa uma vez só com essa camada, e trocar um componente deixa de significar refazer a arquitetura inteira.</p>',
+			),
+			array(
+				'faq:vj-experiencia-cliente',
+				'Como a integração melhora a experiência do cliente?',
+				'<p>A maior parte da fricção percebida pelo consumidor nasce de dado desencontrado: estoque que não bate entre loja e site, pedido que o atendimento não enxerga, promoção que só vale em um canal. Quando vendas, atendimento, estoque e logística compartilham a mesma informação atualizada, a jornada fica consistente em qualquer ponto de contato — e o atendimento passa a responder com o histórico completo em mãos.</p>',
+			),
+			array(
+				'faq:vj-cadeia-suprimentos',
+				'Como reduzir os impactos das incertezas na cadeia de suprimentos?',
+				'<p>Reduzindo o tempo entre o que acontece na cadeia e o que a operação enxerga. Com fornecedores, ERP, WMS e transportadoras integrados, ruptura de estoque, atraso de fornecimento e mudança de prazo aparecem enquanto ainda dá para reagir — remanejar estoque entre lojas, acionar um fornecedor alternativo ou reprogramar a reposição — em vez de virarem surpresa no fechamento do mês.</p>',
+			),
+			array(
+				'faq:vj-ultima-milha',
+				'O CLI Connect ajuda na otimização da última milha?',
+				'<p>Sim. A plataforma conecta o pedido aos sistemas de logística, transportadoras e roteirizadores, de modo que a decisão de origem da entrega, a escolha da transportadora e o roteiro considerem estoque real, prazo prometido e custo. O rastreamento volta pelo mesmo caminho e alimenta o acompanhamento do cliente e os indicadores da operação, sem planilha no meio.</p>',
+			),
+			array(
+				'faq:vj-visao-360',
+				'Quais os benefícios de construir uma visão 360º do cliente?',
+				'<p>Reunir compras, atendimentos, devoluções e interações de marketing em um perfil único muda o que a operação consegue fazer: recomendação baseada em histórico real, campanhas que não repetem oferta de produto já comprado, atendimento que não pede a mesma informação duas vezes e uma leitura confiável de recorrência e valor do cliente ao longo do tempo.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Varejo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Hotelaria e Turismo".
+	 *
+	 * Landing da indústria de hotelaria. Cresce uma seção por rodada, na ordem
+	 * do Figma; as seções ainda não preenchidas ficam vazias e, portanto,
+	 * invisíveis no front.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_hotelaria_e_turismo() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:hotelaria-e-turismo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Hotelaria e Turismo: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para hotelaria',
+			'solucao_hero_titulo'          => 'Conecte dados, propriedades e hóspedes',
+			'solucao_hero_titulo_destaque' => 'em uma experiência integrada',
+			'solucao_hero_corpo'           => 'Integre PMS, CRM, motores de reservas e sistemas operacionais para eliminar overbooking, personalizar o atendimento e acelerar a expansão da rede hoteleira.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'hotelaria-e-turismo-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '17.000+',
+			'solucao_metrica_1_rotulo'     => 'hóspedes e residentes gerenciados por fluxos sincronizados',
+			'solucao_metrica_2_numero'     => '100%',
+			'solucao_metrica_2_rotulo'     => 'de automação alcançada no trabalho manual para alterações de reservas',
+			'solucao_metrica_3_numero'     => '10x',
+			'solucao_metrica_3_rotulo'     => 'mais rápido o tempo de lançamento de novos serviços',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Conecte toda a operação hoteleira em uma única plataforma',
+			'solucao_pilares_1_icone'      => $this->img( 'hotelaria-e-turismo-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Sincronize inventários em tempo real',
+			'solucao_pilares_1_desc'       => 'Mantenha disponibilidade de quartos atualizada entre canais para evitar overbooking e retrabalho.',
+			'solucao_pilares_2_icone'      => $this->img( 'hotelaria-e-turismo-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Personalize a experiência do hóspede',
+			'solucao_pilares_2_desc'       => 'Unifique perfis de hóspedes para oferecer atendimento personalizado utilizando inteligência artificial.',
+			'solucao_pilares_3_icone'      => $this->img( 'hotelaria-e-turismo-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Expanda novas unidades rapidamente',
+			'solucao_pilares_3_desc'       => 'Padronize integrações reutilizando componentes em novas propriedades e franquias da rede.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'          => 'Integramos a hotelaria de grandes empresas.',
+			'solucao_logos_clientes'       => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:utrip', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'Casos de uso',
+			'solucao_casos_titulo'         => 'Automatize os principais processos da hotelaria',
+			'solucao_casos_1_icone'        => $this->img( 'hotelaria-e-turismo-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Conecte PMS e CRM',
+			'solucao_casos_1_desc'         => 'Sincronize reservas, preferências e histórico dos hóspedes entre sistemas automaticamente.',
+			'solucao_casos_2_icone'        => $this->img( 'hotelaria-e-turismo-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Automatize programas de fidelidade',
+			'solucao_casos_2_desc'         => 'Integre POS, reservas e loyalty para oferecer benefícios em todos os canais.',
+			'solucao_casos_3_icone'        => $this->img( 'hotelaria-e-turismo-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Unifique relatórios das propriedades',
+			'solucao_casos_3_desc'         => 'Centralize indicadores operacionais e financeiros de todas as unidades em um painel.',
+			'solucao_casos_4_icone'        => $this->img( 'hotelaria-e-turismo-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Atualize preços dinamicamente',
+			'solucao_casos_4_desc'         => 'Utilize dados de ocupação para automatizar estratégias de precificação em tempo real.',
+			'solucao_casos_5_icone'        => $this->img( 'hotelaria-e-turismo-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Automatize a governança dos quartos',
+			'solucao_casos_5_desc'         => 'Integre housekeeping, reservas e operação para agilizar liberações e limpeza dos apartamentos.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_hotelaria_e_turismo_faq( $post_id );
+
+		WP_CLI::log( "  Hotelaria e Turismo preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Hotelaria e Turismo e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Hotelaria e Turismo.
+	 * @return void
+	 */
+	protected function preencher_hotelaria_e_turismo_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ht-pms-legado',
+				'É possível integrar PMS legados instalados localmente?',
+				'<p>Sim. PMS antigos rodando no servidor da propriedade continuam sendo o caso mais comum na hotelaria, e não é preciso trocá-los para integrar. A conexão é feita por um agente instalado dentro da própria rede do hotel, que fala com o sistema pelo recurso que ele já oferece — banco de dados, arquivo, serviço web ou fila — e abre a comunicação de dentro para fora, sem expor portas de entrada no firewall. O PMS segue como está e passa a alimentar os demais sistemas.</p>',
+			),
+			array(
+				'faq:ht-pos-fidelidade',
+				'Como integrar sistemas de POS ao programa de fidelidade em tempo real?',
+				'<p>Cada consumo registrado no POS — restaurante, bar, spa, frigobar — vira um evento que a plataforma envia na hora ao programa de fidelidade, já associado ao perfil do hóspede pela reserva ativa. O caminho de volta também é automático: saldo, categoria e benefícios voltam ao POS e ao PMS, de modo que o desconto ou a cortesia aparecem no mesmo atendimento, sem o operador consultar outro sistema.</p>',
+			),
+			array(
+				'faq:ht-tempo-producao',
+				'Quanto tempo leva para colocar uma integração em produção?',
+				'<p>Depende muito menos do prazo de desenvolvimento do que do acesso aos sistemas. Fluxos que usam conectores já prontos e uma API documentada costumam entrar em semanas; o que estica o cronograma é liberação de credencial, homologação com o fornecedor do PMS e limpeza de cadastro. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:ht-alta-demanda',
+				'A plataforma suporta grandes volumes de reservas em períodos de alta demanda?',
+				'<p>Sim, e é justamente para o pico que a arquitetura foi pensada. O processamento é elástico e trabalha sobre filas, então feriado, alta temporada ou uma promoção relâmpago aumentam a fila sem derrubar o fluxo nem perder mensagem. Se um sistema de destino fica lento ou indisponível, as mensagens ficam retidas e são reprocessadas automaticamente quando ele volta, preservando a ordem dos eventos de cada reserva.</p>',
+			),
+			array(
+				'faq:ht-franquias-padronizacao',
+				'Como padronizar integrações entre franquias com sistemas diferentes?',
+				'<p>A padronização acontece no meio do caminho, não nas pontas. Define-se um formato único para reserva, hóspede e consumo, e cada propriedade ganha apenas o trecho de tradução do seu sistema para esse formato — o restante do fluxo é o mesmo para toda a rede. Uma unidade nova entra reaproveitando o modelo, e quem opera a rede passa a enxergar todas as propriedades pelos mesmos indicadores, mesmo com PMS diferentes em cada uma.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Hotelaria e Turismo FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Marketing".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_marketing() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:marketing', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Marketing: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'Para o seu marketing',
+			'solucao_hero_titulo'      => 'Conecte marketing, CRM e analytics em tempo real',
+			'solucao_hero_corpo'       => 'Elimine filas de TI, sincronize informações em tempo real e entregue campanhas mais relevantes com automação inteligente entre todas as plataformas do seu ecossistema.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_imagem'      => $this->img( 'marketing-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '127%',
+			'solucao_metrica_1_rotulo' => 'de crescimento em reconhecimento de marca',
+			'solucao_metrica_2_numero' => '50%',
+			'solucao_metrica_2_rotulo' => 'de aumento na geração de pipeline',
+			'solucao_metrica_3_numero' => '22%',
+			'solucao_metrica_3_rotulo' => 'de crescimento médio mensal no funil de vendas',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'Pilares',
+			'solucao_pilares_titulo'   => 'Marketing conectado do início ao fim',
+			'solucao_pilares_1_icone'  => $this->img( 'marketing-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Leads sempre sincronizados',
+			'solucao_pilares_1_desc'   => 'Mantenha CRM e plataforma de automação alinhados em tempo real para evitar contatos desatualizados e aumentar a eficiência das campanhas.',
+			'solucao_pilares_2_icone'  => $this->img( 'marketing-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Escalabilidade sob demanda',
+			'solucao_pilares_2_desc'   => 'Absorva grandes volumes de leads em lançamentos e campanhas sazonais sem comprometer desempenho ou exigir intervenção manual.',
+			'solucao_pilares_3_icone'  => $this->img( 'marketing-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Personalização com governança',
+			'solucao_pilares_3_desc'   => 'Utilize IA para enriquecer audiências e segmentações mantendo conformidade com LGPD, GDPR e políticas corporativas de dados.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'      => 'Grandes empresas integram o seu Marketing com o CLI Connect',
+			'solucao_logos_clientes'   => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unimed', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cocamar', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'Casos de uso',
+			'solucao_casos_titulo'     => 'Automatize todo o ciclo das campanhas',
+			'solucao_casos_1_icone'    => $this->img( 'marketing-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Sincronize leads em tempo real',
+			'solucao_casos_1_desc'     => 'Envie novos leads entre plataformas de automação e CRM em segundos, mantendo equipes de marketing e vendas sempre alinhadas.',
+			'solucao_casos_2_icone'    => $this->img( 'marketing-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Centralize atribuição de campanhas',
+			'solucao_casos_2_desc'     => 'Conecte Google Ads, LinkedIn e plataformas de automação para consolidar resultados e atribuições em um único fluxo.',
+			'solucao_casos_3_icone'    => $this->img( 'marketing-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Enriqueça leads com IA',
+			'solucao_casos_3_desc'     => 'Dispare agentes de IA após o envio de formulários para pesquisar informações e qualificar contatos automaticamente.',
+			'solucao_casos_4_icone'    => $this->img( 'marketing-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Orquestre audiências inteligentes',
+			'solucao_casos_4_desc'     => 'Atualize segmentos automaticamente utilizando IA e dados de múltiplos sistemas para campanhas mais relevantes.',
+			'solucao_casos_5_icone'    => $this->img( 'marketing-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Feche o ciclo de atribuição',
+			'solucao_casos_5_desc'     => 'Conecte marketing, CRM e ERP para medir a contribuição das campanhas até a geração efetiva de receita.',
+			'solucao_casos_6_icone'    => $this->img( 'marketing-caso-6' ),
+			'solucao_casos_6_titulo'   => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'     => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Diferencial Técnico.
+			'solucao_dif_eyebrow'      => 'Diferencial técnico',
+			'solucao_dif_titulo'       => 'Dados prontos para agir',
+			'solucao_dif_corpo'        => 'Substitua sincronizações em lote por integrações em tempo real para acelerar campanhas, reduzir inconsistências e manter marketing e vendas trabalhando com os mesmos dados.',
+			'solucao_dif_topico_1'     => 'Sincronize leads em menos de 60 segundos',
+			'solucao_dif_topico_2'     => 'Elimine atrasos entre marketing e CRM',
+			'solucao_dif_topico_3'     => 'Monitore integrações em tempo real',
+			'solucao_dif_imagem'       => $this->img( 'marketing-dif' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_marketing_faq( $post_id );
+
+		WP_CLI::log( "  Marketing preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Marketing e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Marketing.
+	 * @return void
+	 */
+	protected function preencher_marketing_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:mkt-velocidade-sincronizacao',
+				'Qual é a velocidade da sincronização entre a plataforma de marketing e o CRM?',
+				'<p>Os fluxos trabalham por evento, não por lote: assim que um lead é criado ou atualizado, a mensagem entra na fila e chega ao outro sistema em poucos segundos — a referência de projeto é manter o ciclo abaixo de um minuto. O que costuma pesar nesse tempo não é a plataforma de integração e sim os limites de API do sistema de destino, que são respeitados automaticamente para evitar bloqueio por excesso de chamadas.</p>',
+			),
+			array(
+				'faq:mkt-marketing-operations',
+				'O time de Marketing Operations consegue gerenciar as integrações sem depender da TI?',
+				'<p>Em grande parte, sim. O desenho dos fluxos é low-code e os painéis de acompanhamento mostram volume, erros e reprocessamento sem exigir leitura de log técnico, então ajustes de mapeamento, campos e regras de segmentação ficam com o próprio time de marketing. A TI continua no circuito para o que é de sua alçada — liberar credenciais, aprovar acessos a sistemas internos e definir políticas de dados —, mas deixa de ser fila para cada mudança de campanha.</p>',
+			),
+			array(
+				'faq:mkt-ipaas-vs-nativas',
+				'Qual a diferença entre uma iPaaS e as integrações nativas das plataformas de automação de marketing?',
+				'<p>As integrações nativas resolvem bem o par de sistemas para o qual foram feitas, com o mapeamento que o fornecedor decidiu oferecer. Uma iPaaS trabalha no meio do caminho: conecta marketing, CRM, ERP, mídia paga e analytics com a mesma lógica, permite transformar e enriquecer o dado em trânsito, aplica regras próprias de deduplicação e deixa todo o histórico auditável em um só lugar. Na prática, a nativa é suficiente enquanto o ecossistema é pequeno; a iPaaS é o que sustenta o crescimento sem multiplicar conexões ponto a ponto.</p>',
+			),
+			array(
+				'faq:mkt-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para Marketing?',
+				'<p>Vale olhar cinco pontos: a cobertura de conectores para as ferramentas que já estão em uso; a capacidade de processar picos de lançamento e campanhas sazonais sem perder mensagem; a autonomia que o time de marketing ganha para operar sem abrir chamado; a visibilidade sobre erros e reprocessamento; e o tratamento de dados pessoais, incluindo por onde eles trafegam e onde ficam armazenados. O custo total também conta — além da licença, considere quem vai operar e monitorar a plataforma no dia a dia.</p>',
+			),
+			array(
+				'faq:mkt-lgpd-gdpr',
+				'Como a plataforma garante conformidade com LGPD e GDPR durante o trânsito dos dados?',
+				'<p>Os dados trafegam criptografados de ponta a ponta e a conexão com sistemas internos é feita por um agente que se comunica de dentro para fora, sem expor portas de entrada no firewall. Cada fluxo registra quem acessou o quê e quando, o que sustenta pedidos de auditoria e de exclusão previstos nas duas leis. Campos sensíveis podem ser mascarados ou simplesmente não transitar, e as regras de consentimento e opt-out são aplicadas no próprio fluxo, de modo que um contato que revogou a permissão deixa de ser distribuído para as demais plataformas.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Marketing FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Operações de Receita (RevOps)".
+	 *
+	 * Landing do departamento de RevOps. O design não traz a faixa de métricas
+	 * nem as seções de Plataforma e Aceleradores: esses campos ficam vazios e,
+	 * portanto, invisíveis no front.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_operacoes_de_receita_revops() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:operacoes-de-receita-revops', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Operações de Receita (RevOps): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'Para suas operações de receita',
+			'solucao_hero_titulo'      => 'Conecte toda a operação de receita.',
+			'solucao_hero_corpo'       => 'Sincronize CRM, marketing e customer success em tempo real para eliminar gargalos, acelerar handoffs e manter todo o funil sempre atualizado.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_imagem'      => $this->img( 'operacoes-de-receita-revops-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'Pilares',
+			'solucao_pilares_titulo'   => 'Uma operação de receita conectada',
+			'solucao_pilares_1_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Unifique dados de receita',
+			'solucao_pilares_1_desc'   => 'Conecte marketing, vendas e customer success para priorizar oportunidades com informações consistentes em todo o ciclo comercial.',
+			'solucao_pilares_2_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Automatize os handoffs',
+			'solucao_pilares_2_desc'   => 'Transfira clientes entre vendas e customer success automaticamente, reduzindo atrasos e eliminando processos manuais.',
+			'solucao_pilares_3_icone'  => $this->img( 'operacoes-de-receita-revops-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Mantenha o pipeline limpo',
+			'solucao_pilares_3_desc'   => 'Atualize registros continuamente para evitar duplicidades, inconsistências e decisões baseadas em informações desatualizadas.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'      => 'Integramos as principais plataformas de CRM, marketing, vendas e customer success utilizadas por grandes empresas.',
+			'solucao_logos_clientes'   => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unimed', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cocamar', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'Casos de uso',
+			'solucao_casos_titulo'     => 'Automatize todo o fluxo de receita',
+			'solucao_casos_1_icone'    => $this->img( 'operacoes-de-receita-revops-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Priorize leads automaticamente',
+			'solucao_casos_1_desc'     => 'Combine dados de CRM, automação de marketing e enriquecimento para qualificar oportunidades com mais precisão.',
+			'solucao_casos_2_icone'    => $this->img( 'operacoes-de-receita-revops-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Unifique múltiplos CRMs',
+			'solucao_casos_2_desc'     => 'Consolide informações comerciais de diferentes CRMs para obter uma visão única do pipeline.',
+			'solucao_casos_3_icone'    => $this->img( 'operacoes-de-receita-revops-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Ative o pós-venda',
+			'solucao_casos_3_desc'     => 'Dispare automaticamente processos de customer success quando uma oportunidade for ganha e preserve todo o contexto da venda.',
+			'solucao_casos_4_icone'    => $this->img( 'operacoes-de-receita-revops-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Corrija dados comerciais',
+			'solucao_casos_4_desc'     => 'Identifique e atualize registros inconsistentes para manter oportunidades, contatos e previsões comerciais confiáveis.',
+			'solucao_casos_5_icone'    => $this->img( 'operacoes-de-receita-revops-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Monitore a saúde dos clientes',
+			'solucao_casos_5_desc'     => 'Combine dados de produto, suporte e NPS para identificar riscos e oportunidades de expansão.',
+			'solucao_casos_6_icone'    => $this->img( 'operacoes-de-receita-revops-caso-6' ),
+			'solucao_casos_6_titulo'   => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'     => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 7 · Diferencial.
+			'solucao_dif_eyebrow'      => 'Diferencial técnico',
+			'solucao_dif_titulo'       => 'Mais autonomia para RevOps',
+			'solucao_dif_corpo'        => 'Permita que a equipe de RevOps crie, ajuste e monitore integrações utilizando um builder visual com IA, sem depender de desenvolvimento dedicado.',
+			'solucao_dif_topico_1'     => 'Crie integrações com builder visual',
+			'solucao_dif_topico_2'     => 'Automatize fluxos com apoio de IA',
+			'solucao_dif_topico_3'     => 'Reduza a dependência da equipe de TI',
+			'solucao_dif_imagem'       => $this->img( 'operacoes-de-receita-revops-dif' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_operacoes_de_receita_revops_faq( $post_id );
+
+		WP_CLI::log( "  Operações de Receita (RevOps) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Operações de Receita (RevOps) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Operações de Receita (RevOps).
+	 * @return void
+	 */
+	protected function preencher_operacoes_de_receita_revops_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:revops-crm-automacao-prazo',
+				'Quanto tempo leva para conectar CRM e plataforma de automação de marketing?',
+				'<p>O desenvolvimento costuma ser a parte curta: CRM e ferramentas de automação de marketing têm APIs bem documentadas e conectores prontos, então um fluxo de leads e oportunidades entra no ar em poucas semanas. O que estica o cronograma é a decisão de negócio — definir qual sistema manda em cada campo, o que caracteriza um lead qualificado e como tratar a base duplicada que já existe. Vale começar por um fluxo só, colocá-lo em produção e ampliar a partir dele.</p>',
+			),
+			array(
+				'faq:revops-sem-desenvolvedor',
+				'O time de RevOps consegue criar integrações sem desenvolvedores dedicados?',
+				'<p>Sim, para a maior parte do dia a dia. O builder visual monta o fluxo arrastando e conectando etapas, com apoio de IA na hora de mapear campos e sugerir tratamentos, e quem conhece o processo comercial consegue criar, ajustar e monitorar as automações sem escrever código. A TI continua entrando onde faz sentido — liberação de credenciais, revisão de fluxos críticos e casos que exigem lógica mais elaborada —, mas deixa de ser gargalo para cada pequeno ajuste.</p>',
+			),
+			array(
+				'faq:revops-ponto-a-ponto-ipaas',
+				'Qual a diferença entre uma integração ponto a ponto e uma iPaaS?',
+				'<p>Uma integração ponto a ponto liga dois sistemas diretamente e resolve bem enquanto são dois. O problema aparece na escala: cada nova ferramenta multiplica as conexões, cada uma com sua própria lógica e seu próprio tratamento de erro, e ninguém enxerga o conjunto. Uma iPaaS coloca uma camada no meio — os sistemas conversam com ela, não entre si. Isso centraliza o monitoramento, reaproveita mapeamentos e faz com que trocar uma ferramenta signifique refazer um trecho, não a teia inteira.</p>',
+			),
+			array(
+				'faq:revops-mudanca-api',
+				'Como mudanças nas APIs dos sistemas impactam as integrações?',
+				'<p>Mudanças de versão são esperadas e tratadas na camada de integração, não em cada fluxo. Como o mapeamento entre o formato de cada sistema e o formato interno fica isolado, uma alteração de API costuma exigir ajuste em um ponto só, sem tocar nos fluxos que dependem dele. O monitoramento acusa a falha assim que ela acontece, as mensagens afetadas ficam retidas em fila e são reprocessadas depois da correção, sem perda de registro.</p>',
+			),
+			array(
+				'faq:revops-protecao-dados',
+				'Como os dados comerciais são protegidos durante as integrações?',
+				'<p>O tráfego é criptografado ponta a ponta e as credenciais de cada sistema ficam em cofre, nunca dentro do fluxo. O acesso é concedido por perfil, de modo que quem opera as automações não precisa enxergar o conteúdo sensível que passa por elas, e todo movimento fica registrado em trilha de auditoria — quem alterou o quê, quando e com qual resultado. A operação segue os padrões de compliance e segurança listados nesta página.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Operações de Receita (RevOps) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Financeiro" (Departamento).
+	 *
+	 * Landing do departamento financeiro. O design inverte Diferencial e Selos
+	 * em relação à ordem padrão — daí `solucao_dif_antes_selos`.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_financeiro() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:financeiro', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Financeiro: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'      => 'para o seu financeiro',
+			'solucao_hero_titulo'       => 'Conecte todo o ecossistema financeiro.',
+			'solucao_hero_corpo'        => 'Integre ERPs, bancos e plataformas de planejamento para acelerar fechamentos, automatizar auditorias e manter todas as unidades de negócio sincronizadas.',
+			'solucao_hero_btn1_texto'   => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'     => '/contato/',
+			'solucao_hero_btn2_texto'   => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'     => '/plataforma/',
+			'solucao_hero_imagem'       => $this->img( 'financeiro-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'  => '7 dias',
+			'solucao_metrica_1_rotulo'  => 'de tempo do fechamento contábil mensal',
+			'solucao_metrica_2_numero'  => '5x',
+			'solucao_metrica_2_rotulo'  => 'de aumento no processamento de pedidos',
+			'solucao_metrica_3_numero'  => '50%',
+			'solucao_metrica_3_rotulo'  => 'redução do tempo de fechamento mensal',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'   => 'Pilares',
+			'solucao_pilares_titulo'    => 'Mais controle para a operação financeira',
+			'solucao_pilares_1_icone'   => $this->img( 'financeiro-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Acelere o fechamento contábil',
+			'solucao_pilares_1_desc'    => 'Sincronize informações entre ERPs e sistemas financeiros para reduzir atividades manuais e concluir o fechamento com mais rapidez.',
+			'solucao_pilares_2_icone'   => $this->img( 'financeiro-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Automatize a auditoria',
+			'solucao_pilares_2_desc'    => 'Registre todas as movimentações com rastreabilidade completa para simplificar auditorias e aumentar a confiabilidade dos processos.',
+			'solucao_pilares_3_icone'   => $this->img( 'financeiro-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Unifique os seus ERPs',
+			'solucao_pilares_3_desc'    => 'Mantenha dados financeiros consistentes entre diferentes unidades de negócio, filiais e sistemas corporativos.',
+
+			// 4 · Logos.
+			'solucao_logos_texto'       => 'Integramos os principais ERPs, bancos e plataformas financeiras utilizados por grandes empresas.',
+			'solucao_logos_clientes'    => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:unidas', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:seculus', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:localiza', 'cli_cliente' ),
+					)
+				)
+			),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'     => 'Casos de uso',
+			'solucao_casos_titulo'      => 'Automatize os principais processos financeiros',
+			'solucao_casos_1_icone'     => $this->img( 'financeiro-caso-1' ),
+			'solucao_casos_1_titulo'    => 'Consolide dados contábeis',
+			'solucao_casos_1_desc'      => 'Sincronize informações entre diferentes ERPs para consolidar balancetes e obter uma visão financeira unificada.',
+			'solucao_casos_2_icone'     => $this->img( 'financeiro-caso-2' ),
+			'solucao_casos_2_titulo'    => 'Automatize conciliações bancárias',
+			'solucao_casos_2_desc'      => 'Integre bancos via host-to-host para realizar conciliações diárias com mais agilidade e menos intervenção manual.',
+			'solucao_casos_3_icone'     => $this->img( 'financeiro-caso-3' ),
+			'solucao_casos_3_titulo'    => 'Otimize contas a pagar',
+			'solucao_casos_3_desc'      => 'Conecte plataformas de compras e ERP para automatizar o matching de três vias e reduzir retrabalho operacional.',
+			'solucao_casos_4_icone'     => $this->img( 'financeiro-caso-4' ),
+			'solucao_casos_4_titulo'    => 'Reconheça receitas automaticamente',
+			'solucao_casos_4_desc'      => 'Envie vendas aprovadas para o ERP em tempo real e acelere os processos de contabilização da receita.',
+			'solucao_casos_5_icone'     => $this->img( 'financeiro-caso-5' ),
+			'solucao_casos_5_titulo'    => 'Alimente o planejamento financeiro',
+			'solucao_casos_5_desc'      => 'Atualize plataformas de FP&A automaticamente com dados do ERP para melhorar previsões e análises financeiras.',
+			'solucao_casos_6_icone'     => $this->img( 'financeiro-caso-6' ),
+			'solucao_casos_6_titulo'    => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'      => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 6 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'       => 'diferencial técnico',
+			'solucao_dif_titulo'        => 'Integrações sob seu controle',
+			'solucao_dif_corpo'         => 'Execute integrações dentro da infraestrutura da sua empresa para garantir soberania dos dados, maior controle operacional e conformidade com políticas corporativas.',
+			'solucao_dif_topico_1'      => 'Execute integrações na sua própria nuvem',
+			'solucao_dif_topico_2'      => 'Mantenha dados sob governança corporativa',
+			'solucao_dif_topico_3'      => 'Reduza riscos de conformidade financeira',
+			'solucao_dif_imagem'        => $this->img( 'financeiro-diferencial' ),
+			'solucao_dif_antes_selos'   => 1,
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'     => 'compliance & segurança',
+			'solucao_selos_titulo'      => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'       => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_financeiro_faq( $post_id );
+
+		WP_CLI::log( "  Financeiro preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Financeiro e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Financeiro.
+	 * @return void
+	 */
+	protected function preencher_financeiro_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:fin-tempo-erp',
+				'Quanto tempo leva para integrar SAP, Oracle ou NetSuite?',
+				'<p>Os três já contam com conectores prontos, então o cronograma depende menos do desenvolvimento e mais do acesso ao ambiente. Fluxos comuns do financeiro — balancete, lançamentos contábeis, contas a pagar — costumam entrar em semanas, contadas a partir da liberação de credencial e do aceite do desenho pelo time contábil. O que estica o prazo é customização pesada no ERP e divergência de plano de contas entre unidades, não a conexão em si.</p>',
+			),
+			array(
+				'faq:fin-autonomia-financeiro',
+				'O time financeiro consegue acompanhar as integrações sem depender da TI?',
+				'<p>Sim. O acompanhamento do dia a dia — se o lote da noite rodou, quantos lançamentos entraram, qual registro falhou e por quê — fica em um painel de operação que a área financeira acessa direto, com reprocessamento do que deu erro sem abrir chamado. O que continua com a TI é a mudança estrutural: criar um fluxo novo, alterar credencial ou mexer em regra de negócio.</p>',
+			),
+			array(
+				'faq:fin-nativa-vs-ipaas',
+				'Qual a diferença entre integrações nativas do ERP e uma iPaaS?',
+				'<p>A integração nativa resolve bem o par de sistemas para o qual foi feita, mas cada nova ponta vira um projeto isolado, com sua própria regra, seu próprio log e sua própria manutenção. A iPaaS coloca uma camada única entre todos os sistemas: as regras de transformação, o histórico de execução, o tratamento de erro e a governança de acesso ficam em um só lugar, e uma unidade de negócio nova reaproveita o que já foi construído em vez de recomeçar.</p>',
+			),
+			array(
+				'faq:fin-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para Finanças?',
+				'<p>Comece pela rastreabilidade: toda movimentação precisa ter registro completo do que entrou, do que saiu e de quem alterou, porque é isso que sustenta a auditoria. Depois verifique o catálogo de conectores para os ERPs e bancos que você já usa, o comportamento em caso de falha (reprocessamento sem duplicar lançamento), o controle de acessos por perfil e onde a execução acontece — dentro da sua infraestrutura, quando a política corporativa exigir. Por último, avalie o modelo de evolução: integração financeira muda o tempo todo, e depender de um novo projeto a cada ajuste sai caro.</p>',
+			),
+			array(
+				'faq:fin-atualizacao-apis',
+				'Como atualizações de APIs dos ERPs impactam as integrações?',
+				'<p>O impacto fica contido na camada de conexão. Quando o fornecedor publica uma versão nova, é o conector que é atualizado — os fluxos, as regras e os destinos seguem como estão. Mudanças anunciadas com antecedência são homologadas em ambiente separado antes de entrar em produção; quando algo quebra sem aviso, as mensagens ficam retidas e são reprocessadas depois da correção, sem perda de lançamento nem duplicidade.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Pedido ao Recebimento".
+	 *
+	 * Landing "Iniciativa — Pedido ao Recebimento (O2C)". Todos os textos vêm
+	 * dos frames do Figma (arquivo "CLI Connect (Copy)", nó 16678:117015 e
+	 * seguintes); a única exceção são as respostas do FAQ, redigidas aqui —
+	 * ver preencher_pedido_ao_recebimento_faq().
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_pedido_ao_recebimento() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:pedido-ao-recebimento', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Pedido ao Recebimento: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'do pedido ao recebimento (o2c)',
+			'solucao_hero_titulo'          => 'Conecte vendas, faturamento e recebimento em',
+			'solucao_hero_titulo_destaque' => 'um único fluxo',
+			'solucao_hero_titulo_fluido'   => true,
+			'solucao_hero_corpo'           => 'Acelere o ciclo completo de receita conectando CRM, ERP, bancos e sistemas de pagamento em uma operação integrada, rastreável e sem etapas manuais.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_imagem'          => $this->img( 'pedido-ao-recebimento-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '7 dias',
+			'solucao_metrica_1_rotulo'     => 'mais rápido no seu fechamento financeiro',
+			'solucao_metrica_2_numero'     => '95%',
+			'solucao_metrica_2_rotulo'     => 'mais rapidez na criação de pedidos',
+			'solucao_metrica_3_numero'     => '6.000',
+			'solucao_metrica_3_rotulo'     => 'horas de trabalho manual economizadas anualmente',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'pilares',
+			'solucao_pilares_titulo'       => 'Reconstrua sua arquitetura, não o seu negócio.',
+			'solucao_pilares_1_icone'      => $this->img( 'pedido-ao-recebimento-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Elimine retrabalho operacional',
+			'solucao_pilares_1_desc'       => 'Automatize a troca de dados entre pedido, faturamento e cobrança, eliminando lançamentos manuais.',
+			'solucao_pilares_2_icone'      => $this->img( 'pedido-ao-recebimento-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Receba mais rápido',
+			'solucao_pilares_2_desc'       => 'Reduza o tempo entre o fechamento da venda, a emissão da cobrança e o reconhecimento do caixa.',
+			'solucao_pilares_3_icone'      => $this->img( 'pedido-ao-recebimento-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Tenha visibilidade completa',
+			'solucao_pilares_3_desc'       => 'Acompanhe cada etapa do pedido ao recebimento com dados consistentes entre todas as áreas.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'pedido-ao-recebimento-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Fature automaticamente',
+			'solucao_casos_1_desc'         => 'Converta pedidos fechados no CRM em faturamento e emissão de nota fiscal no ERP.',
+			'solucao_casos_2_icone'        => $this->img( 'pedido-ao-recebimento-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Concilie recebimentos',
+			'solucao_casos_2_desc'         => 'Compare automaticamente pagamentos recebidos com bancos e adquirentes.',
+			'solucao_casos_3_icone'        => $this->img( 'pedido-ao-recebimento-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Avise sobre inadimplência',
+			'solucao_casos_3_desc'         => 'Dispare alertas automáticos ao time comercial sempre que houver atrasos de pagamento.',
+			'solucao_casos_4_icone'        => $this->img( 'pedido-ao-recebimento-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Monitore o DSO',
+			'solucao_casos_4_desc'         => 'Consolide indicadores de prazo médio de recebimento em um único painel de gestão.',
+			'solucao_casos_5_icone'        => $this->img( 'pedido-ao-recebimento-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Sincronize a operação',
+			'solucao_casos_5_desc'         => 'Compartilhe o status dos pedidos entre vendas, financeiro e logística em tempo real.',
+			'solucao_casos_6_icone'        => $this->img( 'pedido-ao-recebimento-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Atualize dados continuamente',
+			'solucao_casos_6_desc'         => 'Propague alterações entre CRM, ERP e sistemas financeiros sem intervenções manuais.',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Garanta rastreabilidade completa em todo o ciclo financeiro',
+			'solucao_dif_corpo'            => 'Proteja as informações financeiras e acompanhe cada etapa do pedido ao recebimento com total transparência e governança.',
+			'solucao_dif_topico_1'         => 'Auditoria completa dos processos',
+			'solucao_dif_topico_2'         => 'Dados protegidos ponta a ponta',
+			'solucao_dif_topico_3'         => 'Histórico detalhado das transações',
+			'solucao_dif_imagem'           => $this->img( 'pedido-ao-recebimento-diferencial' ),
+			'solucao_dif_antes_selos'      => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'         => 'aceleradores de integração',
+			'solucao_acel_titulo'          => 'Modelo pronto para começar',
+			'solucao_acel_corpo'           => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'        => 'Gere faturamentos automaticamente',
+			'solucao_acel_topico_2'        => 'Emita cobranças integradas',
+			'solucao_acel_topico_3'        => 'Concilie recebimentos com bancos',
+			'solucao_acel_topico_4'        => 'E muito mais...',
+			'solucao_acel_btn_texto'       => 'Começar agora',
+			'solucao_acel_btn_url'         => '/contato/',
+			'solucao_acel_imagem'          => $this->img( 'pedido-ao-recebimento-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_pedido_ao_recebimento_faq( $post_id );
+
+		WP_CLI::log( "  Pedido ao Recebimento preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Pedido ao Recebimento e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Pedido ao Recebimento.
+	 * @return void
+	 */
+	protected function preencher_pedido_ao_recebimento_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:o2c-tempo-venda-recebimento',
+				'Como reduzir o tempo entre o fechamento da venda e o recebimento?',
+				'<p>O que costuma alongar o ciclo não é a venda nem a cobrança em si, mas a espera entre elas: o pedido fechado no CRM que só vira faturamento quando alguém redigita, a nota emitida que só gera cobrança no dia seguinte. Conectando CRM, ERP e sistema de cobrança em um fluxo único, cada etapa dispara a próxima assim que a anterior termina, sem lote noturno e sem digitação. O ganho aparece antes na consistência dos dados — pedido, nota e título com os mesmos valores — e só depois no prazo médio.</p>',
+			),
+			array(
+				'faq:o2c-multiplos-erps-crms',
+				'É possível conectar múltiplos ERPs e CRMs no mesmo fluxo Order-to-Cash?',
+				'<p>Sim, e é o cenário mais comum em empresas com várias unidades de negócio ou que passaram por aquisições. As regras de transformação ficam na camada de integração, não dentro de cada sistema, então um ERP a mais entra como uma ponta nova no fluxo que já existe, reaproveitando o desenho de pedido, faturamento e conciliação. O trabalho real está em conciliar os cadastros — cliente, produto, condição de pagamento — que costumam divergir entre as bases.</p>',
+			),
+			array(
+				'faq:o2c-conciliacao-bancos',
+				'Como funciona a conciliação automática com bancos e adquirentes?',
+				'<p>A integração recebe os arquivos de retorno e extratos das instituições, casa cada pagamento com o título correspondente no ERP e baixa o que fechou. O que não casa — valor divergente, pagamento parcial, taxa de adquirente descontada — fica separado em uma fila de exceção com o motivo, para o financeiro tratar caso a caso em vez de conferir tudo à mão. O histórico de cada tentativa fica registrado, o que sustenta a auditoria e permite reprocessar sem duplicar baixa.</p>',
+			),
+			array(
+				'faq:o2c-status-do-pedido',
+				'Como acompanhar o status de um pedido do início ao fim?',
+				'<p>Como o fluxo passa por uma camada única, cada pedido carrega um identificador que atravessa CRM, ERP, faturamento e cobrança. Isso permite montar uma visão de ponta a ponta — em que etapa o pedido está, quando entrou nela, o que falhou e o que foi reprocessado — sem consultar sistema por sistema. Vendas, financeiro e logística passam a olhar o mesmo status, o que resolve boa parte das divergências entre áreas antes que virem retrabalho.</p>',
+			),
+			array(
+				'faq:o2c-sistemas-do-fluxo',
+				'Quais sistemas podem fazer parte do fluxo Order-to-Cash?',
+				'<p>Tipicamente o CRM onde o pedido é fechado, o ERP que fatura e emite a nota fiscal, a plataforma de cobrança ou meio de pagamento, os bancos e adquirentes que confirmam o recebimento, e as ferramentas de gestão que consomem os indicadores de prazo médio. Também entram no fluxo sistemas de logística, quando a entrega condiciona o faturamento, e plataformas de crédito e cobrança, quando há análise de limite ou régua de inadimplência. A escolha depende menos do catálogo de conectores e mais de onde estão hoje as etapas manuais.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Pedido ao Recebimento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Atualização de Sistemas
+	 * Legados" (Por Iniciativa — Legacy Modernization).
+	 *
+	 * O design cobre seis seções: Hero, Pilares, Casos de Uso, Diferencial
+	 * Técnico, Selos e FAQ. Métricas, Logos, Plataforma e Aceleradores ficam
+	 * vazios de propósito e os template-parts os omitem. Como no Financeiro,
+	 * o Diferencial vem antes dos Selos — daí `solucao_dif_antes_selos`.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_atualizacao_de_sistemas_legados() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:atualizacao-de-sistemas-legados', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Atualização de Sistemas Legados: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero (o segundo botão está oculto no Figma).
+			'solucao_hero_eyebrow'         => 'substituição do sistema legado',
+			'solucao_hero_titulo'          => 'Reconstrua sua arquitetura.',
+			'solucao_hero_titulo_destaque' => 'Preserve sua operação.',
+			'solucao_hero_corpo'           => 'Substitua plataformas legadas como TIBCO e IBM MQ por uma arquitetura moderna de integração, preservando seus sistemas existentes e mantendo a operação funcionando durante toda a transição.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => '',
+			'solucao_hero_btn2_url'        => '',
+			'solucao_hero_imagem'          => $this->img( 'atualizacao-de-sistemas-legados-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'pilares',
+			'solucao_pilares_titulo'       => 'Reconstrua sua camada de integração sem reconstruir seus sistemas',
+			'solucao_pilares_1_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Democratize a integração',
+			'solucao_pilares_1_desc'       => 'Reduza a dependência de especialistas em tecnologias legadas com uma plataforma visual, mais simples de evoluir e manter.',
+			'solucao_pilares_2_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Construa sobre padrões abertos',
+			'solucao_pilares_2_desc'       => 'Desenvolva integrações utilizando padrões modernos e portáveis, evitando criar uma nova dependência tecnológica.',
+			'solucao_pilares_3_icone'      => $this->img( 'atualizacao-de-sistemas-legados-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Evolua para eventos em tempo real',
+			'solucao_pilares_3_desc'       => 'Substitua processos em lote por uma arquitetura orientada a eventos, preparada para aplicações modernas e integrações distribuídas.',
+
+			// 5 · Casos de Uso (cinco cards + o card azul de CTA).
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Reconstrua rotas do TIBCO BusinessWorks',
+			'solucao_casos_1_desc'         => 'Transforme integrações existentes em fluxos visuais mais simples de manter e evoluir.',
+			'solucao_casos_2_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Conecte mainframes sem VPN',
+			'solucao_casos_2_desc'         => 'Integre ambientes z/OS e AS/400 utilizando Runtime, sem alterar a infraestrutura de rede.',
+			'solucao_casos_3_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Substitua IBM MQ por eventos',
+			'solucao_casos_3_desc'         => 'Converta integrações baseadas em filas para uma arquitetura orientada a eventos com Kafka.',
+			'solucao_casos_4_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Exponha ERPs legados por APIs',
+			'solucao_casos_4_desc'         => 'Disponibilize SAP ECC e Oracle EBS através de APIs modernas sem alterar o core das aplicações.',
+			'solucao_casos_5_icone'        => $this->img( 'atualizacao-de-sistemas-legados-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Conecte aplicações SaaS no primeiro dia',
+			'solucao_casos_5_desc'         => 'Integre Salesforce, ServiceNow, Workday e outras plataformas à nova arquitetura sem depender do antigo ESB.',
+			'solucao_casos_cta_texto'      => 'Agende uma demonstração',
+			'solucao_casos_cta_url'        => '/contato/',
+
+			// 6 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Seu próximo projeto não deveria começar pelo legado',
+			'solucao_dif_corpo'            => 'Reconstrua a camada de integração em uma arquitetura moderna sem exigir que os sistemas existentes sejam substituídos.',
+			'solucao_dif_topico_1'         => 'Evolua a arquitetura sem expor sistemas críticos',
+			'solucao_dif_topico_2'         => 'Modernize mainframes sem comprometer a segurança',
+			'solucao_dif_topico_3'         => 'Conecte aplicações legadas com isolamento do core',
+			'solucao_dif_imagem'           => $this->img( 'atualizacao-de-sistemas-legados-diferencial' ),
+			'solucao_dif_antes_selos'      => 1,
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_atualizacao_de_sistemas_legados_faq( $post_id );
+
+		WP_CLI::log( "  Atualização de Sistemas Legados preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Atualização de Sistemas Legados e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Atualização de Sistemas Legados.
+	 * @return void
+	 */
+	protected function preencher_atualizacao_de_sistemas_legados_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:legado-mainframe-rede',
+				'É possível conectar mainframes sem alterar a infraestrutura de rede?',
+				'<p>Sim. O Runtime é instalado dentro do próprio ambiente, do mesmo lado do firewall em que o mainframe já vive, e é ele que abre a conexão para fora — não o contrário. Ambientes z/OS e AS/400 continuam onde estão, com as mesmas regras de rede, sem VPN dedicada nem porta nova exposta para a internet. O que muda é apenas quem passa a conversar com esses sistemas: a camada de integração, em vez de cada aplicação isoladamente.</p>',
+			),
+			array(
+				'faq:legado-esb-transicao',
+				'As integrações continuam funcionando durante a substituição do ESB?',
+				'<p>Continuam. A transição é feita rota a rota: a nova arquitetura sobe em paralelo ao ESB atual e cada fluxo só é redirecionado depois de rodar em produção com o mesmo resultado do antigo. Enquanto uma rota está sendo reconstruída, a versão legada segue ativa, o que permite voltar atrás sem parar a operação. O ESB só é desligado quando não resta nenhum fluxo dependendo dele.</p>',
+			),
+			array(
+				'faq:legado-esb-vs-ipaas',
+				'Qual a diferença entre substituir um ESB por uma plataforma moderna de integração?',
+				'<p>O ESB tradicional concentra as regras em código proprietário, exige especialistas na tecnologia específica e trata cada mudança como um novo projeto. A plataforma moderna coloca os mesmos fluxos em um ambiente visual, sobre padrões abertos e portáveis, com histórico de execução, tratamento de erro e governança de acesso em um só lugar. Na prática, o ganho não é só de tecnologia: é a redução da dependência de um grupo pequeno de pessoas para manter a integração de pé.</p>',
+			),
+			array(
+				'faq:legado-prazo-reconstrucao',
+				'Quanto tempo leva para reconstruir integrações existentes?',
+				'<p>Depende muito mais da quantidade de regras de negócio embutidas na rota antiga do que da tecnologia de origem. Fluxos diretos — uma leitura, uma transformação, uma entrega — costumam ser reconstruídos e homologados em semanas. O que estica o prazo é a arqueologia: rotas sem documentação, transformações escritas em código dentro do ESB e regras que ninguém mais conhece precisam ser mapeadas antes de serem reescritas. Por isso a substituição é feita por ondas, começando pelas rotas de maior volume e menor complexidade.</p>',
+			),
+			array(
+				'faq:legado-pos-desativacao',
+				'O que acontece depois que o ESB é completamente desativado?',
+				'<p>A operação passa a viver na nova camada, e o custo de licença e sustentação da plataforma antiga sai da conta. A partir daí, integração deixa de ser projeto e vira rotina: novas conexões, mudanças de regra e ajustes de fluxo entram pelo mesmo ambiente, com monitoramento centralizado e sem precisar de um especialista da tecnologia legada. É também o momento em que a arquitetura orientada a eventos começa a render — aplicações novas se conectam ao que já existe em vez de abrir mais uma integração ponto a ponto.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Atualização de Sistemas Legados FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Integração Pós-Fusão".
+	 *
+	 * O design cobre seis seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Selos e FAQ. Métricas, Logos, Plataforma e Aceleradores não existem
+	 * neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_integracao_pos_fusao() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:integracao-pos-fusao', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Integração Pós-Fusão: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'integração pós-fusão',
+			'solucao_hero_titulo'      => 'Integre empresas adquiridas desde o primeiro dia',
+			'solucao_hero_corpo'       => 'Conecte sistemas críticos sem abrir portas de firewall e acelere a captura de sinergias enquanto a consolidação de TI acontece.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'integracao-pos-fusao-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Acelere resultados após uma aquisição',
+			'solucao_pilares_1_icone'  => $this->img( 'integracao-pos-fusao-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Ative sistemas antes do fechamento',
+			'solucao_pilares_1_desc'   => 'Disponibilize identidade, folha e ERP antes da conclusão do negócio para garantir continuidade operacional.',
+			'solucao_pilares_2_icone'  => $this->img( 'integracao-pos-fusao-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Entregue sinergias no prazo',
+			'solucao_pilares_2_desc'   => 'Conecte ambientes com dual-ERP e cumpra objetivos de integração sem esperar uma consolidação completa.',
+			'solucao_pilares_3_icone'  => $this->img( 'integracao-pos-fusao-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Reutilize integrações em aquisições',
+			'solucao_pilares_3_desc'   => 'Crie cápsulas reutilizáveis para acelerar novas integrações mantendo padrões consistentes entre empresas.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Integre operações sem atrasar o negócio',
+			'solucao_casos_1_icone'    => $this->img( 'integracao-pos-fusao-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Unifique identidades corporativas',
+			'solucao_casos_1_desc'     => 'Conecte Entra ID e Okta para habilitar acesso único aos colaboradores das empresas integradas.',
+			'solucao_casos_2_icone'    => $this->img( 'integracao-pos-fusao-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Sincronize múltiplos ERPs',
+			'solucao_casos_2_desc'     => 'Integre SAP e Oracle Fusion durante a transição sem depender da consolidação definitiva dos sistemas.',
+			'solucao_casos_3_icone'    => $this->img( 'integracao-pos-fusao-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Consolide dados de RH',
+			'solucao_casos_3_desc'     => 'Conecte Workday e Oracle HCM para unificar processos e informações após a fusão.',
+			'solucao_casos_4_icone'    => $this->img( 'integracao-pos-fusao-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Migre seu CRM',
+			'solucao_casos_4_desc'     => 'Transfira informações comerciais entre plataformas mantendo continuidade no relacionamento com clientes.',
+			'solucao_casos_5_icone'    => $this->img( 'integracao-pos-fusao-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Unifique dados analíticos',
+			'solucao_casos_5_desc'     => 'Conecte Snowflake e BigQuery para criar uma visão consolidada das operações combinadas.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 4 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Integração segura desde o Dia 1',
+			'solucao_dif_corpo'        => 'Conecte sistemas adquiridos rapidamente com uma arquitetura preparada para ambientes corporativos, sem depender de alterações complexas na infraestrutura.',
+			'solucao_dif_topico_1'     => 'Runtime com conexão outbound-only',
+			'solucao_dif_topico_2'     => 'Deploy multi-cloud ou Kubernetes gerenciado',
+			'solucao_dif_topico_3'     => '300+ conectores sem custo adicional',
+			'solucao_dif_imagem'       => $this->img( 'integracao-pos-fusao-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 5 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_integracao_pos_fusao_faq( $post_id );
+
+		WP_CLI::log( "  Integração Pós-Fusão preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Integração Pós-Fusão e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Integração Pós-Fusão.
+	 * @return void
+	 */
+	protected function preencher_integracao_pos_fusao_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ipf-runtime-firewall',
+				'Como o Runtime elimina o problema de firewall no Dia 1?',
+				'<p>O runtime roda dentro do ambiente da empresa adquirida e abre a conexão de dentro para fora — é ele que procura a plataforma, nunca o contrário. Como não existe porta de entrada a ser publicada, não há regra de borda nova, IP fixo a negociar nem exceção a ser aprovada pelo time de segurança da outra companhia. É justamente esse ponto que costuma travar as primeiras semanas de uma aquisição, quando as duas redes ainda são independentes e ninguém quer flexibilizar o perímetro.</p>',
+			),
+			array(
+				'faq:ipf-antes-consolidacao-ti',
+				'É possível conectar sistemas antes da consolidação de TI?',
+				'<p>Sim, e é o cenário mais comum. A integração acontece na camada de dados e processos, sobre os sistemas como eles estão hoje — dois ERPs, dois diretórios de identidade, duas folhas. Identidade, RH e ERP podem ser conectados antes mesmo do fechamento do negócio, para que a operação continue de pé no primeiro dia. A consolidação definitiva segue seu próprio cronograma, sem bloquear a captura de sinergias.</p>',
+			),
+			array(
+				'faq:ipf-velocidade-deploy',
+				'Qual a velocidade de deploy para deixar a operação pronta no Dia 1?',
+				'<p>O runtime sobe em multi-cloud ou em Kubernetes gerenciado, então o provisionamento do ambiente é questão de horas, não de projeto. O que define o cronograma é o acesso: liberação de credencial nos sistemas de origem e destino, e o aceite do desenho pelas áreas envolvidas. Com mais de 300 conectores prontos e sem custo adicional, os fluxos críticos do Dia 1 — acesso, folha, pedidos — normalmente entram em semanas, e não em meses.</p>',
+			),
+			array(
+				'faq:ipf-pipelines-pos-projeto',
+				'Os pipelines continuam gerando valor após o projeto de integração?',
+				'<p>Continuam. Cada integração é construída como cápsula reutilizável, com o padrão de mapeamento, tratamento de erro e governança já definidos. Terminada a incorporação, essas cápsulas viram o repertório da empresa para a próxima aquisição: o que foi feito para conectar um ERP ou um diretório de identidade é reaproveitado, em vez de recomeçar do zero. Elas também seguem sustentando a operação corrente — sincronização de cadastros, dados analíticos e processos entre as unidades combinadas.</p>',
+			),
+			array(
+				'faq:ipf-substituir-middleware-legado',
+				'Como substituir o middleware legado da empresa adquirida?',
+				'<p>A troca é feita fluxo a fluxo, sem big bang. O primeiro passo é inventariar o que o middleware antigo realmente executa e com que frequência; em seguida os fluxos são reconstruídos na plataforma e rodam em paralelo com o legado, com comparação de resultados antes do corte. Cada fluxo migrado é desligado do lado antigo só depois de estável, o que mantém a operação funcionando durante toda a transição e evita concentrar risco em uma única data.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Integração Pós-Fusão FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Visão 360° do Cliente".
+	 *
+	 * O design cobre sete seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Aceleradores, Selos e FAQ. Métricas, Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 * O Diferencial vem antes dos Selos (solucao_dif_antes_selos).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_visao_360_do_cliente() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:visao-360-do-cliente', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Visão 360° do Cliente: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'visão 360°',
+			'solucao_hero_titulo'      => 'Uma única visão do cliente em todos os sistemas',
+			'solucao_hero_corpo'       => 'Consolide dados de CRM, ERP, suporte e produto em uma visão 360º atualizada em tempo real para equipes e agentes de IA.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'visao-360-do-cliente-hero' ),
+
+			// 2 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Transforme dados dispersos em contexto completo',
+			'solucao_pilares_1_icone'  => $this->img( 'visao-360-do-cliente-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Unifique a identidade do cliente',
+			'solucao_pilares_1_desc'   => 'Consolide informações de CRM, ERP, suporte e produto para criar um perfil único e consistente.',
+			'solucao_pilares_2_icone'  => $this->img( 'visao-360-do-cliente-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Atualize informações em tempo real',
+			'solucao_pilares_2_desc'   => 'Mantenha a visão do cliente sempre sincronizada, sem depender de cargas batch ou relatórios defasados.',
+			'solucao_pilares_3_icone'  => $this->img( 'visao-360-do-cliente-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Compartilhe o mesmo contexto',
+			'solucao_pilares_3_desc'   => 'Disponibilize uma visão unificada para vendas, suporte, customer success e agentes de inteligência artificial.',
+
+			// 3 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Coloque o cliente no centro das operações',
+			'solucao_casos_1_icone'    => $this->img( 'visao-360-do-cliente-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Resolva identidades duplicadas',
+			'solucao_casos_1_desc'     => 'Reconcilie múltiplos identificadores entre CRM, ERP e suporte para criar um único perfil de cliente.',
+			'solucao_casos_2_icone'    => $this->img( 'visao-360-do-cliente-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Unifique o histórico do cliente',
+			'solucao_casos_2_desc'     => 'Reúna pedidos, chamados e uso do produto em uma única visão para customer success.',
+			'solucao_casos_3_icone'    => $this->img( 'visao-360-do-cliente-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Forneça contexto para agentes de IA',
+			'solucao_casos_3_desc'     => 'Entregue informações completas do cliente antes de cada interação automatizada ou assistida.',
+			'solucao_casos_4_icone'    => $this->img( 'visao-360-do-cliente-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Segmente campanhas em tempo real',
+			'solucao_casos_4_desc'     => 'Atualize públicos de marketing utilizando dados consolidados de todos os sistemas conectados.',
+			'solucao_casos_5_icone'    => $this->img( 'visao-360-do-cliente-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Melhore decisões de atendimento',
+			'solucao_casos_5_desc'     => 'Permita que equipes consultem o contexto completo do cliente durante qualquer atendimento.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 4 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança para dados unificados',
+			'solucao_dif_corpo'        => 'Controle como cada sistema acessa o perfil unificado do cliente, garantindo conformidade e qualidade dos dados.',
+			'solucao_dif_topico_1'     => 'Governança compatível com LGPD e GDPR',
+			'solucao_dif_topico_2'     => 'Controle de leitura e escrita por sistema',
+			'solucao_dif_topico_3'     => 'Gestão centralizada dos atributos do cliente',
+			'solucao_dif_imagem'       => $this->img( 'visao-360-do-cliente-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 5 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Resolução automática de identidade',
+			'solucao_acel_topico_2'    => 'Visão 360º atualizada em tempo real',
+			'solucao_acel_topico_3'    => 'Contexto único para equipes e IA',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'visao-360-do-cliente-aceleradores' ),
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_visao_360_do_cliente_faq( $post_id );
+
+		WP_CLI::log( "  Visão 360° do Cliente preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Visão 360° do Cliente e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Visão 360° do Cliente.
+	 * @return void
+	 */
+	protected function preencher_visao_360_do_cliente_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:v360-resolucao-identidade',
+				'Como resolver a identidade de um cliente entre sistemas diferentes?',
+				'<p>Cada sistema guarda o cliente com a sua própria chave — código no ERP, ID no CRM, e-mail no suporte — e é por isso que a mesma empresa aparece três vezes com dados diferentes. A resolução de identidade cruza esses identificadores por regras de correspondência (documento, domínio de e-mail, razão social) e mantém uma tabela de equivalências entre eles. O perfil unificado passa a ser a referência, e cada sistema continua funcionando com a chave que já usa, sem migração de cadastro.</p>',
+			),
+			array(
+				'faq:v360-tempo-real-ou-batch',
+				'A visão 360º é atualizada em tempo real ou em batch?',
+				'<p>Em tempo real: cada alteração relevante em um sistema conectado — um pedido faturado, um chamado encerrado, um dado cadastral corrigido — dispara a atualização do perfil unificado no momento em que acontece, sem esperar a janela da noite. Cargas em lote continuam disponíveis para o que faz sentido processar em bloco, como a carga inicial de histórico ou bases legadas, mas a operação do dia a dia não depende delas.</p>',
+			),
+			array(
+				'faq:v360-contexto-agente-ia',
+				'Como um agente de IA utiliza essa visão unificada?',
+				'<p>O agente consulta o perfil unificado antes de responder ou agir, e recebe de uma vez o que estaria espalhado entre CRM, ERP, suporte e produto: contratos vigentes, pedidos em aberto, chamados recentes e uso do produto. Com esse contexto, a resposta deixa de ser genérica e as ações executadas — abrir um chamado, atualizar um cadastro, escalar um caso — acontecem sobre dados atuais. Os mesmos controles de leitura e escrita por sistema valem para o agente, então ele só enxerga e altera o que foi autorizado.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Visão 360° do Cliente FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "IA Corporativa".
+	 *
+	 * Landing sem Métricas, Logos, Plataforma e Aceleradores: o Figma dessa
+	 * solução vai de Hero → Pilares → Diagrama → Casos de Uso → Diferencial →
+	 * Selos → FAQ. O Diferencial vem antes dos Selos (solucao_dif_antes_selos).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_ia_corporativa() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:ia-corporativa', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  IA Corporativa: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'      => 'IA corporativa',
+			'solucao_hero_titulo'       => 'Seus dados corporativos prontos para agentes de IA',
+			'solucao_hero_corpo'        => 'Conecte Salesforce, SAP, TOTVS, Senior, ServiceNow e outros sistemas empresariais a qualquer LLM para criar agentes inteligentes que entendem dados e executam ações.',
+			'solucao_hero_btn1_texto'   => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'     => '/contato/',
+			'solucao_hero_imagem'       => $this->img( 'ia-corporativa-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'   => 'pilares',
+			'solucao_pilares_titulo'    => 'Transforme dados em inteligência operacional',
+			'solucao_pilares_1_icone'   => $this->img( 'ia-corporativa-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Trabalhe com dados ao vivo',
+			'solucao_pilares_1_desc'    => 'Permita que agentes de IA consultem informações atuais dos seus sistemas, substituindo decisões baseadas em dados desatualizados.',
+			'solucao_pilares_2_icone'   => $this->img( 'ia-corporativa-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Automatize workflows complexos',
+			'solucao_pilares_2_desc'    => 'Crie agentes capazes de executar múltiplas etapas de processos, reduzindo tarefas manuais e acelerando operações.',
+			'solucao_pilares_3_icone'   => $this->img( 'ia-corporativa-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Aplique segurança desde o início',
+			'solucao_pilares_3_desc'    => 'Use controles de PII e guardrails para garantir que agentes atuem dentro das regras da empresa.',
+
+			// 11 · Diagrama (renderiza logo depois dos Pilares).
+			'solucao_diagrama_titulo'   => 'Um novo jeito de conectar IA aos seus sistemas',
+			'solucao_diagrama_imagem'   => $this->img( 'ia-corporativa-diagrama' ),
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'     => 'casos de uso',
+			'solucao_casos_titulo'      => 'Aplique IA nos processos do negócio',
+			'solucao_casos_1_icone'     => $this->img( 'ia-corporativa-caso-1' ),
+			'solucao_casos_1_titulo'    => 'Crie agentes em tempo real',
+			'solucao_casos_1_desc'      => 'Gere resumos inteligentes para vendedores usando informações atualizadas de clientes, operações e sistemas corporativos.',
+			'solucao_casos_2_icone'     => $this->img( 'ia-corporativa-caso-2' ),
+			'solucao_casos_2_titulo'    => 'Conecte IA ao conhecimento interno',
+			'solucao_casos_2_desc'      => 'Use RAG com Confluence e SharePoint para criar respostas baseadas no conhecimento da sua empresa.',
+			'solucao_casos_3_icone'     => $this->img( 'ia-corporativa-caso-3' ),
+			'solucao_casos_3_titulo'    => 'Exponha ferramentas via MCP',
+			'solucao_casos_3_desc'      => 'Transforme recursos de Salesforce e SAP em ferramentas disponíveis para agentes de IA autenticados.',
+			'solucao_casos_4_icone'     => $this->img( 'ia-corporativa-caso-4' ),
+			'solucao_casos_4_titulo'    => 'Automatize operações com IA',
+			'solucao_casos_4_desc'      => 'Automatize tarefas como abertura de incidentes no ServiceNow sem depender de processos manuais.',
+			'solucao_casos_5_icone'     => $this->img( 'ia-corporativa-caso-5' ),
+			'solucao_casos_5_titulo'    => 'Dispare IA por eventos',
+			'solucao_casos_5_desc'      => 'Execute modelos de linguagem automaticamente quando eventos acontecerem, sem depender de consultas constantes.',
+			'solucao_casos_cta_texto'   => 'Agende uma demonstração',
+			'solucao_casos_cta_url'     => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'       => 'diferencial técnico',
+			'solucao_dif_titulo'        => 'IA conectada com segurança corporativa',
+			'solucao_dif_corpo'         => 'Acesse ambientes críticos sem depender de VPNs complexas',
+			'solucao_dif_topico_1'      => 'Runtime para conexão direta com mainframes',
+			'solucao_dif_topico_2'      => 'Menos aprovações de infraestrutura',
+			'solucao_dif_topico_3'      => 'Migração mais rápida de sistemas legados',
+			'solucao_dif_imagem'        => $this->img( 'ia-corporativa-dif' ),
+			'solucao_dif_antes_selos'   => 1,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'     => 'compliance & segurança',
+			'solucao_selos_titulo'      => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'       => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_ia_corporativa_faq( $post_id );
+
+		WP_CLI::log( "  IA Corporativa preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da IA Corporativa e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da IA Corporativa.
+	 * @return void
+	 */
+	protected function preencher_ia_corporativa_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:ia-provedores-llm',
+				'Quais provedores de LLM são suportados nativamente?',
+				'<p>A conexão com o modelo é só mais uma ponta da integração, então vale para qualquer provedor que exponha API — os grandes fornecedores de nuvem e os modelos abertos hospedados na sua própria infraestrutura inclusive. Na prática isso significa que o agente conversa com o modelo pelo mesmo caminho por onde conversa com o ERP: credencial guardada em um só lugar, chamada registrada e limite de custo aplicado antes de a requisição sair.</p>',
+			),
+			array(
+				'faq:ia-pipelines-mcp',
+				'Como pipelines de integração viram ferramentas MCP?',
+				'<p>Um fluxo que já existe — consultar um pedido no SAP, abrir um chamado no ServiceNow, buscar a ficha de um cliente no Salesforce — é publicado como ferramenta, com a descrição do que faz, os parâmetros que aceita e o retorno que devolve. O agente passa a enxergar essa ferramenta no catálogo e a chamar quando precisar, sem acesso direto ao sistema de origem: a autenticação, o controle de permissão por perfil e o registro da execução continuam na camada de integração.</p>',
+			),
+			array(
+				'faq:ia-vs-data-factory-glue',
+				'Qual a diferença entre essa abordagem e Azure Data Factory ou AWS Glue?',
+				'<p>Data Factory e Glue são ferramentas de pipeline de dados: movem volume de um ponto a outro em lote, para alimentar um data warehouse. O que a IA corporativa exige é diferente — resposta ao vivo, para uma pergunta específica, no instante em que o agente pergunta, e a capacidade de executar uma ação de volta no sistema de origem. É por isso que a camada aqui é de integração de aplicações e não de ETL, e por isso ela expõe ferramentas e eventos além de tabelas.</p>',
+			),
+			array(
+				'faq:ia-tempo-rag',
+				'Quanto tempo leva para colocar RAG em produção?',
+				'<p>Com os conectores de Confluence e SharePoint já prontos, o cronograma depende menos do desenvolvimento e mais do acesso e da curadoria: liberar credencial, decidir quais espaços entram na base e definir quem pode ver o quê. Um primeiro escopo bem delimitado costuma entrar em semanas. O que estica o prazo é base documental desorganizada e permissão herdada de forma inconsistente na origem — nesses casos o trabalho de limpeza é maior que o de integração.</p>',
+			),
+			array(
+				'faq:ia-troca-de-provedor',
+				'Minha arquitetura continua flexível ao trocar o provedor de IA?',
+				'<p>Sim, porque o modelo fica atrás da camada de integração, não no meio dela. As regras de negócio, as ferramentas publicadas, os guardrails e o histórico de execução pertencem à plataforma; trocar de provedor é trocar a credencial e o endpoint de uma ponta, mantendo tudo o mais no lugar. Isso também permite rodar mais de um modelo em paralelo — um para tarefas simples, outro para as caras — sem duplicar a integração.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  IA Corporativa FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Compras ao Pagamento (S2P)".
+	 *
+	 * O design cobre oito seções — Hero, Métricas, Pilares, Casos de Uso,
+	 * Diferencial, Aceleradores, Selos e FAQ. Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_compras_ao_pagamento() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:compras-ao-pagamento', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Compras ao Pagamento: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'das compras ao pagamento (s2p)',
+			'solucao_hero_titulo'      => 'Do fornecedor ao pagamento, sem planilhas no meio',
+			'solucao_hero_corpo'       => 'Conecte compras, ERP, contratos e bancos em um fluxo único para controlar cada etapa do ciclo de suprimentos com rastreabilidade.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'compras-ao-pagamento-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '26.000',
+			'solucao_metrica_1_rotulo' => 'horas de compras eliminadas',
+			'solucao_metrica_2_numero' => '80x',
+			'solucao_metrica_2_rotulo' => 'mais rápido no processamento de faturas',
+			'solucao_metrica_3_numero' => '70%',
+			'solucao_metrica_3_rotulo' => 'mais rápido no cadastro de fornecedores',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Controle total do ciclo de compras',
+			'solucao_pilares_1_icone'  => $this->img( 'compras-ao-pagamento-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte todo o fluxo de compras',
+			'solucao_pilares_1_desc'   => 'Integre cotação, aprovação, pedido e pagamento em um único processo rastreável e conectado.',
+			'solucao_pilares_2_icone'  => $this->img( 'compras-ao-pagamento-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Elimine aprovações manuais',
+			'solucao_pilares_2_desc'   => 'Reduza o tempo do ciclo de compras removendo dependências de e-mails e processos manuais.',
+			'solucao_pilares_3_icone'  => $this->img( 'compras-ao-pagamento-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Tenha visão dos gastos',
+			'solucao_pilares_3_desc'   => 'Acompanhe despesas em tempo real para tomar decisões financeiras com mais precisão.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize cada etapa do suprimento',
+			'solucao_casos_1_icone'    => $this->img( 'compras-ao-pagamento-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Gere pedidos automaticamente',
+			'solucao_casos_1_desc'     => 'Transforme requisições aprovadas em pedidos de compra no ERP sem intervenções manuais.',
+			'solucao_casos_2_icone'    => $this->img( 'compras-ao-pagamento-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Automatize o matching de 3 vias',
+			'solucao_casos_2_desc'     => 'Valide pedido, recebimento e nota fiscal automaticamente antes de liberar pagamentos.',
+			'solucao_casos_3_icone'    => $this->img( 'compras-ao-pagamento-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Dispare pagamentos automaticamente',
+			'solucao_casos_3_desc'     => 'Execute pagamentos a fornecedores após aprovação e conferência dos documentos necessários.',
+			'solucao_casos_4_icone'    => $this->img( 'compras-ao-pagamento-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Consolide gastos estratégicos',
+			'solucao_casos_4_desc'     => 'Unifique despesas por categoria e fornecedor para melhorar negociações e decisões de compra.',
+			'solucao_casos_5_icone'    => $this->img( 'compras-ao-pagamento-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Rastreie todo o ciclo de compras',
+			'solucao_casos_5_desc'     => 'Acompanhe cada etapa da requisição ao pagamento com histórico completo e visão operacional.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança em cada transação',
+			'solucao_dif_corpo'        => 'Garanta controle sobre aprovações e pagamentos com rastreabilidade completa e separação entre funções críticas.',
+			'solucao_dif_topico_1'     => 'Histórico completo de aprovações',
+			'solucao_dif_topico_2'     => 'Segregação entre aprovar e pagar',
+			'solucao_dif_topico_3'     => 'Controle sobre todo o fluxo financeiro',
+			'solucao_dif_imagem'       => $this->img( 'compras-ao-pagamento-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Requisição → aprovação → pedido',
+			'solucao_acel_topico_2'    => 'Matching de 3 vias automatizado',
+			'solucao_acel_topico_3'    => 'Pagamento após conferência',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '',
+			'solucao_acel_imagem'      => $this->img( 'compras-ao-pagamento-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_compras_ao_pagamento_faq( $post_id );
+
+		WP_CLI::log( "  Compras ao Pagamento preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Compras ao Pagamento (S2P) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Compras ao Pagamento.
+	 * @return void
+	 */
+	protected function preencher_compras_ao_pagamento_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:s2p-matching-3-vias',
+				'Como automatizar o matching de 3 vias entre pedido, recebimento e nota fiscal?',
+				'<p>A integração lê os três documentos onde eles nascem — o pedido de compra no ERP, o registro de recebimento no almoxarifado ou no WMS e a nota fiscal enviada pelo fornecedor — e compara item a item quantidade, preço e condição comercial. Quando os três batem dentro das tolerâncias definidas pela empresa, a fatura segue direto para pagamento; quando há divergência, o fluxo para e aciona o responsável com o motivo exato da diferença. O time financeiro deixa de conferir planilha por planilha e passa a tratar apenas as exceções.</p>',
+			),
+			array(
+				'faq:s2p-visibilidade-gastos',
+				'É possível dar visibilidade de gastos em tempo real ao financeiro?',
+				'<p>Sim. Como cada etapa do ciclo passa pela integração, o compromisso financeiro é registrado no momento em que acontece: a requisição aprovada, o pedido emitido, o recebimento confirmado e a fatura liberada. Esses dados são consolidados por categoria, centro de custo e fornecedor e enviados ao ERP ou à ferramenta de BI da empresa, o que permite acompanhar o gasto comprometido antes de ele virar despesa contabilizada — e negociar com base no volume real por fornecedor.</p>',
+			),
+			array(
+				'faq:s2p-segregacao-funcoes',
+				'Como funciona a segregação de funções entre aprovação e pagamento?',
+				'<p>Aprovar e pagar são etapas distintas do fluxo, com permissões distintas: quem autoriza a compra não é quem executa a liberação financeira, e a integração respeita os papéis já definidos no ERP e no sistema de aprovação. Cada transição registra quem agiu, quando e sobre qual documento, formando um histórico completo de aprovações disponível para auditoria. Nenhum pagamento é disparado sem que a etapa anterior tenha sido concluída pelo perfil autorizado.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Compras ao Pagamento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Soberania de Dados".
+	 *
+	 * O design cobre sete seções — Hero, Pilares, Casos de Uso, Diferencial,
+	 * Aceleradores, Selos e FAQ. Métricas, Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_soberania_de_dados() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:soberania-de-dados', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Soberania de Dados: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'soberania de dados',
+			'solucao_hero_titulo'      => 'Processe e armazene dados onde sua operação exige.',
+			'solucao_hero_corpo'       => 'Execute a CLI Connect powered by Boomi dentro do ambiente do próprio cliente, garantindo que dados sensíveis permaneçam na jurisdição definida pelo negócio e pela regulamentação.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'soberania-de-dados-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Controle total sobre a residência dos dados',
+			'solucao_pilares_1_icone'  => $this->img( 'soberania-de-dados-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Implante no seu ambiente',
+			'solucao_pilares_1_desc'   => 'Execute integrações na nuvem ou infraestrutura própria do cliente, usando AWS, Azure, GCP ou datacenter interno.',
+			'solucao_pilares_2_icone'  => $this->img( 'soberania-de-dados-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Mantenha dados sob seu controle',
+			'solucao_pilares_2_desc'   => 'Garanta que informações sensíveis não transitem ou sejam armazenadas em ambientes compartilhados.',
+			'solucao_pilares_3_icone'  => $this->img( 'soberania-de-dados-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Atenda regulações de dados',
+			'solucao_pilares_3_desc'   => 'Cumpra requisitos de residência de dados para setores como financeiro, saúde e setor público.',
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Aplique soberania de dados na prática',
+			'solucao_casos_1_icone'    => $this->img( 'soberania-de-dados-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Implante por região regulatória',
+			'solucao_casos_1_desc'     => 'Execute pipelines dentro da nuvem ou região exigida por regulamentações locais de dados.',
+			'solucao_casos_2_icone'    => $this->img( 'soberania-de-dados-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Proteja dados sensíveis',
+			'solucao_casos_2_desc'     => 'Processe informações financeiras e de saúde sem remover dados da jurisdição definida.',
+			'solucao_casos_3_icone'    => $this->img( 'soberania-de-dados-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Opere em múltiplos países',
+			'solucao_casos_3_desc'     => 'Crie arquiteturas multi-região para atender diferentes leis de dados em cada mercado.',
+			'solucao_casos_4_icone'    => $this->img( 'soberania-de-dados-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Comprove conformidade',
+			'solucao_casos_4_desc'     => 'Audite onde cada dado foi processado para demonstrar controle e atender requisitos regulatórios.',
+			'solucao_casos_5_icone'    => $this->img( 'soberania-de-dados-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Controle ambientes críticos',
+			'solucao_casos_5_desc'     => 'Mantenha integrações executando dentro da infraestrutura escolhida pela sua organização.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Soberania garantida pela arquitetura',
+			'solucao_dif_corpo'        => 'Diferente de ambientes compartilhados, a plataforma executa dentro do ambiente do cliente, garantindo controle sobre dados e processamento.',
+			'solucao_dif_topico_1'     => 'Ambiente dedicado ao cliente',
+			'solucao_dif_topico_2'     => 'Controle sobre processamento e armazenamento',
+			'solucao_dif_topico_3'     => 'Arquitetura sem compartilhamento de dados',
+			'solucao_dif_imagem'       => $this->img( 'soberania-de-dados-dif' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 9 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Escolha da região de implantação',
+			'solucao_acel_topico_2'    => 'Modelo pronto para ambientes regulados',
+			'solucao_acel_topico_3'    => 'Execução em AWS, Azure ou GCP',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( 'soberania-de-dados-acel' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_soberania_de_dados_faq( $post_id );
+
+		WP_CLI::log( "  Soberania de Dados preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq da Soberania de Dados e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao da Soberania de Dados.
+	 * @return void
+	 */
+	protected function preencher_soberania_de_dados_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:soberania-jurisdicao',
+				'Como a CLI Connect powered by Boomi garante que os dados não saiam da jurisdição exigida?',
+				'<p>O motor de execução roda dentro do ambiente que você indicar — a sua conta na AWS, Azure ou GCP, ou o datacenter interno da empresa. É lá que o dado é lido, transformado e gravado; o plano de controle da plataforma cuida de configuração, versionamento e monitoramento, e não do conteúdo que trafega. Na prática, um registro que nasce em uma região só sai dela se um fluxo que você mesmo desenhou mandar sair.</p>',
+			),
+			array(
+				'faq:soberania-multi-regiao',
+				'É possível ter deploy multi-região para operações em vários países?',
+				'<p>Sim, e é o desenho mais comum em operações internacionais: um ambiente de execução por país ou bloco regulatório, cada um com a sua própria fronteira de dados, todos administrados de um único lugar. Os fluxos são construídos uma vez e distribuídos para cada região, o que evita manter times paralelos cuidando de integrações quase idênticas — e permite que uma regra local, quando existe, apareça como exceção explícita e não como uma cópia inteira do projeto.</p>',
+			),
+			array(
+				'faq:soberania-auditoria',
+				'Como funciona a auditoria de onde os dados foram processados?',
+				'<p>Cada execução deixa registro de qual ambiente a processou, quando, com qual versão do fluxo e com que resultado. Esse histórico é o que sustenta a resposta a um auditor: em vez de uma declaração de política, você mostra o rastro de execução por região. Os registros podem ser mantidos no seu próprio ambiente e exportados para a ferramenta de observabilidade ou de compliance que a empresa já usa.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Soberania de Dados FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Centro de Excelência em Integração".
+	 *
+	 * Landing sem Métricas, Logos, Diagrama e Plataforma: o Figma vai de
+	 * Hero → Pilares → Casos de Uso → Diferencial → Aceleradores → Selos → FAQ.
+	 * Os Selos fecham a página logo antes do FAQ — daí `solucao_dif_antes_selos`,
+	 * que no template joga a faixa de selos para depois dos Aceleradores.
+	 *
+	 * ATENÇÃO — o corpo da seção Aceleradores está exatamente como no Figma
+	 * ("conecta pedido, faturamento, cobrança e conciliação financeira"), texto
+	 * herdado da landing de Compras ao Pagamento e provavelmente um resíduo do
+	 * design. Mantido fiel à referência, pendente de decisão do cliente.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_centro_de_excelencia_em_integracao() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:centro-de-excelencia-em-integracao', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Centro de Excelência em Integração: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+		$prefixo = 'centro-de-excelencia-em-integracao';
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'centro de excelência em integração',
+			'solucao_hero_titulo'      => 'Transforme integrações em um ativo reutilizável da empresa',
+			'solucao_hero_corpo'       => 'Crie um Centro de Excelência de Integração com catálogo compartilhado, padrões de desenvolvimento e governança para acelerar novos projetos.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( $prefixo . '-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Padronize integrações em toda a organização',
+			'solucao_pilares_1_icone'  => $this->img( $prefixo . '-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Reutilize integrações existentes',
+			'solucao_pilares_1_desc'   => 'Centralize pipelines e cápsulas reutilizáveis para reduzir retrabalho e acelerar novos projetos.',
+			'solucao_pilares_2_icone'  => $this->img( $prefixo . '-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Padronize o desenvolvimento',
+			'solucao_pilares_2_desc'   => 'Defina padrões únicos para nomenclatura, autenticação e tratamento de erros em todas as integrações.',
+			'solucao_pilares_3_icone'  => $this->img( $prefixo . '-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Fortaleça a governança',
+			'solucao_pilares_3_desc'   => 'Controle quem cria, altera e publica integrações críticas com processos padronizados de aprovação.',
+
+			// 5 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Escalone integrações com governança',
+			'solucao_casos_1_icone'    => $this->img( $prefixo . '-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Centralize integrações reutilizáveis',
+			'solucao_casos_1_desc'     => 'Disponibilize um catálogo interno de integrações para acelerar qualquer novo projeto.',
+			'solucao_casos_2_icone'    => $this->img( $prefixo . '-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Padronize erros e retentativas',
+			'solucao_casos_2_desc'     => 'Garanta que todos os pipelines utilizem as mesmas regras de tratamento e recuperação de falhas.',
+			'solucao_casos_3_icone'    => $this->img( $prefixo . '-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Aprove integrações antes da produção',
+			'solucao_casos_3_desc'     => 'Implemente fluxos de revisão e aprovação para garantir qualidade e conformidade antes do deploy.',
+			'solucao_casos_4_icone'    => $this->img( $prefixo . '-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Monitore custo e desempenho',
+			'solucao_casos_4_desc'     => 'Centralize métricas de uso, performance e consumo para otimizar continuamente suas integrações.',
+			'solucao_casos_5_icone'    => $this->img( $prefixo . '-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Evite integrações duplicadas',
+			'solucao_casos_5_desc'     => 'Permita que equipes reutilizem componentes existentes em vez de reconstruir fluxos já desenvolvidos.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 7 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Governança para integrações críticas',
+			'solucao_dif_corpo'        => 'Implemente controles que garantem segurança, rastreabilidade e qualidade durante todo o ciclo de desenvolvimento das integrações.',
+			'solucao_dif_topico_1'     => 'Controle de acesso por função',
+			'solucao_dif_topico_2'     => 'Fluxo de revisão e aprovação',
+			'solucao_dif_topico_3'     => 'Auditoria de alterações em pipelines',
+			'solucao_dif_imagem'       => $this->img( $prefixo . '-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 9 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'Aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Catálogo de cápsulas reutilizáveis',
+			'solucao_acel_topico_2'    => 'Padrões únicos para novos projetos',
+			'solucao_acel_topico_3'    => 'Governança pronta para escalar',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '/contato/',
+			'solucao_acel_imagem'      => $this->img( $prefixo . '-aceleradores' ),
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_centro_de_excelencia_em_integracao_faq( $post_id );
+
+		WP_CLI::log( "  Centro de Excelência em Integração preenchida (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Centro de Excelência em Integração e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Centro de Excelência em Integração.
+	 * @return void
+	 */
+	protected function preencher_centro_de_excelencia_em_integracao_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:cei-catalogo-reutilizavel',
+				'Como estruturar um catálogo interno de integrações reutilizáveis?',
+				'<p>O catálogo começa pelo inventário do que já existe: cada pipeline em produção vira uma entrada com dono, sistemas conectados, contrato de entrada e saída e nível de criticidade. A partir daí, os trechos que se repetem entre projetos — autenticação, tratamento de erro, transformação de um mesmo objeto de negócio — são extraídos em cápsulas versionadas, publicadas para toda a organização. O ganho aparece no segundo projeto: em vez de reconstruir a conexão do zero, a equipe monta a integração a partir de peças já homologadas.</p>',
+			),
+			array(
+				'faq:cei-governanca-aprovacao',
+				'Como funciona a governança de aprovação de novas integrações?',
+				'<p>Toda integração passa por um fluxo de revisão antes de chegar à produção: quem constrói não é quem aprova, e a promoção entre ambientes exige o aceite de um responsável técnico do Centro de Excelência. O que é verificado nessa etapa é sempre o mesmo conjunto — aderência ao padrão de nomenclatura, credenciais guardadas no cofre, tratamento de erro e retentativa configurados, e ausência de duplicidade em relação ao catálogo. O acesso é controlado por função, de forma que criar, alterar e publicar sejam permissões distintas.</p>',
+			),
+			array(
+				'faq:cei-custo-e-performance',
+				'É possível medir custo e performance de cada integração centralizadamente?',
+				'<p>Sim. Como todas as integrações rodam sob a mesma plataforma e seguem o mesmo padrão de instrumentação, volume processado, tempo de execução, taxa de erro e consumo de recursos ficam disponíveis em um painel único, com corte por integração, por sistema conectado e por área responsável. É esse dado que sustenta as decisões seguintes do Centro de Excelência: quais fluxos otimizar, quais consolidar e quais aposentar por baixo uso.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Centro de Excelência em Integração FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Jornada do Colaborador (H2R)".
+	 *
+	 * O design cobre oito seções — Hero, Métricas, Pilares, Casos de Uso,
+	 * Diferencial, Aceleradores, Selos e FAQ. Logos, Diagrama e Plataforma não
+	 * existem neste layout e ficam vazias (cada template-part retorna cedo).
+	 *
+	 * ATENÇÃO — o corpo da seção Aceleradores está exatamente como no Figma
+	 * ("conecta pedido, faturamento, cobrança e conciliação financeira"), texto
+	 * herdado da landing de Compras ao Pagamento e provavelmente um resíduo do
+	 * design. Mantido fiel à referência, pendente de decisão do cliente.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_jornada_do_colaborador() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:jornada-do-colaborador', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Jornada do Colaborador: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'     => 'jornada do colaborador (h2r)',
+			'solucao_hero_titulo'      => 'Do primeiro dia ao desligamento, todos os sistemas de RH atualizados.',
+			'solucao_hero_corpo'       => 'Orquestre o ciclo de vida completo do colaborador conectando RH, folha, acessos e benefícios em um único fluxo automatizado.',
+			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'    => '/contato/',
+			'solucao_hero_imagem'      => $this->img( 'jornada-do-colaborador-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero' => '5x',
+			'solucao_metrica_1_rotulo' => 'mais rápida a tomada de decisão da contratação',
+			'solucao_metrica_2_numero' => '75%',
+			'solucao_metrica_2_rotulo' => 'mais rápida a integração da força de trabalho',
+			'solucao_metrica_3_numero' => '95%',
+			'solucao_metrica_3_rotulo' => 'menos trabalho manual por parte dos usuários',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'  => 'pilares',
+			'solucao_pilares_titulo'   => 'Automatize cada momento da jornada do colaborador',
+			'solucao_pilares_1_icone'  => $this->img( 'jornada-do-colaborador-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Sincronize eventos automaticamente',
+			'solucao_pilares_1_desc'   => 'Atualize todos os sistemas satélites a partir de eventos como admissão, promoção e desligamento.',
+			'solucao_pilares_2_icone'  => $this->img( 'jornada-do-colaborador-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Acelere o onboarding',
+			'solucao_pilares_2_desc'   => 'Reduza o tempo de ativação de novos colaboradores de dias para horas com processos conectados.',
+			'solucao_pilares_3_icone'  => $this->img( 'jornada-do-colaborador-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Revogue acessos no desligamento',
+			'solucao_pilares_3_desc'   => 'Elimine riscos garantindo que acessos físicos e digitais sejam removidos automaticamente.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Automatize o ciclo de vida do colaborador',
+			'solucao_casos_1_icone'    => $this->img( 'jornada-do-colaborador-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Automatize admissões completas',
+			'solucao_casos_1_desc'     => 'Conecte HRIS, folha, e-mail, acessos, benefícios e LMS em uma única ativação.',
+			'solucao_casos_2_icone'    => $this->img( 'jornada-do-colaborador-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Atualize mudanças de cargo',
+			'solucao_casos_2_desc'     => 'Sincronize nível de acesso e faixa salarial automaticamente durante promoções e movimentações internas.',
+			'solucao_casos_3_icone'    => $this->img( 'jornada-do-colaborador-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Execute desligamentos seguros',
+			'solucao_casos_3_desc'     => 'Revogue acessos físicos e lógicos em minutos, reduzindo riscos após a saída do colaborador.',
+			'solucao_casos_4_icone'    => $this->img( 'jornada-do-colaborador-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Analise dados de colaboradores',
+			'solucao_casos_4_desc'     => 'Consolide informações do ciclo de vida para análises de turnover e tempo de casa.',
+			'solucao_casos_5_icone'    => $this->img( 'jornada-do-colaborador-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Conecte sistemas satélites de RH',
+			'solucao_casos_5_desc'     => 'Garanta que todos os sistemas relacionados recebam atualizações sem depender de checklists manuais.',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'      => 'diferencial técnico',
+			'solucao_dif_titulo'       => 'Segurança em cada mudança de status',
+			'solucao_dif_corpo'        => 'Proteja dados sensíveis de colaboradores com controles de segurança e rastreabilidade em cada atualização.',
+			'solucao_dif_topico_1'     => 'Mascaramento de PII em trânsito',
+			'solucao_dif_topico_2'     => 'Auditoria completa de alterações',
+			'solucao_dif_topico_3'     => 'Rastreabilidade de cada evento',
+			'solucao_dif_imagem'       => $this->img( 'jornada-do-colaborador-diferencial' ),
+			'solucao_dif_antes_selos'  => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'     => 'aceleradores de integração',
+			'solucao_acel_titulo'      => 'Modelo pronto para começar',
+			'solucao_acel_corpo'       => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'    => 'Evento RH → todos os sistemas',
+			'solucao_acel_topico_2'    => 'Admissão automatizada ponta a ponta',
+			'solucao_acel_topico_3'    => 'Promoção e desligamento sincronizados',
+			'solucao_acel_topico_4'    => 'E muito mais...',
+			'solucao_acel_btn_texto'   => 'Começar agora',
+			'solucao_acel_btn_url'     => '',
+			'solucao_acel_imagem'      => $this->img( 'jornada-do-colaborador-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'    => 'compliance & segurança',
+			'solucao_selos_titulo'     => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'      => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_jornada_do_colaborador_faq( $post_id );
+
+		WP_CLI::log( "  Jornada do Colaborador preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Jornada do Colaborador (H2R) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Jornada do Colaborador.
+	 * @return void
+	 */
+	protected function preencher_jornada_do_colaborador_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:h2r-desligamento-acessos',
+				'Como garantir que o desligamento revogue todos os acessos automaticamente?',
+				'<p>O desligamento registrado no sistema de RH vira um evento único que a integração distribui para todos os sistemas ligados àquele colaborador — diretório de identidade, e-mail, VPN, ERP, benefícios, controle de acesso físico e as ferramentas de negócio que ele usava. Cada revogação devolve uma confirmação, e o que não confirma fica visível como pendência em vez de passar despercebido. A janela entre a saída e o corte de acesso passa a ser medida em minutos, não em dias de checklist manual.</p>',
+			),
+			array(
+				'faq:h2r-admissao-multiplos-sistemas',
+				'É possível orquestrar admissão em múltiplos sistemas simultaneamente?',
+				'<p>Sim. A admissão aprovada no HRIS dispara uma única ativação que cria o colaborador na folha, abre a conta de e-mail, provisiona os acessos conforme o cargo, matricula nos benefícios e inscreve nas trilhas do LMS. As etapas que não dependem umas das outras acontecem em paralelo, e as que dependem respeitam a ordem — o crachá só é solicitado depois que a identidade existe, por exemplo. O RH acompanha o andamento em um lugar só e o novo colaborador chega no primeiro dia com tudo liberado.</p>',
+			),
+			array(
+				'faq:h2r-auditoria-ciclo-de-vida',
+				'Como funciona a auditoria de mudanças no ciclo de vida do colaborador?',
+				'<p>Toda mudança de status — admissão, promoção, transferência, alteração de faixa salarial e desligamento — é registrada com o evento que a originou, os sistemas atualizados, o horário de cada atualização e o resultado devolvido por cada um. Dados pessoais sensíveis trafegam mascarados, de modo que o histórico permanece auditável sem expor PII. Esse registro fica disponível para auditoria interna e externa e é a mesma base usada para análises de turnover e tempo de casa.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Jornada do Colaborador FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
 
 	/**
 	 * Preenche os campos ACF do post cli_solucao "Salesforce".
@@ -10295,6 +13556,174 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( sprintf( '  Google Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
+	}
+
+	/* =====================================================================
+	   RECURSOS HUMANOS (RH)
+	   ===================================================================== */
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Recursos Humanos (RH)".
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_recursos_humanos_rh() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:recursos-humanos-rh', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Recursos Humanos (RH): post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'Para o seu RH',
+			'solucao_hero_titulo'          => 'Conecte todo o ciclo de vida do colaborador em',
+			'solucao_hero_titulo_destaque' => 'uma única operação',
+			'solucao_hero_titulo_fluido'   => true,
+			'solucao_hero_corpo'           => 'Integre HRIS, folha de pagamento, ATS e sistemas corporativos para automatizar a jornada do colaborador e manter informações sempre sincronizadas.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
+			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_imagem'          => $this->img( 'recursos-humanos-rh-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '70%',
+			'solucao_metrica_1_rotulo'     => 'de redução no tempo de processamento da folha de pagamento',
+			'solucao_metrica_2_numero'     => '90%',
+			'solucao_metrica_2_rotulo'     => 'de economia projetada em custos contínuos de manutenção',
+			'solucao_metrica_3_numero'     => '40%',
+			'solucao_metrica_3_rotulo'     => 'de diminuição no tempo gasto com entrada manual de dados',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'Pilares',
+			'solucao_pilares_titulo'       => 'Automatize toda a operação de RH',
+			'solucao_pilares_1_icone'      => $this->img( 'recursos-humanos-rh-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Automatize a jornada do colaborador',
+			'solucao_pilares_1_desc'       => 'Sincronize admissões, movimentações e desligamentos entre todos os sistemas para eliminar tarefas manuais e garantir dados consistentes.',
+			'solucao_pilares_2_icone'      => $this->img( 'recursos-humanos-rh-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Mantenha a folha sincronizada',
+			'solucao_pilares_2_desc'       => 'Atualize automaticamente dados entre HRIS e folha de pagamento para reduzir inconsistências e simplificar o fechamento mensal.',
+			'solucao_pilares_3_icone'      => $this->img( 'recursos-humanos-rh-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Proteja dados sensíveis',
+			'solucao_pilares_3_desc'       => 'Aplique mascaramento de informações pessoais durante as integrações para atender requisitos de LGPD e fortalecer a governança.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Automatize processos críticos de RH',
+			'solucao_casos_1_icone'        => $this->img( 'recursos-humanos-rh-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Orquestre o ciclo do funcionário',
+			'solucao_casos_1_desc'         => 'Atualize HRIS, identidade, folha e plataformas de treinamento simultaneamente sempre que um colaborador entrar ou sair da empresa.',
+			'solucao_casos_2_icone'        => $this->img( 'recursos-humanos-rh-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Sincronize HRIS e folha',
+			'solucao_casos_2_desc'         => 'Garanta que alterações cadastrais e movimentações sejam refletidas automaticamente na folha de pagamento.',
+			'solucao_casos_3_icone'        => $this->img( 'recursos-humanos-rh-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Automatize novas contratações',
+			'solucao_casos_3_desc'         => 'Envie candidatos aprovados do ATS para o HRIS automaticamente, eliminando cadastros duplicados e atividades manuais.',
+			'solucao_casos_4_icone'        => $this->img( 'recursos-humanos-rh-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Revogue acessos automaticamente',
+			'solucao_casos_4_desc'         => 'Remova permissões e contas poucos minutos após o desligamento para aumentar a segurança e reduzir riscos operacionais.',
+			'solucao_casos_5_icone'        => $this->img( 'recursos-humanos-rh-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Antecipe riscos de desligamento',
+			'solucao_casos_5_desc'         => 'Utilize agentes de IA para identificar sinais de retenção e apoiar decisões antes da perda de talentos.',
+			'solucao_casos_6_icone'        => $this->img( 'recursos-humanos-rh-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Automatize movimentações internas',
+			'solucao_casos_6_desc'         => 'Atualize cargos, equipes e permissões sempre que houver mudanças.',
+
+			// 5 · Diferencial Técnico (o design do RH inverte Diferencial e Selos).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Privacidade integrada às automações',
+			'solucao_dif_corpo'            => 'Proteja informações sensíveis durante toda a movimentação entre sistemas com detecção e mascaramento automático de dados pessoais antes da integração.',
+			'solucao_dif_topico_1'         => 'Detecte dados sensíveis automaticamente',
+			'solucao_dif_topico_2'         => 'Mascare informações antes da integração',
+			'solucao_dif_topico_3'         => 'Atenda requisitos de LGPD com governança',
+			'solucao_dif_imagem'           => $this->img( 'recursos-humanos-rh-dif' ),
+			'solucao_dif_antes_selos'      => true,
+
+			// 6 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_recursos_humanos_rh_faq( $post_id );
+
+		WP_CLI::log( "  Recursos Humanos (RH) preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Recursos Humanos (RH) e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Recursos Humanos (RH).
+	 * @return void
+	 */
+	protected function preencher_recursos_humanos_rh_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:rh-hris-folha-prazo',
+				'Quanto tempo leva para integrar o HRIS à folha de pagamento?',
+				'<p>O prazo depende bem menos do desenvolvimento do que do acesso aos sistemas e da qualidade do cadastro. Quando o HRIS e a folha expõem APIs documentadas e as credenciais já estão liberadas, o fluxo de admissões, movimentações e desligamentos costuma entrar em produção em semanas. O que estica o cronograma é a conciliação de cadastros divergentes entre os dois sistemas e a homologação com o fornecedor. Como os componentes são reutilizáveis, a primeira integração é a mais demorada e as seguintes aproveitam o que já foi construído.</p>',
+			),
+			array(
+				'faq:rh-autonomia-do-time',
+				'O RH consegue gerenciar integrações sem depender da equipe de desenvolvimento?',
+				'<p>No dia a dia, sim. O time de RH acompanha as execuções, vê onde um registro parou e reprocessa o que falhou por um painel próprio, sem abrir chamado. Mudanças estruturais — incluir um sistema novo no fluxo ou alterar as regras de um campo — continuam passando por quem mantém a integração, mas partem de componentes prontos, então são ajustes de configuração e não de projeto.</p>',
+			),
+			array(
+				'faq:rh-criterios-plataforma',
+				'Quais critérios devo avaliar ao escolher uma plataforma de integração para RH?',
+				'<p>Três pontos pesam mais do que a lista de conectores. O primeiro é o tratamento de dados pessoais: a plataforma precisa detectar e mascarar informações sensíveis antes de movimentá-las, não depois. O segundo é a rastreabilidade — cada admissão, movimentação e desligamento deve deixar registro de quando passou, para onde foi e o que aconteceu se falhou. O terceiro é o reaproveitamento: fluxos montados como componentes reduzem o custo de cada nova integração, enquanto integrações ponto a ponto crescem em manutenção a cada sistema adicionado.</p>',
+			),
+			array(
+				'faq:rh-dados-sensiveis',
+				'Como os dados sensíveis dos colaboradores são protegidos durante as integrações?',
+				'<p>A proteção acontece dentro do próprio fluxo. Campos como CPF, dados bancários e informações de saúde são identificados automaticamente e mascarados antes de seguirem para o sistema de destino, de modo que apenas quem precisa do dado completo o recebe. O tráfego é criptografado ponta a ponta, o acesso é concedido por perfil e cada movimentação fica registrada em trilha de auditoria — é o que sustenta o atendimento aos requisitos de LGPD sem depender de disciplina manual.</p>',
+			),
+			array(
+				'faq:rh-mudanca-de-api',
+				'Como mudanças nas APIs dos fornecedores de HRIS impactam as integrações?',
+				'<p>O impacto fica contido na camada de tradução. Cada sistema conversa com um formato interno comum, então uma versão nova da API do HRIS exige ajustar apenas o trecho que fala com ele — o restante do fluxo, incluindo folha, identidade e treinamento, segue inalterado. As versões novas são homologadas em ambiente separado antes de entrar em produção, e o monitoramento avisa quando um endpoint muda de comportamento, em vez de a falha aparecer no fechamento da folha.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Recursos Humanos (RH) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 }
 

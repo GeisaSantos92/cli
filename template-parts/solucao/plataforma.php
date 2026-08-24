@@ -5,7 +5,7 @@
  * Fundo branco (var(--cor-fundo)). Layout idêntico ao Diferencial:
  * coluna de texto à esquerda + imagem à direita.
  *
- * Campos ACF (group_cli_solucao, aba "6 · Plataforma"):
+ * Campos ACF (group_cli_solucao, aba "8 · Plataforma"):
  *   solucao_plat_eyebrow, solucao_plat_titulo, solucao_plat_corpo,
  *   solucao_plat_topico_{1,2,3}, solucao_plat_imagem (image ID).
  *
