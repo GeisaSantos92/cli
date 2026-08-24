@@ -226,6 +226,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo AWS…' );
 		$this->preencher_solucao_aws();
 
+		WP_CLI::log( '— Preenchendo Microsoft Azure…' );
+		$this->preencher_solucao_microsoft_azure();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1197,6 +1200,7 @@ class Cliconnect_Seed {
 				'snowflake'                      => 'Snowflake',
 				'databricks'                     => 'Databricks',
 				'aws'                            => 'AWS',
+				'microsoft-azure'                => 'Microsoft Azure',
 				),
 			),
 			'industria'      => array(
@@ -9998,6 +10002,150 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  AWS FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	// ─────────────────────────────────────────────
+	// Microsoft Azure
+	// ─────────────────────────────────────────────
+
+	protected function preencher_solucao_microsoft_azure() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:microsoft-azure',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Solução Microsoft Azure não encontrada — pulando.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 Hero
+			'solucao_hero_eyebrow'    => 'para o seu Azure',
+			'solucao_hero_titulo'     => 'Acelere a adoção do Azure mantendo seu core conectado',
+			'solucao_hero_corpo'      => 'Integre serviços Azure, SAP, Salesforce e sistemas legados em uma única plataforma para evoluir sua arquitetura cloud sem interromper operações existentes.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/microsoft-azure/',
+			'solucao_hero_imagem'     => $this->img( 'microsoft-azure-hero' ),
+
+			// 2 Pilares
+			'solucao_pilares_titulo'   => 'Evolua sua arquitetura Microsoft com escala',
+			'solucao_pilares_1_icone'  => $this->img( 'microsoft-azure-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte serviços Azure nativamente',
+			'solucao_pilares_1_desc'   => 'Utilize conectores prontos para dados e mensageria Azure.',
+			'solucao_pilares_2_icone'  => $this->img( 'microsoft-azure-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Acelere eventos em tempo real',
+			'solucao_pilares_2_desc'   => 'Adote arquiteturas orientadas a eventos sem reconstruir integrações.',
+			'solucao_pilares_3_icone'  => $this->img( 'microsoft-azure-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Integre o ecossistema Microsoft',
+			'solucao_pilares_3_desc'   => 'Conecte Azure, Dynamics 365, Teams e Azure AD.',
+
+			// 3 Casos
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos conectados ao Azure',
+			'solucao_casos_1_icone'   => $this->img( 'microsoft-azure-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Capture eventos em tempo real',
+			'solucao_casos_1_desc'    => 'Envie eventos de negócio para analytics usando Event Hubs.',
+			'solucao_casos_2_icone'   => $this->img( 'microsoft-azure-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Desacople sistemas com filas',
+			'solucao_casos_2_desc'    => 'Use Service Bus para conectar legados e novos serviços.',
+			'solucao_casos_3_icone'   => $this->img( 'microsoft-azure-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Armazene dados com baixa latência',
+			'solucao_casos_3_desc'    => 'Utilize CosmosDB para cenários globais de alta performance.',
+			'solucao_casos_4_icone'   => $this->img( 'microsoft-azure-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Automatize arquivos corporativos',
+			'solucao_casos_4_desc'    => 'Processe documentos usando Blob Storage e DataLake.',
+			'solucao_casos_5_icone'   => $this->img( 'microsoft-azure-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Centralize gestão de segredos',
+			'solucao_casos_5_desc'    => 'Proteja credenciais de integração com Azure Key Vault.',
+			'solucao_casos_cta_texto' => 'Fale com especialista',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 Selos
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 Diferencial
+			'solucao_dif_eyebrow'    => 'diferencial técnico',
+			'solucao_dif_titulo'     => 'Integrações Azure com segurança nativa',
+			'solucao_dif_corpo'      => 'Conecte serviços Azure usando OAuth2, Azure AD e Key Vault para controlar acessos e proteger credenciais em todos os fluxos.',
+			'solucao_dif_topico_1'   => 'Autentique via Azure AD',
+			'solucao_dif_topico_2'   => 'Proteja segredos com Key Vault',
+			'solucao_dif_topico_3'   => 'Controle acessos centralmente',
+			'solucao_dif_imagem'     => $this->img( 'microsoft-azure-dif' ),
+
+			// 6 Plataforma
+			'solucao_plat_eyebrow'   => 'plataforma única',
+			'solucao_plat_titulo'    => 'Conecte todo ecossistema Microsoft',
+			'solucao_plat_corpo'     => 'Centralize integrações entre Azure, aplicações Microsoft e sistemas corporativos para acelerar novas iniciativas sem complexidade adicional.',
+			'solucao_plat_topico_1'  => 'Integre dados e aplicações',
+			'solucao_plat_topico_2'  => 'Reaproveite pipelines existentes',
+			'solucao_plat_topico_3'  => 'Evolua arquitetura gradualmente',
+			'solucao_plat_imagem'    => $this->img( 'microsoft-azure-plat' ),
+
+			// 7 Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com eventos Azure estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar eventos de negócio ao Event Hubs e Service Bus acelerando sua arquitetura orientada a eventos.',
+			'solucao_acel_topico_1'  => 'Configure eventos rapidamente',
+			'solucao_acel_topico_2'  => 'Reduza desenvolvimento customizado',
+			'solucao_acel_topico_3'  => 'Acelere adoção cloud',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'microsoft-azure-acel' ),
+		);
+
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		$faq_ids = $this->criar_faq_microsoft_azure( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Microsoft Azure: todas as seções preenchidas.' );
+	}
+
+	protected function criar_faq_microsoft_azure( int $solucao_id ): array {
+		$itens = array(
+			array(
+				'faq:microsoft-azure:1',
+				'Quais serviços Azure têm conector nativo na CLI Connect powered by Boomi?',
+				'A plataforma oferece conectores nativos para os principais serviços Azure, incluindo Event Hubs, Service Bus, CosmosDB, Blob Storage, Azure AD, Key Vault, Functions e API Management. Esses conectores eliminam a necessidade de desenvolvimento específico para integrar seu ecossistema Microsoft.',
+			),
+			array(
+				'faq:microsoft-azure:2',
+				'Como funciona a gestão de segredos via Key Vault?',
+				'A CLI Connect powered by Boomi integra-se nativamente ao Azure Key Vault para armazenar e recuperar segredos, chaves e certificados usados nas conexões. Isso elimina credenciais fixas nos pipelines e garante que todos os acessos sejam auditáveis e rotativos conforme as políticas de segurança corporativas.',
+			),
+			array(
+				'faq:microsoft-azure:3',
+				'É possível combinar Azure com Dynamics 365 e Teams no mesmo pipeline?',
+				'Sim. A plataforma permite orquestrar fluxos que envolvem múltiplos serviços do ecossistema Microsoft em um único pipeline — por exemplo, capturar um evento no Azure Event Hubs, atualizar um registro no Dynamics 365 e notificar uma equipe via Teams, tudo de forma integrada e sem código customizado.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Microsoft Azure FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 }
