@@ -229,6 +229,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Microsoft Azure…' );
 		$this->preencher_solucao_microsoft_azure();
 
+		WP_CLI::log( '— Preenchendo Google Cloud…' );
+		$this->preencher_solucao_google_cloud();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1201,6 +1204,7 @@ class Cliconnect_Seed {
 				'databricks'                     => 'Databricks',
 				'aws'                            => 'AWS',
 				'microsoft-azure'                => 'Microsoft Azure',
+				'google-cloud'                   => 'Google Cloud',
 				),
 			),
 			'industria'      => array(
@@ -10146,6 +10150,150 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Microsoft Azure FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	// ─────────────────────────────────────────────
+	// Google Cloud
+	// ─────────────────────────────────────────────
+
+	protected function preencher_solucao_google_cloud() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:google-cloud',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Solução Google Cloud não encontrada — pulando.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 Hero
+			'solucao_hero_eyebrow'    => 'para o seu Google Cloud',
+			'solucao_hero_titulo'     => 'Acelere a adoção do Google Cloud conectando dados e IA',
+			'solucao_hero_corpo'      => 'Integre ERP, CRM e sistemas operacionais ao BigQuery e Vertex AI para acelerar iniciativas de dados e inteligência artificial sem desconectar seu legado.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/google-cloud/',
+			'solucao_hero_imagem'     => $this->img( 'google-cloud-hero' ),
+
+			// 2 Pilares
+			'solucao_pilares_titulo'   => 'Transforme dados em inteligência no GCP',
+			'solucao_pilares_1_icone'  => $this->img( 'google-cloud-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte BigQuery e Vertex AI',
+			'solucao_pilares_1_desc'   => 'Leve dados corporativos para analytics e agentes de IA.',
+			'solucao_pilares_2_icone'  => $this->img( 'google-cloud-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Adote eventos em escala',
+			'solucao_pilares_2_desc'   => 'Use Pub/Sub para conectar sistemas em tempo real.',
+			'solucao_pilares_3_icone'  => $this->img( 'google-cloud-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Integre sem substituir legados',
+			'solucao_pilares_3_desc'   => 'Conecte ambientes existentes durante sua evolução cloud.',
+
+			// 3 Casos
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize fluxos de dados no GCP',
+			'solucao_casos_1_icone'   => $this->img( 'google-cloud-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Alimente o BigQuery',
+			'solucao_casos_1_desc'    => 'Envie dados de ERP e CRM para análises atualizadas.',
+			'solucao_casos_2_icone'   => $this->img( 'google-cloud-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Desacople sistemas com Pub/Sub',
+			'solucao_casos_2_desc'    => 'Distribua eventos entre aplicações sem dependências diretas.',
+			'solucao_casos_3_icone'   => $this->img( 'google-cloud-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Prepare dados para IA',
+			'solucao_casos_3_desc'    => 'Atualize modelos Vertex AI com contexto corporativo.',
+			'solucao_casos_4_icone'   => $this->img( 'google-cloud-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Processe arquivos na nuvem',
+			'solucao_casos_4_desc'    => 'Armazene e processe documentos usando Cloud Storage.',
+			'solucao_casos_5_icone'   => $this->img( 'google-cloud-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Execute reverse ETL',
+			'solucao_casos_5_desc'    => 'Envie resultados analíticos para sistemas operacionais.',
+			'solucao_casos_cta_texto' => 'Fale com especialista',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 Selos
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 Diferencial
+			'solucao_dif_eyebrow'    => 'diferencial técnico',
+			'solucao_dif_titulo'     => 'Integrações GCP com segurança corporativa',
+			'solucao_dif_corpo'      => 'Conecte serviços Google Cloud usando IAM, Service Accounts e Cloud KMS para proteger acessos, chaves e dados durante toda a operação.',
+			'solucao_dif_topico_1'   => 'Autentique via Service Accounts',
+			'solucao_dif_topico_2'   => 'Proteja chaves com Cloud KMS',
+			'solucao_dif_topico_3'   => 'Controle acessos via IAM',
+			'solucao_dif_imagem'     => $this->img( 'google-cloud-dif' ),
+
+			// 6 Plataforma
+			'solucao_plat_eyebrow'   => 'plataforma única',
+			'solucao_plat_titulo'    => 'Conecte dados, IA e operação',
+			'solucao_plat_corpo'     => 'Centralize a integração entre sistemas corporativos e serviços Google Cloud para acelerar iniciativas de dados sem criar pipelines isolados.',
+			'solucao_plat_topico_1'  => 'Integre sistemas corporativos',
+			'solucao_plat_topico_2'  => 'Reaproveite fluxos existentes',
+			'solucao_plat_topico_3'  => 'Acelere iniciativas de IA',
+			'solucao_plat_imagem'    => $this->img( 'google-cloud-plat' ),
+
+			// 7 Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com dados prontos para IA',
+			'solucao_acel_corpo'     => 'Utilize um modelo estruturado para conectar ERP e CRM ao BigQuery e Vertex AI com dados sempre atualizados.',
+			'solucao_acel_topico_1'  => 'Conecte fontes rapidamente',
+			'solucao_acel_topico_2'  => 'Reduza projetos customizados',
+			'solucao_acel_topico_3'  => 'Acelere adoção cloud',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'google-cloud-acel' ),
+		);
+
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		$faq_ids = $this->criar_faq_google_cloud( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  Google Cloud: todas as seções preenchidas.' );
+	}
+
+	protected function criar_faq_google_cloud( int $solucao_id ): array {
+		$itens = array(
+			array(
+				'faq:google-cloud:1',
+				'Como a CLI Connect powered by Boomi acelera a adoção de BigQuery e Vertex AI?',
+				'A plataforma oferece conectores nativos para BigQuery e Vertex AI, permitindo enviar dados de ERP, CRM e sistemas operacionais diretamente para análises e modelos de IA. Isso elimina integrações customizadas e reduz o tempo de entrega de iniciativas de dados e inteligência artificial.',
+			),
+			array(
+				'faq:google-cloud:2',
+				'É possível fazer reverse ETL do BigQuery para sistemas operacionais?',
+				'Sim. A CLI Connect powered by Boomi suporta fluxos bidirecional, permitindo que resultados analíticos do BigQuery sejam enviados de volta para sistemas operacionais como ERP e CRM. Isso garante que decisões baseadas em dados se reflitam automaticamente nos processos de negócio.',
+			),
+			array(
+				'faq:google-cloud:3',
+				'Como funciona a arquitetura orientada a eventos via Pub/Sub?',
+				'A plataforma integra-se nativamente ao Google Cloud Pub/Sub para distribuir eventos entre aplicações de forma assíncrona e desacoplada. Você pode configurar triggers que publicam ou consomem mensagens do Pub/Sub dentro de fluxos de integração completos, sem código customizado.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  Google Cloud FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 }
