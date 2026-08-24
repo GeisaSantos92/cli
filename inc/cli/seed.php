@@ -223,6 +223,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Databricks…' );
 		$this->preencher_solucao_databricks();
 
+		WP_CLI::log( '— Preenchendo AWS…' );
+		$this->preencher_solucao_aws();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -1193,6 +1196,7 @@ class Cliconnect_Seed {
 				'microsoft-teams'                => 'Microsoft Teams',
 				'snowflake'                      => 'Snowflake',
 				'databricks'                     => 'Databricks',
+				'aws'                            => 'AWS',
 				),
 			),
 			'industria'      => array(
@@ -9850,6 +9854,150 @@ class Cliconnect_Seed {
 		}
 
 		WP_CLI::log( sprintf( '  Databricks FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+		return $ids;
+	}
+
+	// ─────────────────────────────────────────────
+	// AWS
+	// ─────────────────────────────────────────────
+
+	protected function preencher_solucao_aws() {
+		$posts = get_posts( array(
+			'post_type'  => 'cli_solucao',
+			'meta_key'   => '_cliconnect_seed',
+			'meta_value' => 'solucao:aws',
+			'fields'     => 'ids',
+		) );
+		if ( empty( $posts ) ) {
+			WP_CLI::warning( 'Solução AWS não encontrada — pulando.' );
+			return;
+		}
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 Hero
+			'solucao_hero_eyebrow'    => 'para o seu AWS',
+			'solucao_hero_titulo'     => 'Acelere a adoção da AWS sem reescrever integrações existentes',
+			'solucao_hero_corpo'      => 'Conecte serviços AWS, ERPs, CRMs e sistemas legados em uma mesma plataforma para evoluir sua arquitetura cloud sem interromper operações atuais.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/solucao/aws/',
+			'solucao_hero_imagem'     => $this->img( 'aws-hero' ),
+
+			// 2 Pilares
+			'solucao_pilares_titulo'  => 'Evolua sua arquitetura cloud com segurança',
+			'solucao_pilares_1_icone' => $this->img( 'aws-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte serviços AWS nativamente',
+			'solucao_pilares_1_desc'  => 'Use conectores prontos para integrar serviços AWS sem desenvolvimento específico.',
+			'solucao_pilares_2_icone' => $this->img( 'aws-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Adote eventos em escala',
+			'solucao_pilares_2_desc'  => 'Implemente arquiteturas orientadas a eventos sem reconstruir integrações existentes.',
+			'solucao_pilares_3_icone' => $this->img( 'aws-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Migre de forma incremental',
+			'solucao_pilares_3_desc'  => 'Conecte sistemas legados e workloads AWS durante sua evolução cloud.',
+
+			// 3 Casos
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Automatize processos conectados à AWS',
+			'solucao_casos_1_icone'   => $this->img( 'aws-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Dispare fluxos por eventos',
+			'solucao_casos_1_desc'    => 'Acione pipelines AWS a partir de eventos de ERP e CRM.',
+			'solucao_casos_2_icone'   => $this->img( 'aws-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Orquestre funções Lambda',
+			'solucao_casos_2_desc'    => 'Inclua funções serverless em fluxos completos de integração.',
+			'solucao_casos_3_icone'   => $this->img( 'aws-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Desacople sistemas com filas',
+			'solucao_casos_3_desc'    => 'Use SNS e SQS para conectar aplicações com mais flexibilidade.',
+			'solucao_casos_4_icone'   => $this->img( 'aws-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Monitore operações cloud',
+			'solucao_casos_4_desc'    => 'Acompanhe pipelines AWS e legados em uma visão centralizada.',
+			'solucao_casos_5_icone'   => $this->img( 'aws-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Migre workloads gradualmente',
+			'solucao_casos_5_desc'    => 'Evolua para ECS sem interromper integrações existentes.',
+			'solucao_casos_cta_texto' => 'Fale com especialista',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 4 Selos
+			'solucao_selos_eyebrow'   => 'compliance & segurança',
+			'solucao_selos_titulo'    => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'     => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 5 Diferencial
+			'solucao_dif_eyebrow'    => 'diferencial técnico',
+			'solucao_dif_titulo'     => 'Integrações AWS com segurança corporativa',
+			'solucao_dif_corpo'      => 'Conecte serviços AWS utilizando autenticação IAM/STS, gestão de chaves via KMS e criptografia para proteger dados durante toda a operação.',
+			'solucao_dif_topico_1'   => 'Autentique conexões via IAM',
+			'solucao_dif_topico_2'   => 'Proteja dados com KMS',
+			'solucao_dif_topico_3'   => 'Criptografe dados em trânsito',
+			'solucao_dif_imagem'     => $this->img( 'aws-dif' ),
+
+			// 6 Plataforma
+			'solucao_plat_eyebrow'   => 'plataforma única',
+			'solucao_plat_titulo'    => 'Conecte legado e cloud em um só lugar',
+			'solucao_plat_corpo'     => 'Centralize a comunicação entre sistemas existentes e novos serviços AWS para acelerar a transformação sem criar integrações descartáveis.',
+			'solucao_plat_topico_1'  => 'Integre sistemas legados',
+			'solucao_plat_topico_2'  => 'Conecte serviços cloud-native',
+			'solucao_plat_topico_3'  => 'Evolua sem interrupções',
+			'solucao_plat_imagem'    => $this->img( 'aws-plat' ),
+
+			// 7 Aceleradores
+			'solucao_acel_eyebrow'   => 'Aceleradores de integração',
+			'solucao_acel_titulo'    => 'Comece com eventos AWS estruturados',
+			'solucao_acel_corpo'     => 'Utilize um modelo pronto para conectar eventos de negócio ao EventBridge, Lambda e SNS acelerando sua arquitetura orientada a eventos.',
+			'solucao_acel_topico_1'  => 'Configure eventos rapidamente',
+			'solucao_acel_topico_2'  => 'Reaproveite fluxos existentes',
+			'solucao_acel_topico_3'  => 'Acelere adoção cloud',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'aws-acel' ),
+		);
+
+		foreach ( $campos as $chave => $valor ) {
+			update_field( $chave, $valor, $post_id );
+		}
+
+		$faq_ids = $this->criar_faq_aws( $post_id );
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $faq_ids, $post_id );
+
+		WP_CLI::log( '  AWS: todas as seções preenchidas.' );
+	}
+
+	protected function criar_faq_aws( int $solucao_id ): array {
+		$itens = array(
+			array(
+				'faq:aws:1',
+				'Quais serviços AWS têm conector nativo na CLI Connect powered by Boomi?',
+				'A plataforma oferece conectores nativos para os principais serviços AWS, incluindo S3, Lambda, SQS, SNS, EventBridge, DynamoDB, RDS, API Gateway e mais. Esses conectores eliminam a necessidade de desenvolvimento específico para integrar seu ecossistema AWS.',
+			),
+			array(
+				'faq:aws:2',
+				'Como a CLI Connect powered by Boomi ajuda na migração incremental para AWS?',
+				'A plataforma permite conectar sistemas legados e workloads AWS simultaneamente, possibilitando uma migração gradual sem interromper operações. Você pode evoluir sua arquitetura em etapas, mantendo integrações existentes funcionando enquanto novos serviços cloud são adotados.',
+			),
+			array(
+				'faq:aws:3',
+				'Como funciona a autenticação via IAM/STS?',
+				'A integração utiliza roles e políticas IAM para autenticar conexões com serviços AWS, com suporte a STS para credenciais temporárias. Isso garante acesso controlado e auditável, seguindo as melhores práticas de segurança da AWS sem armazenar credenciais fixas.',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		WP_CLI::log( sprintf( '  AWS FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 		return $ids;
 	}
 }
