@@ -274,6 +274,15 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Compras ao Pagamento (S2P)…' );
 		$this->preencher_solucao_compras_ao_pagamento();
 
+		WP_CLI::log( '— Preenchendo Gemini…' );
+		$this->preencher_solucao_gemini();
+
+		WP_CLI::log( '— Preenchendo Claude…' );
+		$this->preencher_solucao_claude();
+
+		WP_CLI::log( '— Preenchendo ChatGPT…' );
+		$this->preencher_solucao_chatgpt();
+
 		WP_CLI::log( '— Preenchendo IA Corporativa…' );
 		$this->preencher_solucao_ia_corporativa();
 
@@ -1297,6 +1306,7 @@ class Cliconnect_Seed {
 				'aws'                            => 'AWS',
 				'microsoft-azure'                => 'Microsoft Azure',
 				'google-cloud'                   => 'Google Cloud',
+				'gemini'                         => 'Gemini',
 				),
 			),
 			'industria'      => array(
@@ -13724,6 +13734,445 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Recursos Humanos (RH) FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche a solução Gemini.
+	 *
+	 * Todas as seções: Hero, Pilares, Diagrama, Integrações, Casos, Selos,
+	 * Diferencial, Plataforma, Aceleradores e FAQ.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_gemini() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:gemini', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Gemini: post não encontrado — verifique se o CPT existe com _cliconnect_seed = solucao:gemini.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'integre o seu gemini',
+			'solucao_hero_titulo'     => 'Conecte o Gemini aos seus sistemas e dados corporativos',
+			'solucao_hero_corpo'      => 'Gemini acessa dados, orquestra sistemas e executa ações com precisão — tudo integrado à operação da empresa.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_imagem'     => $this->img( 'gemini-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_titulo'   => 'Transforme Gemini em parte da operação',
+			'solucao_pilares_1_icone'  => $this->img( 'gemini-pilar-1' ),
+			'solucao_pilares_1_titulo' => 'Conecte Gemini aos seus dados',
+			'solucao_pilares_1_desc'   => 'Leve informações de sistemas corporativos para o modelo e gere respostas baseadas no contexto real da operação.',
+			'solucao_pilares_2_icone'  => $this->img( 'gemini-pilar-2' ),
+			'solucao_pilares_2_titulo' => 'Orquestre múltiplas aplicações',
+			'solucao_pilares_2_desc'   => 'Combine Gemini com ERP, CRM, bancos de dados e outras aplicações em fluxos automatizados.',
+			'solucao_pilares_3_icone'  => $this->img( 'gemini-pilar-3' ),
+			'solucao_pilares_3_titulo' => 'Consulte sistemas em linguagem natural',
+			'solucao_pilares_3_desc'   => 'Permita que equipes encontrem informações de clientes, pedidos e operações sem navegar por diferentes sistemas.',
+
+			// 5 · Casos de uso.
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_titulo'    => 'Aplique Gemini aos processos do negócio',
+			'solucao_casos_1_icone'   => $this->img( 'gemini-caso-1' ),
+			'solucao_casos_1_titulo'  => 'Consulte dados do ERP com IA',
+			'solucao_casos_2_icone'   => $this->img( 'gemini-caso-2' ),
+			'solucao_casos_2_titulo'  => 'Analise documentos automaticamente',
+			'solucao_casos_3_icone'   => $this->img( 'gemini-caso-3' ),
+			'solucao_casos_3_titulo'  => 'Automatize o atendimento',
+			'solucao_casos_4_icone'   => $this->img( 'gemini-caso-4' ),
+			'solucao_casos_4_titulo'  => 'Classifique solicitações',
+			'solucao_casos_5_icone'   => $this->img( 'gemini-caso-5' ),
+			'solucao_casos_5_titulo'  => 'Gere análises operacionais',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
+
+			// 11 · Diagrama — motor de integração.
+			'solucao_diagrama_titulo' => 'Um novo jeito de conectar IA aos seus sistemas',
+			'solucao_diagrama_imagem' => $this->img( 'gemini-motor' ),
+
+			// 12 · Integrações — grade de logos.
+			'solucao_int_eyebrow'   => 'integrações',
+			'solucao_int_titulo'    => 'Integre todos os seus sistema com o Gemini',
+			'solucao_int_imagem'    => $this->img( 'gemini-integracoes' ),
+			'solucao_int_subtitulo' => 'Milhares de integrações já prontas para uso',
+
+			// 7 · Selos — compliance & segurança.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 8 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integre IA com controle sobre seus dados',
+			'solucao_dif_corpo'       => 'Conecte Gemini aos sistemas da empresa com controle sobre dados, acessos e ações para escalar inteligência artificial sem perder governança.',
+			'solucao_dif_topico_1'    => 'Controle quais dados chegam aos modelos',
+			'solucao_dif_topico_2'    => 'Proteja dados em trânsito e repouso',
+			'solucao_dif_topico_3'    => 'Aplique regras antes de executar ações',
+			'solucao_dif_imagem'      => $this->img( 'gemini-dif' ),
+			'solucao_dif_antes_selos' => 0,
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize IA e integrações em uma plataforma',
+			'solucao_plat_corpo'    => 'Evite criar conexões isoladas para cada caso de uso. Centralize Gemini, sistemas e processos para escalar novos agentes usando a mesma arquitetura.',
+			'solucao_plat_topico_1' => 'Conecte Gemini a múltiplos sistemas',
+			'solucao_plat_topico_2' => 'Reutilize conexões em novos agentes',
+			'solucao_plat_topico_3' => 'Orquestre IA dentro dos processos',
+			'solucao_plat_imagem'   => $this->img( 'gemini-plat' ),
+
+			// 9 · Aceleradores — MCP Server.
+			'solucao_acel_eyebrow'   => 'MCP server',
+			'solucao_acel_titulo'    => 'Dê ferramentas ao Gemini sem a necessidade de desenvolver APIs',
+			'solucao_acel_corpo'     => 'Transforme processos corporativos em Tools para o Gemini, definindo exatamente quais informações ele pode consultar e quais ações pode executar.',
+			'solucao_acel_topico_1'  => 'Transforme processos em ferramentas de IA',
+			'solucao_acel_topico_2'  => 'Controle entradas, saídas e informações',
+			'solucao_acel_topico_3'  => 'Disponibilize tudo pelo MCP Server',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'gemini-mcp' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_gemini_faq( $post_id );
+
+		WP_CLI::log( "  Gemini preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Gemini e os vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Gemini.
+	 * @return void
+	 */
+	protected function preencher_gemini_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:gemini-conectar-sistemas',
+				'Como conectar o Gemini aos sistemas da empresa?',
+				'<p>A conexão é feita pela camada de integração da CLI Connect: o Gemini acessa sistemas, bases de dados e processos corporativos via MCP Server, que expõe recursos como ferramentas. Não é necessário desenvolver APIs ou modificar os sistemas de origem — a plataforma gerencia autenticação, permissões e rastreabilidade de ponta a ponta.</p>',
+			),
+			array(
+				'faq:gemini-dados-internos',
+				'É possível usar dados internos para dar contexto ao Gemini?',
+				'<p>Sim. A CLI Connect conecta o Gemini a fontes internas — ERP, CRM, bases de dados, documentos e wikis — enviando o contexto relevante em cada consulta. Os dados trafegam apenas durante a execução e não são usados para retreinar o modelo, garantindo privacidade e conformidade.</p>',
+			),
+			array(
+				'faq:gemini-executar-acoes',
+				'O Gemini pode executar ações nos sistemas conectados?',
+				'<p>Sim. Além de consultar informações, o Gemini pode executar ações — como criar pedidos, atualizar registros ou acionar processos — desde que a ferramenta correspondente esteja publicada no MCP Server e o perfil do usuário tenha permissão. Cada execução fica registrada na plataforma para auditoria.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Gemini FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche a solução Claude.
+	 *
+	 * Todas as seções: Hero, Pilares, Diagrama, Integrações, Casos, Selos,
+	 * Diferencial, Plataforma, Aceleradores e FAQ.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_claude() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:claude', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Claude: post não encontrado — verifique se o CPT existe com _cliconnect_seed = solucao:claude.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'integre o seu claude',
+			'solucao_hero_titulo'     => 'Transforme conhecimento empresarial em ações com Claude',
+			'solucao_hero_corpo'      => 'Claude conecta documentos, dados e sistemas corporativos para consultar informações, interpretar contexto e executar ações com precisão e controle.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_imagem'     => $this->img( 'claude-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_titulo'    => 'Converta conhecimento em decisões',
+			'solucao_pilares_1_icone'   => $this->img( 'claude-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Analise grandes volumes de informação',
+			'solucao_pilares_1_desc'    => 'Processe documentos, históricos e registros para extrair insights relevantes sem depender de buscas manuais.',
+			'solucao_pilares_2_icone'   => $this->img( 'claude-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Consulte o conhecimento da empresa',
+			'solucao_pilares_2_desc'    => 'Conecte fontes internas — wikis, bases de dados, políticas — para que Claude responda com contexto real do negócio.',
+			'solucao_pilares_3_icone'   => $this->img( 'claude-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Execute ferramentas',
+			'solucao_pilares_3_desc'    => 'Crie um pedido de venda, atualize um CRM ou abra um chamado — Claude age nos sistemas com as permissões certas.',
+
+			// 5 · Casos de uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Aplique Claude onde conhecimento importa',
+			'solucao_casos_1_icone'    => $this->img( 'claude-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Revise contratos automaticamente',
+			'solucao_casos_2_icone'    => $this->img( 'claude-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Consulte políticas internas',
+			'solucao_casos_3_icone'    => $this->img( 'claude-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Analise solicitações de clientes',
+			'solucao_casos_4_icone'    => $this->img( 'claude-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Compare propostas comerciais',
+			'solucao_casos_5_icone'    => $this->img( 'claude-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Resuma históricos operacionais',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
+			// 11 · Diagrama — motor de integração.
+			'solucao_diagrama_titulo' => 'Um novo jeito de conectar IA aos seus sistemas',
+			'solucao_diagrama_imagem' => $this->img( 'chatgpt-motor' ),
+
+			// 12 · Integrações — grade de logos.
+			'solucao_int_eyebrow'   => 'integrações',
+			'solucao_int_titulo'    => 'Integre todos os seus sistema com o Claude',
+			'solucao_int_imagem'    => $this->img( 'claude-integracoes' ),
+			'solucao_int_subtitulo' => 'Milhares de integrações já prontas para uso',
+
+			// 7 · Selos — compliance & segurança.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 8 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integre IA com controle sobre seus dados',
+			'solucao_dif_corpo'       => 'Conecte Claude aos sistemas corporativos mantendo controle sobre dados, permissões e ações — sem comprometer segurança ou governança.',
+			'solucao_dif_topico_1'    => 'Controle quais dados chegam aos modelos',
+			'solucao_dif_topico_2'    => 'Proteja dados em trânsito e repouso',
+			'solucao_dif_topico_3'    => 'Aplique regras antes de executar ações',
+			'solucao_dif_imagem'      => $this->img( 'claude-dif' ),
+			'solucao_dif_antes_selos' => 0,
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize conhecimento, sistemas e processos',
+			'solucao_plat_corpo'    => 'Claude gera mais valor quando consegue acessar o contexto necessário. A plataforma CLI Connect conecta fontes, orquestra fluxos e mantém rastreabilidade.',
+			'solucao_plat_topico_1' => 'Conecte diferentes fontes de informação',
+			'solucao_plat_topico_2' => 'Reaproveite dados em novos processos',
+			'solucao_plat_topico_3' => 'Orquestre resultados entre sistemas',
+			'solucao_plat_imagem'   => $this->img( 'claude-plat' ),
+
+			// 9 · Aceleradores — MCP Server.
+			'solucao_acel_eyebrow'   => 'MCP server',
+			'solucao_acel_titulo'    => 'Dê ferramentas ao Claude sem a necessidade de desenvolver APIs',
+			'solucao_acel_corpo'     => 'Transforme processos corporativos em Tools para o Claude, definindo exatamente quais informações ele pode consultar e quais ações pode executar.',
+			'solucao_acel_topico_1'  => 'Transforme processos em ferramentas de IA',
+			'solucao_acel_topico_2'  => 'Controle entradas, saídas e informações',
+			'solucao_acel_topico_3'  => 'Disponibilize tudo pelo MCP Server',
+			'solucao_acel_topico_4'  => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'   => '/contato/',
+			'solucao_acel_imagem'    => $this->img( 'claude-mcp' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_claude_faq( $post_id );
+
+		WP_CLI::log( "  Claude preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do Claude e os vincula à solução.
+	 *
+	 * @param int $post_id ID do post cli_solucao do Claude.
+	 * @return void
+	 */
+	protected function preencher_claude_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:claude-conectar-documentos',
+				'Como conectar Claude aos documentos e dados da empresa?',
+				'<p>A conexão é feita pela camada de integração da CLI Connect: Claude acessa documentos, bases de dados e sistemas via MCP Server, que expõe os recursos corporativos como ferramentas. Não é necessário desenvolver APIs ou modificar as fontes de origem — a plataforma cria o canal seguro e gerencia autenticação, permissões e rastreabilidade.</p>',
+			),
+			array(
+				'faq:claude-analisar-contratos',
+				'É possível usar Claude para analisar contratos e outros documentos?',
+				'<p>Sim. Claude é especialmente eficaz na leitura e interpretação de documentos longos — contratos, relatórios, políticas e históricos. A plataforma CLI Connect envia o contexto relevante ao modelo e retorna os insights de forma estruturada, sem armazenar o conteúdo dos documentos após a execução.</p>',
+			),
+			array(
+				'faq:claude-executar-acoes',
+				'É possível fazer o Claude executar ações nos sistemas?',
+				'<p>Sim. Além de consultar e analisar informações, Claude pode executar ações — como criar um pedido no ERP, atualizar um registro no CRM ou abrir um chamado — desde que a ferramenta correspondente esteja publicada no MCP Server e o perfil do usuário tenha permissão. Cada execução fica registrada na plataforma para auditoria.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Claude FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+	/**
+	 * Preenche a solução ChatGPT.
+	 *
+	 * Seções: 11 · Diagrama, 12 · Integrações, 9 · Aceleradores e 10 · FAQ.
+	 * Hero, Pilares, Diferencial, Selos e Plataforma foram cadastrados manualmente.
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_chatgpt() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:chatgpt', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  ChatGPT: post não encontrado — verifique se o CPT existe com _cliconnect_seed = solucao:chatgpt.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 11 · Diagrama — motor de integração.
+			'solucao_diagrama_titulo' => 'Um novo jeito de conectar IA aos seus sistemas',
+			'solucao_diagrama_imagem' => $this->img( 'chatgpt-motor' ),
+
+			// 12 · Integrações — grade de logos.
+			'solucao_int_eyebrow'   => 'integrações',
+			'solucao_int_titulo'    => 'Integre todos os seus sistema com o ChatGPT',
+			'solucao_int_imagem'    => $this->img( 'chatgpt-integracoes' ),
+			'solucao_int_subtitulo' => 'Milhares de integrações já prontas para uso',
+
+			// 9 · Aceleradores — MCP Server.
+			'solucao_acel_eyebrow'  => 'MCP server',
+			'solucao_acel_titulo'   => 'Dê ferramentas ao ChatGPT sem a necessidade de desenvolver APIs',
+			'solucao_acel_corpo'    => 'Transforme processos corporativos em Tools para o ChatGPT, definindo exatamente quais informações ele pode consultar e quais ações pode executar.',
+			'solucao_acel_topico_1' => 'Transforme processos em ferramentas de IA',
+			'solucao_acel_topico_2' => 'Controle entradas, saídas e informações',
+			'solucao_acel_topico_3' => 'Disponibilize tudo pelo MCP Server',
+			'solucao_acel_topico_4' => 'E muito mais...',
+			'solucao_acel_btn_texto' => 'Começar agora',
+			'solucao_acel_btn_url'  => '/contato/',
+			'solucao_acel_imagem'   => $this->img( 'chatgpt-mcp' ),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_chatgpt_faq( $post_id );
+
+		WP_CLI::log( "  ChatGPT preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq do ChatGPT e os vincula à solução.
+	 *
+	 * As respostas não aparecem no Figma (accordion fechado), mas foram redigidas
+	 * a partir do que a landing afirma nas demais seções — pendentes de validação.
+	 *
+	 * @param int $post_id ID do post cli_solucao do ChatGPT.
+	 * @return void
+	 */
+	protected function preencher_chatgpt_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:chatgpt-conectar-sistemas',
+				'Como conectar o ChatGPT aos sistemas da empresa?',
+				'<p>A conexão é feita pela camada de integração da CLI Connect: o ChatGPT acessa os sistemas via MCP Server, que expõe os processos corporativos como ferramentas. Não é necessário desenvolver APIs ou modificar os sistemas de origem — a plataforma cria o canal seguro e gerencia autenticação, permissões e rastreabilidade de ponta a ponta.</p>',
+			),
+			array(
+				'faq:chatgpt-dados-treinamento',
+				'Os dados da empresa são usados para treinar os modelos?',
+				'<p>Não. Os dados trafegam apenas durante a execução de uma consulta e não são retidos pela OpenAI para treinamento quando a API é usada em ambiente corporativo. Além disso, a CLI Connect controla quais informações chegam ao modelo, permitindo anonimização e mascaramento de dados sensíveis antes de qualquer chamada.</p>',
+			),
+			array(
+				'faq:chatgpt-executar-acoes',
+				'É possível fazer o ChatGPT executar ações nos sistemas?',
+				'<p>Sim. Além de consultar informações, o ChatGPT pode executar ações — como criar um pedido no ERP, atualizar um registro no CRM ou abrir um chamado no ServiceNow — desde que a ferramenta correspondente esteja publicada no MCP Server e o perfil do usuário tenha permissão para aquela ação. Cada execução fica registrada na plataforma para auditoria.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  ChatGPT FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 }
 
