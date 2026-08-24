@@ -155,6 +155,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Jornada do Colaborador (H2R)…' );
 		$this->preencher_solucao_jornada_do_colaborador();
 
+		WP_CLI::log( '— Preenchendo Pedido ao Recebimento (O2C)…' );
+		$this->preencher_solucao_pedido_ao_recebimento();
+
 		WP_CLI::log( '— Montando menus…' );
 		$this->criar_menus( $paginas, $termos_solucao );
 
@@ -4293,6 +4296,186 @@ class Cliconnect_Seed {
 		update_field( 'solucao_faq_itens', $ids, $post_id );
 
 		WP_CLI::log( sprintf( '  Financeiro FAQ: %d perguntas vinculadas.', count( $ids ) ) );
+	}
+
+
+	/**
+	 * Preenche os campos ACF do post cli_solucao "Pedido ao Recebimento".
+	 *
+	 * Landing "Iniciativa — Pedido ao Recebimento (O2C)". Todos os textos vêm
+	 * dos frames do Figma (arquivo "CLI Connect (Copy)", nó 16678:117015 e
+	 * seguintes); a única exceção são as respostas do FAQ, redigidas aqui —
+	 * ver preencher_pedido_ao_recebimento_faq().
+	 *
+	 * @return void
+	 */
+	protected function preencher_solucao_pedido_ao_recebimento() {
+		$posts = get_posts(
+			array(
+				'post_type'      => 'cli_solucao',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => 'solucao:pedido-ao-recebimento', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		if ( ! $posts ) {
+			WP_CLI::warning( '  Pedido ao Recebimento: post não encontrado — verifique se criar_solucoes() foi executado.' );
+			return;
+		}
+
+		$post_id = (int) $posts[0];
+
+		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'         => 'do pedido ao recebimento (o2c)',
+			'solucao_hero_titulo'          => 'Conecte vendas, faturamento e recebimento em',
+			'solucao_hero_titulo_destaque' => 'um único fluxo',
+			'solucao_hero_titulo_fluido'   => true,
+			'solucao_hero_corpo'           => 'Acelere o ciclo completo de receita conectando CRM, ERP, bancos e sistemas de pagamento em uma operação integrada, rastreável e sem etapas manuais.',
+			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'        => '/contato/',
+			'solucao_hero_imagem'          => $this->img( 'pedido-ao-recebimento-hero' ),
+
+			// 2 · Métricas.
+			'solucao_metrica_1_numero'     => '7 dias',
+			'solucao_metrica_1_rotulo'     => 'mais rápido no seu fechamento financeiro',
+			'solucao_metrica_2_numero'     => '95%',
+			'solucao_metrica_2_rotulo'     => 'mais rapidez na criação de pedidos',
+			'solucao_metrica_3_numero'     => '6.000',
+			'solucao_metrica_3_rotulo'     => 'horas de trabalho manual economizadas anualmente',
+
+			// 3 · Pilares.
+			'solucao_pilares_eyebrow'      => 'pilares',
+			'solucao_pilares_titulo'       => 'Reconstrua sua arquitetura, não o seu negócio.',
+			'solucao_pilares_1_icone'      => $this->img( 'pedido-ao-recebimento-pilar-1' ),
+			'solucao_pilares_1_titulo'     => 'Elimine retrabalho operacional',
+			'solucao_pilares_1_desc'       => 'Automatize a troca de dados entre pedido, faturamento e cobrança, eliminando lançamentos manuais.',
+			'solucao_pilares_2_icone'      => $this->img( 'pedido-ao-recebimento-pilar-2' ),
+			'solucao_pilares_2_titulo'     => 'Receba mais rápido',
+			'solucao_pilares_2_desc'       => 'Reduza o tempo entre o fechamento da venda, a emissão da cobrança e o reconhecimento do caixa.',
+			'solucao_pilares_3_icone'      => $this->img( 'pedido-ao-recebimento-pilar-3' ),
+			'solucao_pilares_3_titulo'     => 'Tenha visibilidade completa',
+			'solucao_pilares_3_desc'       => 'Acompanhe cada etapa do pedido ao recebimento com dados consistentes entre todas as áreas.',
+
+			// 4 · Casos de Uso.
+			'solucao_casos_eyebrow'        => 'casos de uso',
+			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_1_icone'        => $this->img( 'pedido-ao-recebimento-caso-1' ),
+			'solucao_casos_1_titulo'       => 'Fature automaticamente',
+			'solucao_casos_1_desc'         => 'Converta pedidos fechados no CRM em faturamento e emissão de nota fiscal no ERP.',
+			'solucao_casos_2_icone'        => $this->img( 'pedido-ao-recebimento-caso-2' ),
+			'solucao_casos_2_titulo'       => 'Concilie recebimentos',
+			'solucao_casos_2_desc'         => 'Compare automaticamente pagamentos recebidos com bancos e adquirentes.',
+			'solucao_casos_3_icone'        => $this->img( 'pedido-ao-recebimento-caso-3' ),
+			'solucao_casos_3_titulo'       => 'Avise sobre inadimplência',
+			'solucao_casos_3_desc'         => 'Dispare alertas automáticos ao time comercial sempre que houver atrasos de pagamento.',
+			'solucao_casos_4_icone'        => $this->img( 'pedido-ao-recebimento-caso-4' ),
+			'solucao_casos_4_titulo'       => 'Monitore o DSO',
+			'solucao_casos_4_desc'         => 'Consolide indicadores de prazo médio de recebimento em um único painel de gestão.',
+			'solucao_casos_5_icone'        => $this->img( 'pedido-ao-recebimento-caso-5' ),
+			'solucao_casos_5_titulo'       => 'Sincronize a operação',
+			'solucao_casos_5_desc'         => 'Compartilhe o status dos pedidos entre vendas, financeiro e logística em tempo real.',
+			'solucao_casos_6_icone'        => $this->img( 'pedido-ao-recebimento-caso-6' ),
+			'solucao_casos_6_titulo'       => 'Atualize dados continuamente',
+			'solucao_casos_6_desc'         => 'Propague alterações entre CRM, ERP e sistemas financeiros sem intervenções manuais.',
+
+			// 5 · Diferencial (antes dos Selos neste design).
+			'solucao_dif_eyebrow'          => 'diferencial técnico',
+			'solucao_dif_titulo'           => 'Garanta rastreabilidade completa em todo o ciclo financeiro',
+			'solucao_dif_corpo'            => 'Proteja as informações financeiras e acompanhe cada etapa do pedido ao recebimento com total transparência e governança.',
+			'solucao_dif_topico_1'         => 'Auditoria completa dos processos',
+			'solucao_dif_topico_2'         => 'Dados protegidos ponta a ponta',
+			'solucao_dif_topico_3'         => 'Histórico detalhado das transações',
+			'solucao_dif_imagem'           => $this->img( 'pedido-ao-recebimento-diferencial' ),
+			'solucao_dif_antes_selos'      => 1,
+
+			// 6 · Aceleradores.
+			'solucao_acel_eyebrow'         => 'aceleradores de integração',
+			'solucao_acel_titulo'          => 'Modelo pronto para começar',
+			'solucao_acel_corpo'           => 'Comece rapidamente com um fluxo pré-configurado que conecta pedido, faturamento, cobrança e conciliação financeira.',
+			'solucao_acel_topico_1'        => 'Gere faturamentos automaticamente',
+			'solucao_acel_topico_2'        => 'Emita cobranças integradas',
+			'solucao_acel_topico_3'        => 'Concilie recebimentos com bancos',
+			'solucao_acel_topico_4'        => 'E muito mais...',
+			'solucao_acel_btn_texto'       => 'Começar agora',
+			'solucao_acel_btn_url'         => '/contato/',
+			'solucao_acel_imagem'          => $this->img( 'pedido-ao-recebimento-aceleradores' ),
+
+			// 7 · Selos.
+			'solucao_selos_eyebrow'        => 'compliance & segurança',
+			'solucao_selos_titulo'         => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'          => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $post_id );
+		}
+
+		$this->preencher_pedido_ao_recebimento_faq( $post_id );
+
+		WP_CLI::log( "  Pedido ao Recebimento preenchido (ID: {$post_id})." );
+	}
+
+	/**
+	 * Cria os posts cli_faq de Pedido ao Recebimento e vincula à solução.
+	 *
+	 * ATENÇÃO — texto provisório: o Figma mostra apenas as perguntas (o
+	 * accordion está fechado no design). As respostas foram redigidas a partir
+	 * do que a própria landing afirma nas seções anteriores e seguem pendentes
+	 * de validação do cliente.
+	 *
+	 * @param int $post_id ID do post cli_solucao de Pedido ao Recebimento.
+	 * @return void
+	 */
+	protected function preencher_pedido_ao_recebimento_faq( $post_id ) {
+		$itens = array(
+			array(
+				'faq:o2c-tempo-venda-recebimento',
+				'Como reduzir o tempo entre o fechamento da venda e o recebimento?',
+				'<p>O que costuma alongar o ciclo não é a venda nem a cobrança em si, mas a espera entre elas: o pedido fechado no CRM que só vira faturamento quando alguém redigita, a nota emitida que só gera cobrança no dia seguinte. Conectando CRM, ERP e sistema de cobrança em um fluxo único, cada etapa dispara a próxima assim que a anterior termina, sem lote noturno e sem digitação. O ganho aparece antes na consistência dos dados — pedido, nota e título com os mesmos valores — e só depois no prazo médio.</p>',
+			),
+			array(
+				'faq:o2c-multiplos-erps-crms',
+				'É possível conectar múltiplos ERPs e CRMs no mesmo fluxo Order-to-Cash?',
+				'<p>Sim, e é o cenário mais comum em empresas com várias unidades de negócio ou que passaram por aquisições. As regras de transformação ficam na camada de integração, não dentro de cada sistema, então um ERP a mais entra como uma ponta nova no fluxo que já existe, reaproveitando o desenho de pedido, faturamento e conciliação. O trabalho real está em conciliar os cadastros — cliente, produto, condição de pagamento — que costumam divergir entre as bases.</p>',
+			),
+			array(
+				'faq:o2c-conciliacao-bancos',
+				'Como funciona a conciliação automática com bancos e adquirentes?',
+				'<p>A integração recebe os arquivos de retorno e extratos das instituições, casa cada pagamento com o título correspondente no ERP e baixa o que fechou. O que não casa — valor divergente, pagamento parcial, taxa de adquirente descontada — fica separado em uma fila de exceção com o motivo, para o financeiro tratar caso a caso em vez de conferir tudo à mão. O histórico de cada tentativa fica registrado, o que sustenta a auditoria e permite reprocessar sem duplicar baixa.</p>',
+			),
+			array(
+				'faq:o2c-status-do-pedido',
+				'Como acompanhar o status de um pedido do início ao fim?',
+				'<p>Como o fluxo passa por uma camada única, cada pedido carrega um identificador que atravessa CRM, ERP, faturamento e cobrança. Isso permite montar uma visão de ponta a ponta — em que etapa o pedido está, quando entrou nela, o que falhou e o que foi reprocessado — sem consultar sistema por sistema. Vendas, financeiro e logística passam a olhar o mesmo status, o que resolve boa parte das divergências entre áreas antes que virem retrabalho.</p>',
+			),
+			array(
+				'faq:o2c-sistemas-do-fluxo',
+				'Quais sistemas podem fazer parte do fluxo Order-to-Cash?',
+				'<p>Tipicamente o CRM onde o pedido é fechado, o ERP que fatura e emite a nota fiscal, a plataforma de cobrança ou meio de pagamento, os bancos e adquirentes que confirmam o recebimento, e as ferramentas de gestão que consomem os indicadores de prazo médio. Também entram no fluxo sistemas de logística, quando a entrega condiciona o faturamento, e plataformas de crédito e cobrança, quando há análise de limite ou régua de inadimplência. A escolha depende menos do catálogo de conectores e mais de onde estão hoje as etapas manuais.</p>',
+			),
+		);
+
+		$ids = array();
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
+		update_field( 'solucao_faq_itens', $ids, $post_id );
+
+		WP_CLI::log( sprintf( '  Pedido ao Recebimento FAQ: %d perguntas vinculadas.', count( $ids ) ) );
 	}
 
 	/**
