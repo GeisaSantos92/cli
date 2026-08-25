@@ -329,6 +329,18 @@ function cliconnect_acf_fields_home() {
 	);
 	$fields[] = cliconnect_acf_text( 'faq_eyebrow', 'Selo', 'faq_eyebrow' );
 	$fields[] = cliconnect_acf_text( 'faq_titulo', 'Título', 'faq_titulo' );
+	$fields[] = array(
+		'key'           => 'field_home_faq_itens',
+		'label'         => 'Perguntas & Respostas',
+		'name'          => 'faq_itens',
+		'type'          => 'relationship',
+		'post_type'     => array( 'cli_faq' ),
+		'filters'       => array( 'search' ),
+		'return_format' => 'object',
+		'min'           => 0,
+		'max'           => 10,
+		'instructions'  => 'Selecione os FAQs que devem aparecer na home (máx. 10).',
+	);
 
 	acf_add_local_field_group(
 		array(

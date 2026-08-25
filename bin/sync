@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#
+# bin/sync — verifica se o repositório remoto tem atualizações e,
+#            opcionalmente, baixa as mudanças.
+#
+# Uso:
+#   ./bin/sync          # só verifica (fetch + status)
+#   ./bin/sync --pull   # verifica e já faz pull se houver novidades
+
+set -euo pipefail
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+REMOTE="origin"
+
+echo "🔄 Buscando atualizações do remoto..."
+git fetch "$REMOTE" --quiet
+
+LOCAL=$(git rev-parse HEAD)
+REMOTE_REF=$(git rev-parse "$REMOTE/$BRANCH" 2>/dev/null || echo "")
+
+if [[ -z "$REMOTE_REF" ]]; then
+  echo "⚠️  Branch '$BRANCH' não existe no remoto ainda."
+  exit 0
+fi
+
+BEHIND=$(git rev-list --count HEAD.."$REMOTE/$BRANCH")
+AHEAD=$(git rev-list --count "$REMOTE/$BRANCH"..HEAD)
+
+echo ""
+echo "Branch atual: $BRANCH"
+echo "  ⬆  $AHEAD commit(s) à frente do remoto"
+echo "  ⬇  $BEHIND commit(s) atrás do remoto"
+
+if [[ "$BEHIND" -eq 0 && "$AHEAD" -eq 0 ]]; then
+  echo ""
+  echo "✅ Projeto está atualizado."
+elif [[ "$BEHIND" -gt 0 ]]; then
+  echo ""
+  echo "📥 Há $BEHIND atualização(ões) disponível(eis):"
+  git log --oneline HEAD.."$REMOTE/$BRANCH"
+  echo ""
+  if [[ "${1:-}" == "--pull" ]]; then
+    echo "Baixando atualizações..."
+    git pull "$REMOTE" "$BRANCH"
+    echo "✅ Atualizado."
+  else
+    echo "Para baixar: ./bin/sync --pull"
+  fi
+fi

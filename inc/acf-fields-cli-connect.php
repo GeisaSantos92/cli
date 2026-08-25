@@ -229,6 +229,26 @@ function cliconnect_acf_fields_cli_connect() {
 	}
 	$fields[] = $cc_textarea( 'parceiro_destaque', 'Banner de destaque (aceita <strong>)', 'cc_parceiro_destaque', 2 );
 
+	// FAQ
+	$fields[] = array(
+		'key'   => 'field_cc_faq_tab',
+		'label' => 'FAQ',
+		'name'  => '',
+		'type'  => 'tab',
+	);
+	$fields[] = array(
+		'key'           => 'field_cc_faq_itens',
+		'label'         => 'Perguntas & Respostas',
+		'name'          => 'faq_itens',
+		'type'          => 'relationship',
+		'post_type'     => array( 'cli_faq' ),
+		'filters'       => array( 'search' ),
+		'return_format' => 'object',
+		'min'           => 0,
+		'max'           => 10,
+		'instructions'  => 'Selecione os FAQs que devem aparecer nesta página (máx. 10).',
+	);
+
 	acf_add_local_field_group(
 		array(
 			'key'      => 'group_cli_cli_connect',
