@@ -1402,6 +1402,8 @@ class Cliconnect_Seed {
 
 				if ( $post_id ) {
 					wp_set_object_terms( $post_id, $filho_id, $tax );
+					// Logo para os cards do catálogo (sem efeito se o arquivo não existir).
+					$this->definir_thumb( $post_id, 'catalogo-logo-' . $chave_filho );
 				}
 			}
 		}
@@ -1469,20 +1471,19 @@ class Cliconnect_Seed {
 				'titulo' => 'Tecnologia',
 				'url'    => $turl( 'tecnologia' ),
 				'filhos' => array(
-					'Claude'                     => $purl( 'claude' ),
-					'ChatGPT'                    => $purl( 'chatgpt' ),
-					'SAP'                        => $purl( 'sap' ),
-					'Salesforce'                 => $purl( 'salesforce' ),
-					'Salesforce Sales Cloud'     => $purl( 'salesforce-sales-cloud' ),
-					'Salesforce Service Cloud'   => $purl( 'salesforce-service-cloud' ),
-					'Salesforce Marketing Cloud' => $purl( 'salesforce-marketing-cloud' ),
-					'TOTVS Protheus'             => $purl( 'totvs-protheus' ),
-					'TOTVS Datasul'              => $purl( 'totvs-datasul' ),
-					'TOTVS Winthor'              => $purl( 'totvs-winthor' ),
-					'TOTVS Logix'               => $purl( 'totvs-logix' ),
-					'Sankhya'                    => $purl( 'sankhya' ),
-					'Senior'                     => $purl( 'senior' ),
-					'Dynamics 365'               => $purl( 'dynamics-365' ),
+					'Claude'         => $purl( 'claude' ),
+					'ChatGPT'        => $purl( 'chatgpt' ),
+					'SAP'            => $purl( 'sap' ),
+					'Salesforce'     => $purl( 'salesforce' ),
+					'TOTVS Protheus' => $purl( 'totvs-protheus' ),
+					'Sankhya'        => $purl( 'sankhya' ),
+					'Senior'         => $purl( 'senior' ),
+					'Dynamics 365'   => $purl( 'dynamics-365' ),
+					array(
+						'titulo'  => 'Ver todos',
+						'url'     => $turl( 'tecnologia' ),
+						'classes' => 'link-ver-todos',
+					),
 				),
 			),
 			array(
@@ -1521,17 +1522,17 @@ class Cliconnect_Seed {
 				'titulo' => 'Por Iniciativa',
 				'url'    => $turl( 'por-iniciativa' ),
 				'filhos' => array(
-					'Atualização de Sistemas Legados' => $purl( 'atualizacao-de-sistemas-legados' ),
-					'Pedido ao Recebimento'           => $purl( 'pedido-ao-recebimento' ),
-					'IA Corporativa'                  => $purl( 'ia-corporativa' ),
-					'Compras ao Pagamento'            => $purl( 'compras-ao-pagamento' ),
-					'Jornada do Colaborador'          => $purl( 'jornada-do-colaborador' ),
-					'Soberania de Dados'              => $purl( 'soberania-de-dados' ),
-					'Visão 360° do Cliente'           => $purl( 'visao-360-do-cliente' ),
-					'Modernização de ERP'             => $purl( 'modernizacao-de-erp' ),
+					'Atualização de Sistemas Legados'    => $purl( 'atualizacao-de-sistemas-legados' ),
+					'Pedido ao Recebimento (O2C)'        => $purl( 'pedido-ao-recebimento' ),
+					'IA Corporativa'                     => $purl( 'ia-corporativa' ),
+					'Compras ao Pagamento (S2P)'         => $purl( 'compras-ao-pagamento' ),
+					'Jornada do Colaborador (H2R)'       => $purl( 'jornada-do-colaborador' ),
+					'Soberania de Dados'                 => $purl( 'soberania-de-dados' ),
+					'Visão 360° do Cliente'              => $purl( 'visao-360-do-cliente' ),
+					'Integração Pós-Fusão'               => $purl( 'integracao-pos-fusao' ),
+					'Centro de Excelência em Integração' => $purl( 'centro-de-excelencia-em-integracao' ),
 				),
 			),
-			array( 'titulo' => 'Ver todos', 'url' => $solucoes_base ),
 		);
 
 		$descricao_produto = 'Integre todos os seus sistemas e coloque agentes de IA personalizados para trabalhar em seus processos.';

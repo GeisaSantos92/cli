@@ -165,6 +165,23 @@ function cliconnect_logo_integracao( $nome ) {
 		foreach ( cliconnect_posts( 'cli_integracao' ) as $integracao ) {
 			$indice[ sanitize_title( $integracao->post_title ) ] = (int) $integracao->ID;
 		}
+
+		// Aliases: título do item no menu → slug da integração cadastrada.
+		// (ChatGPT aparece no menu, mas o logo está na integração "OpenAI".)
+		$aliases = array( 'chatgpt' => 'openai' );
+		foreach ( $aliases as $alias => $slug ) {
+			if ( ! isset( $indice[ $alias ] ) && isset( $indice[ $slug ] ) ) {
+				$indice[ $alias ] = $indice[ $slug ];
+			}
+		}
+
+		// Soluções (cli_solucao) também podem ter featured image usada como logo.
+		foreach ( cliconnect_posts( 'cli_solucao' ) as $solucao ) {
+			$chave = sanitize_title( $solucao->post_title );
+			if ( ! isset( $indice[ $chave ] ) ) {
+				$indice[ $chave ] = (int) $solucao->ID;
+			}
+		}
 	}
 
 	$chave = sanitize_title( (string) $nome );
