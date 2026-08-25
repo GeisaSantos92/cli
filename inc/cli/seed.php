@@ -1359,12 +1359,15 @@ class Cliconnect_Seed {
 		$ids = array();
 
 		foreach ( $hierarquia as $chave_pai => $dados_pai ) {
-			// Termo pai.
-			$existe_pai = term_exists( $dados_pai['nome'], $tax );
-			if ( $existe_pai ) {
-				$pai_id = (int) ( is_array( $existe_pai ) ? $existe_pai['term_id'] : $existe_pai );
+			// Termo pai — busca por slug para sobreviver a renomeações.
+			$termo_pai = get_term_by( 'slug', $chave_pai, $tax );
+			if ( $termo_pai ) {
+				$pai_id = (int) $termo_pai->term_id;
+				if ( $termo_pai->name !== $dados_pai['nome'] ) {
+					wp_update_term( $pai_id, $tax, array( 'name' => $dados_pai['nome'] ) );
+				}
 			} else {
-				$ins = wp_insert_term( $dados_pai['nome'], $tax );
+				$ins = wp_insert_term( $dados_pai['nome'], $tax, array( 'slug' => $chave_pai ) );
 				if ( is_wp_error( $ins ) ) {
 					WP_CLI::warning( "  Categoria \"{$dados_pai['nome']}\": " . $ins->get_error_message() );
 					continue;
@@ -1374,13 +1377,16 @@ class Cliconnect_Seed {
 			update_term_meta( $pai_id, self::META, $chave_pai );
 			$ids[ $chave_pai ] = $pai_id;
 
-			// Termos filhos + posts.
+			// Termos filhos + posts — busca por slug para sobreviver a renomeações.
 			foreach ( $dados_pai['filhos'] as $chave_filho => $nome_filho ) {
-				$existe_filho = term_exists( $nome_filho, $tax, $pai_id );
-				if ( $existe_filho ) {
-					$filho_id = (int) ( is_array( $existe_filho ) ? $existe_filho['term_id'] : $existe_filho );
+				$termo_filho = get_term_by( 'slug', $chave_filho, $tax );
+				if ( $termo_filho ) {
+					$filho_id = (int) $termo_filho->term_id;
+					if ( $termo_filho->name !== $nome_filho ) {
+						wp_update_term( $filho_id, $tax, array( 'name' => $nome_filho ) );
+					}
 				} else {
-					$ins_filho = wp_insert_term( $nome_filho, $tax, array( 'parent' => $pai_id ) );
+					$ins_filho = wp_insert_term( $nome_filho, $tax, array( 'slug' => $chave_filho, 'parent' => $pai_id ) );
 					if ( is_wp_error( $ins_filho ) ) {
 						WP_CLI::warning( "  Tipo \"{$nome_filho}\": " . $ins_filho->get_error_message() );
 						continue;
