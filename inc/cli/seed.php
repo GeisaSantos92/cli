@@ -1252,7 +1252,7 @@ class Cliconnect_Seed {
 
 		$hierarquia = array(
 			'tecnologia'     => array(
-				'nome'   => 'Tecnologia',
+				'nome'   => 'Tecnologias',
 				'filhos' => array(
 					'claude'                         => 'Claude',
 					'chatgpt'                        => 'ChatGPT',

@@ -271,10 +271,17 @@
 	max-width: 820px;
 }
 
-/* --- 3. Corpo: sidebar + conteúdo ------------------------------------------ */
+/* --- 3. Corpo: painel branco + sidebar + conteúdo -------------------------- */
 
 .cat-catalogo__corpo {
 	padding-bottom: 120px;
+}
+
+/* Painel branco que envolve busca + sidebar + grade. */
+.cat-painel {
+	background: var(--cor-fundo);
+	border-radius: var(--raio-card);
+	padding: 32px 40px 48px;
 }
 
 .cat-catalogo__inner {
@@ -390,7 +397,7 @@
 .cat-grade {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 24px 20px;
+	gap: 60px 40px;
 }
 
 /* --- 7. Card individual ----------------------------------------------------- */
