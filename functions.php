@@ -104,11 +104,14 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	cliconnect_require( '/inc/cli/bootstrap.php' );
 
 	// Traits de tradução: precisam existir antes da classe que os usa.
-	cliconnect_require( '/inc/cli/seed-en.php' );
+	cliconnect_require( '/inc/cli/seed-i18n.php' );
 	cliconnect_require( '/inc/cli/seed-en-paginas.php' );
 	cliconnect_require( '/inc/cli/seed-en-cpts.php' );
 	cliconnect_require( '/inc/cli/seed-en-faq.php' );
 	cliconnect_require( '/inc/cli/seed-en-solucoes.php' );
+	cliconnect_require( '/inc/cli/seed-es-paginas.php' );
+	cliconnect_require( '/inc/cli/seed-es-cpts.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes.php' );
 
 	cliconnect_require( '/inc/cli/seed.php' );
 }

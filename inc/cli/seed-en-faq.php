@@ -27,32 +27,6 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 trait Cliconnect_Seed_En_Faq {
 
 	/**
-	 * Traduz todas as FAQ vinculadas às landings de solução.
-	 *
-	 * @return void
-	 */
-	protected function traduzir_faq_solucoes() {
-		$total = 0;
-
-		foreach ( $this->faq_solucoes_en() as $slug => $dados ) {
-			$id = $this->traduzir_post(
-				'faq:' . $slug,
-				'cli_faq',
-				array(
-					'post_title'   => $dados[0],
-					'post_content' => $dados[1],
-				)
-			);
-
-			if ( $id ) {
-				++$total;
-			}
-		}
-
-		WP_CLI::log( sprintf( '  FAQ de solução em inglês: %d.', $total ) );
-	}
-
-	/**
 	 * FAQ das soluções: slug do seed => [pergunta, resposta].
 	 *
 	 * Agrupadas por solução, na mesma ordem em que aparecem na landing.

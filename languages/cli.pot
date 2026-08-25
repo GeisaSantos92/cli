@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-24T12:49:31+00:00\n"
+"POT-Creation-Date: 2026-08-25T12:15:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: cli\n"
@@ -251,6 +251,10 @@ msgstr ""
 
 #: inc/polylang.php:200
 msgid "Soluções"
+msgstr ""
+
+#: inc/polylang.php:201
+msgid "Cases"
 msgstr ""
 
 #: inc/template-tags.php:176

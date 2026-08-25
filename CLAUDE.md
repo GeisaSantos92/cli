@@ -58,13 +58,19 @@ Prioridades: **performance**, **segurança** e **baixa dependência** de plugins
 - **Seed:** `./bin/wp cliconnect seed [--reset]` (`inc/cli/seed.php`) importa os 49
   assets de `assets/seed/`, cria páginas, CPTs, posts, menus e theme mods.
   É idempotente (meta `_cliconnect_seed`).
-- **Site em inglês:** a camada `en` também vem do seed — `./bin/wp cliconnect seed
-  --traducao` roda só ela. Mecânica em `inc/cli/seed-en.php` (trait) e texto em
-  `seed-en-paginas.php`, `seed-en-cpts.php`, `seed-en-faq.php` e
-  `seed-en-solucoes.php`. Cada tradução copia todos os campos ACF do original e
-  sobrescreve só o texto, então seção nova em português já nasce presente no inglês.
-  Strings de interface em `languages/en_US.po|mo` (nome é `{locale}.mo`, não
-  `{dominio}-{locale}.mo`); integração do tema com o plugin em `inc/polylang.php`.
+- **Site multi-idioma (pt/en/es):** as camadas traduzidas vêm do seed —
+  `./bin/wp cliconnect seed --traducao` roda só elas, para todos os idiomas.
+  Mecânica em `inc/cli/seed-i18n.php` (trait, sem idioma fixo) e texto em
+  `seed-{idioma}-paginas.php`, `-cpts.php`, `-faq.php` e `-solucoes.php`. O
+  despacho é por convenção de nome: com `$this->lang = 'es'`, `dados('paginas')`
+  chama `paginas_es()` e `texto('home')` chama `texto_es_home()` — idioma sem
+  trait de conteúdo é ignorado sem quebrar. Cada tradução copia todos os campos
+  ACF do original e sobrescreve só o texto, então seção nova em português já
+  nasce presente nas traduções; sem texto para uma landing, ela vira **stub**
+  (estrutura sim, texto vazio) em vez de herdar o português.
+  Os idiomas são criados pelo próprio seed (`idiomas_do_site()`). Strings de
+  interface em `languages/{locale}.po|mo` — o nome é `{locale}.mo`, não
+  `{dominio}-{locale}.mo`. Integração do tema com o plugin em `inc/polylang.php`.
 
 Ilustrações fechadas (com texto embutido na arte) são assets estáticos em
 `assets/img/`, renderizados por `cliconnect_imagem_tema()`: pilha de camadas,

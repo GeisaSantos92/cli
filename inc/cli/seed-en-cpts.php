@@ -24,59 +24,6 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 trait Cliconnect_Seed_En_Cpts {
 
 	/**
-	 * Traduz agentes, eventos, cases e as FAQ gerais.
-	 *
-	 * @return void
-	 */
-	protected function traduzir_cpts() {
-		$total = 0;
-
-		foreach ( $this->agentes_en() as $slug => $dados ) {
-			$total += $this->traduzir_post(
-				'agente:' . $slug,
-				'cli_agente',
-				array( 'post_title' => $dados[0] ),
-				array( 'descricao' => $dados[1] )
-			) ? 1 : 0;
-		}
-
-		foreach ( $this->eventos_en() as $slug => $dados ) {
-			$total += $this->traduzir_post(
-				'evento:' . $slug,
-				'cli_evento',
-				array( 'post_title' => $dados[0] ),
-				array( 'descricao' => $dados[1] )
-			) ? 1 : 0;
-		}
-
-		foreach ( $this->cases_en() as $slug => $dados ) {
-			$total += $this->traduzir_post(
-				'case:' . $slug,
-				'cli_case',
-				array(
-					'post_title'   => $dados['titulo'],
-					'post_excerpt' => $dados['resumo'],
-					'post_content' => $dados['conteudo'] ?? '',
-				),
-				$dados['campos'] ?? array()
-			) ? 1 : 0;
-		}
-
-		foreach ( $this->faq_en() as $slug => $dados ) {
-			$total += $this->traduzir_post(
-				'faq:' . $slug,
-				'cli_faq',
-				array(
-					'post_title'   => $dados[0],
-					'post_content' => $dados[1],
-				)
-			) ? 1 : 0;
-		}
-
-		WP_CLI::log( sprintf( '  CPTs em inglês: %d itens.', $total ) );
-	}
-
-	/**
 	 * Agentes de IA: slug do seed => [título, descrição].
 	 *
 	 * @return array<string,array{0:string,1:string}>

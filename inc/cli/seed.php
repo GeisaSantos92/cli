@@ -25,11 +25,14 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
  */
 class Cliconnect_Seed {
 
-	use Cliconnect_Seed_En;
+	use Cliconnect_Seed_I18n;
 	use Cliconnect_Seed_En_Paginas;
 	use Cliconnect_Seed_En_Cpts;
 	use Cliconnect_Seed_En_Faq;
 	use Cliconnect_Seed_En_Solucoes;
+	use Cliconnect_Seed_Es_Paginas;
+	use Cliconnect_Seed_Es_Cpts;
+	use Cliconnect_Seed_Es_Solucoes;
 
 	/**
 	 * Chave de meta que marca objetos criados pelo seed.
@@ -52,7 +55,7 @@ class Cliconnect_Seed {
 	 * : Apaga tudo que o seed criou antes de recriar.
 	 *
 	 * [--traducao]
-	 * : Roda só a camada em inglês, sem tocar no conteúdo em português.
+	 * : Roda só as camadas traduzidas, sem tocar no conteúdo em português.
 	 *
 	 * @param array $args       Argumentos posicionais.
 	 * @param array $assoc_args Flags.
@@ -68,7 +71,7 @@ class Cliconnect_Seed {
 			);
 
 			flush_rewrite_rules();
-			WP_CLI::success( 'Camada em inglês atualizada.' );
+			WP_CLI::success( 'Camadas traduzidas atualizadas.' );
 
 			return;
 		}
@@ -451,7 +454,7 @@ class Cliconnect_Seed {
 
 			$chave = get_term_meta( $termo->term_id, self::META, true );
 
-			if ( $chave && ! str_ends_with( $chave, self::SUFIXO ) ) {
+			if ( $chave && ! preg_match( '/:[a-z]{2}(_[A-Z]{2})?$/', $chave ) ) {
 				$ids[ $chave ] = (int) $termo->term_id;
 			}
 		}

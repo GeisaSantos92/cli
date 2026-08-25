@@ -187,6 +187,19 @@ Cuidados:
 
 - **`pll_set_post_language()` antes de `pll_save_post_translations()`** — na ordem
   inversa o vínculo não grava.
+- **`pll_save_post_translations()` grava o grupo inteiro.** Com três idiomas, passar
+  só `array( 'pt' => X, 'es' => Y )` **apaga** o vínculo com o inglês, sem erro nenhum:
+  o seletor de idiomas passa a mandar para a home e o audit acusa a página como não
+  traduzida. Leia o grupo antes e some a sua entrada:
+
+  ```php
+  $grupo         = pll_get_post_translations( $origem_id );
+  $grupo['pt']   = $origem_id;
+  $grupo[ $lang ] = $traducao_id;
+  pll_save_post_translations( $grupo );
+  ```
+
+  Vale igual para `pll_save_term_translations()`.
 - **Slug do seed com sufixo `:en`**, senão o `upsert()` sobrescreve o post em português.
 - **Slug do post precisa ser diferente do português.** Compartilhar slug entre idiomas é
   recurso do Polylang Pro; no free o WordPress acrescenta `-2` em silêncio. Defina o slug

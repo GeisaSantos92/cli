@@ -184,22 +184,23 @@ function cliconnect_acf_front_page_traduzida( $result, $rule, $screen ) {
 add_filter( 'acf/location/rule_match/page_type', 'cliconnect_acf_front_page_traduzida', 20, 3 );
 
 /**
- * Deixa o título do archive de Soluções acompanhar o idioma.
+ * Deixa o título dos archives acompanhar o idioma.
  *
  * Os labels dos CPTs (`inc/cpt.php`) são texto fixo em português de propósito:
  * o painel é usado em português. O nome do archive, porém, vaza para o front —
- * é ele que forma a tag <title> de /en/solucoes/. Aqui devolvemos uma string
- * gettext, traduzida pelo .mo do tema.
+ * é ele que forma a tag <title> de /en/solucoes/ e /es/cases/. Aqui devolvemos
+ * uma string gettext, traduzida pelo .mo do tema.
  *
  * @param string $nome      Nome do post type.
  * @param string $post_type Slug do post type.
  * @return string
  */
 function cliconnect_titulo_archive_traduzido( $nome, $post_type ) {
-	if ( 'cli_solucao' === $post_type ) {
-		return __( 'Soluções', 'cli' );
-	}
+	$traduziveis = array(
+		'cli_solucao' => __( 'Soluções', 'cli' ),
+		'cli_case'    => __( 'Cases', 'cli' ),
+	);
 
-	return $nome;
+	return $traduziveis[ $post_type ] ?? $nome;
 }
 add_filter( 'post_type_archive_title', 'cliconnect_titulo_archive_traduzido', 10, 2 );

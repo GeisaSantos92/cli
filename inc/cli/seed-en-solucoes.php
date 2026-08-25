@@ -119,48 +119,6 @@ trait Cliconnect_Seed_En_Solucoes {
 		);
 	}
 
-	/**
-	 * Cria os termos em inglês e vincula cada um ao termo em português.
-	 *
-	 * @param array<string,int> $termos_pt chave => term_id em português.
-	 * @return array<string,int> chave => term_id em inglês.
-	 */
-	protected function traduzir_termos_solucao( $termos_pt ) {
-		$tax       = 'cli_categoria_solucao';
-		$en        = array();
-		$hierarquia = array();
-
-		foreach ( $this->termos_solucao_en() as $chave => $dados ) {
-			if ( empty( $termos_pt[ $chave ] ) ) {
-				continue;
-			}
-
-			$id = $this->traduzir_termo( (int) $termos_pt[ $chave ], $tax, $dados[0], $dados[1] );
-
-			if ( $id ) {
-				$en[ $chave ] = $id;
-				$pai_pt       = (int) get_term_field( 'parent', (int) $termos_pt[ $chave ], $tax );
-
-				if ( $pai_pt ) {
-					$hierarquia[ $chave ] = $pai_pt;
-				}
-			}
-		}
-
-		// A hierarquia só pode ser aplicada depois que todos os pais existem.
-		foreach ( $hierarquia as $chave => $pai_pt ) {
-			$pai_en = (int) pll_get_term( $pai_pt, self::LANG );
-
-			if ( $pai_en ) {
-				wp_update_term( $en[ $chave ], $tax, array( 'parent' => $pai_en ) );
-			}
-		}
-
-		WP_CLI::log( sprintf( '  categorias de solução em inglês: %d.', count( $en ) ) );
-
-		return $en;
-	}
-
 	/* =====================================================================
 	   MENUS
 	   ===================================================================== */
@@ -173,9 +131,9 @@ trait Cliconnect_Seed_En_Solucoes {
 	 */
 	protected function criar_menus_en( $termos_en ) {
 		$tax           = 'cli_categoria_solucao';
-		$solucoes_base = home_url( '/' . self::LANG . '/solucoes/' );
-		$cases_url     = home_url( '/' . self::LANG . '/cases/' );
-		$blog_url      = $this->url_pagina_en( 'blog' );
+		$solucoes_base = home_url( '/' . $this->lang . '/solucoes/' );
+		$cases_url     = home_url( '/' . $this->lang . '/cases/' );
+		$blog_url      = $this->url_pagina_traduzida( 'blog' );
 
 		$turl = function ( $chave ) use ( $termos_en, $tax, $solucoes_base ) {
 			if ( empty( $termos_en[ $chave ] ) ) {
@@ -256,22 +214,22 @@ trait Cliconnect_Seed_En_Solucoes {
 
 		$descricao_produto = 'Integrate all of your systems and put custom AI agents to work across your processes.';
 
-		$this->montar_menu_en(
+		$this->montar_menu_traduzido(
 			'principal',
 			'CLI — Main Menu (EN)',
 			array(
 				array(
 					'titulo' => 'Platform',
-					'url'    => $this->url_pagina_en( 'plataforma' ),
+					'url'    => $this->url_pagina_traduzida( 'plataforma' ),
 					'filhos' => array(
 						array(
 							'titulo'    => 'CLI Connect',
-							'url'       => $this->url_pagina_en( 'cli-connect' ),
+							'url'       => $this->url_pagina_traduzida( 'cli-connect' ),
 							'descricao' => $descricao_produto,
 						),
 						array(
 							'titulo'    => 'CLI Signature',
-							'url'       => $this->url_pagina_en( 'cli-signature' ),
+							'url'       => $this->url_pagina_traduzida( 'cli-signature' ),
 							'descricao' => $descricao_produto,
 						),
 					),
@@ -281,14 +239,14 @@ trait Cliconnect_Seed_En_Solucoes {
 					'url'    => $solucoes_base,
 					'filhos' => $solucoes_mega,
 				),
-				array( 'titulo' => 'SAP Integration', 'url' => $this->url_pagina_en( 'integracao-sap' ) ),
+				array( 'titulo' => 'SAP Integration', 'url' => $this->url_pagina_traduzida( 'integracao-sap' ) ),
 				array( 'titulo' => 'Case studies', 'url' => $cases_url ),
 				array( 'titulo' => 'Blog', 'url' => $blog_url ),
-				array( 'titulo' => 'Contact', 'url' => $this->url_pagina_en( 'contato' ) ),
+				array( 'titulo' => 'Contact', 'url' => $this->url_pagina_traduzida( 'contato' ) ),
 			)
 		);
 
-		$this->montar_menu_en(
+		$this->montar_menu_traduzido(
 			'rodape',
 			'CLI — Footer (EN)',
 			array(
@@ -298,20 +256,20 @@ trait Cliconnect_Seed_En_Solucoes {
 					'filhos' => array(
 						array(
 							'titulo' => 'Platform',
-							'url'    => $this->url_pagina_en( 'plataforma' ),
+							'url'    => $this->url_pagina_traduzida( 'plataforma' ),
 							'filhos' => array(
-								'CLI Connect'   => $this->url_pagina_en( 'cli-connect' ),
-								'CLI Signature' => $this->url_pagina_en( 'cli-signature' ),
+								'CLI Connect'   => $this->url_pagina_traduzida( 'cli-connect' ),
+								'CLI Signature' => $this->url_pagina_traduzida( 'cli-signature' ),
 							),
 						),
 						array(
 							'titulo' => 'Resources',
-							'url'    => $this->url_pagina_en( 'contato' ),
+							'url'    => $this->url_pagina_traduzida( 'contato' ),
 							'filhos' => array(
 								'Case studies' => $cases_url,
 								'Blog'         => $blog_url,
-								'Careers'      => $this->url_pagina_en( 'trabalhe-conosco' ),
-								'Contact'      => $this->url_pagina_en( 'contato' ),
+								'Careers'      => $this->url_pagina_traduzida( 'trabalhe-conosco' ),
+								'Contact'      => $this->url_pagina_traduzida( 'contato' ),
 							),
 						),
 					),
@@ -408,7 +366,7 @@ trait Cliconnect_Seed_En_Solucoes {
 			)
 		);
 
-		$this->montar_menu_en( 'rodape_legal', 'CLI — Footer Legal (EN)', array() );
+		$this->montar_menu_traduzido( 'rodape_legal', 'CLI — Footer Legal (EN)', array() );
 	}
 
 	/* =====================================================================
@@ -2920,40 +2878,4 @@ trait Cliconnect_Seed_En_Solucoes {
 		);
 	}
 
-	/**
-	 * Traduz as landings de solução que têm conteúdo no seed.
-	 *
-	 * As demais seguem como stub em inglês: título e categoria traduzidos,
-	 * seções vazias — do mesmo jeito que em português.
-	 *
-	 * @param array<string,int> $termos_en chave => term_id em inglês.
-	 * @return void
-	 */
-	protected function traduzir_solucoes( $termos_en ) {
-		$total = 0;
-
-		foreach ( $this->termos_solucao_en() as $chave => $dados ) {
-			// Categorias (nível 1) não têm post; só os tipos têm.
-			if ( ! $this->id_do_seed( 'solucao:' . $chave, 'cli_solucao' ) ) {
-				continue;
-			}
-
-			$metodo = 'texto_en_solucao_' . str_replace( '-', '_', $chave );
-			$textos = method_exists( $this, $metodo ) ? $this->$metodo() : array();
-
-			$post = array( 'post_title' => $dados[0] );
-
-			if ( isset( $dados[2] ) ) {
-				$post['post_name'] = $dados[2];
-			}
-
-			$id = $this->traduzir_post( 'solucao:' . $chave, 'cli_solucao', $post, $textos );
-
-			if ( $id ) {
-				++$total;
-			}
-		}
-
-		WP_CLI::log( sprintf( '  landings de solução em inglês: %d.', $total ) );
-	}
 }

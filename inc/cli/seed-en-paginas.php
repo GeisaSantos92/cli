@@ -55,65 +55,6 @@ trait Cliconnect_Seed_En_Paginas {
 		);
 	}
 
-	/**
-	 * Caminhos internos usados nos campos de link: português => inglês.
-	 *
-	 * Os arquivos de archive (`/cases/`, `/solucoes/`) mantêm o slug: quem
-	 * traduz a URL de um archive é o prefixo de idioma do Polylang.
-	 *
-	 * @return array<string,string>
-	 */
-	protected function mapear_caminhos_en() {
-		$mapa = array(
-			'/cases/'    => '/en/cases/',
-			'/solucoes/' => '/en/solucoes/',
-		);
-
-		foreach ( $this->paginas_en() as $slug_pt => $en ) {
-			$mapa[ '/' . $slug_pt . '/' ] = '/en/' . $en[0] . '/';
-		}
-
-		return $mapa;
-	}
-
-	/**
-	 * Cria as 12 páginas em inglês e preenche as que têm campos.
-	 *
-	 * @return void
-	 */
-	protected function traduzir_paginas() {
-		$this->caminhos_en = $this->mapear_caminhos_en();
-
-		$textos = array(
-			'home'             => $this->texto_en_home(),
-			'contato'          => $this->texto_en_contato(),
-			'cli-connect'      => $this->texto_en_cli_connect(),
-			'cli-signature'    => $this->texto_en_cli_signature(),
-			'integracao-sap'   => $this->texto_en_integracao_sap(),
-			'trabalhe-conosco' => $this->texto_en_trabalhe_conosco(),
-		);
-
-		$criadas = 0;
-
-		foreach ( $this->paginas_en() as $slug_pt => $en ) {
-			$id = $this->traduzir_post(
-				'pagina:' . $slug_pt,
-				'page',
-				array(
-					'post_title' => $en[1],
-					'post_name'  => $en[0],
-				),
-				$textos[ $slug_pt ] ?? array()
-			);
-
-			if ( $id ) {
-				++$criadas;
-			}
-		}
-
-		WP_CLI::log( sprintf( '  páginas em inglês: %d.', $criadas ) );
-	}
-
 	/* =====================================================================
 	   HOME
 	   ===================================================================== */
@@ -129,11 +70,11 @@ trait Cliconnect_Seed_En_Paginas {
 			'hero_titulo_destaque'  => 'Unlimited integrations.',
 			'hero_titulo'           => 'Predictable cost. No surprises.',
 			'hero_subtitulo'        => 'Integrate every one of your systems and put custom AI agents to work across your processes.',
-			'hero_botao'            => $this->link_en( 'Book a demo', '/contato/' ),
+			'hero_botao'            => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'agentes_legenda'       => '30,000+ integrations ready to use',
 			'camadas_titulo'        => "Everything you need.\nAt a predictable cost.",
 			'camadas_texto'         => "Pay a flat fee and use our integration service as much as you want.\nThe more your operation grows, the more you gain.",
-			'camadas_botao'         => $this->link_en( 'See what is included', '/plataforma/' ),
+			'camadas_botao'         => $this->link_traduzido( 'See what is included', '/plataforma/' ),
 			'boomi_eyebrow'         => 'Global platform',
 			'boomi_titulo'          => 'World-class technology with support built for the Brazilian market',
 			'boomi_texto'           => '<p>Get the same platform that large global companies use to integrate their systems, with the added advantage of <strong>specialised support for the Brazilian market</strong>, affordable pricing and managed service included.</p>',
@@ -155,7 +96,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'midia_2_topico_1'      => 'Queries several systems at once',
 			'midia_2_topico_2'      => 'Runs flows with no manual step',
 			'midia_2_topico_3'      => 'Keeps the full history of the operation',
-			'cases_botao'           => $this->link_en( 'See our case studies', '/cases/' ),
+			'cases_botao'           => $this->link_traduzido( 'See our case studies', '/cases/' ),
 			'eventos_eyebrow'       => 'Automatic events',
 			'eventos_titulo'        => 'Your operation responds to business changes in real time',
 			'compliance_eyebrow'    => 'Compliance & security',
@@ -164,7 +105,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'integracoes_eyebrow'   => 'Ready-made integrations',
 			'integracoes_titulo'    => "Your integration may\nalready be built",
 			'integracoes_texto'     => 'We connect SAP, Protheus, VTEX, Mercado Eletrônico, Salesforce, Senior, MV and dozens of other systems. Many of the integrations you need are already in our catalogue.',
-			'integracoes_botao'     => $this->link_en( 'Integrate now', '/contato/' ),
+			'integracoes_botao'     => $this->link_traduzido( 'Integrate now', '/contato/' ),
 			'departamento_1'        => 'Procurement',
 			'departamento_2'        => 'Customer Service',
 			'departamento_3'        => 'Logistics',
@@ -173,7 +114,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'departamento_6'        => 'HR',
 			'departamentos_titulo'  => "Integrate every department\nof your company",
 			'departamentos_texto'   => 'From finance to customer service, build integrated flows and bring all your company information into a single screen, with no hassle.',
-			'departamentos_botao'   => $this->link_en( 'Request a demo', '/contato/' ),
+			'departamentos_botao'   => $this->link_traduzido( 'Request a demo', '/contato/' ),
 			'prova_texto'           => "500+ companies have already chosen\nto automate their processes",
 			'frase_texto'           => 'Your systems talk to each other.',
 			'frase_texto_b'         => 'You focus on',
@@ -181,9 +122,9 @@ trait Cliconnect_Seed_En_Paginas {
 			'suporte_eyebrow'       => 'Support whenever you need it',
 			'suporte_titulo'        => 'You are never on your own.',
 			'suporte_texto'         => '<p>We offer <strong>human support</strong> for the moments you need it most. Our team monitors, maintains and evolves your integrations. If something goes wrong, we are already fixing it before you notice.</p>',
-			'suporte_botao'         => $this->link_en( 'See our support channels', '/contato/' ),
+			'suporte_botao'         => $this->link_traduzido( 'See our support channels', '/contato/' ),
 			'blog_titulo'           => 'The latest from our blog',
-			'blog_link'             => $this->link_en( 'See all posts', '/blog/' ),
+			'blog_link'             => $this->link_traduzido( 'See all posts', '/blog/' ),
 			'faq_eyebrow'           => 'FAQ',
 			'faq_titulo'            => 'Frequently Asked Questions',
 		);
@@ -217,81 +158,19 @@ trait Cliconnect_Seed_En_Paginas {
 		return $campos;
 	}
 
+	/* =====================================================================
+	   TRABALHE CONOSCO
+	   ===================================================================== */
+
 	/**
-	 * Cria (ou atualiza) a versão em inglês do formulário do Contact Form 7.
+	 * Formulário do Contact Form 7 em inglês.
 	 *
-	 * O CF7 guarda o formulário em um post `wpcf7_contact_form`, que fica fora
-	 * do Polylang — sem uma segunda cópia, a página em inglês renderiza rótulos
-	 * e mensagens de erro em português. As configurações de envio (`_mail`) são
-	 * copiadas do original: o e-mail vai para a própria CLI e não muda de idioma.
-	 *
-	 * @return int ID do formulário em inglês, 0 em caso de falha.
+	 * @return int ID do formulário, 0 em caso de falha.
 	 */
 	protected function criar_form_cf7_en() {
-		if ( ! post_type_exists( 'wpcf7_contact_form' ) ) {
-			return 0;
-		}
-
-		$origem = get_posts(
-			array(
-				'post_type'      => 'wpcf7_contact_form',
-				'name'           => 'contato-cli',
-				'posts_per_page' => 1,
-				'post_status'    => 'publish',
-			)
-		);
-
-		if ( ! $origem ) {
-			WP_CLI::warning( '  Formulário CF7 em português não encontrado — versão em inglês ignorada.' );
-
-			return 0;
-		}
-
-		$origem_id = (int) $origem[0]->ID;
-
-		$existente = get_posts(
-			array(
-				'post_type'      => 'wpcf7_contact_form',
-				'name'           => 'contact-cli',
-				'posts_per_page' => 1,
-				'post_status'    => 'publish',
-			)
-		);
-
-		if ( $existente ) {
-			$id = (int) $existente[0]->ID;
-			wp_update_post(
-				array(
-					'ID'         => $id,
-					'post_title' => 'Contact CLI',
-				)
-			);
-		} else {
-			$id = wp_insert_post(
-				array(
-					'post_title'  => 'Contact CLI',
-					'post_name'   => 'contact-cli',
-					'post_type'   => 'wpcf7_contact_form',
-					'post_status' => 'publish',
-				),
-				true
-			);
-
-			if ( is_wp_error( $id ) || ! $id ) {
-				WP_CLI::warning( '  Falha ao criar o formulário CF7 em inglês.' );
-
-				return 0;
-			}
-		}
-
-		// Envio, destinatário e configurações extras seguem o original.
-		foreach ( array( '_mail', '_mail_2', '_additional_settings' ) as $meta ) {
-			update_post_meta( $id, $meta, get_post_meta( $origem_id, $meta, true ) );
-		}
-
-		update_post_meta(
-			$id,
-			'_form',
+		return $this->criar_form_cf7_traduzido(
+			'contact-cli',
+			'Contact CLI',
 			'<label>Name
 [text* ct-nome placeholder "Name"]</label>
 
@@ -306,12 +185,7 @@ trait Cliconnect_Seed_En_Paginas {
 
 [acceptance ct-aceite] By submitting, I agree to receive communications from CLI[/acceptance]
 
-[submit "Send"]'
-		);
-
-		update_post_meta(
-			$id,
-			'_messages',
+[submit "Send"]',
 			array(
 				'mail_sent_ok'               => 'Message sent. We will be in touch shortly.',
 				'mail_sent_ng'               => 'Something went wrong. Please try again.',
@@ -338,13 +212,22 @@ trait Cliconnect_Seed_En_Paginas {
 				'quiz_answer_not_correct'    => 'That answer is not correct.',
 			)
 		);
-
-		return (int) $id;
 	}
 
-	/* =====================================================================
-	   TRABALHE CONOSCO
-	   ===================================================================== */
+	/**
+	 * Strings de opção (Customizer e descrição do site) em inglês.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function strings_polylang_en() {
+		return array(
+			'Portal do Cliente'                                       => 'Client Portal',
+			'Acessar Plataforma'                                      => 'Access Platform',
+			"Planeje a evolução\ndas suas integrações"                 => "Plan the evolution\nof your integrations",
+			'Fale conosco no Whatsapp'                                 => 'Talk to us on WhatsApp',
+			'Integrações ilimitadas. Custo previsível. Sem surpresas.' => 'Unlimited integrations. Predictable cost. No surprises.',
+		);
+	}
 
 	/**
 	 * Campos de texto da página Trabalhe Conosco em inglês.
@@ -359,7 +242,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'hero_eyebrow'         => 'CAREERS',
 			'hero_titulo'          => 'Build solutions that move large companies forward.',
 			'hero_texto'           => 'At CLI you join a team that connects technologies, simplifies operations and helps companies evolve every day. Work remotely, take on challenging projects and grow alongside people who are passionate about innovation.',
-			'hero_botao'           => $this->link_en( 'See our openings', '/trabalhe-conosco/#vagas' ),
+			'hero_botao'           => $this->link_traduzido( 'See our openings', '/trabalhe-conosco/#vagas' ),
 			'sobre_titulo'         => 'We are CLI',
 			'sobre_texto_1'        => 'With 13 years of history, we are a technology and partnership company that connects culture, people and solutions. Our purpose is to keep turning technical skill into human capability, generating real impact for clients, partners and the world.',
 			'sobre_texto_2'        => 'We have a solid track record, with more than 75 active clients and over 500 integrations ready to use. We believe great solutions are built by teams that collaborate, learn constantly and have the autonomy to make things happen.',
@@ -373,7 +256,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'tc_frase_parte_2'     => 'But it is people who transform businesses.',
 			'valores_eyebrow'      => 'VALUES',
 			'valores_titulo'       => 'More than integrating technology, we integrate people',
-			'valores_cta'          => $this->link_en( 'See our openings', '/trabalhe-conosco/#vagas' ),
+			'valores_cta'          => $this->link_traduzido( 'See our openings', '/trabalhe-conosco/#vagas' ),
 			'valor_1_titulo'       => 'Trust',
 			'valor_1_texto'        => 'We act with transparency, safety and respect. We deliver what we promise and build lasting relationships of trust with clients and teams.',
 			'valor_2_titulo'       => 'Equality',
@@ -413,7 +296,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'jeito_item_4_texto'   => 'We study, document and record. Learning is part of the job.',
 			'jeito_item_5_titulo'  => 'Sharing',
 			'jeito_item_5_texto'   => 'We share knowledge, time and opportunities.',
-			'jeito_botao'          => $this->link_en( 'See openings', '/trabalhe-conosco/#vagas' ),
+			'jeito_botao'          => $this->link_traduzido( 'See openings', '/trabalhe-conosco/#vagas' ),
 			'tc_blog_titulo'       => 'Get to know CLI better',
 		);
 	}
@@ -432,7 +315,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'cs_hero_eyebrow'          => 'CLI SIGNATURE',
 			'cs_hero_titulo'           => 'Critical projects demand more than execution. They demand a signature.',
 			'cs_hero_texto'            => 'The premium tier of CLI Connect, for companies running critical projects with dedicated specialists, executive governance and continuous follow-up.',
-			'cs_hero_botao'            => $this->link_en( 'Book a demo', '/contato/' ),
+			'cs_hero_botao'            => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cs_cenarios_eyebrow'      => 'When the challenge demands more',
 			'cs_cenarios_titulo'       => 'Who is CLI Signature for?',
 			'cs_cenarios_texto'        => 'Ideal for companies in highly complex scenarios that require specialist follow-up.',
@@ -486,7 +369,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'cs_operacao_4_texto'      => 'Keep complete technical documentation and an organised knowledge base to guarantee operational continuity and consistency.',
 			'cs_gestor_titulo'         => 'Dedicated Project and Relationship Manager',
 			'cs_gestor_texto'          => 'Have a single point of contact following your customer journey. Organise priorities, run governance rituals with confidence and keep communication clear between business, technology and operations.',
-			'cs_gestor_botao'          => $this->link_en( 'Book a demo', '/contato/' ),
+			'cs_gestor_botao'          => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cs_gestor_1_titulo'       => 'Roadmap Follow-up',
 			'cs_gestor_2_titulo'       => 'Backlog Governance',
 			'cs_gestor_3_titulo'       => 'Executive and Operational Meetings',
@@ -496,7 +379,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'cs_gestor_7_titulo'       => 'Continuous Evolution Plan',
 			'cs_arquiteto_titulo'      => 'Dedicated Architect',
 			'cs_arquiteto_texto'       => 'A senior specialist responsible for making sure technical decisions are aligned with the strategy, scalability, security and evolution of the company.',
-			'cs_arquiteto_botao'       => $this->link_en( 'Book a demo', '/contato/' ),
+			'cs_arquiteto_botao'       => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cs_arquiteto_1_titulo'    => 'Architecture Design',
 			'cs_arquiteto_2_titulo'    => 'Technical Review of Solutions',
 			'cs_arquiteto_3_titulo'    => 'Standards Definition',
@@ -521,7 +404,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'cc_hero_titulo'          => 'Integrations that keep',
 			'cc_hero_titulo_destaque' => 'your operation moving',
 			'cc_hero_texto'           => 'Connect SAP, ERPs, CRMs and critical applications on a platform built for real-time operations. Automate business events with security, continuous monitoring and a single monthly fee.',
-			'cc_hero_botao'           => $this->link_en( 'Book a demo', '/contato/' ),
+			'cc_hero_botao'           => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cc_brands_titulo'        => 'Major companies trust CLI',
 			'cc_solucao_titulo'       => 'Everything you need in a single solution',
 			'cc_solucao_1_titulo'     => 'Global Platform',
@@ -570,14 +453,14 @@ trait Cliconnect_Seed_En_Paginas {
 			'cc_dashboard_eyebrow'    => 'Follow it in real time',
 			'cc_dashboard_titulo'     => 'Track every integration and request new work in one place',
 			'cc_dashboard_texto'      => 'Get visibility over project progress, follow your requests and submit new demands whenever you need. All in one portal designed to keep your operation evolving continuously.',
-			'cc_dashboard_botao'      => $this->link_en( 'Book a demo', '#' ),
+			'cc_dashboard_botao'      => $this->link_traduzido( 'Book a demo', '#' ),
 			'cc_dep_cargo'            => 'Sales Manager',
 			'cc_dep_texto'            => 'With CLI Connect we restructured our governance and our financial processes.',
-			'cc_dep_botao'            => $this->link_en( 'Read the case study', '/cases/' ),
+			'cc_dep_botao'            => $this->link_traduzido( 'Read the case study', '/cases/' ),
 			'cc_dif_eyebrow'          => 'WHAT SETS US APART',
 			'cc_dif_titulo'           => 'Designed to deliver continuous value',
 			'cc_dif_texto'            => 'See what makes CLI Connect a simpler, more predictable option for growing operations.',
-			'cc_dif_botao'            => $this->link_en( 'Book a demo', '/contato/' ),
+			'cc_dif_botao'            => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cc_dif_row_1'            => 'No extra cost per project',
 			'cc_dif_row_2'            => 'No charge per execution, flow or message',
 			'cc_dif_row_3'            => 'Expertise in systems used in the Brazilian market',
@@ -641,7 +524,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'sap_hero_titulo_azul'   => 'Expand what SAP can do',
 			'sap_hero_titulo_escuro' => 'without adding complexity to your operation',
 			'sap_hero_texto'         => 'Connect your SAP S/4HANA and other critical systems with a structure built for complex operations, automatic events and continuous evolution.',
-			'sap_hero_botao'         => $this->link_en( 'Book a demo', '/contato/' ),
+			'sap_hero_botao'         => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'sap_vel_eyebrow'        => 'make the most of your time',
 			'sap_vel_titulo'         => 'More speed for the business.',
 			'sap_vel_texto'          => 'Cut the technical effort needed to integrate SAP and deliver new projects far more quickly.',
@@ -672,7 +555,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'sap_rec_metrica_label'  => 'reduction in hours worked',
 			'sap_dep_cargo'          => 'Sales Manager',
 			'sap_dep_frase'          => '"R$ 6 million saved in ABAP development hours"',
-			'sap_dep_botao'          => $this->link_en( 'Read the case study', '/cases/' ),
+			'sap_dep_botao'          => $this->link_traduzido( 'Read the case study', '/cases/' ),
 			'sap_sis_titulo'         => "Connect SAP to the systems\nthat move your operation",
 			'sap_sis_subtitulo'      => 'Integrate and govern your operation whatever technology you use',
 			'sap_sis_1'              => 'CRM',
@@ -696,7 +579,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'sap_cc_3_texto'         => 'Eliminate the huge spend on maintaining and testing custom ("Z") code at every new SAP cycle.',
 			'sap_int_eyebrow'        => 'INTEGRATIONS INCLUDED',
 			'sap_int_titulo'         => "Start faster with templates\nalready running in real environments",
-			'sap_int_botao'          => $this->link_en( 'Book a demo', '/contato/' ),
+			'sap_int_botao'          => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'sap_int_nota'           => 'More than 30,000 integrations ready to use',
 			'sap_int_1_titulo'       => 'SAP + Salesforce',
 			'sap_int_1_desc'         => 'Sales and service in sync.',
@@ -716,10 +599,10 @@ trait Cliconnect_Seed_En_Paginas {
 			'sap_int_8_desc'         => 'Hospital information synchronised.',
 			'sap_mig_titulo'         => 'Your migration to SAP S/4HANA with zero risk and no surprises',
 			'sap_mig_texto'          => 'Support for SAP ECC ends in 2027. Plan your transition now and get access to the best specialists on the market.',
-			'sap_mig_botao'          => $this->link_en( 'Migrate now', '/contato/' ),
+			'sap_mig_botao'          => $this->link_traduzido( 'Migrate now', '/contato/' ),
 			'sap_ben_eyebrow'        => 'BENEFITS',
 			'sap_ben_titulo'         => 'What CLI Connect brings to your SAP',
-			'sap_ben_botao'          => $this->link_en( 'Get in touch', '/contato/' ),
+			'sap_ben_botao'          => $this->link_traduzido( 'Get in touch', '/contato/' ),
 			'sap_ben_1_rotulo'       => '01 - SAP expertise',
 			'sap_ben_1_desc'         => 'Experience on projects involving SAP S/4HANA integrations.',
 			'sap_ben_2_rotulo'       => '02 - Managed service',
@@ -765,24 +648,4 @@ trait Cliconnect_Seed_En_Paginas {
 	   UTILITÁRIOS
 	   ===================================================================== */
 
-	/**
-	 * Monta o valor de um campo ACF do tipo Link já apontando para o inglês.
-	 *
-	 * @param string $titulo  Texto do botão em inglês.
-	 * @param string $caminho Caminho interno em português (ex.: '/contato/').
-	 * @param string $target  Alvo do link.
-	 * @return array{title:string,url:string,target:string}
-	 */
-	protected function link_en( $titulo, $caminho, $target = '' ) {
-		$partes   = explode( '#', $caminho, 2 );
-		$base     = $partes[0];
-		$ancora   = isset( $partes[1] ) ? '#' . $partes[1] : '';
-		$destino  = $this->caminhos_en[ $base ] ?? $base;
-
-		return array(
-			'title'  => $titulo,
-			'url'    => $this->url_absoluta( $destino ) . $ancora,
-			'target' => $target,
-		);
-	}
 }
