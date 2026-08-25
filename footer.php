@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cta_titulo = get_theme_mod( 'cliconnect_cta_titulo' ) ?? '';
-$cta_texto  = get_theme_mod( 'cliconnect_cta_botao_texto' ) ?? '';
+$cta_titulo = cliconnect_mod_traduzido( 'cliconnect_cta_titulo' );
+$cta_texto  = cliconnect_mod_traduzido( 'cliconnect_cta_botao_texto' );
 $cta_url    = get_theme_mod( 'cliconnect_cta_botao_url' ) ?? '';
 $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
 $linkedin   = get_theme_mod( 'cliconnect_social_linkedin' ) ?? '';

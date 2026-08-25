@@ -101,9 +101,9 @@ function cliconnect_logo( $variant = 'claro', $width = 120 ) {
  * @return void
  */
 function cliconnect_header_acoes() {
-	$portal_texto = get_theme_mod( 'cliconnect_portal_texto' ) ?? '';
+	$portal_texto = cliconnect_mod_traduzido( 'cliconnect_portal_texto' );
 	$portal_url   = get_theme_mod( 'cliconnect_portal_url' ) ?? '';
-	$cta_texto    = get_theme_mod( 'cliconnect_header_cta_texto' ) ?? '';
+	$cta_texto    = cliconnect_mod_traduzido( 'cliconnect_header_cta_texto' );
 	$cta_url      = get_theme_mod( 'cliconnect_header_cta_url' ) ?? '';
 
 	if ( $portal_texto && $portal_url ) {

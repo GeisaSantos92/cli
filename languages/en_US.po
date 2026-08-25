@@ -1,0 +1,621 @@
+# Copyright (C) 2026 Agência R8
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: CLI Connect 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/cli\n"
+"Last-Translator: CLI Connect\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-24T12:36:29+00:00\n"
+"PO-Revision-Date: 2026-08-24 00:00+0000\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: cli\n"
+
+#. Theme Name of the theme
+#. Template Name of the theme
+#: style.css
+msgid "CLI Connect"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://cliconnect.com.br/"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Tema clássico do WordPress do site CLI Connect — plataforma de integrações e agentes de IA. Construído sobre o starter da Agência R8: performance, segurança e baixa dependência de plugins/build. Assets estáticos e fontes auto-hospedadas, enfileirados via wp_enqueue_*."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Agência R8"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://agenciar8.com.br/"
+msgstr ""
+
+#: 404.php:18
+msgid "Página não encontrada"
+msgstr "Page not found"
+
+#: 404.php:20
+msgid "O conteúdo que você procura não existe ou foi movido. Tente uma busca ou volte para a página inicial."
+msgstr "The content you are looking for does not exist or has been moved. Try a search or go back to the home page."
+
+#: 404.php:27
+msgid "Voltar para a home"
+msgstr "Back to home"
+
+#: archive-cli_case.php:48
+msgid "Conheça os resultados alcançados por nossos clientes"
+msgstr "See the results our clients have achieved"
+
+#: archive-cli_case.php:51
+msgid "Explore projetos que ajudaram empresas a ganhar eficiência, previsibilidade e capacidade de evolução."
+msgstr "Explore projects that helped companies gain efficiency, predictability and room to evolve."
+
+#: archive-cli_case.php:173
+msgid "Case em andamento"
+msgstr "Case study in progress"
+
+#: archive-cli_solucao.php:24
+#: taxonomy-cli_categoria_solucao.php:28
+msgid "Filtrar por categoria"
+msgstr "Filter by category"
+
+#: archive-cli_solucao.php:25
+#: taxonomy-cli_categoria_solucao.php:29
+msgid "Categorias"
+msgstr "Categories"
+
+#: archive-cli_solucao.php:30
+#: taxonomy-cli_categoria_solucao.php:34
+msgid "Ver todos"
+msgstr "See all"
+
+#: archive-cli_solucao.php:75
+msgid "Todas as Soluções"
+msgstr "All Solutions"
+
+#: archive-cli_solucao.php:100
+msgid "Nenhuma solução encontrada."
+msgstr "No solutions found."
+
+#: blocks/hero/render.php:24
+msgid "Hero da página"
+msgstr "Page hero"
+
+#: footer.php:77
+#: inc/customizer.php:32
+msgid "LinkedIn"
+msgstr ""
+
+#: footer.php:88
+#: inc/customizer.php:30
+#: template-parts/contato/formulario.php:106
+msgid "Instagram"
+msgstr ""
+
+#: footer.php:100
+msgid "Links do rodapé"
+msgstr "Footer links"
+
+#: footer.php:126
+msgid "Voltar ao topo"
+msgstr "Back to top"
+
+#: footer.php:137
+msgid "Falar no WhatsApp"
+msgstr "Chat on WhatsApp"
+
+#: functions.php:65
+msgid "Cabeçalho — Menu Principal"
+msgstr "Header — Main Menu"
+
+#: functions.php:66
+msgid "Rodapé — Colunas de Links"
+msgstr "Footer — Link Columns"
+
+#: functions.php:67
+msgid "Rodapé — Links Legais (linha inferior)"
+msgstr "Footer — Legal Links (bottom row)"
+
+#: header.php:28
+msgid "Pular para o conteúdo"
+msgstr "Skip to content"
+
+#: header.php:44
+msgid "Menu principal"
+msgstr "Main menu"
+
+#: header.php:73
+msgid "Abrir menu"
+msgstr "Open menu"
+
+#: inc/blocks.php:103
+msgid "Seções do tema"
+msgstr "Theme sections"
+
+#: inc/customizer.php:31
+#: template-parts/contato/formulario.php:97
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer.php:33
+msgid "YouTube"
+msgstr ""
+
+#: inc/customizer.php:34
+msgid "TikTok"
+msgstr ""
+
+#: inc/customizer.php:35
+msgid "X / Twitter"
+msgstr ""
+
+#: inc/customizer.php:50
+msgid "Opções do Tema"
+msgstr "Theme Options"
+
+#: inc/customizer.php:75
+msgid "Logo Claro"
+msgstr "Light Logo"
+
+#: inc/customizer.php:76
+msgid "Logo branca/clara para fundos escuros (cabeçalho)"
+msgstr "White/light logo for dark backgrounds (header)"
+
+#: inc/customizer.php:96
+msgid "Logo Escuro"
+msgstr "Dark Logo"
+
+#: inc/customizer.php:97
+msgid "Logo colorida para fundos claros (rodapé, login)"
+msgstr "Colour logo for light backgrounds (footer, login)"
+
+#. translators: %s: nome da rede social
+#: inc/customizer.php:124
+#, php-format
+msgid "URL do perfil no %s"
+msgstr "Profile URL on %s"
+
+#: inc/customizer.php:146
+#: template-parts/contato/formulario.php:80
+msgid "Telefone"
+msgstr "Phone"
+
+#: inc/customizer.php:147
+msgid "Número de telefone principal (ex.: +55 11 98765-4321)"
+msgstr "Main phone number (e.g. +55 11 98765-4321)"
+
+#: inc/customizer.php:164
+msgid "E-mail Geral"
+msgstr "General Email"
+
+#: inc/customizer.php:165
+msgid "E-mail de contato geral"
+msgstr "General contact email"
+
+#: inc/customizer.php:221
+#: inc/polylang.php:39
+msgid "Rodapé — título do CTA"
+msgstr "Footer — CTA title"
+
+#: inc/customizer.php:222
+msgid "Bloco azul acima do rodapé. Use quebras de linha para separar as linhas do título."
+msgstr "Blue block above the footer. Use line breaks to split the title into separate lines."
+
+#: inc/customizer.php:245
+msgid "Tag Google Analytics / GTM"
+msgstr "Google Analytics / GTM tag"
+
+#: inc/customizer.php:246
+msgid "Cole aqui o snippet completo de Google Analytics ou Google Tag Manager. Só é impresso em produção (WP_DEBUG desligado) e para visitantes não logados."
+msgstr "Paste the full Google Analytics or Google Tag Manager snippet here. It is only printed in production (WP_DEBUG off) and for logged-out visitors."
+
+#. translators: %s: nome do item de menu
+#: inc/menu-walker.php:148
+#, php-format
+msgid "Abrir submenu de %s"
+msgstr "Open the %s submenu"
+
+#: inc/pagination.php:75
+msgid "Navegação de páginas"
+msgstr "Pagination"
+
+#: inc/pagination.php:81
+msgid "Página anterior"
+msgstr "Previous page"
+
+#: inc/pagination.php:109
+msgid "Próxima página"
+msgstr "Next page"
+
+#: inc/polylang.php:37
+msgid "Cabeçalho — texto do Portal do Cliente"
+msgstr "Header — Client Portal text"
+
+#: inc/polylang.php:38
+msgid "Cabeçalho — texto do CTA"
+msgstr "Header — CTA text"
+
+#: inc/polylang.php:40
+msgid "Rodapé — texto do botão do CTA"
+msgstr "Footer — CTA button text"
+
+#: inc/polylang.php:200
+msgid "Soluções"
+msgstr "Solutions"
+
+#: inc/template-tags.php:176
+msgid "Mudar o idioma"
+msgstr "Change language"
+
+#. Template Name of the theme
+msgid "CLI Signature"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Contato"
+msgstr "Contact"
+
+#. Template Name of the theme
+msgid "Integração SAP"
+msgstr "SAP Integration"
+
+#. Template Name of the theme
+msgid "Landing Page (canvas)"
+msgstr "Landing Page (canvas)"
+
+#. Template Name of the theme
+msgid "Trabalhe Conosco"
+msgstr "Careers"
+
+#. translators: %s: termo buscado
+#: search.php:21
+#, php-format
+msgid "Resultados para: %s"
+msgstr "Results for: %s"
+
+#: single-cli_case.php:121
+msgid "Tecnologias Utilizadas"
+msgstr "Technologies Used"
+
+#: single-cli_case.php:150
+msgid "Tópicos do case"
+msgstr "In this case study"
+
+#: single-cli_case.php:153
+#: single-cli_case.php:205
+msgid "Desafio"
+msgstr "Challenge"
+
+#: single-cli_case.php:158
+msgid "Solução"
+msgstr "Solution"
+
+#: single-cli_case.php:163
+msgid "Impacto"
+msgstr "Impact"
+
+#: single-cli_case.php:192
+msgid "Assistir ao vídeo"
+msgstr "Watch the video"
+
+#: single-cli_case.php:242
+msgid "A solução"
+msgstr "The solution"
+
+#: single-cli_case.php:261
+msgid "O impacto"
+msgstr "The impact"
+
+#: single-cli_case.php:310
+msgid "Confira outros cases de sucesso"
+msgstr "See other success stories"
+
+#: single-cli_case.php:336
+msgid "Ver case"
+msgstr "View case study"
+
+#: single-cli_case.php:345
+msgid "Confira nossos cases"
+msgstr "See our case studies"
+
+#: taxonomy-cli_categoria_solucao.php:122
+msgid "Nenhuma solução encontrada nesta categoria."
+msgstr "No solutions found in this category."
+
+#: template-parts/blog/destaque.php:38
+#: template-parts/single/breadcrumb.php:21
+msgid "Localização"
+msgstr "Location"
+
+#: template-parts/blog/destaque.php:42
+#: template-parts/single/breadcrumb.php:27
+msgid "Início"
+msgstr "Home"
+
+#: template-parts/blog/destaque.php:48
+#: template-parts/single/breadcrumb.php:38
+msgid "Blog"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:19
+msgid "Se mantenha atualizado"
+msgstr "Stay up to date"
+
+#: template-parts/blog/newsletter.php:22
+msgid "Conteúdos, análises e boas práticas para apoiar decisões em tecnologia e operações da sua empresa"
+msgstr "Content, analysis and best practice to support technology and operations decisions at your company"
+
+#: template-parts/blog/newsletter.php:35
+msgid "Digite seu e-mail"
+msgstr "Enter your email"
+
+#: template-parts/blog/newsletter.php:37
+msgid "Seu e-mail"
+msgstr "Your email"
+
+#: template-parts/blog/newsletter.php:40
+msgid "Assinar"
+msgstr "Subscribe"
+
+#: template-parts/blog/newsletter.php:44
+msgid "Ao enviar este formulário, você concorda com nossa Política de Privacidade."
+msgstr "By submitting this form, you agree to our Privacy Policy."
+
+#: template-parts/cli-connect/boomi.php:27
+#: template-parts/home/boomi.php:24
+msgid "Powered by Boomi — a única com 11 certificações globais do AICPA"
+msgstr "Powered by Boomi — the only one with 11 global AICPA certifications"
+
+#: template-parts/cli-connect/dashboard.php:23
+msgid "Screenshot do portal CLI Connect — visão geral de projetos e solicitações"
+msgstr "Screenshot of the CLI Connect portal — overview of projects and requests"
+
+#: template-parts/cli-connect/diferenciais.php:73
+msgid "Sim"
+msgstr "Yes"
+
+#: template-parts/cli-connect/diferenciais.php:83
+msgid "Outras plataformas"
+msgstr "Other platforms"
+
+#: template-parts/cli-connect/diferenciais.php:87
+msgid "Não"
+msgstr "No"
+
+#: template-parts/cli-connect/operacoes.php:31
+msgid "Ilustração de operações críticas protegidas pela CLI Connect"
+msgstr "Illustration of critical operations protected by CLI Connect"
+
+#: template-parts/contato/clientes.php:25
+#: template-parts/home/clientes.php:19
+msgid "Clientes que confiam na CLI Connect"
+msgstr "Clients who trust CLI Connect"
+
+#: template-parts/contato/formulario.php:68
+msgid "Entre em contato"
+msgstr "Get in touch"
+
+#: template-parts/contato/formulario.php:72
+msgid "E-mail"
+msgstr "Email"
+
+#: template-parts/contato/formulario.php:90
+msgid "Nossas redes"
+msgstr "Our social channels"
+
+#: template-parts/contato/formulario.php:115
+msgid "WhatsApp"
+msgstr ""
+
+#: template-parts/contato/formulario.php:134
+msgid "Formulário não configurado. Insira o ID do formulário CF7 no painel ACF."
+msgstr "Form not configured. Enter the CF7 form ID in the ACF panel."
+
+#: template-parts/content-none.php:14
+msgid "Nada encontrado"
+msgstr "Nothing found"
+
+#: template-parts/content-none.php:17
+msgid "Nenhum resultado para a sua busca. Tente outras palavras."
+msgstr "No results for your search. Try different words."
+
+#: template-parts/content-none.php:19
+msgid "Ainda não há conteúdo publicado aqui."
+msgstr "There is no published content here yet."
+
+#: template-parts/home/agentes.php:55
+msgid "Integrações"
+msgstr "Integrations"
+
+#: template-parts/home/camadas.php:23
+msgid "Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global"
+msgstr "Platform layers: integration library, service included and global platform"
+
+#: template-parts/home/departamentos.php:42
+msgid "Diagrama de departamentos: Compras, Atendimento e Logística (esquerda) conectados ao logo da CLI Connect, e Fiscal, Financeiro e RH (direita)"
+msgstr "Department diagram: Procurement, Customer Service and Logistics (left) connected to the CLI Connect logo, and Tax, Finance and HR (right)"
+
+#. translators: %s: nome do case
+#: template-parts/home/depoimento.php:72
+#, php-format
+msgid "Assistir ao depoimento de %s"
+msgstr "Watch the testimonial from %s"
+
+#: template-parts/home/suporte.php:24
+msgid "Canais de atendimento: portal, WhatsApp e e-mail"
+msgstr "Support channels: portal, WhatsApp and email"
+
+#: template-parts/integracao-sap/hero.php:70
+msgid "Diagrama de integração SAP com CLI Connect"
+msgstr "Diagram of the SAP integration with CLI Connect"
+
+#. translators: 1: nome do site, 2: ano atual.
+#: template-parts/rodape-agencia.php:20
+#, php-format
+msgid "© %1$s %2$s. Todos os direitos reservados."
+msgstr "© %1$s %2$s. All rights reserved."
+
+#: template-parts/rodape-agencia.php:34
+msgid "Links legais"
+msgstr "Legal links"
+
+#: template-parts/rodape-agencia.php:52
+msgid "Design e desenvolvimento"
+msgstr "Design and development"
+
+#: template-parts/rodape-agencia.php:54
+msgid "Logo Agência R8"
+msgstr "Agência R8 logo"
+
+#. translators: %s: data de publicação
+#: template-parts/single/materia.php:43
+#, php-format
+msgid "Publicado em: %s"
+msgstr "Published on: %s"
+
+#: template-parts/single/materia.php:69
+msgid "Assuntos"
+msgstr "Topics"
+
+#: template-parts/solucao/aceleradores.php:40
+msgid "Aceleradores de Integração"
+msgstr "Integration Accelerators"
+
+#: template-parts/solucao/casos.php:47
+msgid "Casos de Uso"
+msgstr "Use Cases"
+
+#: template-parts/solucao/diagrama.php:25
+msgid "Diagrama da solução"
+msgstr "Solution diagram"
+
+#: template-parts/solucao/diferencial.php:35
+msgid "Diferencial Técnico"
+msgstr "Technical Differentiator"
+
+#: template-parts/solucao/faq.php:32
+msgid "Dúvidas Frequentes"
+msgstr "Frequently Asked Questions"
+
+#: template-parts/solucao/faq.php:37
+msgid "FAQ"
+msgstr ""
+
+#: template-parts/solucao/hero.php:38
+msgid "Apresentação"
+msgstr "Overview"
+
+#: template-parts/solucao/logos.php:29
+msgid "Clientes do segmento"
+msgstr "Clients in this segment"
+
+#: template-parts/solucao/metricas.php:33
+msgid "Números da solução"
+msgstr "The solution in numbers"
+
+#: template-parts/solucao/pilares.php:39
+msgid "Pilares"
+msgstr "Pillars"
+
+#: template-parts/solucao/plataforma.php:36
+msgid "Plataforma Única"
+msgstr "One Platform"
+
+#: template-parts/solucao/selos.php:46
+msgid "Compliance e Segurança"
+msgstr "Compliance and Security"
+
+#: template-parts/solucao/selos.php:64
+msgid "Certificações"
+msgstr "Certifications"
+
+#: blocks/hero/editor.js:37
+msgid "Imagem de fundo"
+msgstr "Background image"
+
+#: blocks/hero/editor.js:52
+msgid "Trocar imagem"
+msgstr "Change image"
+
+#: blocks/hero/editor.js:53
+msgid "Escolher imagem"
+msgstr "Choose image"
+
+#: blocks/hero/editor.js:68
+msgid "Remover imagem"
+msgstr "Remove image"
+
+#: blocks/hero/editor.js:95
+msgid "Badge (ex.: Campanha)"
+msgstr "Badge (e.g. Campaign)"
+
+#: blocks/hero/editor.js:106
+msgid "Título da landing"
+msgstr "Landing page title"
+
+#: blocks/hero/editor.js:116
+msgid "Subtítulo (opcional)"
+msgstr "Subtitle (optional)"
+
+#: blocks/stat-item/editor.js:36
+msgid "Rótulo do indicador"
+msgstr "Metric label"
+
+#: blocks/stats/editor.js:52
+msgid "Badge (ex.: Números)"
+msgstr "Badge (e.g. Numbers)"
+
+#: blocks/stats/editor.js:63
+msgid "Título da faixa de números"
+msgstr "Stats band title"
+
+#: blocks/hero/block.json
+msgctxt "block title"
+msgid "Seção: Hero de landing"
+msgstr "Section: Landing hero"
+
+#: blocks/hero/block.json
+msgctxt "block description"
+msgid "Seção de abertura full-bleed com badge, título, subtítulo e imagem de fundo."
+msgstr "Full-bleed opening section with badge, title, subtitle and background image."
+
+#: blocks/secao-texto/block.json
+msgctxt "block title"
+msgid "Seção: Texto livre"
+msgstr "Section: Free text"
+
+#: blocks/secao-texto/block.json
+msgctxt "block description"
+msgid "Wrapper com container e tipografia do tema para conteúdo livre (parágrafos, listas, imagens) dentro da landing."
+msgstr "Wrapper with the theme container and typography for free content (paragraphs, lists, images) inside the landing page."
+
+#: blocks/stat-item/block.json
+msgctxt "block title"
+msgid "Seção: Indicador"
+msgstr "Section: Metric"
+
+#: blocks/stat-item/block.json
+msgctxt "block description"
+msgid "Um indicador (número + rótulo) dentro da faixa de estatísticas."
+msgstr "A single metric (number + label) inside the stats band."
+
+#: blocks/stats/block.json
+msgctxt "block title"
+msgid "Seção: Faixa de estatísticas"
+msgstr "Section: Stats band"
+
+#: blocks/stats/block.json
+msgctxt "block description"
+msgid "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks."
+msgstr "Band with badge, title and a grid of metrics (number + label). Example of the parent/child pattern with InnerBlocks."
+

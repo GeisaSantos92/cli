@@ -1,0 +1,620 @@
+# Copyright (C) 2026 Agência R8
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: CLI Connect 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/cli\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-24T12:49:31+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: cli\n"
+
+#. Theme Name of the theme
+#. Template Name of the theme
+#: style.css
+msgid "CLI Connect"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://cliconnect.com.br/"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Tema clássico do WordPress do site CLI Connect — plataforma de integrações e agentes de IA. Construído sobre o starter da Agência R8: performance, segurança e baixa dependência de plugins/build. Assets estáticos e fontes auto-hospedadas, enfileirados via wp_enqueue_*."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Agência R8"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://agenciar8.com.br/"
+msgstr ""
+
+#: 404.php:18
+msgid "Página não encontrada"
+msgstr ""
+
+#: 404.php:20
+msgid "O conteúdo que você procura não existe ou foi movido. Tente uma busca ou volte para a página inicial."
+msgstr ""
+
+#: 404.php:27
+msgid "Voltar para a home"
+msgstr ""
+
+#: archive-cli_case.php:48
+msgid "Conheça os resultados alcançados por nossos clientes"
+msgstr ""
+
+#: archive-cli_case.php:51
+msgid "Explore projetos que ajudaram empresas a ganhar eficiência, previsibilidade e capacidade de evolução."
+msgstr ""
+
+#: archive-cli_case.php:173
+msgid "Case em andamento"
+msgstr ""
+
+#: archive-cli_solucao.php:24
+#: taxonomy-cli_categoria_solucao.php:28
+msgid "Filtrar por categoria"
+msgstr ""
+
+#: archive-cli_solucao.php:25
+#: taxonomy-cli_categoria_solucao.php:29
+msgid "Categorias"
+msgstr ""
+
+#: archive-cli_solucao.php:30
+#: taxonomy-cli_categoria_solucao.php:34
+msgid "Ver todos"
+msgstr ""
+
+#: archive-cli_solucao.php:75
+msgid "Todas as Soluções"
+msgstr ""
+
+#: archive-cli_solucao.php:100
+msgid "Nenhuma solução encontrada."
+msgstr ""
+
+#: blocks/hero/render.php:24
+msgid "Hero da página"
+msgstr ""
+
+#: footer.php:77
+#: inc/customizer.php:32
+msgid "LinkedIn"
+msgstr ""
+
+#: footer.php:88
+#: inc/customizer.php:30
+#: template-parts/contato/formulario.php:106
+msgid "Instagram"
+msgstr ""
+
+#: footer.php:100
+msgid "Links do rodapé"
+msgstr ""
+
+#: footer.php:126
+msgid "Voltar ao topo"
+msgstr ""
+
+#: footer.php:137
+msgid "Falar no WhatsApp"
+msgstr ""
+
+#: functions.php:65
+msgid "Cabeçalho — Menu Principal"
+msgstr ""
+
+#: functions.php:66
+msgid "Rodapé — Colunas de Links"
+msgstr ""
+
+#: functions.php:67
+msgid "Rodapé — Links Legais (linha inferior)"
+msgstr ""
+
+#: header.php:28
+msgid "Pular para o conteúdo"
+msgstr ""
+
+#: header.php:44
+msgid "Menu principal"
+msgstr ""
+
+#: header.php:73
+msgid "Abrir menu"
+msgstr ""
+
+#: inc/blocks.php:103
+msgid "Seções do tema"
+msgstr ""
+
+#: inc/customizer.php:31
+#: template-parts/contato/formulario.php:97
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer.php:33
+msgid "YouTube"
+msgstr ""
+
+#: inc/customizer.php:34
+msgid "TikTok"
+msgstr ""
+
+#: inc/customizer.php:35
+msgid "X / Twitter"
+msgstr ""
+
+#: inc/customizer.php:50
+msgid "Opções do Tema"
+msgstr ""
+
+#: inc/customizer.php:75
+msgid "Logo Claro"
+msgstr ""
+
+#: inc/customizer.php:76
+msgid "Logo branca/clara para fundos escuros (cabeçalho)"
+msgstr ""
+
+#: inc/customizer.php:96
+msgid "Logo Escuro"
+msgstr ""
+
+#: inc/customizer.php:97
+msgid "Logo colorida para fundos claros (rodapé, login)"
+msgstr ""
+
+#. translators: %s: nome da rede social
+#: inc/customizer.php:124
+#, php-format
+msgid "URL do perfil no %s"
+msgstr ""
+
+#: inc/customizer.php:146
+#: template-parts/contato/formulario.php:80
+msgid "Telefone"
+msgstr ""
+
+#: inc/customizer.php:147
+msgid "Número de telefone principal (ex.: +55 11 98765-4321)"
+msgstr ""
+
+#: inc/customizer.php:164
+msgid "E-mail Geral"
+msgstr ""
+
+#: inc/customizer.php:165
+msgid "E-mail de contato geral"
+msgstr ""
+
+#: inc/customizer.php:221
+#: inc/polylang.php:39
+msgid "Rodapé — título do CTA"
+msgstr ""
+
+#: inc/customizer.php:222
+msgid "Bloco azul acima do rodapé. Use quebras de linha para separar as linhas do título."
+msgstr ""
+
+#: inc/customizer.php:245
+msgid "Tag Google Analytics / GTM"
+msgstr ""
+
+#: inc/customizer.php:246
+msgid "Cole aqui o snippet completo de Google Analytics ou Google Tag Manager. Só é impresso em produção (WP_DEBUG desligado) e para visitantes não logados."
+msgstr ""
+
+#. translators: %s: nome do item de menu
+#: inc/menu-walker.php:148
+#, php-format
+msgid "Abrir submenu de %s"
+msgstr ""
+
+#: inc/pagination.php:75
+msgid "Navegação de páginas"
+msgstr ""
+
+#: inc/pagination.php:81
+msgid "Página anterior"
+msgstr ""
+
+#: inc/pagination.php:109
+msgid "Próxima página"
+msgstr ""
+
+#: inc/polylang.php:37
+msgid "Cabeçalho — texto do Portal do Cliente"
+msgstr ""
+
+#: inc/polylang.php:38
+msgid "Cabeçalho — texto do CTA"
+msgstr ""
+
+#: inc/polylang.php:40
+msgid "Rodapé — texto do botão do CTA"
+msgstr ""
+
+#: inc/polylang.php:200
+msgid "Soluções"
+msgstr ""
+
+#: inc/template-tags.php:176
+msgid "Mudar o idioma"
+msgstr ""
+
+#. Template Name of the theme
+msgid "CLI Signature"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Contato"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Integração SAP"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Landing Page (canvas)"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Trabalhe Conosco"
+msgstr ""
+
+#. translators: %s: termo buscado
+#: search.php:21
+#, php-format
+msgid "Resultados para: %s"
+msgstr ""
+
+#: single-cli_case.php:121
+msgid "Tecnologias Utilizadas"
+msgstr ""
+
+#: single-cli_case.php:150
+msgid "Tópicos do case"
+msgstr ""
+
+#: single-cli_case.php:153
+#: single-cli_case.php:205
+msgid "Desafio"
+msgstr ""
+
+#: single-cli_case.php:158
+msgid "Solução"
+msgstr ""
+
+#: single-cli_case.php:163
+msgid "Impacto"
+msgstr ""
+
+#: single-cli_case.php:192
+msgid "Assistir ao vídeo"
+msgstr ""
+
+#: single-cli_case.php:242
+msgid "A solução"
+msgstr ""
+
+#: single-cli_case.php:261
+msgid "O impacto"
+msgstr ""
+
+#: single-cli_case.php:310
+msgid "Confira outros cases de sucesso"
+msgstr ""
+
+#: single-cli_case.php:336
+msgid "Ver case"
+msgstr ""
+
+#: single-cli_case.php:345
+msgid "Confira nossos cases"
+msgstr ""
+
+#: taxonomy-cli_categoria_solucao.php:122
+msgid "Nenhuma solução encontrada nesta categoria."
+msgstr ""
+
+#: template-parts/blog/destaque.php:38
+#: template-parts/single/breadcrumb.php:21
+msgid "Localização"
+msgstr ""
+
+#: template-parts/blog/destaque.php:42
+#: template-parts/single/breadcrumb.php:27
+msgid "Início"
+msgstr ""
+
+#: template-parts/blog/destaque.php:48
+#: template-parts/single/breadcrumb.php:38
+msgid "Blog"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:19
+msgid "Se mantenha atualizado"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:22
+msgid "Conteúdos, análises e boas práticas para apoiar decisões em tecnologia e operações da sua empresa"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:35
+msgid "Digite seu e-mail"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:37
+msgid "Seu e-mail"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:40
+msgid "Assinar"
+msgstr ""
+
+#: template-parts/blog/newsletter.php:44
+msgid "Ao enviar este formulário, você concorda com nossa Política de Privacidade."
+msgstr ""
+
+#: template-parts/cli-connect/boomi.php:27
+#: template-parts/home/boomi.php:24
+msgid "Powered by Boomi — a única com 11 certificações globais do AICPA"
+msgstr ""
+
+#: template-parts/cli-connect/dashboard.php:23
+msgid "Screenshot do portal CLI Connect — visão geral de projetos e solicitações"
+msgstr ""
+
+#: template-parts/cli-connect/diferenciais.php:73
+msgid "Sim"
+msgstr ""
+
+#: template-parts/cli-connect/diferenciais.php:83
+msgid "Outras plataformas"
+msgstr ""
+
+#: template-parts/cli-connect/diferenciais.php:87
+msgid "Não"
+msgstr ""
+
+#: template-parts/cli-connect/operacoes.php:31
+msgid "Ilustração de operações críticas protegidas pela CLI Connect"
+msgstr ""
+
+#: template-parts/contato/clientes.php:25
+#: template-parts/home/clientes.php:19
+msgid "Clientes que confiam na CLI Connect"
+msgstr ""
+
+#: template-parts/contato/formulario.php:68
+msgid "Entre em contato"
+msgstr ""
+
+#: template-parts/contato/formulario.php:72
+msgid "E-mail"
+msgstr ""
+
+#: template-parts/contato/formulario.php:90
+msgid "Nossas redes"
+msgstr ""
+
+#: template-parts/contato/formulario.php:115
+msgid "WhatsApp"
+msgstr ""
+
+#: template-parts/contato/formulario.php:134
+msgid "Formulário não configurado. Insira o ID do formulário CF7 no painel ACF."
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nada encontrado"
+msgstr ""
+
+#: template-parts/content-none.php:17
+msgid "Nenhum resultado para a sua busca. Tente outras palavras."
+msgstr ""
+
+#: template-parts/content-none.php:19
+msgid "Ainda não há conteúdo publicado aqui."
+msgstr ""
+
+#: template-parts/home/agentes.php:55
+msgid "Integrações"
+msgstr ""
+
+#: template-parts/home/camadas.php:23
+msgid "Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global"
+msgstr ""
+
+#: template-parts/home/departamentos.php:42
+msgid "Diagrama de departamentos: Compras, Atendimento e Logística (esquerda) conectados ao logo da CLI Connect, e Fiscal, Financeiro e RH (direita)"
+msgstr ""
+
+#. translators: %s: nome do case
+#: template-parts/home/depoimento.php:72
+#, php-format
+msgid "Assistir ao depoimento de %s"
+msgstr ""
+
+#: template-parts/home/suporte.php:24
+msgid "Canais de atendimento: portal, WhatsApp e e-mail"
+msgstr ""
+
+#: template-parts/integracao-sap/hero.php:70
+msgid "Diagrama de integração SAP com CLI Connect"
+msgstr ""
+
+#. translators: 1: nome do site, 2: ano atual.
+#: template-parts/rodape-agencia.php:20
+#, php-format
+msgid "© %1$s %2$s. Todos os direitos reservados."
+msgstr ""
+
+#: template-parts/rodape-agencia.php:34
+msgid "Links legais"
+msgstr ""
+
+#: template-parts/rodape-agencia.php:52
+msgid "Design e desenvolvimento"
+msgstr ""
+
+#: template-parts/rodape-agencia.php:54
+msgid "Logo Agência R8"
+msgstr ""
+
+#. translators: %s: data de publicação
+#: template-parts/single/materia.php:43
+#, php-format
+msgid "Publicado em: %s"
+msgstr ""
+
+#: template-parts/single/materia.php:69
+msgid "Assuntos"
+msgstr ""
+
+#: template-parts/solucao/aceleradores.php:40
+msgid "Aceleradores de Integração"
+msgstr ""
+
+#: template-parts/solucao/casos.php:47
+msgid "Casos de Uso"
+msgstr ""
+
+#: template-parts/solucao/diagrama.php:25
+msgid "Diagrama da solução"
+msgstr ""
+
+#: template-parts/solucao/diferencial.php:35
+msgid "Diferencial Técnico"
+msgstr ""
+
+#: template-parts/solucao/faq.php:32
+msgid "Dúvidas Frequentes"
+msgstr ""
+
+#: template-parts/solucao/faq.php:37
+msgid "FAQ"
+msgstr ""
+
+#: template-parts/solucao/hero.php:38
+msgid "Apresentação"
+msgstr ""
+
+#: template-parts/solucao/logos.php:29
+msgid "Clientes do segmento"
+msgstr ""
+
+#: template-parts/solucao/metricas.php:33
+msgid "Números da solução"
+msgstr ""
+
+#: template-parts/solucao/pilares.php:39
+msgid "Pilares"
+msgstr ""
+
+#: template-parts/solucao/plataforma.php:36
+msgid "Plataforma Única"
+msgstr ""
+
+#: template-parts/solucao/selos.php:46
+msgid "Compliance e Segurança"
+msgstr ""
+
+#: template-parts/solucao/selos.php:64
+msgid "Certificações"
+msgstr ""
+
+#: blocks/hero/editor.js:37
+msgid "Imagem de fundo"
+msgstr ""
+
+#: blocks/hero/editor.js:52
+msgid "Trocar imagem"
+msgstr ""
+
+#: blocks/hero/editor.js:53
+msgid "Escolher imagem"
+msgstr ""
+
+#: blocks/hero/editor.js:68
+msgid "Remover imagem"
+msgstr ""
+
+#: blocks/hero/editor.js:95
+msgid "Badge (ex.: Campanha)"
+msgstr ""
+
+#: blocks/hero/editor.js:106
+msgid "Título da landing"
+msgstr ""
+
+#: blocks/hero/editor.js:116
+msgid "Subtítulo (opcional)"
+msgstr ""
+
+#: blocks/stat-item/editor.js:36
+msgid "Rótulo do indicador"
+msgstr ""
+
+#: blocks/stats/editor.js:52
+msgid "Badge (ex.: Números)"
+msgstr ""
+
+#: blocks/stats/editor.js:63
+msgid "Título da faixa de números"
+msgstr ""
+
+#: blocks/hero/block.json
+msgctxt "block title"
+msgid "Seção: Hero de landing"
+msgstr ""
+
+#: blocks/hero/block.json
+msgctxt "block description"
+msgid "Seção de abertura full-bleed com badge, título, subtítulo e imagem de fundo."
+msgstr ""
+
+#: blocks/secao-texto/block.json
+msgctxt "block title"
+msgid "Seção: Texto livre"
+msgstr ""
+
+#: blocks/secao-texto/block.json
+msgctxt "block description"
+msgid "Wrapper com container e tipografia do tema para conteúdo livre (parágrafos, listas, imagens) dentro da landing."
+msgstr ""
+
+#: blocks/stat-item/block.json
+msgctxt "block title"
+msgid "Seção: Indicador"
+msgstr ""
+
+#: blocks/stat-item/block.json
+msgctxt "block description"
+msgid "Um indicador (número + rótulo) dentro da faixa de estatísticas."
+msgstr ""
+
+#: blocks/stats/block.json
+msgctxt "block title"
+msgid "Seção: Faixa de estatísticas"
+msgstr ""
+
+#: blocks/stats/block.json
+msgctxt "block description"
+msgid "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks."
+msgstr ""

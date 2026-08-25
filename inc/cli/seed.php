@@ -25,6 +25,12 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
  */
 class Cliconnect_Seed {
 
+	use Cliconnect_Seed_En;
+	use Cliconnect_Seed_En_Paginas;
+	use Cliconnect_Seed_En_Cpts;
+	use Cliconnect_Seed_En_Faq;
+	use Cliconnect_Seed_En_Solucoes;
+
 	/**
 	 * Chave de meta que marca objetos criados pelo seed.
 	 */
@@ -45,12 +51,27 @@ class Cliconnect_Seed {
 	 * [--reset]
 	 * : Apaga tudo que o seed criou antes de recriar.
 	 *
+	 * [--traducao]
+	 * : Roda só a camada em inglês, sem tocar no conteúdo em português.
+	 *
 	 * @param array $args       Argumentos posicionais.
 	 * @param array $assoc_args Flags.
 	 * @return void
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$reset = ! empty( $assoc_args['reset'] );
+
+		if ( ! empty( $assoc_args['traducao'] ) ) {
+			$this->traduzir_site(
+				$this->ids_das_paginas(),
+				$this->ids_dos_termos_solucao()
+			);
+
+			flush_rewrite_rules();
+			WP_CLI::success( 'Camada em inglês atualizada.' );
+
+			return;
+		}
 
 		if ( $reset ) {
 			$this->reset();
@@ -164,6 +185,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Ajustando o Customizer…' );
 		$this->configurar_customizer();
 
+		WP_CLI::log( '— Criando a versão em inglês…' );
+		$this->traduzir_site( $paginas, $termos_solucao );
+
 		flush_rewrite_rules();
 
 		WP_CLI::success( 'Conteúdo do CLI Connect populado.' );
@@ -194,10 +218,12 @@ class Cliconnect_Seed {
 		}
 
 		foreach ( array( 'principal', 'rodape', 'rodape_legal' ) as $slug ) {
-			$menu = wp_get_nav_menu_object( 'cli-' . $slug );
+			foreach ( array( 'cli-' . $slug, 'cli-' . $slug . '-en' ) as $nome ) {
+				$menu = wp_get_nav_menu_object( $nome );
 
-			if ( $menu ) {
-				wp_delete_nav_menu( $menu->term_id );
+				if ( $menu ) {
+					wp_delete_nav_menu( $menu->term_id );
+				}
 			}
 		}
 
@@ -385,6 +411,52 @@ class Cliconnect_Seed {
 		);
 
 		return $posts ? (int) $posts[0] : 0;
+	}
+
+	/**
+	 * Recupera os IDs das páginas do seed sem recriá-las.
+	 *
+	 * @return array<string,int> slug => ID.
+	 */
+	protected function ids_das_paginas() {
+		$ids = array();
+
+		foreach ( array_keys( $this->paginas_en() ) as $slug ) {
+			$ids[ $slug ] = $this->id_do_seed( 'pagina:' . $slug, 'page' );
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Recupera os IDs dos termos de solução do seed sem recriá-los.
+	 *
+	 * @return array<string,int> chave => term_id.
+	 */
+	protected function ids_dos_termos_solucao() {
+		$ids = array();
+
+		$termos = get_terms(
+			array(
+				'taxonomy'   => 'cli_categoria_solucao',
+				'hide_empty' => false,
+				'lang'       => '',
+			)
+		);
+
+		foreach ( (array) $termos as $termo ) {
+			if ( is_wp_error( $termo ) ) {
+				continue;
+			}
+
+			$chave = get_term_meta( $termo->term_id, self::META, true );
+
+			if ( $chave && ! str_ends_with( $chave, self::SUFIXO ) ) {
+				$ids[ $chave ] = (int) $termo->term_id;
+			}
+		}
+
+		return $ids;
 	}
 
 	/* =====================================================================
