@@ -121,7 +121,9 @@
       "Bash(chmod +x '/c/Users/geisa/Local Sites/cli/app/public/wp-content/themes/cli/bin/sync')",
       "Bash(./bin/sync)",
       "Bash(./bin/wp cache:*)",
-      "Bash(./bin/wp transient:*)"
+      "Bash(./bin/wp transient:*)",
+      "Bash(bin/wp cliconnect:*)",
+      "Bash(grep:*)"
     ]
   }
 }

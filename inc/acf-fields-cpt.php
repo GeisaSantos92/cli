@@ -1232,6 +1232,44 @@ function cliconnect_acf_fields_cpt() {
 				'instructions'  => 'Ilustração fechada, com o texto já embutido na arte, exportada do Figma em 2x.',
 			),
 
+			// Renderiza logo depois do Diagrama.
+			array(
+				'key'   => 'field_solucao_int_tab',
+				'label' => '12 · Integrações',
+				'name'  => '',
+				'type'  => 'tab',
+			),
+			array(
+				'key'          => 'field_solucao_int_eyebrow',
+				'label'        => 'Eyebrow',
+				'name'         => 'solucao_int_eyebrow',
+				'type'         => 'text',
+				'instructions' => 'Texto pequeno acima do título. Deixe vazio para ocultar.',
+			),
+			array(
+				'key'          => 'field_solucao_int_titulo',
+				'label'        => 'Título da seção',
+				'name'         => 'solucao_int_titulo',
+				'type'         => 'text',
+				'instructions' => 'Deixe vazio para ocultar a seção.',
+			),
+			array(
+				'key'           => 'field_solucao_int_imagem',
+				'label'         => 'Imagem de logos / integrações',
+				'name'          => 'solucao_int_imagem',
+				'type'          => 'image',
+				'return_format' => 'id',
+				'preview_size'  => 'medium',
+				'instructions'  => 'Ilustração fechada com a grade de logos exportada do Figma em 2x.',
+			),
+			array(
+				'key'          => 'field_solucao_int_subtitulo',
+				'label'        => 'Subtítulo (abaixo da imagem)',
+				'name'         => 'solucao_int_subtitulo',
+				'type'         => 'text',
+				'instructions' => 'Linha de texto exibida abaixo da imagem. Opcional.',
+			),
+
 			),
 		)
 	);

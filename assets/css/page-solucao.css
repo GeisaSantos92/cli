@@ -371,6 +371,85 @@
 	border-radius: 18px;
 }
 
+/* --- 12. Seção Integrações ------------------------------------------------- */
+
+/*
+ * Eyebrow + título H3 + grade de logos com fade na base + subtítulo.
+ * Renderiza logo depois do Diagrama.
+ * Design: Figma → node 16678-122864.
+ */
+.si-integracoes {
+	padding-block: 120px 80px;
+	background: var(--cor-fundo-suave);
+}
+
+.si-integracoes__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.si-integracoes__header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding-bottom: 40px;
+	width: 100%;
+}
+
+.si-integracoes__eyebrow {
+	margin: 0;
+}
+
+.si-integracoes__titulo {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+	color: var(--cor-texto);
+	text-align: center;
+	margin: 0;
+	width: 100%;
+}
+
+/*
+ * A grade de logos tem 323 px de altura no Figma (1312×323).
+ * O fade da base é feito por mask-image com gradiente de transparência.
+ */
+.si-integracoes__imagem-wrap {
+	width: 100%;
+	height: 323px;
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+	-webkit-mask-size: 100% 100%;
+	mask-size: 100% 100%;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+.si-integracoes__imagem {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: top center;
+}
+
+.si-integracoes__subtitulo {
+	padding-top: 40px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+	line-height: 1.1;
+	color: var(--cor-texto-marca-escura);
+	text-align: center;
+	margin: 0;
+	width: 100%;
+}
+
 /* --- 4. Seção Logos ------------------------------------------------------- */
 
 /*
@@ -1194,5 +1273,20 @@
 
 	.sp-pilares {
 		padding-block: 48px;
+	}
+
+	.si-integracoes {
+		padding-block: 64px 48px;
+	}
+
+	.si-integracoes__imagem-wrap {
+		height: auto;
+		max-height: 280px;
+	}
+}
+
+@media (max-width: 768px) {
+	.si-integracoes__titulo {
+		font-size: var(--tam-h4);
 	}
 }

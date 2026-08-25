@@ -20,6 +20,7 @@ $cliconnect_secoes = array(
 	'metricas',
 	'pilares',
 	'diagrama',
+	'integracoes',
 	'logos',
 	'casos',
 	'selos',

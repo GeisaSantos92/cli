@@ -176,6 +176,20 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Catálogo de Tecnologias — filtro client-side (somente no termo pai).
+	if ( is_tax( 'cli_categoria_solucao' ) ) {
+		$termo_cat = get_queried_object();
+		if ( $termo_cat && 0 === (int) $termo_cat->parent ) {
+			wp_enqueue_script(
+				'cliconnect-catalogo',
+				get_theme_file_uri( '/assets/js/catalogo-tecnologias.js' ),
+				array(),
+				cliconnect_asset_version( '/assets/js/catalogo-tecnologias.js' ),
+				true
+			);
+		}
+	}
+
 	// Comportamentos vanilla (menu, submenus, acordeão do FAQ).
 	wp_enqueue_script(
 		'cliconnect-theme',

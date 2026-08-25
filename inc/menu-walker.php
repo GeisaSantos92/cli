@@ -230,6 +230,16 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		// Link de coluna: ganha o logo quando existe uma Integração de mesmo nome.
 		if ( $depth >= 2 ) {
+			// "Ver todos" dentro de um grupo de coluna (class link-ver-todos no item).
+			if ( in_array( 'link-ver-todos', (array) $item->classes, true ) ) {
+				return sprintf(
+					'<a class="site-nav__ver-todos"%1$s>%2$s%3$s</a>',
+					$atributos,
+					esc_html( $item->title ),
+					cliconnect_icone( 'seta-nordeste', 16 )
+				);
+			}
+
 			$logo = cliconnect_logo_integracao( $item->title );
 
 			return sprintf(
