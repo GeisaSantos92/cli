@@ -211,7 +211,7 @@ p {
 	justify-content: center;
 	gap: 8px;
 	font-family: var(--fonte-botao);
-	font-size: var(--tam-h6);
+	font-size: var(--tam-body-lg);
 	font-weight: 700;
 	line-height: 1;
 	text-decoration: none;

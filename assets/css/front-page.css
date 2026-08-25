@@ -355,16 +355,10 @@
  * largura e a seção rola na horizontal.
  */
 @media (max-width: 780px) {
-	.camadas__grafico {
-		overflow-x: auto;
-		/* Compensa o padding do container: a peça sangra até a borda da tela. */
-		margin-inline: calc(-1 * var(--margem-lateral));
-		padding-inline: var(--margem-lateral);
-		-webkit-overflow-scrolling: touch;
-	}
-
+	/* A versão mobile da ilustração (section-camadas-mobile.png) é vertical:
+	 * enche a largura do container sem scroll horizontal. */
 	.camadas__imagem {
-		min-width: 660px;
+		width: 100%;
 	}
 }
 
@@ -1311,6 +1305,11 @@
 @media (max-width: 900px) {
 	.suporte__grid {
 		grid-template-columns: 1fr;
+	}
+
+	/* Imagem acima do texto em mobile. */
+	.suporte__visual {
+		order: -1;
 	}
 }
 
