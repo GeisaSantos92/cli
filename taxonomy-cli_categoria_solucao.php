@@ -106,7 +106,16 @@ $termo_pai   = ( $termo_atual->parent ) ? get_term( $termo_atual->parent, 'cli_c
 						?>
 					</div>
 
-					<?php cliconnect_paginacao(); ?>
+					<?php
+					get_template_part(
+						'template-parts/pagination',
+						null,
+						array(
+							'current_page' => max( 1, (int) get_query_var( 'paged' ) ),
+							'total_pages'  => (int) $wp_query->max_num_pages,
+						)
+					);
+					?>
 
 				<?php else : ?>
 					<p class="sl-conteudo__vazio">
