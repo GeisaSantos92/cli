@@ -22,6 +22,7 @@
 		initFaq();
 		initMetricasCounters();
 		initCaseScrollSpy();
+		initFooterCta();
 	});
 
 	/* ----- Seletor de idiomas (globo do header) ---------------------------- */
@@ -263,6 +264,25 @@
 		Array.prototype.forEach.call(sections, function (section) {
 			observer.observe(section);
 		});
+	}
+
+	/* ----- Footer CTA: adapta gradiente à cor da seção anterior ----------- */
+	function initFooterCta() {
+		var cta = document.querySelector('.footer-cta');
+		if (!cta) return;
+
+		var secoes = Array.prototype.slice.call(document.querySelectorAll('section'));
+		var idx    = secoes.indexOf(cta);
+		if (idx <= 0) return;
+
+		var cor = window.getComputedStyle(secoes[idx - 1]).backgroundColor;
+
+		// Ignora transparente — o CSS já tem o fallback correto.
+		if (!cor || cor === 'rgba(0, 0, 0, 0)' || cor === 'transparent') return;
+
+		cta.style.backgroundImage =
+			'linear-gradient(180deg, ' + cor + ' 0%, ' + cor + ' 50%, ' +
+			'var(--cor-marca-profunda) 50%, var(--cor-marca-profunda) 100%)';
 	}
 
 })();
