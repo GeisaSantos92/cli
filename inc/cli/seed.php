@@ -1462,7 +1462,9 @@ class Cliconnect_Seed {
 				update_term_meta( $filho_id, self::META, $chave_filho );
 				$ids[ $chave_filho ] = $filho_id;
 
-				// Post cli_solucao para este tipo (stub sem imagem — cliente adiciona depois).
+				// Post cli_solucao para este tipo. O logo do card vem de
+				// assets/seed/catalogo-logo-{chave}.*; quem não tiver arquivo
+				// fica sem imagem destacada e o card cai nas iniciais.
 				$post_id = $this->upsert(
 					'solucao:' . $chave_filho,
 					array(
@@ -1474,6 +1476,7 @@ class Cliconnect_Seed {
 
 				if ( $post_id ) {
 					wp_set_object_terms( $post_id, $filho_id, $tax );
+					$this->definir_thumb( $post_id, 'catalogo-logo-' . $chave_filho );
 				}
 			}
 		}
