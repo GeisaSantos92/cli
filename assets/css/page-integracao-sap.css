@@ -1141,9 +1141,11 @@
 	padding: 40px 40px 64px;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: 12px;
 	overflow: hidden;
 	position: relative;
+	height: 100%;
 	min-height: 280px;
 }
 
@@ -1161,11 +1163,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-}
-
-.sap-beneficios__check-wrap img {
-	width: 24px;
-	height: 24px;
+	color: var(--cor-primaria);
 }
 
 .sap-beneficios__desc {

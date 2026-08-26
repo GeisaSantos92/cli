@@ -38,7 +38,6 @@ if ( ! $titulo || ! $itens ) {
 
 $uri    = get_template_directory_uri();
 $elipse = $uri . '/assets/img/sap-ben-elipse.svg';
-$check  = $uri . '/assets/img/sap-ben-check.svg';
 ?>
 <section class="sap-beneficios">
 	<div class="container sap-beneficios__inner">
@@ -88,7 +87,7 @@ $check  = $uri . '/assets/img/sap-ben-check.svg';
 						<?php echo 0 !== $idx ? 'hidden' : ''; ?>
 					>
 						<div class="sap-beneficios__check-wrap" aria-hidden="true">
-							<img src="<?php echo esc_url( $check ); ?>" alt="" width="24" height="24" loading="lazy" decoding="async">
+							<?php echo cliconnect_icone( 'check', 20 ); ?>
 						</div>
 						<p class="sap-beneficios__desc"><?php echo esc_html( $item['desc'] ); ?></p>
 						<img class="sap-beneficios__elipse" src="<?php echo esc_url( $elipse ); ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -107,22 +106,24 @@ $check  = $uri . '/assets/img/sap-ben-check.svg';
 	if (!grid) return;
 	var tabs = grid.querySelectorAll('[role="tab"]');
 	var panels = grid.querySelectorAll('[role="tabpanel"]');
-	tabs.forEach(function (tab) {
-		tab.addEventListener('click', function () {
-			var idx = this.dataset.tab;
-			tabs.forEach(function (t) {
-				t.classList.remove('sap-beneficios__topico--ativo');
-				t.setAttribute('aria-selected', 'false');
-			});
-			panels.forEach(function (p) {
-				p.classList.remove('sap-beneficios__painel--ativo');
-				p.hidden = true;
-			});
-			this.classList.add('sap-beneficios__topico--ativo');
-			this.setAttribute('aria-selected', 'true');
-			var painel = document.getElementById('sap-ben-painel-' + idx);
-			if (painel) { painel.classList.add('sap-beneficios__painel--ativo'); painel.hidden = false; }
+	function ativar(tab) {
+		var idx = tab.dataset.tab;
+		tabs.forEach(function (t) {
+			t.classList.remove('sap-beneficios__topico--ativo');
+			t.setAttribute('aria-selected', 'false');
 		});
+		panels.forEach(function (p) {
+			p.classList.remove('sap-beneficios__painel--ativo');
+			p.hidden = true;
+		});
+		tab.classList.add('sap-beneficios__topico--ativo');
+		tab.setAttribute('aria-selected', 'true');
+		var painel = document.getElementById('sap-ben-painel-' + idx);
+		if (painel) { painel.classList.add('sap-beneficios__painel--ativo'); painel.hidden = false; }
+	}
+	tabs.forEach(function (tab) {
+		tab.addEventListener('mouseenter', function () { ativar(this); });
+		tab.addEventListener('focus', function () { ativar(this); });
 	});
 }());
 </script>
