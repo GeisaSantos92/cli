@@ -176,7 +176,8 @@
 
 .cc-solucao {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 160px;
+	padding-bottom: 80px;
 }
 
 .cc-solucao__titulo {
@@ -272,7 +273,8 @@
 
 .cc-impl {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 104px;
+	padding-bottom: 80px;
 }
 
 .cc-impl__inner {
@@ -466,7 +468,8 @@
 
 .cc-boomi {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 80px;
+	padding-bottom: 80px;
 }
 
 .cc-boomi__inner {
@@ -511,7 +514,8 @@
 
 .cc-operacoes {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 80px;
+	padding-bottom: 80px;
 }
 
 .cc-operacoes__inner {
@@ -590,8 +594,8 @@
 
 .cc-dashboard {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
+	padding-top: 80px;
 	padding-bottom: 120px;
-	padding-top: var(--tam-secao-v, 80px);
 }
 
 .cc-dashboard__inner {
@@ -1554,7 +1558,8 @@
 
 .cc-vantagens {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 80px;
+	padding-bottom: 80px;
 }
 
 .cc-vantagens__header {
@@ -1672,7 +1677,8 @@
 
 .cc-pratica {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: var(--tam-secao-v, 80px) 0;
+	padding-top: 64px;
+	padding-bottom: 120px;
 }
 
 .cc-pratica__inner {
@@ -1749,7 +1755,8 @@
 
 .cc-parceiro {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
-	padding: 80px 0 160px;
+	padding-top: 80px;
+	padding-bottom: 80px;
 }
 
 .cc-parceiro__header {
@@ -2079,6 +2086,8 @@
 
 .compliance {
 	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 160px;
 }
 
 .compliance__grid {

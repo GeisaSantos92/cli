@@ -93,6 +93,8 @@
 
 .cs-cenarios {
 	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 120px;
 }
 
 .cs-cenarios__header {
@@ -184,7 +186,7 @@
 
 .cs-pilares {
 	background: var(--cor-fundo-suave);
-	padding-top: var(--secao-espacamento);
+	padding-top: 120px;
 	padding-bottom: 80px;
 }
 
@@ -271,7 +273,7 @@
 	/* Fundo azul-claro que desvanece para branco na base, fiel ao Figma. */
 	background: linear-gradient(to bottom, var(--cor-fundo-suave) 67%, #fff 100%);
 	padding-top: 80px;
-	padding-bottom: var(--secao-espacamento);
+	padding-bottom: 120px;
 }
 
 .cs-diferenciais__inner {

@@ -633,7 +633,7 @@
 	background:
 		linear-gradient(to bottom, transparent 64%, #e7efff 100%),
 		var(--cor-fundo-suave);
-	padding-top: 80px;
+	padding-top: 120px;
 	padding-bottom: 120px;
 }
 
