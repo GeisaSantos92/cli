@@ -134,6 +134,13 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/page-integracao-sap.css' )
 		);
+		wp_enqueue_script(
+			'cliconnect-integracao-sap',
+			get_theme_file_uri( '/assets/js/page-integracao-sap.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/page-integracao-sap.js' ),
+			true
+		);
 	}
 
 	// Página Contato.

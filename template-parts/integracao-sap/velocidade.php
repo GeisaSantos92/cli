@@ -81,9 +81,7 @@ if ( ! $titulo ) {
 
 					<div class="sap-vel-barra sap-vel-barra--cinza" role="list" aria-label="<?php echo esc_attr( $sem_label ); ?>">
 						<?php foreach ( $etapas_sem as $etapa ) : ?>
-							<div class="sap-vel-etapa sap-vel-etapa--cinza" role="listitem">
-								<?php echo esc_html( $etapa ); ?>
-							</div>
+							<div class="sap-vel-etapa sap-vel-etapa--cinza" role="listitem"><?php echo esc_html( $etapa ); ?></div>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -111,9 +109,7 @@ if ( ! $titulo ) {
 						$ativas     = count( $etapas_com );
 						foreach ( $etapas_com as $etapa ) :
 							?>
-							<div class="sap-vel-etapa sap-vel-etapa--ativa" role="listitem">
-								<?php echo esc_html( $etapa ); ?>
-							</div>
+							<div class="sap-vel-etapa sap-vel-etapa--ativa" role="listitem"><?php echo esc_html( $etapa ); ?></div>
 						<?php endforeach; ?>
 						<?php for ( $v = $ativas; $v < $total_cols; $v++ ) : ?>
 							<div class="sap-vel-etapa sap-vel-etapa--vazia" aria-hidden="true"></div>
