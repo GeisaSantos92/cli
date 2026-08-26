@@ -94,6 +94,22 @@ está em
 [`.claude/skills/criar-pagina/references/estrutura-pagina.md`](../../criar-pagina/references/estrutura-pagina.md),
 seção "Polylang: template da tradução". Verifique se já existe antes de adicionar.
 
+### 1b-bis. Cache de idiomas do Polylang
+
+O Polylang guarda a lista de idiomas — **incluindo o `page_on_front` de cada um** — em
+transient. Vincular o par pt/en pela linha de comando não invalida esse cache, e o
+sintoma é enganoso: `/en/` redireciona (301) para o slug da home traduzida em vez de
+servir a home, e como a tradução é uma página comum, ela não usa `front-page.php`.
+
+Depois de qualquer vínculo feito por WP-CLI:
+
+```php
+delete_transient( 'pll_languages_list' );
+```
+
+Ligue também `polylang['redirect_lang'] = true` para o inverso valer: `/en/home-en/`
+passa a redirecionar para `/en/`.
+
 ### 1c. Front page por idioma
 
 Cada idioma tem a **sua** home. Crie a página EN, vincule à home pt e confirme:
@@ -171,7 +187,24 @@ Cuidados:
 
 - **`pll_set_post_language()` antes de `pll_save_post_translations()`** — na ordem
   inversa o vínculo não grava.
+- **`pll_save_post_translations()` grava o grupo inteiro.** Com três idiomas, passar
+  só `array( 'pt' => X, 'es' => Y )` **apaga** o vínculo com o inglês, sem erro nenhum:
+  o seletor de idiomas passa a mandar para a home e o audit acusa a página como não
+  traduzida. Leia o grupo antes e some a sua entrada:
+
+  ```php
+  $grupo         = pll_get_post_translations( $origem_id );
+  $grupo['pt']   = $origem_id;
+  $grupo[ $lang ] = $traducao_id;
+  pll_save_post_translations( $grupo );
+  ```
+
+  Vale igual para `pll_save_term_translations()`.
 - **Slug do seed com sufixo `:en`**, senão o `upsert()` sobrescreve o post em português.
+- **Slug do post precisa ser diferente do português.** Compartilhar slug entre idiomas é
+  recurso do Polylang Pro; no free o WordPress acrescenta `-2` em silêncio. Defina o slug
+  em inglês explicitamente (`contact`, `careers`, `salesforce-integration`) em vez de
+  deixar o WordPress escolher.
 - **Campos ACF de link** apontando para URL interna precisam apontar para a **versão EN**
   do destino (`pll_get_post( $id, 'en' )`), senão o botão joga o visitante de volta ao pt.
 - **Anexos** podem ficar sem idioma; a mesma imagem serve aos dois — não duplique mídia.
@@ -186,18 +219,23 @@ nenhuma string de interface do tema está traduzida.
 
 ```bash
 # 1. Extrair as strings do código para um template .pot
-./bin/wp i18n make-pot . languages/cli.pot --domain=cli
+./bin/wp i18n make-pot . languages/cli.pot --domain=cli --exclude=.claude,assets
 
 # 2. Criar o .po de inglês (a partir do .pot) e traduzir as entradas
-cp languages/cli.pot languages/cli-en_US.po
+cp languages/cli.pot languages/en_US.po
 #    edite msgstr "" de cada msgid — ou use Poedit
 
 # 3. Compilar o .mo (é o arquivo que o WordPress lê)
 ./bin/wp i18n make-mo languages/
 ```
 
-- Nome do arquivo: `{text-domain}-{locale}.mo` → `cli-en_US.mo`. Errar o nome faz o
-  WordPress ignorar em silêncio.
+- **Nome do arquivo: `{locale}.mo` → `languages/en_US.mo`.** Esta é a pegadinha mais
+  cara desta camada. `{text-domain}-{locale}.mo` (`cli-en_US.mo`) vale para
+  `wp-content/languages/themes/`; para a pasta `languages/` **dentro do tema**, o core
+  procura só `{locale}.mo` — ver `_load_textdomain_just_in_time()` e o final de
+  `load_theme_textdomain()` em `wp-includes/l10n.php`. Com o nome errado,
+  `load_theme_textdomain()` devolve `true`, `is_textdomain_loaded()` devolve `false` e
+  o site segue em português sem um único aviso.
 - `load_theme_textdomain( 'cli', get_theme_file_path( '/languages' ) )` já está em
   `functions.php`.
 - `.po` **e** `.mo` vão para o git — o `.mo` é o que roda em produção.

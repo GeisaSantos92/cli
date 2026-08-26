@@ -25,6 +25,20 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
  */
 class Cliconnect_Seed {
 
+	use Cliconnect_Seed_I18n;
+	use Cliconnect_Seed_En_Paginas;
+	use Cliconnect_Seed_En_Cpts;
+	use Cliconnect_Seed_En_Faq;
+	use Cliconnect_Seed_En_Solucoes;
+	use Cliconnect_Seed_Es_Paginas;
+	use Cliconnect_Seed_Es_Cpts;
+	use Cliconnect_Seed_Es_Solucoes;
+	use Cliconnect_Seed_Es_Solucoes_Erp;
+	use Cliconnect_Seed_Es_Solucoes_Plataformas;
+	use Cliconnect_Seed_Es_Solucoes_Ia_Nuvem;
+	use Cliconnect_Seed_Es_Solucoes_Negocio;
+	use Cliconnect_Seed_Es_Faq;
+
 	/**
 	 * Chave de meta que marca objetos criados pelo seed.
 	 */
@@ -45,12 +59,27 @@ class Cliconnect_Seed {
 	 * [--reset]
 	 * : Apaga tudo que o seed criou antes de recriar.
 	 *
+	 * [--traducao]
+	 * : Roda só as camadas traduzidas, sem tocar no conteúdo em português.
+	 *
 	 * @param array $args       Argumentos posicionais.
 	 * @param array $assoc_args Flags.
 	 * @return void
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$reset = ! empty( $assoc_args['reset'] );
+
+		if ( ! empty( $assoc_args['traducao'] ) ) {
+			$this->traduzir_site(
+				$this->ids_das_paginas(),
+				$this->ids_dos_termos_solucao()
+			);
+
+			flush_rewrite_rules();
+			WP_CLI::success( 'Camadas traduzidas atualizadas.' );
+
+			return;
+		}
 
 		if ( $reset ) {
 			$this->reset();
@@ -76,9 +105,6 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( '— Preenchendo a home…' );
 		$this->preencher_home( $paginas['home'], $cases );
-
-		WP_CLI::log( '— Sincronizando home EN (Polylang)…' );
-		$this->sincronizar_polylang_front( $paginas['home'] );
 
 		WP_CLI::log( '— Preenchendo Trabalhe Conosco…' );
 		$this->preencher_trabalhe_conosco( $paginas['trabalhe-conosco'] );
@@ -307,6 +333,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Ajustando o Customizer…' );
 		$this->configurar_customizer();
 
+		WP_CLI::log( '— Criando as versões traduzidas…' );
+		$this->traduzir_site( $paginas, $termos_solucao );
+
 		flush_rewrite_rules();
 
 		WP_CLI::success( 'Conteúdo do CLI Connect populado.' );
@@ -530,6 +559,52 @@ class Cliconnect_Seed {
 		return $posts ? (int) $posts[0] : 0;
 	}
 
+	/**
+	 * Recupera os IDs das páginas do seed sem recriá-las.
+	 *
+	 * @return array<string,int> slug => ID.
+	 */
+	protected function ids_das_paginas() {
+		$ids = array();
+
+		foreach ( array_keys( $this->paginas_en() ) as $slug ) {
+			$ids[ $slug ] = $this->id_do_seed( 'pagina:' . $slug, 'page' );
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Recupera os IDs dos termos de solução do seed sem recriá-los.
+	 *
+	 * @return array<string,int> chave => term_id.
+	 */
+	protected function ids_dos_termos_solucao() {
+		$ids = array();
+
+		$termos = get_terms(
+			array(
+				'taxonomy'   => 'cli_categoria_solucao',
+				'hide_empty' => false,
+				'lang'       => '',
+			)
+		);
+
+		foreach ( (array) $termos as $termo ) {
+			if ( is_wp_error( $termo ) ) {
+				continue;
+			}
+
+			$chave = get_term_meta( $termo->term_id, self::META, true );
+
+			if ( $chave && ! preg_match( '/:[a-z]{2}(_[A-Z]{2})?$/', $chave ) ) {
+				$ids[ $chave ] = (int) $termo->term_id;
+			}
+		}
+
+		return $ids;
+	}
+
 	/* =====================================================================
 	   PÁGINAS
 	   ===================================================================== */
@@ -574,7 +649,6 @@ class Cliconnect_Seed {
 		update_option( 'page_for_posts', $ids['blog'] );
 
 		// Registrar a home PT no Polylang (sem copiar meta — feito depois do preencher_home).
-		$this->registrar_polylang_front( $ids['home'] );
 
 		WP_CLI::log( sprintf( '  páginas: %d (home #%d, blog #%d).', count( $ids ), $ids['home'], $ids['blog'] ) );
 

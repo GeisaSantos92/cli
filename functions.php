@@ -83,6 +83,7 @@ cliconnect_require( '/inc/icons.php' );
 cliconnect_require( '/inc/template-tags.php' );
 cliconnect_require( '/inc/menu-walker.php' );
 cliconnect_require( '/inc/helpers.php' );
+cliconnect_require( '/inc/polylang.php' );
 cliconnect_require( '/inc/pagination.php' );
 cliconnect_require( '/inc/login.php' );
 cliconnect_require( '/inc/smtp.php' );
@@ -101,5 +102,21 @@ cliconnect_require( '/inc/acf-fields-integracao-sap.php' );
 // inertes em produção/requisições web.
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	cliconnect_require( '/inc/cli/bootstrap.php' );
+
+	// Traits de tradução: precisam existir antes da classe que os usa.
+	cliconnect_require( '/inc/cli/seed-i18n.php' );
+	cliconnect_require( '/inc/cli/seed-en-paginas.php' );
+	cliconnect_require( '/inc/cli/seed-en-cpts.php' );
+	cliconnect_require( '/inc/cli/seed-en-faq.php' );
+	cliconnect_require( '/inc/cli/seed-en-solucoes.php' );
+	cliconnect_require( '/inc/cli/seed-es-paginas.php' );
+	cliconnect_require( '/inc/cli/seed-es-cpts.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-erp.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-plataformas.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-ia-nuvem.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-negocio.php' );
+	cliconnect_require( '/inc/cli/seed-es-faq.php' );
+
 	cliconnect_require( '/inc/cli/seed.php' );
 }
