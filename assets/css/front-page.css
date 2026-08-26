@@ -168,14 +168,15 @@
 
 .agentes__pista {
 	position: relative;
-	overflow: hidden;
+	overflow-x: clip;
+	overflow-y: visible;
 	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 	mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
 
 .agentes__trilha {
 	display: flex;
-	gap: 24px;
+	gap: 12px;
 	width: max-content;
 	animation: marquee 42s linear infinite;
 	will-change: transform;
@@ -238,7 +239,7 @@
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
 	color: var(--cor-positivo);
-	background: rgba(18, 183, 106, 0.12);
+	background: hsl(126deg 71% 89% / 50%);
 	border-radius: var(--raio-pill);
 	white-space: nowrap;
 }
@@ -304,8 +305,8 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 44px;
-	height: 32px;
+	width: 40px;
+	height: 40px;
 	padding: 4px;
 	border: 1px solid var(--cor-borda);
 	border-radius: 6px;
