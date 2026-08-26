@@ -1348,7 +1348,21 @@
 	.cc-depoimento__perfil {
 		flex-direction: row;
 		align-items: center;
-		width: auto;
+		width: 100%;
+		padding-right: 0;
+	}
+
+	.cc-depoimento__foto-wrap {
+		flex-shrink: 0;
+	}
+
+	.cc-depoimento__nome,
+	.cc-depoimento__cargo {
+		white-space: normal;
+	}
+
+	.cc-depoimento__quote-col {
+		padding-block: 24px;
 	}
 
 	.cc-depoimento__acao {
