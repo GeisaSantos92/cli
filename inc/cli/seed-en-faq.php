@@ -536,6 +536,326 @@ trait Cliconnect_Seed_En_Faq {
 				'Can integrations built in Power Automate be replaced?',
 				'<p>Yes. CLI Connect offers an enterprise integration layer that replaces Power Automate flows in scenarios with high volume, complex logic or a need for centralised governance. The migration happens gradually, with no interruption to the operation.</p>',
 			),
+
+			// Home.
+			'home-o-que-faz'                                 => array(
+				'What exactly does CLI Connect do?',
+				'<p>CLI Connect is an enterprise integration platform that connects ERPs, CRMs, e-commerce and other corporate systems. We use Boomi technology to build, monitor and maintain secure, scalable and auditable data flows between the systems in your company.</p>',
+			),
+			'home-quanto-tempo'                              => array(
+				'How long does the service take?',
+				'<p>The time varies with the complexity of the integrations. Simple projects can go live in a few weeks; more complex scenarios, with several systems and business rules, may take a few months. During the initial assessment we present a realistic timeline for your case.</p>',
+			),
+			'home-algo-parar'                                => array(
+				'What if something stops working?',
+				'<p>Our team monitors the integrations continuously. If a failure happens, we open a ticket automatically and call in the support team before you even notice the problem. You can also reach support at any time through our service channels.</p>',
+			),
+			'home-dependencia'                               => array(
+				'Will I depend on CLI for everything?',
+				'<p>No. The integrations are built on the Boomi platform, which is your property. CLI Connect takes care of running, evolving and supporting them — but you have access to the environment and can bring in other Boomi partners if you wish. Our model is partnership, not lock-in.</p>',
+			),
+			'home-contratacao'                               => array(
+				'How does the contract model work?',
+				'<p>We work with implementation projects (fixed scope) and managed service contracts (a monthly fee per monitored environment). The most suitable model depends on your moment: new clients usually start with the implementation and move to the managed service after go-live.</p>',
+			),
+			'home-criar-integracoes'                         => array(
+				'Can I build my own integrations in CLI Connect?',
+				'<p>Yes. The Boomi platform lets internal teams build and edit integrations. CLI Connect can train your team, run code reviews and take over the operation when needed. Many clients choose a hybrid model, developing in-house and counting on CLI for support and monitoring.</p>',
+			),
+
+			// HubSpot CRM.
+			'hubspot-crm-erp'                                => array(
+				'How do you sync closed deals from HubSpot straight into the ERP?',
+				'<p>When a deal is closed in HubSpot CRM, CLI Connect detects the event through a webhook and automatically triggers the configured integration flow — creating the order, contract or customer record in the ERP with no manual work. Field mapping is defined once and can be adjusted to the rules of your sales process.</p>',
+			),
+			'hubspot-crm-multiplos-portais'                  => array(
+				'Can several HubSpot portals from different business units be connected?',
+				'<p>Yes. CLI Connect supports several simultaneous connections to separate HubSpot CRM portals. Each business unit operates with its own set of credentials and independent flows, centralised on a single integration platform to make governance easier.</p>',
+			),
+			'hubspot-crm-rate-limit'                         => array(
+				'How do you handle the API rate limits?',
+				'<p>CLI Connect automatically manages the HubSpot API rate limits through queues and retry mechanisms with exponential backoff. In volume peaks — such as bulk imports or large-scale campaigns — the data is processed in a controlled way, with no errors or lost records.</p>',
+			),
+
+			// TOTVS Consinco.
+			'totvs-consinco-precos'                          => array(
+				'How do you sync prices between the physical store and the digital channel?',
+				'<p>CLI Connect creates a centralised flow that captures price and promotion changes directly in Consinco and distributes them automatically to the POS and the e-commerce platform. Any change to a price list, promotional campaign or discount is propagated in real time to every channel, removing price discrepancies and manual rework for the commercial teams.</p>',
+			),
+			'totvs-consinco-edi'                             => array(
+				'Can several suppliers be integrated over EDI quickly?',
+				'<p>Yes. CLI Connect offers EDI integration accelerators that standardise the onboarding of new suppliers. Instead of building a specific mapping for each partner, the platform reuses configurable EDI connectors that support the main formats in the sector. That cuts integration time from weeks to days and makes it easy to add new suppliers as the operation grows.</p>',
+			),
+			'totvs-consinco-reposicao'                       => array(
+				'How does automatic stock replenishment work?',
+				'<p>CLI Connect connects the sales turnover data in Consinco with the purchasing system and the suppliers, creating an automated replenishment cycle. When the stock of a product reaches the defined reorder point, the platform automatically triggers the purchase process with the corresponding supplier, with no manual intervention. That reduces empty shelves and excess inventory across the whole chain.</p>',
+			),
+
+			// TOTVS Linx.
+			'totvs-linx-bandeiras'                           => array(
+				'How do you consolidate sales from several Linx brands?',
+				'<p>CLI Connect creates a central hub that aggregates transactions from different Linx verticals — fashion, pharmacies, petrol stations, convenience — and consolidates the data in a single financial repository. Each brand keeps its own independent POS operation, but the results are consolidated automatically in the corporate ERP. That removes manual reconciliation and gives real-time visibility of the performance of the whole chain.</p>',
+			),
+			'totvs-linx-fidelidade'                          => array(
+				'Can it be integrated with third-party loyalty programmes?',
+				'<p>Yes. CLI Connect connects Linx to any CRM or loyalty platform through an API, whether proprietary or third-party solutions. The purchase data recorded at the POS is sent automatically to the loyalty programme, which processes points and benefits and returns the information to the till in real time. The integration is configurable and reusable for each new loyalty partner.</p>',
+			),
+			'totvs-linx-fiscal'                              => array(
+				'How does the centralised tax integration (SAT/NFC-e) work?',
+				'<p>CLI Connect centralises the issuing and storage of the tax documents generated by Linx POS — SAT, NF-e and NFC-e — in a single repository integrated with the ERP. Every document issued by the stores is automatically transmitted, validated and stored in a structured way, which makes ancillary obligations, audits and tax reconciliation easier without manual processes store by store.</p>',
+			),
+
+			// TOTVS RM.
+			'totvs-rm-admissao'                              => array(
+				'How do you orchestrate joiners and leavers between RM and other systems?',
+				'<p>CLI Connect creates a centralised process that runs automatically when a joiner or leaver is recorded in RM Folha. The flow provisions or deactivates the employee in Active Directory, notifies the benefits platform and syncs the profile in the LMS — all with no manual work. Every step is audited and can be monitored in real time on the platform dashboard.</p>',
+			),
+			'totvs-rm-nucleo'                                => array(
+				'Can RM Núcleo be connected to a third-party student portal?',
+				'<p>Yes. CLI Connect uses the native RM Núcleo web services to expose academic data securely to third-party portals. Enrolment, grades, attendance and academic history are synced automatically, with no manual exports or custom integrations. The external portal always receives up-to-date data straight from the source system.</p>',
+			),
+			'totvs-rm-dados-rh'                              => array(
+				'How does RM protect sensitive HR data?',
+				'<p>CLI Connect masks sensitive information in transit, such as tax ID, salary and employees\' medical data. Every movement is written to an audit log with the user, the timestamp and the data exchanged. Access is controlled by permission profiles, so each satellite system only receives the information it needs to operate.</p>',
+			),
+
+			// Arius ERP.
+			'arius-erp-mes'                                  => array(
+				'How do you connect Arius to the shop floor (MES)?',
+				'CLI Connect offers native connectors to integrate Arius ERP with MES systems, syncing production orders, material consumption and line status in real time, with no customisation in the ERP.',
+			),
+			'arius-erp-crm-pedidos'                          => array(
+				'Can it be integrated with a CRM to automate sales orders?',
+				'Yes. The integration between the CRM and Arius ERP means orders created in the CRM are automatically created in the ERP, removing rekeying and shortening the sales cycle.',
+			),
+			'arius-erp-estoque-multiplanta'                  => array(
+				'How does multi-plant stock consolidation work?',
+				'CLI Connect centralises stock data from several Arius ERP plants in a single view, with automatic syncing of movements and availability in real time.',
+			),
+
+			// CISS Poder ERP.
+			'ciss-poder-erp-pdv'                             => array(
+				'How do you sync POS sales with CISSPoder?',
+				'CLI Connect integrates the points of sale with CISSPoder in real time, automatically sending the transactions made in the stores to the ERP. That removes manual exports and keeps stock and finance always up to date.',
+			),
+			'ciss-poder-erp-ecommerce'                       => array(
+				'Can CISSPoder be integrated with e-commerce and marketplaces?',
+				'Yes. The integration connects CISSPoder to e-commerce platforms and marketplaces, syncing orders, stock and product information automatically, with centralised visibility of the digital operation.',
+			),
+			'ciss-poder-erp-edi'                             => array(
+				'How do you integrate CISSPoder with suppliers over EDI?',
+				'CLI Connect implements the exchange of electronic documents over EDI between CISSPoder and the suppliers, automating the receipt of orders, invoices and confirmations with no manual keying.',
+			),
+
+			// IFS Cloud.
+			'ifs-cloud-ia-preditiva'                         => array(
+				'How do you connect IFS maintenance data to a predictive AI agent?',
+				'CLI Connect exposes the EAM data in IFS Cloud as tools that AI agents can consume, so predictive models can reach work order history, asset status and IoT sensor alerts without coupling directly to the core of the system.',
+			),
+			'ifs-cloud-fsm-crm'                              => array(
+				'Can field service (FSM) be integrated with the CRM?',
+				'Yes. The integration connects the FSM module of IFS Cloud to the CRM of the operation, syncing tickets, scheduling and service history. That gives the sales and support teams a unified view of the customer with no duplicate records.',
+			),
+			'ifs-cloud-consolidacao-financeira'              => array(
+				'How does financial consolidation between IFS and the corporate ERP work?',
+				'CLI Connect collects entries, cost centres and accounting data from IFS Cloud and sends them automatically to the corporate ERP, removing manual exports. The process is audited and configurable per closing period, which keeps consolidated financial reporting consistent.',
+			),
+
+			// QAD Redzone.
+			'qad-redzone-oee'                                => array(
+				'How do you take OEE data from Redzone into QAD ERP?',
+				'CLI Connect captures the OEE indicators generated by QAD Redzone in real time and sends them automatically to QAD ERP, so managers can follow line performance directly in the corporate reports, with no manual exports.',
+			),
+			'qad-redzone-alertas'                            => array(
+				'Can line stoppage alerts be raised in real time?',
+				'Yes. The integration monitors the stoppage events recorded in Redzone and automatically triggers notifications for the maintenance, quality or operations teams. The alerts can be sent by email or message, or integrated with maintenance management systems.',
+			),
+			'qad-redzone-multiplanta'                        => array(
+				'How does multi-plant consolidation work?',
+				'CLI Connect aggregates productivity and quality data from the several plants using QAD Redzone in a centralised repository connected to the ERP and the corporate BI. That gives a unified view of the industrial operation without depending on manual consolidation plant by plant.',
+			),
+
+			// RP Info.
+			'rp-info-pdv'                                    => array(
+				'How do you sync front-of-store sales in real time?',
+				'CLI Connect integrates RPDV from RP Info with Flex ERP, automatically sending every checkout transaction in real time. That removes manual closing routines and keeps stock and billing always up to date, with no dependency on periodic syncing.',
+			),
+			'rp-info-edi'                                    => array(
+				'Can several suppliers be integrated over EDI?',
+				'Yes. CLI Connect implements the EDI protocol for exchanging orders, invoices and delivery confirmations between RP Info and suppliers using different formats and standards. The integration is configurable per partner and lets new suppliers be onboarded without changing the core of the system.',
+			),
+			'rp-info-multiloja'                              => array(
+				'How does multi-store sales consolidation work?',
+				'CLI Connect aggregates sales data from the several stores using RP Info and consolidates it in a single repository connected to the corporate BI. Managers get a unified view of performance by store, region and period, with no manual exports from each unit.',
+			),
+
+			// Viasoft.
+			'viasoft-consolidacao-financeira'                => array(
+				'How do you consolidate financial data across different Viasoft verticals?',
+				'CLI Connect centralises financial and tax data from several Viasoft verticals — agribusiness, fuels, manufacturing — in a single integration layer connected to the corporate BI. That allows consolidated analysis by business without depending on manual exports per system.',
+			),
+			'viasoft-defensivos-agricolas'                   => array(
+				'Can crop protection expiry control be integrated with the ERP?',
+				'Yes. CLI Connect integrates the crop protection control data in Agrotitan with Viasoft ERP, syncing expiry dates, stock movements and regulatory alerts automatically. That keeps you compliant with the requirements of the sector with no manual processes.',
+			),
+			'viasoft-integracao-fiscal'                      => array(
+				'How does tax integration by vertical work?',
+				'CLI Connect adapts the tax integration flows to the specific rules of each Viasoft vertical. For agribusiness, fuels and manufacturing, the NF-e, SPED and ancillary obligation processes are connected automatically to the ERP, respecting the tax particularities of each segment.',
+			),
+
+			// Onclick ERP.
+			'onclick-erp-estoque-omnichannel'                => array(
+				'How do you sync stock between the physical store and e-commerce in Onclick?',
+				'<p>CLI Connect monitors stock movement events in Onclick ERP and replicates the updates in real time to the configured digital channels — own e-commerce, marketplaces and POS. The flow is bidirectional: digital sales also debit the ERP stock automatically, removing discrepancies and empty shelves.</p>',
+			),
+			'onclick-erp-marketplaces'                       => array(
+				'Can several marketplaces be integrated at the same time?',
+				'<p>Yes. CLI Connect supports simultaneous connections to several marketplaces — such as Mercado Livre, Amazon, Shopee and others — all integrated with Onclick ERP in a single project. Each channel operates with its own mapping of categories, prices and shipping rules, with centralised monitoring on the platform.</p>',
+			),
+			'onclick-erp-forca-de-vendas'                    => array(
+				'How does sales force automation work?',
+				'<p>CLI Connect connects the sales force app to Onclick ERP, syncing orders, price lists, credit limits and stock availability in real time. Field reps work with up-to-date information and the orders are transmitted automatically to the ERP, with no rekeying or manual reconciliation.</p>',
+			),
+
+			// Propz.
+			'propz-dados-venda'                              => array(
+				'How do you feed Propz with sales data in real time?',
+				'<p>CLI Connect monitors sales events at the POS, in the e-commerce and in the ERP and sends them automatically to Propz in real time. Each transaction updates the shopper\'s purchase history, so the platform can recalculate offers and segments with no delay — with no manual export or periodic batch.</p>',
+			),
+			'propz-ofertas-canais'                           => array(
+				'Can the offers generated by Propz be returned to the app/SMS automatically?',
+				'<p>Yes. CLI Connect receives the campaigns published by Propz and distributes them automatically to the configured channels — app, SMS, email and push. The flow is bidirectional: sales data goes into Propz and the personalised offers go out to the digital channels with no manual work.</p>',
+			),
+			'propz-atribuicao-resultados'                    => array(
+				'How does campaign result attribution work in the CRM/ERP?',
+				'<p>CLI Connect captures the conversion events recorded by Propz — purchases made after an offer is activated — and returns them to the CRM and the ERP with the campaign attributes. That lets managers see ROI, conversion rate and incremental revenue directly in the management tools, with no manual data matching.</p>',
+			),
+
+			// Microsoft Teams.
+			'microsoft-teams-aprovacao-card'                 => array(
+				'How do you create a process approval straight in a Teams card?',
+				'<p>CLI Connect connects your corporate systems — ERP, CRM or ITSM — to Microsoft Teams through the Bot Framework and the Microsoft Graph API. When an approval event is triggered (a purchase, a holiday request, a proposal), the platform automatically posts an adaptive card in the configured channel. The approver clicks "Approve" or "Reject" straight in Teams and the answer is written to the source system with no email exchange at all.</p>',
+			),
+			'microsoft-teams-bot-erp'                        => array(
+				'Can an AI bot in Teams query the ERP?',
+				'<p>Yes. CLI Connect exposes ERP data such as stock, orders and customer status as secure endpoints that Teams bots can consume. With Azure AD authentication, team members look up corporate information by chatting with the bot in Teams — with no need to open the legacy system directly. The bot can also trigger actions, such as opening service orders or updating records.</p>',
+			),
+			'microsoft-teams-azure-ad'                       => array(
+				'How does Azure AD authentication work?',
+				'<p>CLI Connect uses the OAuth 2.0 flow of Azure Active Directory to authenticate the calls between Teams and the integrated systems. Each integration is registered as an application in Azure AD with permission scopes specific to each team and channel. That ensures only authorised users can trigger actions or look up data, respecting corporate security policy without exposing credentials in the flows.</p>',
+			),
+
+			// Snowflake.
+			'snowflake-ingestao'                             => array(
+				'How does CLI Connect feed Snowflake with ERP data?',
+				'<p>The integration uses the Boomi certified connector for Snowflake, transferring transactional ERP data — orders, billing and stock — continuously and traceably. The flows are configured visually, with no custom ETL scripts, and support bulk load for large volumes and streaming for real-time data.</p>',
+			),
+			'snowflake-seguranca'                            => array(
+				'Which security mechanisms are used in the connection to Snowflake?',
+				'<p>CLI Connect uses OAuth 2.0 and key-pair authentication to make sure only authorised systems reach Snowflake. All traffic is encrypted in transit and every access is audited, which keeps you compliant with the LGPD, the GDPR and the internal data governance policy of the company.</p>',
+			),
+			'snowflake-transformacoes'                       => array(
+				'Can data be transformed before it is loaded into Snowflake?',
+				'<p>Yes. The Boomi integration flows let you normalise, enrich and filter data before sending it to Snowflake. That includes format conversions, deduplication, field validation and schema mapping, so only quality data reaches the Data Warehouse for analysis.</p>',
+			),
+
+			// Databricks.
+			'databricks-ingestao'                            => array(
+				'How do you take operational data into Databricks in real time?',
+				'<p>CLI Connect uses the Boomi certified connector for Databricks, transferring data from ERP, CRM and legacy systems continuously and traceably. The flows are configured visually, with no custom ETL scripts, and support batch and streaming ingestion, so the data feeding the machine learning models is always up to date.</p>',
+			),
+			'databricks-writeback'                           => array(
+				'Can the result of an AI model be returned to the ERP automatically?',
+				'<p>Yes. Once Databricks generates scores, forecasts or recommendations, the integration writes the results back into the source systems — ERP, CRM or operational platforms — automatically. That closes the loop between data and action with no manual work, speeding up decisions in sales, supply chain and finance.</p>',
+			),
+			'databricks-governanca'                          => array(
+				'How does the governance of sensitive data work in that flow?',
+				'<p>CLI Connect uses the official Databricks APIs with token authentication and Delta Sharing to control precisely which data reaches the models. Sensitive fields can be masked or excluded before ingestion, which keeps you compliant with the LGPD and the GDPR and leaves a full audit trail of every access to the analytics environment.</p>',
+			),
+
+			// AWS.
+			'aws:1'                                          => array(
+				'Which AWS services have a native connector in CLI Connect powered by Boomi?',
+				'The platform offers native connectors for the main AWS services, including S3, Lambda, SQS, SNS, EventBridge, DynamoDB, RDS, API Gateway and more. These connectors remove the need for specific development to integrate your AWS ecosystem.',
+			),
+			'aws:2'                                          => array(
+				'How does CLI Connect powered by Boomi help with an incremental migration to AWS?',
+				'The platform lets you connect legacy systems and AWS workloads at the same time, which makes a gradual migration possible without interrupting the operation. You can evolve your architecture in stages, keeping the existing integrations running while new cloud services are adopted.',
+			),
+			'aws:3'                                          => array(
+				'How does authentication through IAM/STS work?',
+				'The integration uses IAM roles and policies to authenticate the connections to AWS services, with support for STS for temporary credentials. That gives controlled and auditable access, following AWS security best practice without storing fixed credentials.',
+			),
+
+			// Microsoft Azure.
+			'microsoft-azure:1'                              => array(
+				'Which Azure services have a native connector in CLI Connect powered by Boomi?',
+				'The platform offers native connectors for the main Azure services, including Event Hubs, Service Bus, CosmosDB, Blob Storage, Azure AD, Key Vault, Functions and API Management. These connectors remove the need for specific development to integrate your Microsoft ecosystem.',
+			),
+			'microsoft-azure:2'                              => array(
+				'How does secret management through Key Vault work?',
+				'CLI Connect powered by Boomi integrates natively with Azure Key Vault to store and retrieve the secrets, keys and certificates used in the connections. That removes fixed credentials from the pipelines and makes sure every access is auditable and rotated in line with corporate security policy.',
+			),
+			'microsoft-azure:3'                              => array(
+				'Can Azure be combined with Dynamics 365 and Teams in the same pipeline?',
+				'Yes. The platform lets you orchestrate flows involving several services of the Microsoft ecosystem in a single pipeline — for example, capturing an event in Azure Event Hubs, updating a record in Dynamics 365 and notifying a team through Teams, all integrated and with no custom code.',
+			),
+
+			// Google Cloud.
+			'google-cloud:1'                                 => array(
+				'How does CLI Connect powered by Boomi speed up the adoption of BigQuery and Vertex AI?',
+				'The platform offers native connectors for BigQuery and Vertex AI, so data from ERP, CRM and operational systems can be sent straight to analytics and AI models. That removes custom integrations and shortens the delivery time of data and artificial intelligence initiatives.',
+			),
+			'google-cloud:2'                                 => array(
+				'Can you run reverse ETL from BigQuery to operational systems?',
+				'Yes. CLI Connect powered by Boomi supports bidirectional flows, so analytical results from BigQuery can be sent back to operational systems such as the ERP and the CRM. That makes sure data-driven decisions are automatically reflected in the business processes.',
+			),
+			'google-cloud:3'                                 => array(
+				'How does the event-driven architecture through Pub/Sub work?',
+				'The platform integrates natively with Google Cloud Pub/Sub to distribute events between applications asynchronously and decoupled. You can configure triggers that publish or consume Pub/Sub messages inside complete integration flows, with no custom code.',
+			),
+
+			// Gemini.
+			'gemini-conectar-sistemas'                       => array(
+				'How do you connect Gemini to the company systems?',
+				'<p>The connection is made through the CLI Connect integration layer: Gemini reaches systems, databases and corporate processes through the MCP Server, which exposes those resources as tools. There is no need to develop APIs or change the source systems — the platform manages authentication, permissions and traceability end to end.</p>',
+			),
+			'gemini-dados-internos'                          => array(
+				'Can internal data be used to give Gemini context?',
+				'<p>Yes. CLI Connect connects Gemini to internal sources — ERP, CRM, databases, documents and wikis — sending the relevant context with each query. The data only travels during the execution and is not used to retrain the model, which preserves privacy and compliance.</p>',
+			),
+			'gemini-executar-acoes'                          => array(
+				'Can Gemini run actions in the connected systems?',
+				'<p>Yes. Beyond looking up information, Gemini can run actions — such as creating orders, updating records or triggering processes — as long as the corresponding tool is published on the MCP Server and the user profile has permission. Every execution is logged on the platform for auditing.</p>',
+			),
+
+			// Claude.
+			'claude-conectar-documentos'                     => array(
+				'How do you connect Claude to the company documents and data?',
+				'<p>The connection is made through the CLI Connect integration layer: Claude reaches documents, databases and systems through the MCP Server, which exposes the corporate resources as tools. There is no need to develop APIs or change the source systems — the platform creates the secure channel and manages authentication, permissions and traceability.</p>',
+			),
+			'claude-analisar-contratos'                      => array(
+				'Can Claude be used to analyse contracts and other documents?',
+				'<p>Yes. Claude is especially effective at reading and interpreting long documents — contracts, reports, policies and historical records. The CLI Connect platform sends the relevant context to the model and returns the insights in a structured form, without storing the content of the documents after the execution.</p>',
+			),
+			'claude-executar-acoes'                          => array(
+				'Can Claude run actions in the systems?',
+				'<p>Yes. Beyond looking up and analysing information, Claude can run actions — such as creating an order in the ERP, updating a record in the CRM or opening a ticket — as long as the corresponding tool is published on the MCP Server and the user profile has permission. Every execution is logged on the platform for auditing.</p>',
+			),
+
+			// ChatGPT.
+			'chatgpt-conectar-sistemas'                      => array(
+				'How do you connect ChatGPT to the company systems?',
+				'<p>The connection is made through the CLI Connect integration layer: ChatGPT reaches the systems through the MCP Server, which exposes the corporate processes as tools. There is no need to develop APIs or change the source systems — the platform creates the secure channel and manages authentication, permissions and traceability end to end.</p>',
+			),
+			'chatgpt-dados-treinamento'                      => array(
+				'Is company data used to train the models?',
+				'<p>No. The data only travels while a query is running and is not retained by OpenAI for training when the API is used in a corporate environment. On top of that, CLI Connect controls which information reaches the model, so sensitive data can be anonymised and masked before any call.</p>',
+			),
+			'chatgpt-executar-acoes'                         => array(
+				'Can ChatGPT run actions in the systems?',
+				'<p>Yes. Beyond looking up information, ChatGPT can run actions — such as creating an order in the ERP, updating a record in the CRM or opening a ticket in ServiceNow — as long as the corresponding tool is published on the MCP Server and the user profile has permission for that action. Every execution is logged on the platform for auditing.</p>',
+			),
 		);
 	}
 

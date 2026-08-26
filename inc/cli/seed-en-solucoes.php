@@ -85,6 +85,25 @@ trait Cliconnect_Seed_En_Solucoes {
 			'sap-ecc'                            => array( 'SAP ECC', 'sap-ecc-en', 'sap-ecc-integration' ),
 			'oracle-netsuite'                    => array( 'Oracle NetSuite', 'oracle-netsuite-en', 'oracle-netsuite-integration' ),
 
+			// Tecnologia — catálogo de tecnologias e landings de IA.
+			'hubspot-crm'                        => array( 'HubSpot CRM', 'hubspot-crm-en', 'hubspot-crm-integration' ),
+			'totvs-consinco'                     => array( 'TOTVS Consinco', 'totvs-consinco-en', 'totvs-consinco-integration' ),
+			'totvs-linx'                         => array( 'TOTVS Linx', 'totvs-linx-en', 'totvs-linx-integration' ),
+			'totvs-rm'                           => array( 'TOTVS RM', 'totvs-rm-en', 'totvs-rm-integration' ),
+			'arius-erp'                          => array( 'Arius ERP', 'arius-erp-en', 'arius-erp-integration' ),
+			'ciss-poder-erp'                     => array( 'CISS Poder ERP', 'ciss-poder-erp-en', 'ciss-poder-erp-integration' ),
+			'ifs-cloud'                          => array( 'IFS Cloud', 'ifs-cloud-en', 'ifs-cloud-integration' ),
+			'qad-redzone'                        => array( 'QAD Redzone', 'qad-redzone-en', 'qad-redzone-integration' ),
+			'rp-info'                            => array( 'RP Info', 'rp-info-en', 'rp-info-integration' ),
+			'viasoft'                            => array( 'Viasoft', 'viasoft-en', 'viasoft-integration' ),
+			'onclick-erp'                        => array( 'Onclick ERP', 'onclick-erp-en', 'onclick-erp-integration' ),
+			'propz'                              => array( 'Propz', 'propz-en', 'propz-integration' ),
+			'microsoft-teams'                    => array( 'Microsoft Teams', 'microsoft-teams-en', 'microsoft-teams-integration' ),
+			'snowflake'                          => array( 'Snowflake', 'snowflake-en', 'snowflake-integration' ),
+			'databricks'                         => array( 'Databricks', 'databricks-en', 'databricks-integration' ),
+			'microsoft-azure'                    => array( 'Microsoft Azure', 'microsoft-azure-en', 'microsoft-azure-integration' ),
+			'gemini'                             => array( 'Gemini', 'gemini-en', 'gemini-integration' ),
+
 			// Indústria.
 			'servicos-financeiros'               => array( 'Financial Services', 'financial-services' ),
 			'manufatura'                         => array( 'Manufacturing', 'manufacturing' ),
@@ -2873,6 +2892,1095 @@ trait Cliconnect_Seed_En_Solucoes {
 				'solucao_acel_topico_1'    => 'Connect systems quickly',
 				'solucao_acel_topico_2'    => 'Reuse NetSuite integrations',
 				'solucao_acel_topico_3'    => 'Speed up new projects',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Gemini.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_gemini() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'integrate your Gemini',
+				'solucao_hero_titulo'      => 'Connect Gemini to your enterprise systems and data',
+				'solucao_hero_corpo'       => 'Gemini reaches your data, orchestrates systems and takes action precisely — all of it integrated into how the company runs.',
+				'solucao_pilares_titulo'   => 'Make Gemini part of the operation',
+				'solucao_pilares_1_titulo' => 'Connect Gemini to your data',
+				'solucao_pilares_1_desc'   => 'Bring information from enterprise systems to the model and generate answers based on the real context of the operation.',
+				'solucao_pilares_2_titulo' => 'Orchestrate multiple applications',
+				'solucao_pilares_2_desc'   => 'Combine Gemini with the ERP, CRM, databases and other applications in automated flows.',
+				'solucao_pilares_3_titulo' => 'Query systems in natural language',
+				'solucao_pilares_3_desc'   => 'Let teams find customer, order and operational information without moving between different systems.',
+				'solucao_casos_titulo'     => 'Apply Gemini to your business processes',
+				'solucao_casos_1_titulo'   => 'Query ERP data with AI',
+				'solucao_casos_2_titulo'   => 'Analyse documents automatically',
+				'solucao_casos_3_titulo'   => 'Automate customer service',
+				'solucao_casos_4_titulo'   => 'Classify requests',
+				'solucao_casos_5_titulo'   => 'Generate operational analysis',
+				'solucao_diagrama_titulo'  => 'A new way to connect AI to your systems',
+				'solucao_int_eyebrow'      => 'integrations',
+				'solucao_int_titulo'       => 'Integrate all of your systems with Gemini',
+				'solucao_int_subtitulo'    => 'Thousands of integrations ready to use',
+				'solucao_dif_titulo'       => 'Integrate AI with control over your data',
+				'solucao_dif_corpo'        => 'Connect Gemini to the company systems with control over data, access and actions, to scale artificial intelligence without losing governance.',
+				'solucao_dif_topico_1'     => 'Control which data reaches the models',
+				'solucao_dif_topico_2'     => 'Protect data in transit and at rest',
+				'solucao_dif_topico_3'     => 'Apply rules before running actions',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Centralise AI and integrations on one platform',
+				'solucao_plat_corpo'       => 'Avoid building isolated connections for every use case. Centralise Gemini, systems and processes to scale new agents on the same architecture.',
+				'solucao_plat_topico_1'    => 'Connect Gemini to multiple systems',
+				'solucao_plat_topico_2'    => 'Reuse connections in new agents',
+				'solucao_plat_topico_3'    => 'Orchestrate AI inside the processes',
+				'solucao_acel_eyebrow'     => 'MCP server',
+				'solucao_acel_titulo'      => 'Give Gemini tools without having to develop APIs',
+				'solucao_acel_corpo'       => 'Turn enterprise processes into Tools for Gemini, defining exactly which information it can query and which actions it can run.',
+				'solucao_acel_topico_1'    => 'Turn processes into AI tools',
+				'solucao_acel_topico_2'    => 'Control inputs, outputs and information',
+				'solucao_acel_topico_3'    => 'Expose it all through the MCP Server',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Microsoft Azure.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_microsoft_azure() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Azure',
+				'solucao_hero_titulo'      => 'Speed up Azure adoption while keeping your core connected',
+				'solucao_hero_corpo'       => 'Integrate Azure services, SAP, Salesforce and legacy systems on one platform to evolve your cloud architecture without interrupting the operations you already run.',
+				'solucao_pilares_titulo'   => 'Evolve your Microsoft architecture at scale',
+				'solucao_pilares_1_titulo' => 'Connect Azure services natively',
+				'solucao_pilares_1_desc'   => 'Use ready-made connectors for Azure data and messaging.',
+				'solucao_pilares_2_titulo' => 'Speed up real-time events',
+				'solucao_pilares_2_desc'   => 'Adopt event-driven architectures without rebuilding integrations.',
+				'solucao_pilares_3_titulo' => 'Integrate the Microsoft ecosystem',
+				'solucao_pilares_3_desc'   => 'Connect Azure, Dynamics 365, Teams and Azure AD.',
+				'solucao_casos_titulo'     => 'Automate processes connected to Azure',
+				'solucao_casos_1_titulo'   => 'Capture events in real time',
+				'solucao_casos_1_desc'     => 'Send business events to analytics using Event Hubs.',
+				'solucao_casos_2_titulo'   => 'Decouple systems with queues',
+				'solucao_casos_2_desc'     => 'Use Service Bus to connect legacy systems and new services.',
+				'solucao_casos_3_titulo'   => 'Store data with low latency',
+				'solucao_casos_3_desc'     => 'Use CosmosDB for high-performance global scenarios.',
+				'solucao_casos_4_titulo'   => 'Automate corporate files',
+				'solucao_casos_4_desc'     => 'Process documents using Blob Storage and DataLake.',
+				'solucao_casos_5_titulo'   => 'Centralise secrets management',
+				'solucao_casos_5_desc'     => 'Protect integration credentials with Azure Key Vault.',
+				'solucao_casos_cta_texto'  => 'Talk to a specialist',
+				'solucao_dif_titulo'       => 'Azure integrations with native security',
+				'solucao_dif_corpo'        => 'Connect Azure services using OAuth2, Azure AD and Key Vault to control access and protect credentials across every flow.',
+				'solucao_dif_topico_1'     => 'Authenticate through Azure AD',
+				'solucao_dif_topico_2'     => 'Protect secrets with Key Vault',
+				'solucao_dif_topico_3'     => 'Control access centrally',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect the whole Microsoft ecosystem',
+				'solucao_plat_corpo'       => 'Centralise integrations between Azure, Microsoft applications and enterprise systems to speed up new initiatives with no added complexity.',
+				'solucao_plat_topico_1'    => 'Integrate data and applications',
+				'solucao_plat_topico_2'    => 'Reuse existing pipelines',
+				'solucao_plat_topico_3'    => 'Evolve the architecture gradually',
+				'solucao_acel_titulo'      => 'Start with Azure events already structured',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect business events to Event Hubs and Service Bus, speeding up your event-driven architecture.',
+				'solucao_acel_topico_1'    => 'Set events up quickly',
+				'solucao_acel_topico_2'    => 'Cut back on custom development',
+				'solucao_acel_topico_3'    => 'Speed up cloud adoption',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Databricks.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_databricks() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Databricks',
+				'solucao_hero_titulo'      => 'Connect Databricks to the core of the business with data always ready for AI',
+				'solucao_hero_corpo'       => 'Integrate Databricks with your transactional, ERP and CRM systems to feed machine learning models in real time and turn enterprise data into intelligent decisions.',
+				'solucao_pilares_titulo'   => 'Get data ready for advanced intelligence',
+				'solucao_pilares_1_titulo' => 'Ingest data continuously',
+				'solucao_pilares_1_desc'   => 'Connect operational systems to Databricks in real time.',
+				'solucao_pilares_2_titulo' => 'Feed AI models',
+				'solucao_pilares_2_desc'   => 'Make current data available to machine learning and intelligent agents.',
+				'solucao_pilares_3_titulo' => 'Turn predictions into actions',
+				'solucao_pilares_3_desc'   => 'Send analytical results back to the ERP and CRM automatically.',
+				'solucao_casos_titulo'     => 'Apply intelligence with connected data',
+				'solucao_casos_1_titulo'   => 'Train predictive models',
+				'solucao_casos_1_desc'     => 'Use ERP and CRM data to predict churn, demand and risk.',
+				'solucao_casos_2_titulo'   => 'Give context to AI agents',
+				'solucao_casos_2_desc'     => 'Feed intelligent agents with current enterprise information.',
+				'solucao_casos_3_titulo'   => 'Send scores to the systems',
+				'solucao_casos_3_desc'     => 'Return model results to support operational decisions.',
+				'solucao_casos_4_titulo'   => 'Consolidate analytical data',
+				'solucao_casos_4_desc'     => 'Bring multiple sources together for advanced enterprise analysis.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make enterprise data available to AI agents without exposing the core of the systems.',
+				'solucao_dif_titulo'       => 'Data prepared for AI, securely',
+				'solucao_dif_corpo'        => 'Connect Databricks through APIs and Delta Sharing while keeping secure authentication, governance and protection of the sensitive data the models use.',
+				'solucao_dif_topico_1'     => 'Use the official Databricks APIs',
+				'solucao_dif_topico_2'     => 'Protect sensitive data',
+				'solucao_dif_topico_3'     => 'Control access by token',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect data and decisions on one platform',
+				'solucao_plat_corpo'       => 'Centralise the connection between operational systems, Databricks and business applications to close the loop between data and action.',
+				'solucao_plat_topico_1'    => 'Integrate enterprise data',
+				'solucao_plat_topico_2'    => 'Reuse existing pipelines',
+				'solucao_plat_topico_3'    => 'Apply AI across the processes',
+				'solucao_acel_titulo'      => 'Start with AI flows already structured',
+				'solucao_acel_corpo'       => 'Use a ready-made template to take data into Databricks, generate analytical results and return actions to the enterprise systems.',
+				'solucao_acel_topico_1'    => 'Connect data quickly',
+				'solucao_acel_topico_2'    => 'Speed up model training',
+				'solucao_acel_topico_3'    => 'Automate intelligent actions',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Snowflake.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_snowflake() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Snowflake',
+				'solucao_hero_titulo'      => 'Connect Snowflake to the core of the business with data always ready for analysis',
+				'solucao_hero_corpo'       => 'Integrate Snowflake with your transactional, CRM and ERP systems to feed analytical pipelines in real time and clear the data silos that hold strategic decisions back.',
+				'solucao_pilares_titulo'   => 'Unified data, faster decisions',
+				'solucao_pilares_1_titulo' => 'Continuous data ingestion',
+				'solucao_pilares_1_desc'   => 'Feed Snowflake with data from the ERP, CRM and legacy systems in an automated, reliable way.',
+				'solucao_pilares_2_titulo' => 'Transformations with no extra code',
+				'solucao_pilares_2_desc'   => 'Process, normalise and enrich data before loading it into Snowflake using Boomi visual flows.',
+				'solucao_pilares_3_titulo' => 'Centralised governance',
+				'solucao_pilares_3_desc'   => 'Control which data reaches Snowflake, with source traceability and compliance with LGPD and GDPR.',
+				'solucao_casos_titulo'     => 'Turn data into competitive advantage',
+				'solucao_casos_1_titulo'   => 'Sync the ERP with the Data Cloud',
+				'solucao_casos_1_desc'     => 'Move financial and operational transactions from the ERP to Snowflake in real time for up-to-date analysis.',
+				'solucao_casos_2_titulo'   => 'Unify CRM data',
+				'solucao_casos_2_desc'     => 'Consolidate leads, opportunities and customer history in Snowflake for a 360° view of the sales pipeline.',
+				'solucao_casos_3_titulo'   => 'Automate marketing pipelines',
+				'solucao_casos_3_desc'     => 'Feed attribution and segmentation models with campaign data centralised in Snowflake.',
+				'solucao_casos_4_titulo'   => 'Integrate e-commerce data',
+				'solucao_casos_4_desc'     => 'Send orders, returns and browsing behaviour to Snowflake and feed sales dashboards in real time.',
+				'solucao_casos_5_titulo'   => 'Feed AI agents',
+				'solucao_casos_5_desc'     => 'Make structured Snowflake data available to machine learning models and AI agents that automate operational decisions.',
+				'solucao_dif_titulo'       => 'Native integration with the Snowflake Data Cloud',
+				'solucao_dif_corpo'        => 'Connect Snowflake using the certified Boomi connector with support for OAuth 2.0 and key-pair authentication, for maximum security in moving data.',
+				'solucao_dif_topico_1'     => 'Certified Boomi connector for Snowflake',
+				'solucao_dif_topico_2'     => 'OAuth 2.0 and key-pair authentication',
+				'solucao_dif_topico_3'     => 'Support for bulk load and streaming',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'A central hub for all of your data',
+				'solucao_plat_corpo'       => 'With Boomi as the integration layer, you connect any system to Snowflake with no custom ETL scripts, speeding up the delivery of insight and reducing the technical debt of fragmented pipelines.',
+				'solucao_plat_topico_1'    => 'Clear out fragmented ETL pipelines',
+				'solucao_plat_topico_2'    => 'Connect any system to Snowflake',
+				'solucao_plat_topico_3'    => 'Speed up time-to-insight for the data team',
+				'solucao_acel_titulo'      => 'Start ingesting data into Snowflake today',
+				'solucao_acel_corpo'       => 'Use ready-made templates to connect the ERP, CRM and operational systems to Snowflake with structured flows and end-to-end traceability.',
+				'solucao_acel_topico_1'    => 'Connect the ERP and CRM quickly',
+				'solucao_acel_topico_2'    => 'Reuse data pipelines',
+				'solucao_acel_topico_3'    => 'Speed up Data Cloud projects',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Microsoft Teams.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_microsoft_teams() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Microsoft Teams',
+				'solucao_hero_titulo'      => 'Turn Microsoft Teams into a channel for taking action on processes',
+				'solucao_hero_corpo'       => 'Connect approvals, notifications and AI agents to the internal systems to speed up decisions without depending on email or manual processes.',
+				'solucao_pilares_titulo'   => 'Bring processes to where the teams already work',
+				'solucao_pilares_1_titulo' => 'Approve processes in Teams',
+				'solucao_pilares_1_desc'   => 'Run approvals straight from adaptive cards.',
+				'solucao_pilares_2_titulo' => 'Talk to the internal systems',
+				'solucao_pilares_2_desc'   => 'Let bots query enterprise data inside Teams.',
+				'solucao_pilares_3_titulo' => 'Cut back on manual handovers',
+				'solucao_pilares_3_desc'   => 'Replace email with automated actions.',
+				'solucao_casos_titulo'     => 'Automate processes inside Teams',
+				'solucao_casos_1_titulo'   => 'Approve requests in Teams',
+				'solucao_casos_1_desc'     => 'Send purchase or holiday approvals to the ERP.',
+				'solucao_casos_2_titulo'   => 'Raise incident alerts automatically',
+				'solucao_casos_2_desc'     => 'Notify teams about ServiceNow or Freshservice events.',
+				'solucao_casos_3_titulo'   => 'Query systems with AI',
+				'solucao_casos_3_desc'     => 'Let bots look up stock and orders.',
+				'solucao_casos_4_titulo'   => 'Monitor critical events',
+				'solucao_casos_4_desc'     => 'Trigger alerts for SLAs and important operations.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make enterprise data available to AI agents through Teams using governed APIs and MCP Servers.',
+				'solucao_dif_titulo'       => 'Secure integrations with Microsoft Teams',
+				'solucao_dif_corpo'        => 'Connect Teams through the Microsoft Graph API and Bot Framework using Azure AD authentication, with control by team and channel.',
+				'solucao_dif_topico_1'     => 'Use the Microsoft Graph API.',
+				'solucao_dif_topico_2'     => 'Authenticate through Azure AD.',
+				'solucao_dif_topico_3'     => 'Control access by channel.',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect communication and operation',
+				'solucao_plat_corpo'       => 'Centralise business events on one platform to bring teams closer to the enterprise systems.',
+				'solucao_plat_topico_1'    => 'Integrate the internal systems.',
+				'solucao_plat_topico_2'    => 'Centralise operational notifications.',
+				'solucao_plat_topico_3'    => 'Automate actions in Teams.',
+				'solucao_acel_titulo'      => 'Start with processes already connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to turn enterprise processes into approvals and notifications inside Teams.',
+				'solucao_acel_topico_1'    => 'Set flows up quickly.',
+				'solucao_acel_topico_2'    => 'Reuse approved templates.',
+				'solucao_acel_topico_3'    => 'Speed up operational decisions.',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Propz.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_propz() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Propz',
+				'solucao_hero_titulo'      => 'Connect Propz intelligence to your company data',
+				'solucao_hero_corpo'       => 'Integrate the POS, e-commerce and ERP to feed retail personalisation with current data and activate offers on the right channel.',
+				'solucao_pilares_titulo'   => 'Turn data into personalised experiences',
+				'solucao_pilares_1_titulo' => 'Feed data in real time',
+				'solucao_pilares_1_desc'   => 'Connect POS, e-commerce and ERP sales to Propz.',
+				'solucao_pilares_2_titulo' => 'Activate offers automatically',
+				'solucao_pilares_2_desc'   => 'Send personalised campaigns to the digital channels.',
+				'solucao_pilares_3_titulo' => 'Centralise purchase history',
+				'solucao_pilares_3_desc'   => 'Unify multichannel data to understand consumers.',
+				'solucao_casos_titulo'     => 'Automate personalisation processes',
+				'solucao_casos_1_titulo'   => 'Send sales to Propz',
+				'solucao_casos_1_desc'     => 'Update consumer intelligence with sales data.',
+				'solucao_casos_2_titulo'   => 'Distribute personalised offers',
+				'solucao_casos_2_desc'     => 'Activate Propz campaigns in app, SMS and email.',
+				'solucao_casos_3_titulo'   => 'Consolidate multichannel purchases',
+				'solucao_casos_3_desc'     => 'Unify history for customer segmentation.',
+				'solucao_casos_4_titulo'   => 'Measure campaign results',
+				'solucao_casos_4_desc'     => 'Return campaign data to the CRM and ERP.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make consumer data available to AI agents using governed APIs and MCP Servers.',
+				'solucao_dif_titulo'       => 'Secure integrations for customer data',
+				'solucao_dif_corpo'        => 'Connect Propz through the REST API with data governance and controls aligned to LGPD requirements.',
+				'solucao_dif_topico_1'     => 'Protect consumer data.',
+				'solucao_dif_topico_2'     => 'Control access per integration.',
+				'solucao_dif_topico_3'     => 'Govern data in line with LGPD.',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect data and personalisation',
+				'solucao_plat_corpo'       => 'Centralise data going in and out between Propz, the digital channels and the internal systems with no manual processes.',
+				'solucao_plat_topico_1'    => 'Integrate activation channels.',
+				'solucao_plat_topico_2'    => 'Centralise commercial data.',
+				'solucao_plat_topico_3'    => 'Automate personalised journeys.',
+				'solucao_acel_titulo'      => 'Start with personalised retail',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect sales, Propz and the activation channels in one complete flow.',
+				'solucao_acel_topico_1'    => 'Connect data quickly.',
+				'solucao_acel_topico_2'    => 'Reuse campaign flows.',
+				'solucao_acel_topico_3'    => 'Speed up commercial personalisation.',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Onclick ERP.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_onclick_erp() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Onclick',
+				'solucao_hero_titulo'      => 'Connect the Onclick ERP to e-commerce, manufacturing and distribution',
+				'solucao_hero_corpo'       => 'Integrate retail, marketplaces, sales and tax processes to keep stock, orders and operations in sync across every channel.',
+				'solucao_pilares_titulo'   => 'Get more out of Onclick',
+				'solucao_pilares_1_titulo' => 'Connect every module',
+				'solucao_pilares_1_desc'   => 'Integrate retail, e-commerce, manufacturing, distribution and services.',
+				'solucao_pilares_2_titulo' => 'Sync omnichannel stock',
+				'solucao_pilares_2_desc'   => 'Keep physical stores and digital channels always up to date.',
+				'solucao_pilares_3_titulo' => 'Centralise tax processes',
+				'solucao_pilares_3_desc'   => 'Integrate tax and accounting information automatically.',
+				'solucao_casos_titulo'     => 'Automate processes with Onclick',
+				'solucao_casos_1_titulo'   => 'Sync digital orders',
+				'solucao_casos_1_desc'     => 'Send e-commerce orders straight into the ERP.',
+				'solucao_casos_2_titulo'   => 'Integrate marketplaces',
+				'solucao_casos_2_desc'     => 'Centralise stock and sales from multiple channels.',
+				'solucao_casos_3_titulo'   => 'Automate the sales force',
+				'solucao_casos_3_desc'     => 'Connect mobile reps to the ERP processes.',
+				'solucao_casos_4_titulo'   => 'Consolidate service orders',
+				'solucao_casos_4_desc'     => 'Centralise service operations in a single flow.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make ERP data available to AI agents using governed APIs and MCP Servers.',
+				'solucao_dif_titulo'       => 'Integrations shaped around Onclick',
+				'solucao_dif_corpo'        => 'Connect the different Onclick modules with an architecture prepared for retail, manufacturing, distribution and services.',
+				'solucao_dif_topico_1'     => 'Integrate specialised modules.',
+				'solucao_dif_topico_2'     => 'Adapt operational flows.',
+				'solucao_dif_topico_3'     => 'Connect multiple channels.',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Unify your omnichannel operation',
+				'solucao_plat_corpo'       => 'Centralise stores, e-commerce and marketplaces in a single integration layer to avoid out-of-date stock.',
+				'solucao_plat_topico_1'    => 'Sync the sales channels.',
+				'solucao_plat_topico_2'    => 'Centralise commercial data.',
+				'solucao_plat_topico_3'    => 'Avoid disconnected processes.',
+				'solucao_acel_titulo'      => 'Start with e-commerce already integrated',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect Onclick to the main digital channels and marketplaces.',
+				'solucao_acel_topico_1'    => 'Connect channels quickly.',
+				'solucao_acel_topico_2'    => 'Reuse commercial flows.',
+				'solucao_acel_topico_3'    => 'Speed up new integrations.',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Viasoft.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_viasoft() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Viasoft',
+				'solucao_hero_titulo'      => 'Connect Viasoft to the rest of the operation',
+				'solucao_hero_corpo'       => 'Integrate ERPs specialised in agribusiness, fuels and manufacturing with banks, tax and commercial systems to unify processes.',
+				'solucao_pilares_titulo'   => 'Get more out of Viasoft',
+				'solucao_pilares_1_titulo' => 'Connect specialised verticals',
+				'solucao_pilares_1_desc'   => 'Integrate Agrotitan, Filt IA+ and Viasoft solutions by segment.',
+				'solucao_pilares_2_titulo' => 'Automate tax processes',
+				'solucao_pilares_2_desc'   => 'Connect tax obligations according to each business vertical.',
+				'solucao_pilares_3_titulo' => 'Integrate financial operations',
+				'solucao_pilares_3_desc'   => 'Synchronise banks and financial processes automatically.',
+				'solucao_casos_titulo'     => 'Automate the Viasoft processes',
+				'solucao_casos_1_titulo'   => 'Integrate sales with finance',
+				'solucao_casos_1_desc'     => 'Synchronise agricultural sales and commercial operations with finance.',
+				'solucao_casos_2_titulo'   => 'Automate tax processes',
+				'solucao_casos_2_desc'     => 'Connect NF-e and SPED according to each segment.',
+				'solucao_casos_3_titulo'   => 'Reconcile banking operations',
+				'solucao_casos_3_desc'     => 'Automate reconciliation for dealers and cooperatives.',
+				'solucao_casos_4_titulo'   => 'Consolidate operational data',
+				'solucao_casos_4_desc'     => 'Unify multi-site information for strategic analysis.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make operational data available to intelligent agents without exposing the Viasoft core.',
+				'solucao_dif_titulo'       => 'Integrations shaped around your segment',
+				'solucao_dif_corpo'        => 'Connect operations with the specific tax and regulatory rules for agribusiness, fuels and the other verticals Viasoft serves.',
+				'solucao_dif_topico_1'     => 'Adapt integrations by vertical',
+				'solucao_dif_topico_2'     => 'Meet specific regulatory rules',
+				'solucao_dif_topico_3'     => 'Connect specialised operations',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Unify the different Viasoft verticals',
+				'solucao_plat_corpo'       => 'Centralise financial and tax data from different operations in a single integration layer.',
+				'solucao_plat_topico_1'    => 'Integrate multiple businesses',
+				'solucao_plat_topico_2'    => 'Centralise enterprise information',
+				'solucao_plat_topico_3'    => 'Avoid isolated integrations',
+				'solucao_acel_titulo'      => 'Start with operations already connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect Viasoft to finance and tax quickly.',
+				'solucao_acel_topico_1'    => 'Connect data quickly',
+				'solucao_acel_topico_2'    => 'Reuse validated flows',
+				'solucao_acel_topico_3'    => 'Speed up new integrations',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * RP Info.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_rp_info() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your RP Info',
+				'solucao_hero_titulo'      => 'Connect RP Info from the checkout to the distribution centre',
+				'solucao_hero_corpo'       => 'Integrate the store front, ERP, suppliers and BI to synchronise retail sales, stock and operations in real time.',
+				'solucao_pilares_titulo'   => 'Scale your retail, connected',
+				'solucao_pilares_1_titulo' => 'Connect the retail operations',
+				'solucao_pilares_1_desc'   => 'Integrate Flex ERP, RPDV, Mix, Target and Task into the commercial ecosystem.',
+				'solucao_pilares_2_titulo' => 'Sync sales in real time',
+				'solucao_pilares_2_desc'   => 'Connect checkout transactions to the ERP with no manual processes.',
+				'solucao_pilares_3_titulo' => 'Integrate suppliers through EDI',
+				'solucao_pilares_3_desc'   => 'Automate the exchange of data with trading partners.',
+				'solucao_casos_titulo'     => 'Automate the RP Info retail processes',
+				'solucao_casos_1_titulo'   => 'Sync POS sales',
+				'solucao_casos_1_desc'     => 'Update RPDV sales in Flex ERP in real time.',
+				'solucao_casos_2_titulo'   => 'Connect suppliers through EDI',
+				'solucao_casos_2_desc'     => 'Automate orders and information with trading partners.',
+				'solucao_casos_3_titulo'   => 'Consolidate multi-store sales',
+				'solucao_casos_3_desc'     => 'Centralise results from different sites for analysis.',
+				'solucao_casos_4_titulo'   => 'Centralise tax processes',
+				'solucao_casos_4_desc'     => 'Integrate SPED and NF-e into the enterprise processes.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make operational data available to intelligent agents without exposing the RP Info core.',
+				'solucao_dif_titulo'       => 'Integrations for retail at scale',
+				'solucao_dif_corpo'        => 'Connect operations with thousands of checkouts using an architecture prepared for high transaction volume.',
+				'solucao_dif_topico_1'     => 'Process sales at scale',
+				'solucao_dif_topico_2'     => 'Synchronise data quickly',
+				'solucao_dif_topico_3'     => 'Support multiple checkouts',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Unify the retail data',
+				'solucao_plat_corpo'       => 'Centralise sales, stock and suppliers in a single integration layer without depending on batch processes.',
+				'solucao_plat_topico_1'    => 'Consolidate sales in real time',
+				'solucao_plat_topico_2'    => 'Centralise operational data',
+				'solucao_plat_topico_3'    => 'Cut back on manual processes',
+				'solucao_acel_titulo'      => 'Start with retail already integrated',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect RP Info to supplier EDI and analytics platforms.',
+				'solucao_acel_topico_1'    => 'Connect suppliers quickly',
+				'solucao_acel_topico_2'    => 'Reuse retail flows',
+				'solucao_acel_topico_3'    => 'Speed up new integrations',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * QAD Redzone.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_qad_redzone() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your QAD Redzone',
+				'solucao_hero_titulo'      => 'Connect QAD Redzone to the ERP and the shop floor in real time',
+				'solucao_hero_corpo'       => 'Integrate line productivity, manufacturing and quality with QAD ERP and enterprise BI to turn operational data into fast decisions.',
+				'solucao_pilares_titulo'   => 'Turn factory data into value',
+				'solucao_pilares_1_titulo' => 'Monitor productivity in real time',
+				'solucao_pilares_1_desc'   => 'Synchronise OEE and line performance data automatically.',
+				'solucao_pilares_2_titulo' => 'Integrate with QAD ERP',
+				'solucao_pilares_2_desc'   => 'Connect shop-floor execution to the enterprise processes in the ERP.',
+				'solucao_pilares_3_titulo' => 'Connect the factory and BI',
+				'solucao_pilares_3_desc'   => 'Take operational data into strategic enterprise analysis.',
+				'solucao_casos_titulo'     => 'Automate the manufacturing processes',
+				'solucao_casos_1_titulo'   => 'Integrate OEE with the ERP',
+				'solucao_casos_1_desc'     => 'Send Redzone productivity indicators to QAD ERP.',
+				'solucao_casos_2_titulo'   => 'Control quality end to end',
+				'solucao_casos_2_desc'     => 'Connect non-conformities to the quality processes.',
+				'solucao_casos_3_titulo'   => 'Consolidate multi-plant production',
+				'solucao_casos_3_desc'     => 'Centralise industrial data from different production sites.',
+				'solucao_casos_4_titulo'   => 'Raise alerts for line stoppages',
+				'solucao_casos_4_desc'     => 'Trigger real-time alerts for preventive maintenance.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make operational data available to intelligent agents without exposing the Redzone core.',
+				'solucao_dif_titulo'       => 'Integrations for real-time manufacturing',
+				'solucao_dif_corpo'        => 'Process large volumes of industrial data with connectivity prepared for sensors and continuous production operations.',
+				'solucao_dif_topico_1'     => 'Process data at high volume',
+				'solucao_dif_topico_2'     => 'Connect industrial events',
+				'solucao_dif_topico_3'     => 'Follow production in real time',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect your whole industrial operation',
+				'solucao_plat_corpo'       => 'Centralise shop-floor, ERP and BI data to clear out isolated information and get more value from Redzone.',
+				'solucao_plat_topico_1'    => 'Integrate factory and office',
+				'solucao_plat_topico_2'    => 'Centralise production data',
+				'solucao_plat_topico_3'    => 'Widen operational visibility',
+				'solucao_acel_titulo'      => 'Start with manufacturing connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect QAD Redzone to QAD ERP and enterprise analytics platforms.',
+				'solucao_acel_topico_1'    => 'Connect data quickly',
+				'solucao_acel_topico_2'    => 'Reuse industrial patterns',
+				'solucao_acel_topico_3'    => 'Speed up factory projects',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * IFS Cloud.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_ifs_cloud() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your IFS Cloud',
+				'solucao_hero_titulo'      => 'Connect IFS Cloud to the rest of the industrial operation',
+				'solucao_hero_corpo'       => 'Integrate the ERP, asset management and field service with MES, IoT and enterprise systems to turn operational data into faster decisions.',
+				'solucao_pilares_titulo'   => 'Get more out of IFS Cloud',
+				'solucao_pilares_1_titulo' => 'Use the native IFS APIs',
+				'solucao_pilares_1_desc'   => 'Connect systems using the official IFS Cloud REST API.',
+				'solucao_pilares_2_titulo' => 'Connect industrial assets',
+				'solucao_pilares_2_desc'   => 'Integrate maintenance, sensors and operational data in real time.',
+				'solucao_pilares_3_titulo' => 'Scale field service',
+				'solucao_pilares_3_desc'   => 'Connect field teams, the CRM and the service processes.',
+				'solucao_casos_titulo'     => 'Automate processes with IFS Cloud',
+				'solucao_casos_1_titulo'   => 'Integrate maintenance and IoT',
+				'solucao_casos_1_desc'     => 'Connect EAM work orders to sensors and industrial data.',
+				'solucao_casos_2_titulo'   => 'Connect field service to the CRM',
+				'solucao_casos_2_desc'     => 'Synchronise field visits with the commercial processes.',
+				'solucao_casos_3_titulo'   => 'Consolidate financial data',
+				'solucao_casos_3_desc'     => 'Integrate IFS and the enterprise ERP for a single financial view.',
+				'solucao_casos_4_titulo'   => 'Expose data to AI',
+				'solucao_casos_4_desc'     => 'Make assets available as tools for intelligent agents.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make operational data available to administrative agents without exposing the IFS core.',
+				'solucao_dif_titulo'       => 'Secure integrations for IFS Cloud',
+				'solucao_dif_corpo'        => 'Connect enterprise applications using OAuth2 authentication through the IFS Cloud REST API, with security and control.',
+				'solucao_dif_topico_1'     => 'Use secure OAuth2',
+				'solucao_dif_topico_2'     => 'Connect official APIs',
+				'solucao_dif_topico_3'     => 'Protect industrial data',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Centralise industrial asset data',
+				'solucao_plat_corpo'       => 'Connect maintenance, the ERP and artificial intelligence in a single layer without changing the IFS Cloud core.',
+				'solucao_plat_topico_1'    => 'Integrate enterprise systems',
+				'solucao_plat_topico_2'    => 'Avoid customising IFS',
+				'solucao_plat_topico_3'    => 'Scale industrial operations',
+				'solucao_acel_titulo'      => 'Start with assets already connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect IFS EAM/FSM to the enterprise ERP and IoT platforms.',
+				'solucao_acel_topico_1'    => 'Connect IoT quickly',
+				'solucao_acel_topico_2'    => 'Reuse industrial flows',
+				'solucao_acel_topico_3'    => 'Speed up new projects',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * CISS Poder ERP.
+	 *
+	 * O caso de uso 5 fala de dados assistenciais também no português —
+	 * resíduo do seed original, mantido aqui para os dois idiomas dizerem
+	 * o mesmo.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_ciss_poder_erp() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your CISS',
+				'solucao_hero_titulo'      => 'Connect CISSPoder to the whole retail operation',
+				'solucao_hero_corpo'       => 'Integrate purchasing, stock, POS, e-commerce, suppliers and finance to keep the entire retail operation in sync in real time.',
+				'solucao_pilares_titulo'   => 'Integrate the whole retail operation',
+				'solucao_pilares_1_titulo' => 'Sync sales and stock',
+				'solucao_pilares_1_desc'   => 'Connect the POS, e-commerce and marketplaces to CISSPoder to keep sales and stock up to date.',
+				'solucao_pilares_2_titulo' => 'Connect suppliers',
+				'solucao_pilares_2_desc'   => 'Automate supplier orders, invoices and information through EDI, cutting back on manual entry.',
+				'solucao_pilares_3_titulo' => 'Integrate purchasing and replenishment',
+				'solucao_pilares_3_desc'   => 'Take sales and stock data into more efficient purchasing and replenishment processes.',
+				'solucao_casos_titulo'     => 'Automate the retail processes',
+				'solucao_casos_1_titulo'   => 'Sync POS sales',
+				'solucao_casos_1_desc'     => 'Take store sales into CISSPoder in real time and keep the operation up to date.',
+				'solucao_casos_2_titulo'   => 'Connect the e-commerce',
+				'solucao_casos_2_desc'     => 'Integrate orders and stock between CISSPoder and the digital sales channels.',
+				'solucao_casos_3_titulo'   => 'Integrate suppliers through EDI',
+				'solucao_casos_3_desc'     => 'Automate the receipt of orders and documents sent by suppliers.',
+				'solucao_casos_4_titulo'   => 'Automate replenishment',
+				'solucao_casos_4_desc'     => 'Connect sales, stock and supply to speed up replenishment orders.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make care data available to administrative agents without exposing the clinical core.',
+				'solucao_dif_titulo'       => 'Integrations for high-volume operations',
+				'solucao_dif_corpo'        => 'Connect CISSPoder to the systems that hold your operation up, keeping sales, stock and purchasing data in sync even across chains with many stores.',
+				'solucao_dif_topico_1'     => 'Process large volumes of transactions',
+				'solucao_dif_topico_2'     => 'Synchronise data in real time',
+				'solucao_dif_topico_3'     => 'Connect multiple stores and systems',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'A connected retail operation',
+				'solucao_plat_corpo'       => 'CISSPoder already centralises retail management. CLI Connect widens that reach by connecting the ERP to the systems that make up the operation.',
+				'solucao_plat_topico_1'    => 'Connect the POS and e-commerce',
+				'solucao_plat_topico_2'    => 'Integrate suppliers and the WMS',
+				'solucao_plat_topico_3'    => 'Centralise data across stores',
+				'solucao_acel_titulo'      => 'Start with a ready-made integration',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect CISSPoder to the main systems in the retail operation and speed up the rollout.',
+				'solucao_acel_topico_1'    => 'Connect the POS and e-commerce',
+				'solucao_acel_topico_2'    => 'Automate supplier integrations',
+				'solucao_acel_topico_3'    => 'Reuse flows across stores',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Arius ERP.
+	 *
+	 * O hero fala de varejo enquanto o resto da landing fala de indústria —
+	 * resíduo do seed original, mantido aqui para os dois idiomas dizerem
+	 * o mesmo.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_arius_erp() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Arius',
+				'solucao_hero_titulo'      => 'Synchronise Arius ERP with your whole sales ecosystem',
+				'solucao_hero_corpo'       => 'Integrate store management, the POS and the financial back office to clear out manual controls and get full visibility over your retail in real time.',
+				'solucao_pilares_titulo'   => 'Scale your industrial operation, connected',
+				'solucao_pilares_1_titulo' => 'Connect industrial systems',
+				'solucao_pilares_1_desc'   => 'Integrate Arius ERP with MES and shop-floor applications.',
+				'solucao_pilares_2_titulo' => 'Automate production and management',
+				'solucao_pilares_2_desc'   => 'Synchronise production orders and operational data automatically.',
+				'solucao_pilares_3_titulo' => 'Cut back on manual controls',
+				'solucao_pilares_3_desc'   => 'Replace spreadsheets with processes connected across areas.',
+				'solucao_casos_titulo'     => 'Automate industrial processes with Arius',
+				'solucao_casos_1_titulo'   => 'Connect production to the ERP',
+				'solucao_casos_1_desc'     => 'Synchronise production orders between MES and Arius.',
+				'solucao_casos_2_titulo'   => 'Integrate tax processes',
+				'solucao_casos_2_desc'     => 'Automate tax document issuing and ERP financial data.',
+				'solucao_casos_3_titulo'   => 'Consolidate industrial stock',
+				'solucao_casos_3_desc'     => 'Centralise stock information across multiple plants.',
+				'solucao_casos_4_titulo'   => 'Connect the CRM to Arius',
+				'solucao_casos_4_desc'     => 'Integrate commercial orders with industrial planning.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make industrial data available to administrative agents without exposing the operational core.',
+				'solucao_dif_titulo'       => 'Dedicated integrations for Arius ERP',
+				'solucao_dif_corpo'        => 'Use connectors adapted to the Arius protocol, deployed inside the customer environment for greater operational control.',
+				'solucao_dif_topico_1'     => 'Use dedicated connectors',
+				'solucao_dif_topico_2'     => 'Deploy in the internal environment',
+				'solucao_dif_topico_3'     => 'Control industrial integrations',
+				'solucao_plat_titulo'      => 'Connect your industry as it evolves',
+				'solucao_plat_corpo'       => 'Centralise integrations between Arius, MES, the CRM and new systems without depending on developers specialised in the ERP.',
+				'solucao_plat_topico_1'    => 'Depend less on technical resources',
+				'solucao_plat_topico_2'    => 'Centralise new systems',
+				'solucao_plat_topico_3'    => 'Scale industrial processes',
+				'solucao_acel_titulo'      => 'Start with Arius already integrated',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect Arius ERP to MES and the CRM with structured industrial flows.',
+				'solucao_acel_topico_1'    => 'Connect MES quickly',
+				'solucao_acel_topico_2'    => 'Reuse industrial integrations',
+				'solucao_acel_topico_3'    => 'Speed up new projects',
+			)
+		);
+	}
+
+	/**
+	 * TOTVS RM.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_totvs_rm() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your TOTVS RM',
+				'solucao_hero_titulo'      => 'Connect TOTVS RM to every satellite system',
+				'solucao_hero_corpo'       => 'Integrate HR, education and back office with payroll, time tracking, portals and enterprise applications to automate complete journeys.',
+				'solucao_pilares_titulo'   => 'Get more out of TOTVS RM',
+				'solucao_pilares_1_titulo' => 'Connect the RM modules',
+				'solucao_pilares_1_desc'   => 'Integrate RM Folha, RM Núcleo and RM Backoffice with the external systems.',
+				'solucao_pilares_2_titulo' => 'Automate complete journeys',
+				'solucao_pilares_2_desc'   => 'Orchestrate employee and student cycles across different platforms.',
+				'solucao_pilares_3_titulo' => 'Use the native web services',
+				'solucao_pilares_3_desc'   => 'Connect applications using the official TOTVS RM resources.',
+				'solucao_casos_titulo'     => 'Automate the TOTVS RM processes',
+				'solucao_casos_1_titulo'   => 'Orchestrate onboarding and offboarding',
+				'solucao_casos_1_desc'     => 'Connect RM to AD, benefits and the LMS automatically.',
+				'solucao_casos_2_titulo'   => 'Integrate the academic journey',
+				'solucao_casos_2_desc'     => 'Synchronise RM Núcleo with portals and education platforms.',
+				'solucao_casos_3_titulo'   => 'Connect finance and banks',
+				'solucao_casos_3_desc'     => 'Automate back-office financial processes with banking institutions.',
+				'solucao_casos_4_titulo'   => 'Consolidate data for BI',
+				'solucao_casos_4_desc'     => 'Unify HR and education information for strategic analysis.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make HR data available to administrative agents without exposing the system core.',
+				'solucao_dif_titulo'       => 'Secure integrations for TOTVS RM',
+				'solucao_dif_corpo'        => 'Protect employee and student data with masking of information in transit and full auditing of the processes.',
+				'solucao_dif_topico_1'     => 'Protect sensitive personal data',
+				'solucao_dif_topico_2'     => 'Audit every movement',
+				'solucao_dif_topico_3'     => 'Control the information shared',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Centralise the business journeys',
+				'solucao_plat_corpo'       => 'Replace one-off integrations between RM and satellite systems with a single layer of reusable processes.',
+				'solucao_plat_topico_1'    => 'Reuse existing pipelines',
+				'solucao_plat_topico_2'    => 'Connect multiple systems',
+				'solucao_plat_topico_3'    => 'Simplify complex architectures',
+				'solucao_acel_titulo'      => 'Start with RM connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to integrate HR and education RM with the satellite systems of the organisation.',
+				'solucao_acel_topico_1'    => 'Connect systems quickly',
+				'solucao_acel_topico_2'    => 'Reuse ready-made processes',
+				'solucao_acel_topico_3'    => 'Speed up new automations',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * TOTVS Linx.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_totvs_linx() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Linx',
+				'solucao_hero_titulo'      => 'Connect Linx from the POS to the enterprise ERP',
+				'solucao_hero_corpo'       => 'Integrate Linx solutions for retail, fashion, filling stations and pharmacies with the ERP, CRM and loyalty programmes to centralise commercial operations.',
+				'solucao_pilares_titulo'   => 'Scale your Linx operation, connected',
+				'solucao_pilares_1_titulo' => 'Connect the Linx verticals',
+				'solucao_pilares_1_desc'   => 'Integrate fashion, retail, filling station and pharmacy operations into the enterprise ecosystem.',
+				'solucao_pilares_2_titulo' => 'Sync sales in real time',
+				'solucao_pilares_2_desc'   => 'Connect POS transactions to the financial systems automatically.',
+				'solucao_pilares_3_titulo' => 'Integrate loyalty and CRM',
+				'solucao_pilares_3_desc'   => 'Connect customer data to the relationship programmes.',
+				'solucao_casos_titulo'     => 'Automate the Linx retail processes',
+				'solucao_casos_1_titulo'   => 'Sync sales with the ERP',
+				'solucao_casos_1_desc'     => 'Send Linx POS transactions to enterprise finance automatically.',
+				'solucao_casos_2_titulo'   => 'Connect loyalty programmes',
+				'solucao_casos_2_desc'     => 'Integrate customer data with the CRM and relationship platforms.',
+				'solucao_casos_3_titulo'   => 'Consolidate multi-store sales',
+				'solucao_casos_3_desc'     => 'Centralise results from different stores and retail brands.',
+				'solucao_casos_4_titulo'   => 'Integrate tax documents',
+				'solucao_casos_4_desc'     => 'Connect SAT, NF-e and NFC-e in one centralised operation.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make retail data available to administrative agents without exposing the system core.',
+				'solucao_dif_titulo'       => 'Integrations for high sales volume',
+				'solucao_dif_corpo'        => 'Connect POS operations with real-time processing to support large volumes of commercial transactions.',
+				'solucao_dif_topico_1'     => 'Process sales in real time',
+				'solucao_dif_topico_2'     => 'Support high transaction volume',
+				'solucao_dif_topico_3'     => 'Connect multiple sites',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Unify the retail operations',
+				'solucao_plat_corpo'       => 'Centralise data from the different Linx solutions to connect sales, finance and the CRM without customising the existing systems.',
+				'solucao_plat_topico_1'    => 'Consolidate multiple retail brands',
+				'solucao_plat_topico_2'    => 'Centralise commercial data',
+				'solucao_plat_topico_3'    => 'Avoid complex customisation',
+				'solucao_acel_titulo'      => 'Start with retail already integrated',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect the Linx POS to the financial ERP and loyalty programmes.',
+				'solucao_acel_topico_1'    => 'Connect POS terminals quickly',
+				'solucao_acel_topico_2'    => 'Reuse commercial flows',
+				'solucao_acel_topico_3'    => 'Speed up new integrations',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * TOTVS Consinco.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_totvs_consinco() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Consinco',
+				'solucao_hero_titulo'      => 'Connect Consinco from the shelf to the distribution centre',
+				'solucao_hero_corpo'       => 'Integrate the food retail ERP with the POS, e-commerce and suppliers to synchronise prices, stock and operations across the whole chain.',
+				'solucao_pilares_titulo'   => 'Integrate the whole food retail operation',
+				'solucao_pilares_1_titulo' => 'Connect purchasing and operations',
+				'solucao_pilares_1_desc'   => 'Integrate retail purchasing, pricing and promotion processes.',
+				'solucao_pilares_2_titulo' => 'Automate EDI connections',
+				'solucao_pilares_2_desc'   => 'Synchronise data with suppliers with no manual processes.',
+				'solucao_pilares_3_titulo' => 'Unify prices and channels',
+				'solucao_pilares_3_desc'   => 'Keep the physical store and the digital one always aligned.',
+				'solucao_casos_titulo'     => 'Automate the food retail processes',
+				'solucao_casos_1_titulo'   => 'Sync prices and promotions',
+				'solucao_casos_1_desc'     => 'Update prices across Consinco, the POS and e-commerce automatically.',
+				'solucao_casos_2_titulo'   => 'Integrate suppliers through EDI',
+				'solucao_casos_2_desc'     => 'Connect partner manufacturers to the purchasing flow.',
+				'solucao_casos_3_titulo'   => 'Consolidate chain-wide sales',
+				'solucao_casos_3_desc'     => 'Centralise multi-store sales data for BI.',
+				'solucao_casos_4_titulo'   => 'Automate stock replenishment',
+				'solucao_casos_4_desc'     => 'Use sales turnover to support automatic supply.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make retail data available to AI agents without exposing the system core.',
+				'solucao_dif_titulo'       => 'Integrations built for high volume',
+				'solucao_dif_corpo'        => 'Connect supermarket operations with thousands of SKUs and multiple stores while keeping performance, stability and continuous processing.',
+				'solucao_dif_topico_1'     => 'Support large transaction volumes',
+				'solucao_dif_topico_2'     => 'Connect multiple stores',
+				'solucao_dif_topico_3'     => 'Process data continuously',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Centralise the connections of the whole chain',
+				'solucao_plat_corpo'       => 'Unify EDI, POS and e-commerce integrations on a single platform to reduce operational effort and bring new partners on faster.',
+				'solucao_plat_topico_1'    => 'Centralise EDI integrations',
+				'solucao_plat_topico_2'    => 'Shorten supplier onboarding',
+				'solucao_plat_topico_3'    => 'Reuse existing connections',
+				'solucao_acel_titulo'      => 'Start with structured integrations',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect Consinco, EDI suppliers, the POS and e-commerce more quickly.',
+				'solucao_acel_topico_1'    => 'Connect suppliers quickly',
+				'solucao_acel_topico_2'    => 'Adapt existing flows',
+				'solucao_acel_topico_3'    => 'Speed up new integrations',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * HubSpot CRM.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_hubspot_crm() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your HubSpot',
+				'solucao_hero_titulo'      => 'Connect HubSpot to the ERP and the rest of the sales funnel',
+				'solucao_hero_corpo'       => 'Integrate the CRM, marketing, e-commerce and billing to turn opportunities into connected operations, without relying on Marketplace apps alone.',
+				'solucao_pilares_titulo'   => 'Get more out of HubSpot CRM',
+				'solucao_pilares_1_titulo' => 'Convert sales automatically',
+				'solucao_pilares_1_desc'   => 'Turn closed deals into ERP orders with no rework.',
+				'solucao_pilares_2_titulo' => 'Enrich commercial data',
+				'solucao_pilares_2_desc'   => 'Update contacts and companies with information from other systems.',
+				'solucao_pilares_3_titulo' => 'Get past the Marketplace limits',
+				'solucao_pilares_3_desc'   => 'Build integrations for the specific scenarios of your business.',
+				'solucao_casos_titulo'     => 'Automate the HubSpot CRM processes',
+				'solucao_casos_1_titulo'   => 'Send sales to the ERP',
+				'solucao_casos_1_desc'     => 'Create orders automatically once deals are closed.',
+				'solucao_casos_2_titulo'   => 'Enrich contacts automatically',
+				'solucao_casos_2_desc'     => 'Combine product, support and customer behaviour data.',
+				'solucao_casos_3_titulo'   => 'Integrate e-commerce with the CRM',
+				'solucao_casos_3_desc'     => 'Make purchase history available in the commercial relationship.',
+				'solucao_casos_4_titulo'   => 'Consolidate marketing data',
+				'solucao_casos_4_desc'     => 'Centralise the sales funnel and campaigns for strategic analysis.',
+				'solucao_casos_5_titulo'   => 'Connect AI agents',
+				'solucao_casos_5_desc'     => 'Make CRM data available to AI agents using governed APIs and MCP Servers.',
+				'solucao_dif_titulo'       => 'Secure integrations for HubSpot',
+				'solucao_dif_corpo'        => 'Use the official HubSpot REST API with access control, private tokens and permissions defined by scope.',
+				'solucao_dif_topico_1'     => 'Use the official APIs.',
+				'solucao_dif_topico_2'     => 'Control permissions by scope.',
+				'solucao_dif_topico_3'     => 'Protect commercial data.',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect your whole commercial ecosystem',
+				'solucao_plat_corpo'       => 'Centralise the CRM, ERP and operational systems in a single integration layer that keeps up as the company grows.',
+				'solucao_plat_topico_1'    => 'Integrate multiple systems.',
+				'solucao_plat_topico_2'    => 'Scale commercial processes.',
+				'solucao_plat_topico_3'    => 'Avoid isolated connections.',
+				'solucao_acel_titulo'      => 'Start with sales connected',
+				'solucao_acel_corpo'       => 'Use a ready-made template to turn deals closed in HubSpot into orders in the ERP.',
+				'solucao_acel_topico_1'    => 'Automate sales quickly.',
+				'solucao_acel_topico_2'    => 'Reuse commercial flows.',
+				'solucao_acel_topico_3'    => 'Speed up new integrations.',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Azure.
+	 *
+	 * Mesmo texto da landing Microsoft Azure do catálogo de tecnologias —
+	 * as duas páginas repetem o conteúdo também no português.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_azure() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Azure',
+				'solucao_hero_titulo'      => 'Speed up Azure adoption while keeping your core connected',
+				'solucao_hero_corpo'       => 'Integrate Azure services, SAP, Salesforce and legacy systems on one platform to evolve your cloud architecture without interrupting the operations you already run.',
+				'solucao_pilares_titulo'   => 'Evolve your Microsoft architecture at scale',
+				'solucao_pilares_1_titulo' => 'Connect Azure services natively',
+				'solucao_pilares_1_desc'   => 'Use ready-made connectors for Azure data and messaging.',
+				'solucao_pilares_2_titulo' => 'Speed up real-time events',
+				'solucao_pilares_2_desc'   => 'Adopt event-driven architectures without rebuilding integrations.',
+				'solucao_pilares_3_titulo' => 'Integrate the Microsoft ecosystem',
+				'solucao_pilares_3_desc'   => 'Connect Azure, Dynamics 365, Teams and Azure AD.',
+				'solucao_casos_titulo'     => 'Automate processes connected to Azure',
+				'solucao_casos_1_titulo'   => 'Capture events in real time',
+				'solucao_casos_1_desc'     => 'Send business events to analytics using Event Hubs.',
+				'solucao_casos_2_titulo'   => 'Decouple systems with queues',
+				'solucao_casos_2_desc'     => 'Use Service Bus to connect legacy systems and new services.',
+				'solucao_casos_3_titulo'   => 'Store data with low latency',
+				'solucao_casos_3_desc'     => 'Use CosmosDB for high-performance global scenarios.',
+				'solucao_casos_4_titulo'   => 'Automate corporate files',
+				'solucao_casos_4_desc'     => 'Process documents using Blob Storage and DataLake.',
+				'solucao_casos_5_titulo'   => 'Centralise secrets management',
+				'solucao_casos_5_desc'     => 'Protect integration credentials with Azure Key Vault.',
+				'solucao_casos_cta_texto'  => 'Talk to a specialist',
+				'solucao_dif_titulo'       => 'Azure integrations with native security',
+				'solucao_dif_corpo'        => 'Connect Azure services using OAuth2, Azure AD and Key Vault to control access and protect credentials across every flow.',
+				'solucao_dif_topico_1'     => 'Authenticate through Azure AD',
+				'solucao_dif_topico_2'     => 'Protect secrets with Key Vault',
+				'solucao_dif_topico_3'     => 'Control access centrally',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect the whole Microsoft ecosystem',
+				'solucao_plat_corpo'       => 'Centralise integrations between Azure, Microsoft applications and enterprise systems to speed up new initiatives with no added complexity.',
+				'solucao_plat_topico_1'    => 'Integrate data and applications',
+				'solucao_plat_topico_2'    => 'Reuse existing pipelines',
+				'solucao_plat_topico_3'    => 'Evolve the architecture gradually',
+				'solucao_acel_titulo'      => 'Start with Azure events already structured',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect business events to Event Hubs and Service Bus, speeding up your event-driven architecture.',
+				'solucao_acel_topico_1'    => 'Set events up quickly',
+				'solucao_acel_topico_2'    => 'Cut back on custom development',
+				'solucao_acel_topico_3'    => 'Speed up cloud adoption',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Google Cloud.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_google_cloud() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your Google Cloud',
+				'solucao_hero_titulo'      => 'Speed up Google Cloud adoption by connecting data and AI',
+				'solucao_hero_corpo'       => 'Integrate the ERP, CRM and operational systems with BigQuery and Vertex AI to speed up data and artificial intelligence initiatives without disconnecting your legacy.',
+				'solucao_pilares_titulo'   => 'Turn data into intelligence on GCP',
+				'solucao_pilares_1_titulo' => 'Connect BigQuery and Vertex AI',
+				'solucao_pilares_1_desc'   => 'Take enterprise data into analytics and AI agents.',
+				'solucao_pilares_2_titulo' => 'Adopt events at scale',
+				'solucao_pilares_2_desc'   => 'Use Pub/Sub to connect systems in real time.',
+				'solucao_pilares_3_titulo' => 'Integrate without replacing legacy systems',
+				'solucao_pilares_3_desc'   => 'Connect existing environments as your cloud journey evolves.',
+				'solucao_casos_titulo'     => 'Automate data flows on GCP',
+				'solucao_casos_1_titulo'   => 'Feed BigQuery',
+				'solucao_casos_1_desc'     => 'Send ERP and CRM data through for up-to-date analysis.',
+				'solucao_casos_2_titulo'   => 'Decouple systems with Pub/Sub',
+				'solucao_casos_2_desc'     => 'Distribute events across applications with no direct dependencies.',
+				'solucao_casos_3_titulo'   => 'Prepare data for AI',
+				'solucao_casos_3_desc'     => 'Update Vertex AI models with enterprise context.',
+				'solucao_casos_4_titulo'   => 'Process files in the cloud',
+				'solucao_casos_4_desc'     => 'Store and process documents using Cloud Storage.',
+				'solucao_casos_5_titulo'   => 'Run reverse ETL',
+				'solucao_casos_5_desc'     => 'Send analytical results back to the operational systems.',
+				'solucao_casos_cta_texto'  => 'Talk to a specialist',
+				'solucao_dif_titulo'       => 'GCP integrations with enterprise security',
+				'solucao_dif_corpo'        => 'Connect Google Cloud services using IAM, Service Accounts and Cloud KMS to protect access, keys and data throughout the operation.',
+				'solucao_dif_topico_1'     => 'Authenticate through Service Accounts',
+				'solucao_dif_topico_2'     => 'Protect keys with Cloud KMS',
+				'solucao_dif_topico_3'     => 'Control access through IAM',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect data, AI and the operation',
+				'solucao_plat_corpo'       => 'Centralise the integration between enterprise systems and Google Cloud services to speed up data initiatives without creating isolated pipelines.',
+				'solucao_plat_topico_1'    => 'Integrate enterprise systems',
+				'solucao_plat_topico_2'    => 'Reuse existing flows',
+				'solucao_plat_topico_3'    => 'Speed up AI initiatives',
+				'solucao_acel_titulo'      => 'Start with data ready for AI',
+				'solucao_acel_corpo'       => 'Use a structured template to connect the ERP and CRM to BigQuery and Vertex AI with data that is always current.',
+				'solucao_acel_topico_1'    => 'Connect sources quickly',
+				'solucao_acel_topico_2'    => 'Cut back on custom projects',
+				'solucao_acel_topico_3'    => 'Speed up cloud adoption',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * AWS.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_aws() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'for your AWS',
+				'solucao_hero_titulo'      => 'Speed up AWS adoption without rewriting the integrations you already have',
+				'solucao_hero_corpo'       => 'Connect AWS services, ERPs, CRMs and legacy systems on the same platform to evolve your cloud architecture without interrupting current operations.',
+				'solucao_pilares_titulo'   => 'Evolve your cloud architecture securely',
+				'solucao_pilares_1_titulo' => 'Connect AWS services natively',
+				'solucao_pilares_1_desc'   => 'Use ready-made connectors to integrate AWS services with no specific development.',
+				'solucao_pilares_2_titulo' => 'Adopt events at scale',
+				'solucao_pilares_2_desc'   => 'Put event-driven architectures in place without rebuilding the integrations you already have.',
+				'solucao_pilares_3_titulo' => 'Migrate incrementally',
+				'solucao_pilares_3_desc'   => 'Connect legacy systems and AWS workloads as your cloud journey evolves.',
+				'solucao_casos_titulo'     => 'Automate processes connected to AWS',
+				'solucao_casos_1_titulo'   => 'Trigger flows from events',
+				'solucao_casos_1_desc'     => 'Start AWS pipelines from ERP and CRM events.',
+				'solucao_casos_2_titulo'   => 'Orchestrate Lambda functions',
+				'solucao_casos_2_desc'     => 'Bring serverless functions into complete integration flows.',
+				'solucao_casos_3_titulo'   => 'Decouple systems with queues',
+				'solucao_casos_3_desc'     => 'Use SNS and SQS to connect applications with more flexibility.',
+				'solucao_casos_4_titulo'   => 'Monitor cloud operations',
+				'solucao_casos_4_desc'     => 'Follow AWS and legacy pipelines in one centralised view.',
+				'solucao_casos_5_titulo'   => 'Migrate workloads gradually',
+				'solucao_casos_5_desc'     => 'Move to ECS without interrupting the integrations you already have.',
+				'solucao_casos_cta_texto'  => 'Talk to a specialist',
+				'solucao_dif_titulo'       => 'AWS integrations with enterprise security',
+				'solucao_dif_corpo'        => 'Connect AWS services using IAM/STS authentication, key management through KMS and encryption to protect data throughout the operation.',
+				'solucao_dif_topico_1'     => 'Authenticate connections through IAM',
+				'solucao_dif_topico_2'     => 'Protect data with KMS',
+				'solucao_dif_topico_3'     => 'Encrypt data in transit',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Connect legacy and cloud in one place',
+				'solucao_plat_corpo'       => 'Centralise the communication between existing systems and new AWS services to speed up the transformation without building throwaway integrations.',
+				'solucao_plat_topico_1'    => 'Integrate legacy systems',
+				'solucao_plat_topico_2'    => 'Connect cloud-native services',
+				'solucao_plat_topico_3'    => 'Evolve with no interruptions',
+				'solucao_acel_titulo'      => 'Start with AWS events already structured',
+				'solucao_acel_corpo'       => 'Use a ready-made template to connect business events to EventBridge, Lambda and SNS, speeding up your event-driven architecture.',
+				'solucao_acel_topico_1'    => 'Set events up quickly',
+				'solucao_acel_topico_2'    => 'Reuse existing flows',
+				'solucao_acel_topico_3'    => 'Speed up cloud adoption',
+				'solucao_acel_topico_4'    => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * ChatGPT.
+	 *
+	 * A landing em português só tem o diagrama, o bloco de integrações e o
+	 * acelerador de MCP Server — as demais seções não têm texto.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_chatgpt() {
+		return $this->solucao_en(
+			array(
+				'solucao_diagrama_titulo' => 'A new way to connect AI to your systems',
+				'solucao_int_eyebrow'     => 'integrations',
+				'solucao_int_titulo'      => 'Integrate all of your systems with ChatGPT',
+				'solucao_int_subtitulo'   => 'Thousands of integrations ready to use',
+				'solucao_acel_eyebrow'    => 'MCP server',
+				'solucao_acel_titulo'     => 'Give ChatGPT tools without having to develop APIs',
+				'solucao_acel_corpo'      => 'Turn enterprise processes into Tools for ChatGPT, defining exactly which information it can query and which actions it can run.',
+				'solucao_acel_topico_1'   => 'Turn processes into AI tools',
+				'solucao_acel_topico_2'   => 'Control inputs, outputs and information',
+				'solucao_acel_topico_3'   => 'Expose it all through the MCP Server',
+				'solucao_acel_topico_4'   => 'And much more...',
+			)
+		);
+	}
+
+	/**
+	 * Claude.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function texto_en_solucao_claude() {
+		return $this->solucao_en(
+			array(
+				'solucao_hero_eyebrow'     => 'integrate your Claude',
+				'solucao_hero_titulo'      => 'Turn enterprise knowledge into action with Claude',
+				'solucao_hero_corpo'       => 'Claude connects documents, data and enterprise systems to look up information, interpret context and take action precisely and under control.',
+				'solucao_pilares_titulo'   => 'Turn knowledge into decisions',
+				'solucao_pilares_1_titulo' => 'Analyse large volumes of information',
+				'solucao_pilares_1_desc'   => 'Process documents, history and records to draw out relevant insight without depending on manual searches.',
+				'solucao_pilares_2_titulo' => 'Query the company knowledge',
+				'solucao_pilares_2_desc'   => 'Connect internal sources — wikis, databases, policies — so Claude answers with the real context of the business.',
+				'solucao_pilares_3_titulo' => 'Run tools',
+				'solucao_pilares_3_desc'   => 'Create a sales order, update a CRM or raise a ticket — Claude acts on the systems with the right permissions.',
+				'solucao_casos_titulo'     => 'Apply Claude where knowledge matters',
+				'solucao_casos_1_titulo'   => 'Review contracts automatically',
+				'solucao_casos_2_titulo'   => 'Query internal policies',
+				'solucao_casos_3_titulo'   => 'Analyse customer requests',
+				'solucao_casos_4_titulo'   => 'Compare commercial proposals',
+				'solucao_casos_5_titulo'   => 'Summarise operational history',
+				'solucao_diagrama_titulo'  => 'A new way to connect AI to your systems',
+				'solucao_int_eyebrow'      => 'integrations',
+				'solucao_int_titulo'       => 'Integrate all of your systems with Claude',
+				'solucao_int_subtitulo'    => 'Thousands of integrations ready to use',
+				'solucao_dif_titulo'       => 'Integrate AI with control over your data',
+				'solucao_dif_corpo'        => 'Connect Claude to the enterprise systems while keeping control over data, permissions and actions — with no compromise on security or governance.',
+				'solucao_dif_topico_1'     => 'Control which data reaches the models',
+				'solucao_dif_topico_2'     => 'Protect data in transit and at rest',
+				'solucao_dif_topico_3'     => 'Apply rules before running actions',
+				'solucao_plat_eyebrow'     => 'one platform',
+				'solucao_plat_titulo'      => 'Centralise knowledge, systems and processes',
+				'solucao_plat_corpo'       => 'Claude delivers more value when it can reach the context it needs. The CLI Connect platform connects sources, orchestrates flows and keeps traceability.',
+				'solucao_plat_topico_1'    => 'Connect different sources of information',
+				'solucao_plat_topico_2'    => 'Reuse data in new processes',
+				'solucao_plat_topico_3'    => 'Orchestrate results across systems',
+				'solucao_acel_eyebrow'     => 'MCP server',
+				'solucao_acel_titulo'      => 'Give Claude tools without having to develop APIs',
+				'solucao_acel_corpo'       => 'Turn enterprise processes into Tools for Claude, defining exactly which information it can query and which actions it can run.',
+				'solucao_acel_topico_1'    => 'Turn processes into AI tools',
+				'solucao_acel_topico_2'    => 'Control inputs, outputs and information',
+				'solucao_acel_topico_3'    => 'Expose it all through the MCP Server',
 				'solucao_acel_topico_4'    => 'And much more...',
 			)
 		);

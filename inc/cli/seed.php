@@ -33,6 +33,11 @@ class Cliconnect_Seed {
 	use Cliconnect_Seed_Es_Paginas;
 	use Cliconnect_Seed_Es_Cpts;
 	use Cliconnect_Seed_Es_Solucoes;
+	use Cliconnect_Seed_Es_Solucoes_Erp;
+	use Cliconnect_Seed_Es_Solucoes_Plataformas;
+	use Cliconnect_Seed_Es_Solucoes_Ia_Nuvem;
+	use Cliconnect_Seed_Es_Solucoes_Negocio;
+	use Cliconnect_Seed_Es_Faq;
 
 	/**
 	 * Chave de meta que marca objetos criados pelo seed.

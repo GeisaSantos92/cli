@@ -112,6 +112,11 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	cliconnect_require( '/inc/cli/seed-es-paginas.php' );
 	cliconnect_require( '/inc/cli/seed-es-cpts.php' );
 	cliconnect_require( '/inc/cli/seed-es-solucoes.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-erp.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-plataformas.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-ia-nuvem.php' );
+	cliconnect_require( '/inc/cli/seed-es-solucoes-negocio.php' );
+	cliconnect_require( '/inc/cli/seed-es-faq.php' );
 
 	cliconnect_require( '/inc/cli/seed.php' );
 }

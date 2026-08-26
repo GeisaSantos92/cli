@@ -78,6 +78,25 @@ trait Cliconnect_Seed_Es_Solucoes {
 			'sap-ecc'                            => array( 'SAP ECC', 'sap-ecc-es', 'sap-ecc-integracion' ),
 			'oracle-netsuite'                    => array( 'Oracle NetSuite', 'oracle-netsuite-es', 'oracle-netsuite-integracion' ),
 
+			// Tecnologia — catálogo de tecnologias e landings de IA.
+			'hubspot-crm'                        => array( 'HubSpot CRM', 'hubspot-crm-es', 'hubspot-crm-integracion' ),
+			'totvs-consinco'                     => array( 'TOTVS Consinco', 'totvs-consinco-es', 'totvs-consinco-integracion' ),
+			'totvs-linx'                         => array( 'TOTVS Linx', 'totvs-linx-es', 'totvs-linx-integracion' ),
+			'totvs-rm'                           => array( 'TOTVS RM', 'totvs-rm-es', 'totvs-rm-integracion' ),
+			'arius-erp'                          => array( 'Arius ERP', 'arius-erp-es', 'arius-erp-integracion' ),
+			'ciss-poder-erp'                     => array( 'CISS Poder ERP', 'ciss-poder-erp-es', 'ciss-poder-erp-integracion' ),
+			'ifs-cloud'                          => array( 'IFS Cloud', 'ifs-cloud-es', 'ifs-cloud-integracion' ),
+			'qad-redzone'                        => array( 'QAD Redzone', 'qad-redzone-es', 'qad-redzone-integracion' ),
+			'rp-info'                            => array( 'RP Info', 'rp-info-es', 'rp-info-integracion' ),
+			'viasoft'                            => array( 'Viasoft', 'viasoft-es', 'viasoft-integracion' ),
+			'onclick-erp'                        => array( 'Onclick ERP', 'onclick-erp-es', 'onclick-erp-integracion' ),
+			'propz'                              => array( 'Propz', 'propz-es', 'propz-integracion' ),
+			'microsoft-teams'                    => array( 'Microsoft Teams', 'microsoft-teams-es', 'microsoft-teams-integracion' ),
+			'snowflake'                          => array( 'Snowflake', 'snowflake-es', 'snowflake-integracion' ),
+			'databricks'                         => array( 'Databricks', 'databricks-es', 'databricks-integracion' ),
+			'microsoft-azure'                    => array( 'Microsoft Azure', 'microsoft-azure-es', 'microsoft-azure-integracion' ),
+			'gemini'                             => array( 'Gemini', 'gemini-es', 'gemini-integracion' ),
+
 			// Indústria.
 			'servicos-financeiros'               => array( 'Servicios Financieros', 'servicios-financieros' ),
 			'manufatura'                         => array( 'Manufactura', 'manufactura' ),
@@ -349,5 +368,51 @@ trait Cliconnect_Seed_Es_Solucoes {
 		);
 
 		$this->montar_menu_traduzido( 'rodape_legal', 'CLI — Pie legal (ES)', array() );
+	}
+
+	/* =====================================================================
+	   RÓTULOS COMUNS DAS LANDINGS
+	   ===================================================================== */
+
+	/**
+	 * Rótulos repetidos em toda landing de solução, em espanhol.
+	 *
+	 * Campo vazio no português continua vazio na tradução — `copiar_campos_acf()`
+	 * ignora a chave —, então trazer aqui o CTA de Casos de Uso não liga a seção
+	 * onde ela não existe. Cada landing sobrescreve o que fugir deste padrão.
+	 *
+	 * @return array<string,string>
+	 */
+	protected function base_solucao_es() {
+		return array(
+			'solucao_hero_btn1_texto' => 'Solicite una demostración',
+			'solucao_hero_btn1_url'   => '/es/contacto/',
+			'solucao_hero_btn2_texto' => 'Conozca nuestra solución',
+			'solucao_hero_btn2_url'   => '/es/plataforma-de-integracion/',
+			'solucao_pilares_eyebrow' => 'Pilares',
+			'solucao_casos_eyebrow'   => 'casos de uso',
+			'solucao_casos_cta_texto' => 'Solicite una demostración',
+			'solucao_casos_cta_url'   => '/es/contacto/',
+			'solucao_selos_eyebrow'   => 'compliance y seguridad',
+			'solucao_selos_titulo'    => 'Lideramos el mercado cuando se trata de compliance y seguridad',
+			'solucao_selos_corpo'     => 'Sus datos, procesos e integraciones protegidos por los más altos estándares globales.',
+			'solucao_faq_titulo'      => 'Preguntas Frecuentes',
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_plat_eyebrow'    => 'plataforma única',
+			'solucao_acel_eyebrow'    => 'Aceleradores de integración',
+			'solucao_acel_btn_texto'  => 'Comenzar ahora',
+			'solucao_acel_btn_url'    => '/es/contacto/',
+			'solucao_acel_topico_4'   => 'Y mucho más...',
+		);
+	}
+
+	/**
+	 * Junta os rótulos comuns aos campos próprios de uma landing.
+	 *
+	 * @param array<string,string> $campos Campos específicos da solução.
+	 * @return array<string,string>
+	 */
+	protected function solucao_es( $campos ) {
+		return array_merge( $this->base_solucao_es(), $campos );
 	}
 }
