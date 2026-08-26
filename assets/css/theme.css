@@ -494,6 +494,7 @@ p {
 }
 
 .site-nav__list .nav-cartao {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	/* Anula o align-items: center herdado dos links do menu. */
@@ -505,13 +506,12 @@ p {
 	border-radius: var(--raio-card);
 	background: linear-gradient(135deg, #f2f7ff 0%, #e3ecff 100%);
 	white-space: normal;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	transition: box-shadow 0.2s ease;
 }
 
 .site-nav__list .nav-cartao:hover,
 .site-nav__list .nav-cartao:focus-visible {
-	transform: translateY(-2px);
-	box-shadow: var(--sombra-flutuante);
+	box-shadow: 0px 8px 24px -10px rgba(0, 42, 126, 0.15), inset 0 0 0 1px var(--cor-borda);
 }
 
 .nav-cartao__titulo {
@@ -523,15 +523,29 @@ p {
 }
 
 .nav-cartao__texto {
-	font-size: var(--tam-body-sm);
+	font-size: var(--tam-body);
 	font-weight: 400;
 	line-height: 1.5;
 	color: var(--cor-texto-alt);
 }
 
+.nav-cartao__seta {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	color: var(--cor-texto-marca-escura);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.site-nav__list .nav-cartao:hover .nav-cartao__seta,
+.site-nav__list .nav-cartao:focus-visible .nav-cartao__seta {
+	opacity: 1;
+}
+
 /* Cartões pares invertem a paleta, como no Figma (CLI Connect × CLI Signature). */
 .site-nav__cartao-item:nth-child(even) .nav-cartao {
-	background: linear-gradient(135deg, #3551f2 0%, #1e2f9e 100%);
+	background: linear-gradient(to left, #001233, transparent), var(--cor-texto-marca-escura);
 }
 
 .site-nav__cartao-item:nth-child(even) .nav-cartao__titulo {
@@ -540,6 +554,10 @@ p {
 
 .site-nav__cartao-item:nth-child(even) .nav-cartao__texto {
 	color: var(--cor-texto-clara-suave);
+}
+
+.site-nav__cartao-item:nth-child(even) .nav-cartao__seta {
+	color: #fff;
 }
 
 /* --- Mega menu ("Soluções") ------------------------------------------------ */

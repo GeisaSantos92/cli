@@ -1542,7 +1542,8 @@ class Cliconnect_Seed {
 			),
 		);
 
-		$descricao_produto = 'Integre todos os seus sistemas e coloque agentes de IA personalizados para trabalhar em seus processos.';
+		$descricao_produto    = 'Integre todos os seus sistemas e coloque agentes de IA personalizados para trabalhar em seus processos.';
+		$descricao_signature  = 'Uma experiência dedicada para empresas que conduzem projetos críticos e exigem um nível superior de acompanhamento, governança e suporte.';
 
 		// --- Menu principal --------------------------------------------------
 		$this->montar_menu(
@@ -1561,7 +1562,7 @@ class Cliconnect_Seed {
 						array(
 							'titulo'    => 'CLI Signature',
 							'url'       => '/cli-signature/',
-							'descricao' => $descricao_produto,
+							'descricao' => $descricao_signature,
 						),
 					),
 				),
