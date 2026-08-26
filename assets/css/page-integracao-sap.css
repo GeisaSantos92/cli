@@ -668,7 +668,7 @@
 .sap-cleancore__cards {
 	display: flex;
 	gap: 24px;
-	align-items: flex-start;
+	align-items: stretch;
 }
 
 .sap-cleancore__card {
