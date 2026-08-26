@@ -122,13 +122,17 @@
 
 .cc-brands__titulo {
 	color: var(--cor-texto-secundario, #566f9d);
-	font-size: var(--tam-corpo-sm, 14px);
+	font-size: var(--tam-body);
+	font-weight: 600;
 	margin-bottom: 32px;
 	text-align: center;
 }
 
 .cc-brands__pista {
 	overflow: hidden;
+	width: 100%;
+	max-width: var(--largura-conteudo);
+	margin: auto;
 	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
 	mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
 }
@@ -137,7 +141,7 @@
 	display: flex;
 	align-items: center;
 	width: max-content;
-	animation: cc-marquee 45s linear infinite;
+	animation: cc-marquee-brands 80s linear infinite;
 }
 
 .cc-brands__pista:hover .cc-brands__trilha {
@@ -736,6 +740,11 @@
 @keyframes cc-marquee {
 	from { transform: translateX(0); }
 	to { transform: translateX(-100%); }
+}
+
+@keyframes cc-marquee-brands {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
 }
 
 .cc-integracoes__logo {
