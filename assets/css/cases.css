@@ -56,6 +56,8 @@
 	padding: 80px 64px;
 	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
 	border-radius: 24px;
+	backdrop-filter: blur(24px);
+	box-shadow: inset 0 0 20px rgb(0 0 0 / 10%), inset 3px 3px 2px -2px rgb(255 255 255 / 40%), inset -3px -3px 2px -2px rgb(255 255 255 / 40%);
 }
 
 .cases-hero__titulo {
@@ -127,12 +129,12 @@
 	display: block;
 }
 
-/* Chamada: ocupa a coluna direita. Sem métricas → centraliza verticalmente;
-   com métricas → distribui espaço entre header e métricas (justify-between). */
+/* Chamada: ocupa a coluna direita. Título sempre no topo; com métricas,
+   o espaço restante empurra as métricas para baixo (justify-between). */
 .case-container__chamada {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	gap: 40px;
 }
 
