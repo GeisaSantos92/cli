@@ -457,8 +457,24 @@
 		padding: 24px;
 	}
 
+	.cc-impl__label,
+	.cc-impl__tempo {
+		font-size: 10px;
+	}
+
+	.cc-impl__barra {
+		flex-direction: column;
+		height: auto;
+	}
+
+	.cc-impl__barra-azul {
+		width: 100%;
+		height: auto;
+	}
+
 	.cc-impl__etapa {
 		font-size: 11px;
+		min-height: 44px;
 	}
 }
 
