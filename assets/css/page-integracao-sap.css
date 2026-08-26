@@ -1320,6 +1320,7 @@
 
 /* Etapas */
 .sap-automacao__etapa {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1331,6 +1332,15 @@
 	border: 1px solid rgba(39, 62, 128, 0.2);
 	border-radius: 8px;
 	padding: 13px;
+}
+
+.sap-automacao__pegador {
+	position: absolute;
+	bottom: 4px;
+	height: 4px;
+	width: 40px;
+	background: var(--cor-fundo-suave);
+	border-radius: 2px;
 }
 
 .sap-automacao__etapa--trigger {

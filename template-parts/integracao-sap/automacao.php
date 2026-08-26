@@ -82,6 +82,7 @@ $bg   = $uri . '/assets/img/sap-aut-bg.png';
 						<span class="sap-automacao__etapa-texto sap-automacao__etapa-texto--bold">
 							<?php echo esc_html( $col['etapa1'] ); ?>
 						</span>
+						<span class="sap-automacao__pegador" aria-hidden="true"></span>
 					</div>
 
 					<!-- Linha conectora 1 -->
@@ -96,6 +97,7 @@ $bg   = $uri . '/assets/img/sap-aut-bg.png';
 						<span class="sap-automacao__etapa-texto">
 							<?php echo esc_html( $col['etapa2'] ); ?>
 						</span>
+						<span class="sap-automacao__pegador" aria-hidden="true"></span>
 					</div>
 
 					<!-- Linha conectora 2 -->
@@ -110,6 +112,7 @@ $bg   = $uri . '/assets/img/sap-aut-bg.png';
 						<span class="sap-automacao__etapa-texto">
 							<?php echo esc_html( $col['etapa3'] ); ?>
 						</span>
+						<span class="sap-automacao__pegador" aria-hidden="true"></span>
 					</div>
 
 				</div>
