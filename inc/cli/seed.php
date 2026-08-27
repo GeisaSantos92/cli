@@ -1599,9 +1599,9 @@ class Cliconnect_Seed {
 				'titulo' => 'Nuvem',
 				'url'    => $turl( 'nuvem' ),
 				'filhos' => array(
-					'AWS'          => $purl( 'aws' ),
-					'Google Cloud' => $purl( 'google-cloud' ),
-					'Azure'        => $purl( 'azure' ),
+					'AWS'             => $purl( 'aws' ),
+					'Google Cloud'    => $purl( 'google-cloud' ),
+					'Microsoft Azure' => $purl( 'microsoft-azure' ),
 				),
 			),
 			array(
@@ -1678,7 +1678,7 @@ class Cliconnect_Seed {
 						),
 						array(
 							'titulo' => 'Recursos',
-							'url'    => '/contato/',
+							'url'    => '#',
 							'filhos' => array(
 								'Cases'            => $cases_url,
 								'Blog'             => $blog_url,
@@ -1756,9 +1756,9 @@ class Cliconnect_Seed {
 							'titulo' => 'Nuvem',
 							'url'    => $turl( 'nuvem' ),
 							'filhos' => array(
-								'AWS'          => $purl( 'aws' ),
-								'Google Cloud' => $purl( 'google-cloud' ),
-								'Azure'        => $purl( 'azure' ),
+								'AWS'             => $purl( 'aws' ),
+								'Google Cloud'    => $purl( 'google-cloud' ),
+								'Microsoft Azure' => $purl( 'microsoft-azure' ),
 							),
 						),
 					),
