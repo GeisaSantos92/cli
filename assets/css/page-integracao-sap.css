@@ -468,7 +468,8 @@
 /* Decorativos */
 .sap-depoimento__brilho {
 	position: absolute;
-	left: -724px;
+	left: auto;
+	right: -724px;
 	top: 50%;
 	transform: translateY(-50%);
 	width: 788px;
