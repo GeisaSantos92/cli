@@ -2068,8 +2068,8 @@ class Cliconnect_Seed {
 	/**
 	 * Preenche os campos ACF da página Trabalhe Conosco.
 	 *
-	 * Fotos da equipe (sobre_foto_*) e foto do depoimento (dep_foto) precisam
-	 * de imagens reais do cliente — os campos ficam vazios no seed.
+	 * sobre_foto_1 e dep_foto são populados via seed (tc-sobre-equipe.png e
+	 * tc-dep-foto-vitoria.png em assets/seed/).
 	 *
 	 * @param int $page_id ID da página.
 	 * @return void
@@ -2090,6 +2090,7 @@ class Cliconnect_Seed {
 			'sobre_titulo'  => 'Somos a CLI',
 			'sobre_texto_1' => 'Com 13 anos de história, somos uma empresa de tecnologia e parceria que conecta cultura, pessoas e soluções. Nossa proposta é transformar continuamente técnico em capacidade humana, gerando impacto real para clientes, parceiros e para o mundo.',
 			'sobre_texto_2' => 'Temos uma trajetória sólida, com mais de 75 clientes ativos e mais de 500 integrações prontas para uso. Acreditamos que grandes soluções são construídas por equipes que colaboram, aprendem constantemente e têm autonomia para fazer acontecer.',
+			'sobre_foto_1'  => $this->img( 'tc-sobre-equipe' ),
 
 			// 3. Métricas.
 			'tc_metrica_1_numero' => '13',
@@ -2129,6 +2130,7 @@ class Cliconnect_Seed {
 			'valor_5_texto'  => 'Somos uma equipe unida. Compartilhamos conhecimento, conquistas e aprendizados com espírito de parceria e harmonia.',
 
 			// 6. Depoimento.
+			'dep_foto'  => $this->img( 'tc-dep-foto-vitoria' ),
 			'dep_nome'  => 'Vitória Nunes',
 			'dep_cargo' => 'Tech Lead',
 			'dep_texto' => 'O trabalho em equipe na CLI é real e acontece no dia a dia. Contar com um time que se ajuda para resolver problemas complexos e que está em total sintonia com ferramentas inovadoras torna a nossa rotina leve e realizadora. No final das contas, o sucesso das nossas entregas é fruto desse ecossistema, onde recebemos apoio de todas as áreas da empresa.',
