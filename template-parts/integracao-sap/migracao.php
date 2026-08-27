@@ -29,7 +29,6 @@ if ( ! $titulo ) {
 $uri      = get_template_directory_uri();
 $diagonal = $uri . '/assets/img/sap-mig-diagonal.svg';
 $sap_logo = $uri . '/assets/img/sap-mig-sap-logo.png';
-$arrow    = $uri . '/assets/img/sap-mig-arrow.svg';
 $cloud    = $uri . '/assets/img/sap-mig-cloud.svg';
 ?>
 <section class="sap-migracao">
@@ -55,7 +54,7 @@ $cloud    = $uri . '/assets/img/sap-mig-cloud.svg';
 							<?php echo ( '_blank' === ( $botao['target'] ?? '' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
 						>
 							<?php echo esc_html( $botao['title'] ); ?>
-							<?php cliconnect_icone( 'seta-direita', 24 ); ?>
+							<?php echo cliconnect_icone( 'seta-direita', 24 ); ?>
 						</a>
 					</div>
 				<?php endif; ?>
@@ -71,9 +70,7 @@ $cloud    = $uri . '/assets/img/sap-mig-cloud.svg';
 					</div>
 
 					<div class="sap-migracao__seta-wrap">
-						<img src="<?php echo esc_url( $arrow ); ?>" alt="" class="sap-migracao__arrow sap-migracao__arrow--esq" loading="lazy" decoding="async">
 						<img src="<?php echo esc_url( $cloud ); ?>" alt="" class="sap-migracao__cloud" loading="lazy" decoding="async">
-						<img src="<?php echo esc_url( $arrow ); ?>" alt="" class="sap-migracao__arrow sap-migracao__arrow--dir" loading="lazy" decoding="async">
 					</div>
 
 					<div class="sap-migracao__logo-card">
