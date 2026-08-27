@@ -63,8 +63,14 @@ $uri = get_template_directory_uri();
 			<?php /* Coluna 2 — CLI Connect */ ?>
 			<div class="cc-dif__col cc-dif__col--cli">
 				<div class="cc-dif__th cc-dif__th--cli">
-					<img src="<?php echo esc_url( $uri . '/assets/img/cc-dif-logo-cli.png' ); ?>"
+					<img class="cc-dif__logo cc-dif__logo--desktop"
+						src="<?php echo esc_url( $uri . '/assets/img/cc-dif-logo-cli.png' ); ?>"
 						width="170" height="27"
+						alt="CLI Connect"
+						loading="lazy">
+					<img class="cc-dif__logo cc-dif__logo--mobile"
+						src="<?php echo esc_url( $uri . '/assets/img/cc-dif-logo-cli-mobile.svg' ); ?>"
+						width="40" height="40"
 						alt="CLI Connect"
 						loading="lazy">
 				</div>

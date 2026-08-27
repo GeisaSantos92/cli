@@ -1554,6 +1554,9 @@
 	padding-top: 60px;
 }
 
+/* Troca de logo desktop/mobile */
+.cc-dif__logo--mobile { display: none; }
+
 /* Responsivo ----------------------------------------------------------------- */
 
 @media (max-width: 768px) {
@@ -1581,6 +1584,20 @@
 
 	.cc-dif__td {
 		padding: 16px;
+	}
+
+	.cc-dif__logo--desktop { display: none; }
+	.cc-dif__logo--mobile  { display: block; }
+}
+
+@media (max-width: 450px) {
+	.cc-dif__td--label {
+		font-size: 12px;
+		line-height: 130%;
+	}
+
+	.cc-dif__th--outras {
+		text-align: center;
 	}
 }
 
