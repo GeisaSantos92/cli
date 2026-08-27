@@ -461,7 +461,7 @@ class Cliconnect_Seed {
 			}
 		);
 
-		$arquivos = glob( $dir . '/*.{png,jpg,jpeg,svg}', GLOB_BRACE );
+		$arquivos = glob( $dir . '/*.{png,jpg,jpeg,svg,webp}', GLOB_BRACE );
 		$novos    = 0;
 
 		foreach ( $arquivos as $arquivo ) {
@@ -665,18 +665,23 @@ class Cliconnect_Seed {
 	 * @return void
 	 */
 	protected function criar_integracoes() {
+		// A ordem define a órbita do hero: os 8 primeiros vão para o lado
+		// esquerdo e os 8 seguintes para o direito (ver template-parts/home/hero.php).
 		$itens = array(
-			array( 'SAP', 'integracao-sap', true ),
+			array( 'VTEX', 'integracao-vtex', true ),
+			array( 'Claude', 'integracao-claude', true ),
 			array( 'TOTVS', 'integracao-totvs', true ),
+			array( 'SAP', 'integracao-sap', true ),
+			array( 'IFS', 'integracao-ifs', true ),
+			array( 'Zendesk', 'integracao-zendesk', true ),
+			array( 'Sankhya', 'integracao-sankhya', true ),
+			array( 'WhatsApp', 'integracao-whatsapp', true ),
+			array( 'Thomson Reuters', 'integracao-thomson-reuters', true ),
+			array( 'MV', 'integracao-mv', true ),
+			array( 'OpenAI', 'integracao-openai', true ),
+			array( 'ServiceNow', 'integracao-servicenow', true ),
 			array( 'Salesforce', 'integracao-salesforce', true ),
 			array( 'Senior', 'integracao-senior', true ),
-			array( 'Sankhya', 'integracao-sankhya', true ),
-			array( 'Zendesk', 'integracao-zendesk', true ),
-			array( 'IFS', 'integracao-ifs', true ),
-			array( 'WhatsApp', 'integracao-whatsapp', true ),
-			array( 'ServiceNow', 'integracao-servicenow', true ),
-			array( 'OpenAI', 'integracao-openai', true ),
-			array( 'Thomson Reuters', 'integracao-thomson-reuters', true ),
 			array( 'HubSpot', 'integracao-hubspot', true ),
 			array( 'TASY', 'integracao-tasy', true ),
 		);

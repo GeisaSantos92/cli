@@ -121,18 +121,19 @@
 	justify-content: center;
 	width: 74px;
 	height: 74px;
-	padding: 12px;
 	border-radius: var(--raio-pill);
 	background: #fff;
 	border: 1px solid var(--cor-borda);
 	box-shadow: var(--sombra-card);
+	overflow: hidden;
 	animation: hero-flutua 7s ease-in-out infinite;
 	will-change: transform;
 }
 
+/* A arte já vem 74×74 (exportada em 2x) com a margem interna embutida. */
 .hero__logo img {
-	max-width: 100%;
-	max-height: 44px;
+	width: 100%;
+	height: 100%;
 	object-fit: contain;
 }
 
