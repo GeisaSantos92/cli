@@ -2672,7 +2672,7 @@ class Cliconnect_Seed {
 			'sap_dep_foto'  => $this->img( 'sap-depoimento-foto' ),
 			'sap_dep_nome'  => 'João Carvalho',
 			'sap_dep_cargo' => 'Gerente de Vendas',
-			'sap_dep_frase' => '"R$ 6 milhões economizados em horas de desenvolvimento ABAP"',
+			'sap_dep_frase' => '“R$ 6 milhões economizados em horas de desenvolvimento ABAP”',
 			'sap_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
 
 			// 7. Sistemas.

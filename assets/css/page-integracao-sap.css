@@ -548,6 +548,7 @@
 	align-items: center;
 	align-self: stretch;
 	padding-inline: 40px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	position: relative;
 	z-index: 1;
 }
@@ -575,21 +576,21 @@
 	gap: 8px;
 	padding: 12px 24px;
 	height: 48px;
-	background: #fff;
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 8px;
 	font-family: var(--fonte-titulo);
 	font-size: 16px;
-	font-weight: 700;
+	font-weight: 400;
 	line-height: 1;
-	color: var(--cor-primaria);
+	color: #fff;
 	text-decoration: none;
 	white-space: nowrap;
-	box-shadow: inset 0 -1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .sap-depoimento__botao svg {
 	flex-shrink: 0;
-	color: var(--cor-primaria);
+	color: #fff;
 }
 
 /* --- Sistemas conectáveis --------------------------------------------------- */
@@ -1061,21 +1062,10 @@
 .sap-migracao__seta-wrap {
 	display: flex;
 	align-items: center;
-	gap: 4px;
-}
-
-.sap-migracao__arrow {
-	width: 28px;
-	height: auto;
-	display: block;
-}
-
-.sap-migracao__arrow--dir {
-	transform: scaleX(-1);
 }
 
 .sap-migracao__cloud {
-	width: 56px;
+	width: 100px;
 	height: auto;
 	display: block;
 }
