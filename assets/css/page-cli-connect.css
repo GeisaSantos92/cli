@@ -1304,7 +1304,6 @@
 
 	.cc-boomi__inner,
 	.cc-operacoes__inner,
-	.cc-pratica__inner,
 	.cc-dashboard__inner,
 	.cc-departamentos__inner {
 		grid-template-columns: 1fr;
@@ -1768,6 +1767,17 @@
 	height: auto;
 	max-width: 100%;
 	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.cc-pratica {
+		padding-bottom: 64px;
+	}
+
+	.cc-pratica__inner {
+		gap: 40px;
+		grid-template-columns: 1fr;
+	}
 }
 
 /* ==========================================================================
