@@ -1166,9 +1166,34 @@ p {
 }
 
 @media (max-width: 768px) {
+	/* Flex column no inner permite reordenar logo e links */
+	.site-footer__inner {
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Links sobem (order 0 é padrão mas explícito para clareza) */
+	.site-footer__links {
+		order: 0;
+	}
+
+	/* Logo + sociais descem abaixo dos links */
 	.site-footer__top {
+		order: 1;
 		flex-wrap: wrap;
 		gap: 16px;
+		border-bottom: none;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	/* Espaço do planeta fica por último */
+	.site-footer__espaco {
+		order: 2;
+	}
+
+	/* Colunas do menu empilhadas em coluna única */
+	.site-footer__grid {
+		flex-direction: column;
 	}
 }
 
