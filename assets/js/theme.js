@@ -43,6 +43,19 @@
 			gatilho.setAttribute('aria-expanded', aberto ? 'true' : 'false');
 		});
 
+		// No desktop, hover abre e fecha (mesmo padrão dos dropdowns do nav).
+		seletor.addEventListener('mouseenter', function () {
+			if (window.innerWidth < 1025) return;
+			clearTimeout(seletor.__closeTimer);
+			seletor.classList.add('is-open');
+			gatilho.setAttribute('aria-expanded', 'true');
+		});
+
+		seletor.addEventListener('mouseleave', function () {
+			if (window.innerWidth < 1025) return;
+			seletor.__closeTimer = setTimeout(fechar, 100);
+		});
+
 		document.addEventListener('click', function (e) {
 			if (!seletor.contains(e.target)) fechar();
 		});
