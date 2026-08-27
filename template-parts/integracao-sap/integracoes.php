@@ -69,7 +69,7 @@ $int_vector = $uri . '/assets/img/sap-int-vector.svg';
 									<img class="sap-int-card__logo" src="<?php echo esc_url( $sap_logo ); ?>" alt="SAP" width="80" height="80" loading="lazy" decoding="async">
 								</div>
 								<div class="sap-int-card__linha" aria-hidden="true"></div>
-								<div class="sap-int-card__logo-wrap">
+								<div class="sap-int-card__logo-wrap sap-int-card__logo-wrap--parceiro">
 									<?php if ( $int['logo'] ) : ?>
 										<?php $logo_src = wp_get_attachment_image_url( $int['logo'], 'full' ); ?>
 										<?php if ( $logo_src ) : ?>
