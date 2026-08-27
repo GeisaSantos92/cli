@@ -16,15 +16,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 $titulo = cliconnect_campo( 'camadas_titulo' );
 $texto  = cliconnect_campo( 'camadas_texto' );
 
-$grafico = cliconnect_imagem_tema(
-	'section-camadas.png',
-	array(
-		'class'  => 'camadas__imagem',
-		'alt'    => __( 'Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global', 'cli' ),
-		'width'  => 1312,
-		'height' => 606,
-	)
-);
+$alt_grafico = __( 'Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global', 'cli' );
+$src_desktop = esc_url( get_theme_file_uri( '/assets/img/section-camadas.png' ) );
+$src_mobile  = esc_url( get_theme_file_uri( '/assets/img/section-camadas-mobile.png' ) );
+$tem_mobile  = file_exists( get_theme_file_path( '/assets/img/section-camadas-mobile.png' ) );
+
+$grafico  = '<picture>';
+if ( $tem_mobile ) {
+	$grafico .= '<source media="(max-width: 780px)" srcset="' . $src_mobile . '" width="1312" height="2038">';
+}
+$grafico .= '<img'
+	. ' class="camadas__imagem"'
+	. ' src="' . $src_desktop . '"'
+	. ' alt="' . esc_attr( $alt_grafico ) . '"'
+	. ' width="1312"'
+	. ' height="606"'
+	. ' loading="lazy"'
+	. ' decoding="async"'
+	. '>';
+$grafico .= '</picture>';
 ?>
 
 <section class="camadas">

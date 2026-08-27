@@ -202,10 +202,11 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$descricao = $item->description ?? '';
 
 			return sprintf(
-				'<a class="nav-cartao"%1$s><span class="nav-cartao__titulo">%2$s</span>%3$s</a>',
+				'<a class="nav-cartao"%1$s><span class="nav-cartao__titulo">%2$s</span>%3$s<span class="nav-cartao__seta" aria-hidden="true">%4$s</span></a>',
 				$atributos,
 				esc_html( $item->title ),
-				$descricao ? '<span class="nav-cartao__texto">' . esc_html( $descricao ) . '</span>' : ''
+				$descricao ? '<span class="nav-cartao__texto">' . esc_html( $descricao ) . '</span>' : '',
+				cliconnect_icone( 'seta-nordeste', 20 )
 			);
 		}
 

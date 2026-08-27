@@ -168,14 +168,15 @@
 
 .agentes__pista {
 	position: relative;
-	overflow: hidden;
+	overflow-x: clip;
+	overflow-y: visible;
 	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 	mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
 
 .agentes__trilha {
 	display: flex;
-	gap: 24px;
+	gap: 12px;
 	width: max-content;
 	animation: marquee 42s linear infinite;
 	will-change: transform;
@@ -238,7 +239,7 @@
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
 	color: var(--cor-positivo);
-	background: rgba(18, 183, 106, 0.12);
+	background: hsl(126deg 71% 89% / 50%);
 	border-radius: var(--raio-pill);
 	white-space: nowrap;
 }
@@ -304,8 +305,8 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 44px;
-	height: 32px;
+	width: 40px;
+	height: 40px;
 	padding: 4px;
 	border: 1px solid var(--cor-borda);
 	border-radius: 6px;
@@ -355,16 +356,10 @@
  * largura e a seção rola na horizontal.
  */
 @media (max-width: 780px) {
-	.camadas__grafico {
-		overflow-x: auto;
-		/* Compensa o padding do container: a peça sangra até a borda da tela. */
-		margin-inline: calc(-1 * var(--margem-lateral));
-		padding-inline: var(--margem-lateral);
-		-webkit-overflow-scrolling: touch;
-	}
-
+	/* A versão mobile da ilustração (section-camadas-mobile.png) é vertical:
+	 * enche a largura do container sem scroll horizontal. */
 	.camadas__imagem {
-		min-width: 660px;
+		width: 100%;
 	}
 }
 
@@ -396,6 +391,8 @@
 
 .boomi {
 	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 80px;
 }
 
 .boomi__grid {
@@ -521,15 +518,18 @@
 
 .clientes__pista {
 	overflow: hidden;
-	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-	mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+	width: 100%;
+	max-width: var(--largura-conteudo);
+	margin: auto;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+	mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
 }
 
 .clientes__trilha {
 	display: flex;
 	align-items: center;
 	width: max-content;
-	animation: marquee 45s linear infinite;
+	animation: marquee 80s linear infinite;
 	will-change: transform;
 }
 
@@ -560,6 +560,16 @@
 /* ==========================================================================
    7. MÍDIA + TEXTO (IA corporativa / Na prática)
    ========================================================================== */
+
+.midia {
+	padding-top: 120px;
+	padding-bottom: 64px;
+}
+
+.midia--invertida {
+	padding-top: 64px;
+	padding-bottom: 120px;
+}
 
 .midia__grid {
 	display: grid;
@@ -872,6 +882,8 @@
 
 .eventos {
 	background: var(--cor-fundo-suave);
+	padding-top: 120px;
+	padding-bottom: 80px;
 }
 
 .secao__cabecalho {
@@ -930,7 +942,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-	padding: 24px;
+	padding: 32px;
 }
 
 .evento-card__titulo {
@@ -954,6 +966,8 @@
 
 .compliance {
 	background: var(--cor-fundo-suave);
+	padding-top: 80px;
+	padding-bottom: 120px;
 }
 
 .compliance__grid {
@@ -1006,7 +1020,8 @@
 .integracoes {
 	position: relative;
 	background: linear-gradient(180deg, var(--cor-fundo-suave) 0 50%, var(--cor-fundo) 50% 100%);
-	padding-block: clamp(40px, 6vw, 80px);
+	padding-top: 120px;
+	padding-bottom: 80px;
 }
 
 .integracoes__wrapper {
@@ -1076,6 +1091,11 @@
 /* ==========================================================================
    12. DEPARTAMENTOS — diagrama + texto
    ========================================================================== */
+
+.departamentos {
+	padding-top: 120px;
+	padding-bottom: 120px;
+}
 
 .departamentos__grid {
 	display: grid;
@@ -1311,6 +1331,11 @@
 @media (max-width: 900px) {
 	.suporte__grid {
 		grid-template-columns: 1fr;
+	}
+
+	/* Imagem acima do texto em mobile. */
+	.suporte__visual {
+		order: -1;
 	}
 }
 

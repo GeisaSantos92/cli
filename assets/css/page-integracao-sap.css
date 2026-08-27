@@ -207,12 +207,44 @@
 	border-radius: 99px 0 0 99px;
 }
 
-.sap-vel-etapa--ativa:last-of-type {
+.sap-vel-etapa--ativa:last-child,
+.sap-vel-etapa--ativa:has(+ .sap-vel-etapa--vazia) {
 	border-radius: 0 99px 99px 0;
 }
 
 .sap-vel-etapa--vazia {
 	flex: 1;
+	padding: 8px 4px;
+}
+
+/* Animação fade-in scroll-triggered */
+@keyframes sap-vel-fade-in {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.sap-velocidade.sap-vel-animar .sap-vel-etapa--cinza,
+	.sap-velocidade.sap-vel-animar .sap-vel-etapa--ativa {
+		opacity: 0;
+	}
+
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza,
+	.sap-velocidade.is-visible .sap-vel-etapa--ativa {
+		animation: sap-vel-fade-in 0.6s ease-out forwards;
+	}
+
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(1) { animation-delay: 0.2s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(2) { animation-delay: 0.4s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(3) { animation-delay: 0.6s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(4) { animation-delay: 0.8s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(5) { animation-delay: 1.0s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(6) { animation-delay: 1.2s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--cinza:nth-child(7) { animation-delay: 1.4s; }
+
+	.sap-velocidade.is-visible .sap-vel-etapa--ativa:nth-child(1) { animation-delay: 0.2s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--ativa:nth-child(2) { animation-delay: 0.4s; }
+	.sap-velocidade.is-visible .sap-vel-etapa--ativa:nth-child(3) { animation-delay: 0.6s; }
 }
 
 /* --- SAP Integrado (Conectar) ----------------------------------------------- */
@@ -633,7 +665,7 @@
 	background:
 		linear-gradient(to bottom, transparent 64%, #e7efff 100%),
 		var(--cor-fundo-suave);
-	padding-top: 80px;
+	padding-top: 120px;
 	padding-bottom: 120px;
 }
 
@@ -668,7 +700,7 @@
 .sap-cleancore__cards {
 	display: flex;
 	gap: 24px;
-	align-items: flex-start;
+	align-items: stretch;
 }
 
 .sap-cleancore__card {
@@ -1141,9 +1173,11 @@
 	padding: 40px 40px 64px;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	gap: 12px;
 	overflow: hidden;
 	position: relative;
+	height: 100%;
 	min-height: 280px;
 }
 
@@ -1161,11 +1195,7 @@
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
-}
-
-.sap-beneficios__check-wrap img {
-	width: 24px;
-	height: 24px;
+	color: var(--cor-primaria);
 }
 
 .sap-beneficios__desc {
@@ -1322,6 +1352,7 @@
 
 /* Etapas */
 .sap-automacao__etapa {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -1333,6 +1364,15 @@
 	border: 1px solid rgba(39, 62, 128, 0.2);
 	border-radius: 8px;
 	padding: 13px;
+}
+
+.sap-automacao__pegador {
+	position: absolute;
+	bottom: 4px;
+	height: 4px;
+	width: 40px;
+	background: var(--cor-fundo-suave);
+	border-radius: 2px;
 }
 
 .sap-automacao__etapa--trigger {

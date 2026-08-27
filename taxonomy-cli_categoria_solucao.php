@@ -134,68 +134,70 @@ if ( $is_pai ) :
 	<!-- Corpo -->
 	<div class="cat-catalogo__corpo">
 		<div class="container">
-			<div class="cat-catalogo__inner">
+			<div class="cat-painel">
 
-				<!-- Sidebar de categorias funcionais -->
-				<aside class="cat-sidebar" aria-label="<?php esc_attr_e( 'Filtrar por categoria', 'cli' ); ?>">
-					<p class="cat-sidebar__titulo"><?php esc_html_e( 'Categorias', 'cli' ); ?></p>
-					<ul class="cat-sidebar__lista" role="list">
-						<?php foreach ( $categorias_sidebar as $cat ) :
-							$ico_uri = get_theme_file_uri( '/assets/img/catalogo-ico-' . $cat['ico'] . '.svg' );
-							$ico_ok  = file_exists( get_theme_file_path( '/assets/img/catalogo-ico-' . $cat['ico'] . '.svg' ) );
-						?>
-						<li>
-							<button
-								class="cat-sidebar__btn"
-								type="button"
-								data-tipo="<?php echo esc_attr( $cat['slug'] ); ?>"
-								aria-pressed="false"
-							>
-								<?php if ( $ico_ok ) : ?>
-									<img
-										src="<?php echo esc_url( $ico_uri ); ?>"
-										alt=""
-										width="24"
-										height="24"
-										loading="lazy"
-										aria-hidden="true"
-									>
-								<?php endif; ?>
-								<?php echo esc_html( $cat['label'] ); ?>
-							</button>
-						</li>
-						<?php endforeach; ?>
-					</ul>
-				</aside>
-
-				<!-- Conteúdo: busca + grade -->
-				<div class="cat-conteudo">
-
-					<!-- Barra de busca -->
-					<div class="cat-busca">
-						<label for="cat-busca-campo" class="visually-hidden">
-							<?php esc_html_e( 'Pesquisar por alguma tecnologia', 'cli' ); ?>
-						</label>
-						<div class="cat-busca__campo-wrap">
-							<img
-								class="cat-busca__ico"
-								src="<?php echo esc_url( get_theme_file_uri( '/assets/img/catalogo-ico-busca.svg' ) ); ?>"
-								alt=""
-								width="24"
-								height="24"
-								aria-hidden="true"
-							>
-							<input
-								id="cat-busca-campo"
-								class="cat-busca__campo"
-								type="search"
-								placeholder="<?php esc_attr_e( 'Pesquisar por alguma tecnologia', 'cli' ); ?>"
-								autocomplete="off"
-							>
-						</div>
+				<!-- Barra de busca (largura total do painel) -->
+				<div class="cat-busca">
+					<label for="cat-busca-campo" class="visually-hidden">
+						<?php esc_html_e( 'Pesquisar por alguma tecnologia', 'cli' ); ?>
+					</label>
+					<div class="cat-busca__campo-wrap">
+						<img
+							class="cat-busca__ico"
+							src="<?php echo esc_url( get_theme_file_uri( '/assets/img/catalogo-ico-busca.svg' ) ); ?>"
+							alt=""
+							width="24"
+							height="24"
+							aria-hidden="true"
+						>
+						<input
+							id="cat-busca-campo"
+							class="cat-busca__campo"
+							type="search"
+							placeholder="<?php esc_attr_e( 'Pesquisar por alguma tecnologia', 'cli' ); ?>"
+							autocomplete="off"
+						>
 					</div>
+				</div>
 
-					<!-- Grade de tecnologias -->
+				<div class="cat-catalogo__inner">
+
+					<!-- Sidebar de categorias funcionais -->
+					<aside class="cat-sidebar" aria-label="<?php esc_attr_e( 'Filtrar por categoria', 'cli' ); ?>">
+						<p class="cat-sidebar__titulo"><?php esc_html_e( 'Categorias', 'cli' ); ?></p>
+						<ul class="cat-sidebar__lista" role="list">
+							<?php foreach ( $categorias_sidebar as $cat ) :
+								$ico_uri = get_theme_file_uri( '/assets/img/catalogo-ico-' . $cat['ico'] . '.svg' );
+								$ico_ok  = file_exists( get_theme_file_path( '/assets/img/catalogo-ico-' . $cat['ico'] . '.svg' ) );
+							?>
+							<li>
+								<button
+									class="cat-sidebar__btn"
+									type="button"
+									data-tipo="<?php echo esc_attr( $cat['slug'] ); ?>"
+									aria-pressed="false"
+								>
+									<?php if ( $ico_ok ) : ?>
+										<img
+											src="<?php echo esc_url( $ico_uri ); ?>"
+											alt=""
+											width="24"
+											height="24"
+											loading="lazy"
+											aria-hidden="true"
+										>
+									<?php endif; ?>
+									<?php echo esc_html( $cat['label'] ); ?>
+								</button>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</aside>
+
+					<!-- Conteúdo: grade -->
+					<div class="cat-conteudo">
+
+						<!-- Grade de tecnologias -->
 					<?php if ( $todos->have_posts() ) : ?>
 						<div class="cat-grade" id="cat-grade" role="list" aria-live="polite">
 							<?php
@@ -241,9 +243,10 @@ if ( $is_pai ) :
 						</p>
 					<?php endif; ?>
 
-				</div><!-- .cat-conteudo -->
+					</div><!-- .cat-conteudo -->
 
-			</div><!-- .cat-catalogo__inner -->
+				</div><!-- .cat-catalogo__inner -->
+			</div><!-- .cat-painel -->
 		</div><!-- .container -->
 	</div><!-- .cat-catalogo__corpo -->
 
