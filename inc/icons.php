@@ -71,3 +71,23 @@ function cliconnect_icone( $nome, $tamanho = 24 ) {
 		$paths[ $nome ]
 	);
 }
+
+/**
+ * Retorna o markup de um ícone Material Symbols Rounded via ligatura (issue #55).
+ *
+ * A fonte é carregada via fonts.css (auto-hospedada). A classe .ms-icon define
+ * os eixos variáveis (FILL=1, wght=400) e font-size padrão de 24 px.
+ * O tamanho pode ser sobrescrito por CSS no container — não use style inline.
+ *
+ * @param string $ligatura Nome do ícone no Material Symbols (ex.: 'hub', 'shield').
+ * @return string Span HTML com aria-hidden, ou string vazia se ligatura vazia.
+ */
+function cliconnect_icone_ms( $ligatura ) {
+	$ligatura = trim( $ligatura );
+
+	if ( ! $ligatura ) {
+		return '';
+	}
+
+	return '<span class="ms-icon" aria-hidden="true">' . esc_html( $ligatura ) . '</span>';
+}

@@ -46,7 +46,7 @@ if ( ! $titulo && ! $valores ) {
 				<article class="tc-valor">
 					<?php if ( $valor['icone'] ) : ?>
 						<span class="tc-valor__icone">
-							<?php echo cliconnect_icone( $valor['icone'], 24 ); // SVG estático de lista fechada. ?>
+							<?php echo cliconnect_icone_ms( $valor['icone'] ); ?>
 						</span>
 					<?php endif; ?>
 					<h3 class="tc-valor__titulo"><?php echo esc_html( $valor['nome'] ); ?></h3>

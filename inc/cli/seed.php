@@ -2108,23 +2108,23 @@ class Cliconnect_Seed {
 			'valores_titulo'  => 'Mais do que integrar tecnologia, nós integramos pessoas',
 			'valores_cta'     => $this->link( 'Confira nossas vagas', '/trabalhe-conosco/#vagas' ),
 
-			'valor_1_icone'  => 'escudo',
+			'valor_1_icone'  => 'shield',
 			'valor_1_titulo' => 'Confiança',
 			'valor_1_texto'  => 'Agimos com transparência, segurança e respeito. Cumprimos o que prometemos e construímos relações de confiança duradouras com clientes e equipes.',
 
-			'valor_2_icone'  => 'verificado',
+			'valor_2_icone'  => 'verified',
 			'valor_2_titulo' => 'Igualdade',
 			'valor_2_texto'  => 'Damos oportunidade a quem deseja crescer, valorizando o talento e o desenvolvimento de cada pessoa independentemente de sua origem.',
 
-			'valor_3_icone'  => 'grupo',
+			'valor_3_icone'  => 'group',
 			'valor_3_titulo' => 'Sucesso do Cliente',
 			'valor_3_texto'  => 'O problema do cliente é nosso. Resolvemos com conhecimento de negócio e nos orgulhamos de cada entrega bem-sucedida.',
 
-			'valor_4_icone'  => 'lampada',
+			'valor_4_icone'  => 'lightbulb',
 			'valor_4_titulo' => 'Inovação',
 			'valor_4_texto'  => 'Estimulamos novas ideias e a criatividade para antecipar tendências e gerar soluções inovadoras com responsabilidade.',
 
-			'valor_5_icone'  => 'grupo',
+			'valor_5_icone'  => 'group',
 			'valor_5_titulo' => 'Colaboração',
 			'valor_5_texto'  => 'Somos uma equipe unida. Compartilhamos conhecimento, conquistas e aprendizados com espírito de parceria e harmonia.',
 
@@ -2138,27 +2138,27 @@ class Cliconnect_Seed {
 			'beneficios_titulo'    => 'Tudo para que você possa fazer o seu melhor trabalho.',
 			'beneficios_subtitulo' => 'Sabemos que você precisa de estrutura para dar o seu melhor. Por isso oferecemos benefícios que fazem diferença no dia a dia.',
 
-			'beneficio_1_icone'  => 'coracao',
+			'beneficio_1_icone'  => 'favorite',
 			'beneficio_1_titulo' => 'Saúde e Bem-estar',
 			'beneficio_1_texto'  => 'Plano de saúde Bradesco e plano odontológico Odontomais, com cobertura ampla para você e seus dependentes.',
 
-			'beneficio_2_icone'  => 'casa',
+			'beneficio_2_icone'  => 'home',
 			'beneficio_2_titulo' => 'Trabalho Remoto',
 			'beneficio_2_texto'  => 'Auxílio mensal para pagar os custos do home office e manter sua rotina de trabalho remoto confortável.',
 
-			'beneficio_3_icone'  => 'refeicao',
+			'beneficio_3_icone'  => 'restaurant',
 			'beneficio_3_titulo' => 'Alimentação',
 			'beneficio_3_texto'  => 'Auxílio mensal em pix, que você pode usar como quiser para sua alimentação ao longo do mês.',
 
-			'beneficio_4_icone'  => 'grupo',
+			'beneficio_4_icone'  => 'group',
 			'beneficio_4_titulo' => 'Apoio à Família',
 			'beneficio_4_texto'  => 'Auxílio-creche para filhos de até 5 anos, porque sabemos que a família também faz parte do sucesso de cada um.',
 
-			'beneficio_5_icone'  => 'verificado',
+			'beneficio_5_icone'  => 'verified',
 			'beneficio_5_titulo' => 'Qualidade de vida',
 			'beneficio_5_texto'  => 'Acesso ao TotalPass: academias, esportes e atividades de bem-estar para manter a saúde física em dia.',
 
-			'beneficio_6_icone'  => 'bolo',
+			'beneficio_6_icone'  => 'cake',
 			'beneficio_6_titulo' => 'Day Off de aniversário',
 			'beneficio_6_texto'  => 'No dia que você fizer anos, tire uma folga. Você merece celebrar do jeito que quiser.',
 

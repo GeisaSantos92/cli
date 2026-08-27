@@ -1654,22 +1654,10 @@
 	width: 40px;
 }
 
-.cc-vantagens__icone {
-	background-color: #fff;
-	display: block;
-	height: 24px;
-	mask-position: center;
-	mask-repeat: no-repeat;
-	mask-size: contain;
-	width: 24px;
+.cc-vantagens__icone-wrap .ms-icon {
+	color: #fff;
+	font-size: 24px;
 }
-
-.cc-vantagens__icone--1 { mask-image: url("../img/cc-vantag-icon-1.svg"); }
-.cc-vantagens__icone--2 { mask-image: url("../img/cc-vantag-icon-2.svg"); }
-.cc-vantagens__icone--3 { mask-image: url("../img/cc-vantag-icon-3.svg"); }
-.cc-vantagens__icone--4 { mask-image: url("../img/cc-vantag-icon-4.svg"); }
-.cc-vantagens__icone--5 { mask-image: url("../img/cc-vantag-icon-5.svg"); }
-.cc-vantagens__icone--6 { mask-image: url("../img/cc-vantag-icon-6.svg"); }
 
 .cc-vantagens__card-titulo {
 	color: var(--cor-texto-primario, #1f242d);

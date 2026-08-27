@@ -49,7 +49,7 @@ if ( ! $titulo && ! $beneficios ) {
 				<article class="tc-beneficio">
 					<?php if ( $beneficio['icone'] ) : ?>
 						<span class="tc-beneficio__icone">
-							<?php echo cliconnect_icone( $beneficio['icone'], 24 ); // SVG estático de lista fechada. ?>
+							<?php echo cliconnect_icone_ms( $beneficio['icone'] ); ?>
 						</span>
 					<?php endif; ?>
 					<h3 class="tc-beneficio__titulo"><?php echo esc_html( $beneficio['nome'] ); ?></h3>

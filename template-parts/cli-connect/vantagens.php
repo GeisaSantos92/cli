@@ -3,8 +3,8 @@
  * CLI Connect — Vantagens.
  *
  * Header centralizado (eyebrow + H3 + subtítulo) + grid 3×2 de cards.
- * Cada card: ícone SVG (mask-image) + título + texto descritivo.
- * Ícones são decorativos e fixos em assets/img/cc-vantag-icon-{n}.svg.
+ * Cada card: ícone Material Symbols Rounded + título + texto descritivo.
+ * Migrado de CSS mask-image para ligatura de fonte (issue #55).
  *
  * @package Cliconnect
  */
@@ -21,7 +21,15 @@ if ( ! $titulo ) {
 	return;
 }
 
-$uri = get_template_directory_uri();
+// Mapeamento de posição → ligatura Material Symbols Rounded.
+$icones_ms = array(
+	1 => 'checklist',
+	2 => 'account_balance',
+	3 => 'shield',
+	4 => 'automation',
+	5 => 'schedule',
+	6 => 'paid',
+);
 ?>
 <section class="cc-vantagens">
 	<div class="container">
@@ -49,7 +57,7 @@ $uri = get_template_directory_uri();
 				?>
 				<div class="cc-vantagens__card">
 					<div class="cc-vantagens__icone-wrap" aria-hidden="true">
-						<span class="cc-vantagens__icone cc-vantagens__icone--<?php echo (int) $i; ?>"></span>
+						<?php echo cliconnect_icone_ms( $icones_ms[ $i ] ?? '' ); ?>
 					</div>
 					<h3 class="cc-vantagens__card-titulo"><?php echo esc_html( $card_titulo ); ?></h3>
 					<?php if ( $card_texto ) : ?>
