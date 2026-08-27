@@ -168,6 +168,7 @@
 			Array.prototype.forEach.call(toggles, function (btn) {
 				var item = btn.closest('.site-nav__item--has-children');
 				if (!item || item === exceto) return;
+				clearTimeout(item.__closeTimer);
 				item.classList.remove('is-open');
 				btn.setAttribute('aria-expanded', 'false');
 			});
@@ -187,8 +188,12 @@
 
 			// No desktop, hover abre e fecha via JS — elimina o problema do gap
 			// entre o <li> e o painel que fazia o CSS :hover perder o estado.
+			// O delay de 100ms no mouseleave evita fechamento prematuro quando o
+			// mouse passa brevemente por outro elemento do header antes de chegar
+			// ao painel (especialmente no mega menu de Soluções, mais largo).
 			item.addEventListener('mouseenter', function () {
 				if (window.innerWidth < 1025) return;
+				clearTimeout(item.__closeTimer);
 				fecharTodos(item);
 				item.classList.add('is-open');
 				btn.setAttribute('aria-expanded', 'true');
@@ -196,8 +201,10 @@
 
 			item.addEventListener('mouseleave', function () {
 				if (window.innerWidth < 1025) return;
-				item.classList.remove('is-open');
-				btn.setAttribute('aria-expanded', 'false');
+				item.__closeTimer = setTimeout(function () {
+					item.classList.remove('is-open');
+					btn.setAttribute('aria-expanded', 'false');
+				}, 100);
 			});
 
 			// No desktop, clicar no texto do item pai não deve navegar.
