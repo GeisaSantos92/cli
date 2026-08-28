@@ -16,6 +16,7 @@
 	display: flex;
 	justify-content: center;
 	background: var(--cor-fundo);
+	padding-inline: var(--margem-lateral);
 }
 
 .post-breadcrumb__inner {
@@ -302,4 +303,13 @@
 	text-transform: uppercase;
 	color: var(--cor-texto-marca);
 	white-space: nowrap;
+}
+
+/* --- Responsivo ------------------------------------------------------------ */
+
+@media (max-width: 640px) {
+	.post-breadcrumb__link,
+	.post-breadcrumb__atual {
+		font-size: var(--tam-body-sm);
+	}
 }
