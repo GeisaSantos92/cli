@@ -74,7 +74,8 @@
 }
 
 .hero__subtitulo {
-	max-width: 62ch;
+	/* 938px é a largura do frame `subtítulo` no Figma. */
+	max-width: 938px;
 	font-size: var(--tam-body-lg);
 	color: var(--cor-texto-alt);
 }
@@ -89,6 +90,13 @@
 
 /* --- Órbita de logos de integração ---------------------------------------- */
 
+/*
+ * Órbita e malha de linhas dividem a mesma caixa (.hero__orbita = a seção
+ * inteira) e usam as mesmas porcentagens, tiradas do frame do Figma (hero de
+ * 1531x800, com o grupo `icones` começando em x=-431). Como as duas escalam
+ * juntas, cada linha continua ancorada na sua bolha em qualquer largura —
+ * inclusive quando o hero fica mais baixo que os 800px do layout.
+ */
 .hero__orbita {
 	position: absolute;
 	inset: 0;
@@ -96,22 +104,24 @@
 	pointer-events: none;
 }
 
-.hero__orbita-lado {
+/*
+ * A malha é o nó `linhas` (1304x512) do Figma: 16 traços pontilhados que saem
+ * do centro de cada bolha e convergem num ponto só, esmaecendo no caminho.
+ * O preserveAspectRatio="none" do SVG é proposital — faz a malha acompanhar a
+ * deformação da caixa junto com as bolhas, em vez de descolar delas.
+ */
+.hero__linhas {
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: min(24vw, 320px);
+	left: 6.4343%;
+	top: 15.0794%;
+	width: 85.1594%;
+	height: 64.0079%;
+}
+
+.hero__linhas-img {
+	display: block;
+	width: 100%;
 	height: 100%;
-	max-height: 640px;
-}
-
-/* 16px de recuo para os logos não encostarem na borda da viewport. */
-.hero__orbita-lado--esquerda {
-	left: max(16px, calc(50% - 720px));
-}
-
-.hero__orbita-lado--direita {
-	right: max(16px, calc(50% - 720px));
 }
 
 .hero__logo {
@@ -121,6 +131,7 @@
 	justify-content: center;
 	width: 74px;
 	height: 74px;
+	margin: -37px 0 0 -37px;
 	border-radius: var(--raio-pill);
 	background: #fff;
 	border: 1px solid var(--cor-borda);
@@ -130,26 +141,42 @@
 	will-change: transform;
 }
 
-/* A arte já vem 74×74 (exportada em 2x) com a margem interna embutida. */
+/* A arte já vem 74x74 (exportada em 2x) com a margem interna embutida. */
 .hero__logo img {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
 }
 
-/* Posições em zigue-zague (até 8 logos por lado) */
-.hero__orbita-lado .hero__logo:nth-child(1) { left: 4%;  top: 8%;  animation-delay: 0s; }
-.hero__orbita-lado .hero__logo:nth-child(2) { left: 38%; top: 2%;  animation-delay: -0.9s; }
-.hero__orbita-lado .hero__logo:nth-child(3) { left: 0;   top: 30%; animation-delay: -1.8s; }
-.hero__orbita-lado .hero__logo:nth-child(4) { left: 46%; top: 26%; animation-delay: -2.7s; }
-.hero__orbita-lado .hero__logo:nth-child(5) { left: 8%;  top: 52%; animation-delay: -3.6s; }
-.hero__orbita-lado .hero__logo:nth-child(6) { left: 44%; top: 58%; animation-delay: -4.5s; }
-.hero__orbita-lado .hero__logo:nth-child(7) { left: 2%;  top: 76%; animation-delay: -5.4s; }
-.hero__orbita-lado .hero__logo:nth-child(8) { left: 40%; top: 84%; animation-delay: -6.3s; }
+/*
+ * Centro das 16 instâncias `integracao hero` do Figma, em % do hero. O margin
+ * negativo de -37px acima recua meia bolha, então estas coordenadas são o
+ * centro — exatamente onde cada linha termina.
+ */
+.hero__logo--1 { left: 10.959%; top: 16.196%; animation-delay: 0.00s; }
+.hero__logo--2 { left: 8.333%; top: 46.741%; animation-delay: -0.45s; }
+.hero__logo--3 { left: 16.342%; top: 36.005%; animation-delay: -0.90s; }
+.hero__logo--4 { left: 12.658%; top: 60.491%; animation-delay: -1.35s; }
+.hero__logo--5 { left: 11.488%; top: 76.282%; animation-delay: -1.80s; }
+.hero__logo--6 { left: 6.434%; top: 29.946%; animation-delay: -2.25s; }
+.hero__logo--7 { left: 85.296%; top: 15.079%; animation-delay: -2.70s; }
+.hero__logo--8 { left: 20.581%; top: 79.087%; animation-delay: -3.15s; }
+.hero__logo--9 { left: 78.488%; top: 79.087%; animation-delay: -3.60s; }
+.hero__logo--10 { left: 85.648%; top: 61.304%; animation-delay: -4.05s; }
+.hero__logo--11 { left: 87.723%; top: 74.508%; animation-delay: -4.50s; }
+.hero__logo--12 { left: 85.825%; top: 38.810%; animation-delay: -4.95s; }
+.hero__logo--13 { left: 91.594%; top: 49.546%; animation-delay: -5.40s; }
+.hero__logo--14 { left: 77.960%; top: 29.946%; animation-delay: -5.85s; }
+.hero__logo--15 { left: 91.594%; top: 24.851%; animation-delay: -6.30s; }
+.hero__logo--16 { left: 20.053%; top: 22.979%; animation-delay: -6.75s; }
 
+/*
+ * Amplitude curta de propósito: a malha não flutua junto, e um deslocamento
+ * maior descolaria a ponta da linha da borda da bolha.
+ */
 @keyframes hero-flutua {
 	0%, 100% { transform: translateY(0); }
-	50%      { transform: translateY(-10px); }
+	50%      { transform: translateY(-6px); }
 }
 
 @media (max-width: 1280px) {

@@ -3,8 +3,12 @@
  * Home — Hero.
  *
  * Título, subtítulo e CTA vêm do ACF da página inicial. Os logos que flutuam
- * ao redor são as Integrações marcadas com "Exibir na órbita do Hero", divididas
- * em dois grupos (esquerda/direita).
+ * ao redor são as Integrações marcadas com "Exibir na órbita do Hero".
+ *
+ * A órbita é uma peça só: a malha de linhas pontilhadas (assets/img/hero-linhas.svg)
+ * e as 16 bolhas dividem a mesma caixa e as mesmas porcentagens, tiradas do frame
+ * do Figma. É isso que mantém cada linha ancorada na sua bolha em qualquer
+ * largura — por isso as posições ficam em `.hero__logo--N` no CSS, e não aqui.
  *
  * @package Cliconnect
  */
@@ -27,24 +31,32 @@ $orbita = cliconnect_posts(
 	)
 );
 
-$metade    = (int) ceil( count( $orbita ) / 2 );
-$esquerda  = array_slice( $orbita, 0, $metade );
-$direita   = array_slice( $orbita, $metade );
 ?>
 
 <section class="hero">
 
 	<?php if ( $orbita ) : ?>
 	<div class="hero__orbita" aria-hidden="true">
-		<?php foreach ( array( 'esquerda' => $esquerda, 'direita' => $direita ) as $lado => $logos ) : ?>
-			<?php if ( ! $logos ) { continue; } ?>
-			<div class="hero__orbita-lado hero__orbita-lado--<?php echo esc_attr( $lado ); ?>">
-				<?php foreach ( $logos as $logo ) : ?>
-					<span class="hero__logo">
-						<?php echo cliconnect_thumb( $logo->ID, 'medium', array( 'alt' => '' ) ); // wp_get_attachment_image escapa. ?>
-					</span>
-				<?php endforeach; ?>
-			</div>
+		<span class="hero__linhas">
+			<?php
+			echo cliconnect_imagem_tema( // phpcs:ignore WordPress.Security.EscapeOutput -- montado com escape em cliconnect_imagem_tema().
+				'hero-linhas.svg',
+				array(
+					'alt'     => '',
+					'class'   => 'hero__linhas-img',
+					'width'   => 1304,
+					'height'  => 512,
+					// Acima da dobra: lazy atrasaria a malha na primeira pintura.
+					'loading' => 'eager',
+				)
+			);
+			?>
+		</span>
+
+		<?php foreach ( $orbita as $indice => $logo ) : ?>
+			<span class="hero__logo hero__logo--<?php echo (int) ( $indice + 1 ); ?>">
+				<?php echo cliconnect_thumb( $logo->ID, 'medium', array( 'alt' => '' ) ); // wp_get_attachment_image escapa. ?>
+			</span>
 		<?php endforeach; ?>
 	</div>
 	<?php endif; ?>
