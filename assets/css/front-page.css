@@ -1081,6 +1081,16 @@
 	max-width: 16ch;
 }
 
+.integracoes__titulo-linha {
+	display: block;
+	font-weight: 400;
+}
+
+.integracoes__titulo-destaque {
+	display: block;
+	font-weight: 700;
+}
+
 .integracoes__painel .integracoes__texto {
 	font-size: var(--tam-body-lg);
 	color: var(--cor-texto-clara-suave);
@@ -1337,7 +1347,7 @@
 
 .suporte__descricao {
 	font-size: var(--tam-body-lg);
-	color: var(--cor-texto-suave);
+	color: var(--cor-texto-alt);
 }
 
 .suporte__descricao strong {

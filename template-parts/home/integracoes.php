@@ -30,7 +30,19 @@ if ( ! $titulo ) {
 					<span class="eyebrow eyebrow--clara"><?php echo esc_html( $eyebrow ); ?></span>
 				<?php endif; ?>
 
-				<h2 class="integracoes__titulo"><?php echo nl2br( esc_html( $titulo ) ); ?></h2>
+				<?php
+				$titulo_linhas   = array_map( 'trim', explode( "\n", $titulo ) );
+				$titulo_linha_1  = $titulo_linhas[0] ?? '';
+				$titulo_destaque = $titulo_linhas[1] ?? '';
+				?>
+				<h2 class="integracoes__titulo">
+					<?php if ( $titulo_linha_1 ) : ?>
+						<span class="integracoes__titulo-linha"><?php echo esc_html( $titulo_linha_1 ); ?></span>
+					<?php endif; ?>
+					<?php if ( $titulo_destaque ) : ?>
+						<span class="integracoes__titulo-destaque"><?php echo esc_html( $titulo_destaque ); ?></span>
+					<?php endif; ?>
+				</h2>
 
 				<?php if ( $texto ) : ?>
 					<p class="integracoes__texto"><?php echo esc_html( $texto ); ?></p>
