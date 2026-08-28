@@ -715,43 +715,44 @@ class Cliconnect_Seed {
 	 * @return void
 	 */
 	protected function criar_clientes() {
+		// Nome | arquivo | prova social (home) | régua de logos da home (issue #90 — só os 18 do Drive).
 		$itens = array(
-			array( 'Panasonic', 'cliente-panasonic', true ),
-			array( 'Cocamar', 'cliente-cocamar', true ),
-			array( 'Localiza', 'cliente-localiza', true ),
-			array( 'HSBC', 'cliente-hsbc', false ),
-			array( 'Unimed', 'cliente-unimed', false ),
-			array( 'Martins', 'cliente-martins', false ),
-			array( 'Culligan', 'cliente-culligan', false ),
-			array( 'Arcom', 'cliente-arcom', false ),
-			array( 'Seculus', 'cliente-seculus', false ),
-			array( 'Grupo Ferroeste', 'cliente-grupo-ferroeste', false ),
-			array( 'Rodoil', 'cliente-rodoil', false ),
-			array( 'Albaugh', 'cliente-albaugh', false ),
-			array( 'Real', 'cliente-real', false ),
-			array( 'BNP Paribas Cardif', 'cliente-bnp-paribas-cardif', false ),
-			array( 'Thomson Reuters', 'cliente-thomson-reuters', false ),
-			array( 'Unidas', 'cliente-unidas', false ),
-			array( 'BRZ', 'cliente-brz', false ),
-			array( 'SBC', 'cliente-sbc', false ),
-			array( 'Indiana', 'cliente-indiana', false ),
-			array( 'Moura', 'cliente-moura', false ),
-			array( 'Sustentare', 'cliente-sustentare', false ),
-			array( 'Clamper', 'cliente-clamper', false ),
-			array( 'Legrand', 'cliente-legrand', false ),
-			array( 'Neogrid', 'cliente-neogrid', false ),
-			array( 'Zukkin', 'cliente-zukkin', false ),
-			array( 'B2List', 'cliente-b2list', false ),
-			array( 'Peixoto', 'cliente-peixoto', false ),
-			array( 'SEG Imob', 'cliente-seg-imob', false ),
-			array( 'Utrip', 'cliente-utrip', false ),
-			array( 'Cargill', 'cliente-cargill', false ),
-			array( 'Cisco', 'cliente-cisco', false ),
-			array( 'Dell', 'cliente-dell', false ),
+			array( 'Panasonic', 'cliente-panasonic', true, true ),
+			array( 'Cocamar', 'cliente-cocamar', true, true ),
+			array( 'Localiza', 'cliente-localiza', true, true ),
+			array( 'HSBC', 'cliente-hsbc', false, true ),
+			array( 'Unimed', 'cliente-unimed', false, true ),
+			array( 'Martins', 'cliente-martins', false, true ),
+			array( 'Culligan', 'cliente-culligan', false, true ),
+			array( 'Arcom', 'cliente-arcom', false, true ),
+			array( 'Seculus', 'cliente-seculus', false, true ),
+			array( 'Grupo Ferroeste', 'cliente-grupo-ferroeste', false, true ),
+			array( 'Rodoil', 'cliente-rodoil', false, false ),
+			array( 'Albaugh', 'cliente-albaugh', false, false ),
+			array( 'Real', 'cliente-real', false, true ),
+			array( 'BNP Paribas Cardif', 'cliente-bnp-paribas-cardif', false, true ),
+			array( 'Thomson Reuters', 'cliente-thomson-reuters', false, true ),
+			array( 'Unidas', 'cliente-unidas', false, true ),
+			array( 'BRZ', 'cliente-brz', false, true ),
+			array( 'SBC', 'cliente-sbc', false, true ),
+			array( 'Indiana', 'cliente-indiana', false, true ),
+			array( 'Moura', 'cliente-moura', false, true ),
+			array( 'Sustentare', 'cliente-sustentare', false, false ),
+			array( 'Clamper', 'cliente-clamper', false, false ),
+			array( 'Legrand', 'cliente-legrand', false, false ),
+			array( 'Neogrid', 'cliente-neogrid', false, false ),
+			array( 'Zukkin', 'cliente-zukkin', false, false ),
+			array( 'B2List', 'cliente-b2list', false, false ),
+			array( 'Peixoto', 'cliente-peixoto', false, false ),
+			array( 'SEG Imob', 'cliente-seg-imob', false, false ),
+			array( 'Utrip', 'cliente-utrip', false, false ),
+			array( 'Cargill', 'cliente-cargill', false, false ),
+			array( 'Cisco', 'cliente-cisco', false, false ),
+			array( 'Dell', 'cliente-dell', false, false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
-			list( $nome, $arquivo, $prova ) = $item;
+			list( $nome, $arquivo, $prova, $regua_home ) = $item;
 
 			$id = $this->upsert(
 				'cliente:' . sanitize_title( $nome ),
@@ -768,6 +769,7 @@ class Cliconnect_Seed {
 
 			$this->definir_thumb( $id, $arquivo );
 			update_field( 'prova_social', $prova ? 1 : 0, $id );
+			update_field( 'exibir_na_regua_home', $regua_home ? 1 : 0, $id );
 		}
 
 		WP_CLI::log( sprintf( '  clientes: %d.', count( $itens ) ) );

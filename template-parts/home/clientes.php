@@ -9,7 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$clientes = cliconnect_posts( 'cli_cliente' );
+$clientes = cliconnect_posts(
+	'cli_cliente',
+	-1,
+	array(
+		'meta_key'   => 'exibir_na_regua_home',
+		'meta_value' => '1',
+	)
+);
 
 if ( ! $clientes ) {
 	return;

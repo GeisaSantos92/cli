@@ -190,6 +190,15 @@ function cliconnect_acf_fields_cpt() {
 					'ui'            => 1,
 					'default_value' => 0,
 				),
+				array(
+					'key'           => 'field_cliente_regua_home',
+					'label'         => 'Usar na régua da home',
+					'name'          => 'exibir_na_regua_home',
+					'type'          => 'true_false',
+					'instructions'  => 'Exibe o logo na esteira de clientes da página inicial.',
+					'ui'            => 1,
+					'default_value' => 0,
+				),
 			),
 		)
 	);
