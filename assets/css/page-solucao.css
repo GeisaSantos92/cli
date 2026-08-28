@@ -115,16 +115,18 @@
 	border-radius: var(--raio);
 }
 
-/* Sinal animado */
+/* Sinal animado — varre da esquerda para a direita sobre a linha conectora.
+ * Valores calculados a partir da posição natural do elemento no Figma (left: 228.43px)
+ * e dos deltas de translate (-85px → +225px → 0px), com base CSS em left: 50% (308px).
+ * Offset base: 228.43 - 308 = -79.57px; delta somado a cada keyframe.
+ */
 .sh-hero__sinal {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	width: 28px;
 	height: auto;
-	transform: translateY(-50%);
-	animation: sh-sinal-translate 4s linear infinite,
-	           sh-sinal-rotate    4s linear infinite;
+	animation: sh-sinal 4s linear infinite;
 }
 
 .sh-hero__sinal img {
@@ -133,16 +135,11 @@
 	display: block;
 }
 
-@keyframes sh-sinal-translate {
-	0%   { translate: -99px 0; }  /* centro: -14px; + offset Figma -85px */
-	50%  { translate: 211px 0; }  /* centro: -14px; + offset Figma +225px */
-	100% { translate: -14px 0; }  /* centro: -14px; + offset Figma 0px */
-}
-
-@keyframes sh-sinal-rotate {
-	0%, 49.5%  { rotate: -180deg; }
-	49.633%    { rotate: -360deg; }
-	100%       { rotate: -360deg; }
+@keyframes sh-sinal {
+	0%      { transform: translate(-165px, -50%) rotate(-180deg); } /* -79.57 + -85.22 */
+	49.5%   { transform: translate(146px,  -50%) rotate(-180deg); } /* -79.57 + 225.51 */
+	49.633% { transform: translate(146px,  -50%) rotate(-360deg); } /* flip instantâneo */
+	100%    { transform: translate(-80px,  -50%) rotate(-360deg); } /* -79.57 + 0 */
 }
 
 /* --- 2. Seção Métricas ----------------------------------------------------- */
