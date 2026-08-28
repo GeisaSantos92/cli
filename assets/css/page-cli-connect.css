@@ -1313,6 +1313,7 @@
 	.cc-dashboard__inner,
 	.cc-departamentos__inner {
 		grid-template-columns: 1fr;
+		gap: 40px;
 	}
 
 	.cc-depoimento__card {
