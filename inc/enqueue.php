@@ -161,6 +161,13 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/page-cli-connect.css' )
 		);
+		wp_enqueue_script(
+			'cliconnect-cli-connect',
+			get_theme_file_uri( '/assets/js/page-cli-connect.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/page-cli-connect.js' ),
+			true
+		);
 	}
 
 	// Landing page de Solução (single do CPT cli_solucao).

@@ -452,6 +452,35 @@
 	text-align: center;
 }
 
+/* Animação fade-in scroll-triggered (mesmo padrão da sap-velocidade) */
+
+@keyframes cc-impl-fade-in {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.cc-impl.cc-impl-animar .cc-impl__etapa {
+		opacity: 0;
+	}
+
+	.cc-impl.is-visible .cc-impl__etapa {
+		animation: cc-impl-fade-in 0.6s ease-out forwards;
+	}
+
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(1) { animation-delay: 0.2s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(2) { animation-delay: 0.4s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(3) { animation-delay: 0.6s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(4) { animation-delay: 0.8s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(5) { animation-delay: 1.0s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(6) { animation-delay: 1.2s; }
+	.cc-impl.is-visible .cc-impl__barra--sem .cc-impl__etapa:nth-child(7) { animation-delay: 1.4s; }
+
+	.cc-impl.is-visible .cc-impl__barra--com .cc-impl__etapa:nth-child(1) { animation-delay: 0.2s; }
+	.cc-impl.is-visible .cc-impl__barra--com .cc-impl__etapa:nth-child(2) { animation-delay: 0.4s; }
+	.cc-impl.is-visible .cc-impl__barra--com .cc-impl__etapa:nth-child(3) { animation-delay: 0.6s; }
+}
+
 @media (max-width: 768px) {
 	.cc-impl__titulo {
 		font-size: clamp(28px, 5vw, 40px);
