@@ -43,6 +43,19 @@
 			gatilho.setAttribute('aria-expanded', aberto ? 'true' : 'false');
 		});
 
+		// No desktop, hover abre e fecha (mesmo padrão dos dropdowns do nav).
+		seletor.addEventListener('mouseenter', function () {
+			if (window.innerWidth < 1025) return;
+			clearTimeout(seletor.__closeTimer);
+			seletor.classList.add('is-open');
+			gatilho.setAttribute('aria-expanded', 'true');
+		});
+
+		seletor.addEventListener('mouseleave', function () {
+			if (window.innerWidth < 1025) return;
+			seletor.__closeTimer = setTimeout(fechar, 100);
+		});
+
 		document.addEventListener('click', function (e) {
 			if (!seletor.contains(e.target)) fechar();
 		});
@@ -168,22 +181,52 @@
 			Array.prototype.forEach.call(toggles, function (btn) {
 				var item = btn.closest('.site-nav__item--has-children');
 				if (!item || item === exceto) return;
+				clearTimeout(item.__closeTimer);
 				item.classList.remove('is-open');
 				btn.setAttribute('aria-expanded', 'false');
 			});
 		}
 
 		Array.prototype.forEach.call(toggles, function (btn) {
+			var item = btn.closest('.site-nav__item--has-children');
+			if (!item) return;
+
+			// Clique no botão de toggle (mobile e teclado).
 			btn.addEventListener('click', function (e) {
 				e.preventDefault();
-				var item = btn.closest('.site-nav__item--has-children');
-				if (!item) return;
-
 				var aberto = item.classList.toggle('is-open');
 				btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-
 				if (aberto) fecharTodos(item);
 			});
+
+			// No desktop, hover abre e fecha via JS — elimina o problema do gap
+			// entre o <li> e o painel que fazia o CSS :hover perder o estado.
+			// O delay de 100ms no mouseleave evita fechamento prematuro quando o
+			// mouse passa brevemente por outro elemento do header antes de chegar
+			// ao painel (especialmente no mega menu de Soluções, mais largo).
+			item.addEventListener('mouseenter', function () {
+				if (window.innerWidth < 1025) return;
+				clearTimeout(item.__closeTimer);
+				fecharTodos(item);
+				item.classList.add('is-open');
+				btn.setAttribute('aria-expanded', 'true');
+			});
+
+			item.addEventListener('mouseleave', function () {
+				if (window.innerWidth < 1025) return;
+				item.__closeTimer = setTimeout(function () {
+					item.classList.remove('is-open');
+					btn.setAttribute('aria-expanded', 'false');
+				}, 100);
+			});
+
+			// No desktop, clicar no texto do item pai não deve navegar.
+			var link = item.querySelector('.site-nav__row > a');
+			if (link) {
+				link.addEventListener('click', function (e) {
+					if (window.innerWidth >= 1025) e.preventDefault();
+				});
+			}
 		});
 
 		// Clique fora fecha os dropdowns abertos.

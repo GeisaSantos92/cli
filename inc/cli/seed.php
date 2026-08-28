@@ -1601,7 +1601,7 @@ class Cliconnect_Seed {
 				'filhos' => array(
 					array( 'titulo' => 'AWS', 'url' => $purl( 'aws' ), 'classes' => 'link-sem-logo' ),
 					array( 'titulo' => 'Google Cloud', 'url' => $purl( 'google-cloud' ), 'classes' => 'link-sem-logo' ),
-					array( 'titulo' => 'Azure', 'url' => $purl( 'azure' ), 'classes' => 'link-sem-logo' ),
+					array( 'titulo' => 'Microsoft Azure', 'url' => $purl( 'microsoft-azure' ), 'classes' => 'link-sem-logo' ),
 				),
 			),
 			array(
@@ -1725,7 +1725,7 @@ class Cliconnect_Seed {
 						),
 						array(
 							'titulo' => 'Recursos',
-							'url'    => '/contato/',
+							'url'    => '#',
 							'filhos' => array(
 								'Cases'            => $cases_url,
 								'Blog'             => $blog_url,
