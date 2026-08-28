@@ -308,11 +308,35 @@ function cliconnect_lista_numerada( $molde, $total, $callback = null ) {
 /**
  * Verifica se a página atual é identificada pelo slug informado.
  *
- * @param string $slug Post name da página.
+ * A tradução tem post_name próprio (`/en/cli-signature-service/`), então um
+ * `is_page( 'cli-signature' )` seco devolve false em todo idioma que não o
+ * padrão — e o CSS da página, que é enfileirado por esta função, não carrega.
+ * Por isso, quando o slug não casa direto, o teste é refeito contra a página
+ * de origem, no idioma padrão. Mesma estratégia de
+ * `cliconnect_template_da_traducao()` em inc/polylang.php.
+ *
+ * @param string $slug Post name da página, no idioma padrão.
  * @return bool
  */
 function cliconnect_e_pagina( $slug ) {
-	return is_page( $slug );
+	if ( is_page( $slug ) ) {
+		return true;
+	}
+
+	if ( ! is_page() || ! function_exists( 'pll_get_post' ) || ! function_exists( 'pll_default_language' ) ) {
+		return false;
+	}
+
+	$padrao = pll_default_language();
+	$atual  = function_exists( 'pll_current_language' ) ? pll_current_language() : '';
+
+	if ( ! $padrao || $padrao === $atual ) {
+		return false;
+	}
+
+	$origem = (int) pll_get_post( get_queried_object_id(), $padrao );
+
+	return $origem && $slug === get_post_field( 'post_name', $origem );
 }
 
 /**

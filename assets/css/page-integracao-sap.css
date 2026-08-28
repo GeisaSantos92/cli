@@ -1250,6 +1250,34 @@
 	pointer-events: none;
 }
 
+/*
+ * A grade de benefícios não tinha regra responsiva: as duas colunas com 64px
+ * de gap, mais o `white-space: nowrap` dos tópicos, faziam a seção medir 573px
+ * num viewport de 390px. O `body` tem overflow-x: hidden, então no desktop o
+ * estouro passava despercebido — mas no celular a página rolava de lado.
+ */
+@media (max-width: 900px) {
+	.sap-beneficios__grid {
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+
+	.sap-beneficios__menu {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 12px 24px;
+	}
+
+	.sap-beneficios__topico {
+		width: auto;
+		white-space: normal;
+	}
+
+	.sap-beneficios__painel {
+		padding: 24px 24px 32px;
+	}
+}
+
 /* --- Responsivo ------------------------------------------------------------- */
 
 @media (max-width: 1024px) {
