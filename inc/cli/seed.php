@@ -1219,7 +1219,7 @@ class Cliconnect_Seed {
 
 			// 8. Depoimento e cases.
 			'case_destaque'         => $cases['panasonic'] ?? 0,
-			'cases_metricas'        => array_values( array_filter( array( $cases['petro'] ?? 0 ) ) ),
+			'cases_metricas'        => array_values( array_filter( array( $cases['petro'] ?? 0, $cases['moura2'] ?? 0 ) ) ),
 			'cases_botao'           => $this->link( 'Confira nossos cases', get_post_type_archive_link( 'cli_case' ) ),
 
 			// 9. Eventos.
