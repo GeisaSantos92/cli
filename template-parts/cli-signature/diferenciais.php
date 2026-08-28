@@ -67,7 +67,7 @@ if ( ! $titulo_1 && ! $cards ) {
 					<li class="cs-dif-card">
 
 						<span class="cs-dif-card__icone-wrap" aria-hidden="true">
-							<?php echo cliconnect_icone_ms( 'hub' ); ?>
+							<?php echo cliconnect_icone_ms( 'automation' ); ?>
 						</span>
 
 						<h3 class="cs-dif-card__titulo"><?php echo esc_html( $card['titulo'] ); ?></h3>

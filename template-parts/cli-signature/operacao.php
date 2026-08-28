@@ -70,7 +70,7 @@ if ( ! $titulo_1 && ! $cards ) {
 				<?php foreach ( $cards as $card ) : ?>
 					<li class="cs-op-card">
 						<div class="cs-op-card__icone-wrap" aria-hidden="true">
-							<?php echo cliconnect_icone_ms( 'hub' ); ?>
+							<?php echo cliconnect_icone_ms( 'automation' ); ?>
 						</div>
 						<p class="cs-op-card__titulo"><?php echo esc_html( $card['titulo'] ); ?></p>
 						<?php if ( $card['texto'] ) : ?>
