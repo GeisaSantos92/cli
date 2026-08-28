@@ -463,9 +463,9 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--cor-fundo-azul);
+	background: var(--cor-primaria);
 	border-radius: var(--raio);
-	color: var(--cor-primaria);
+	color: var(--cor-texto-clara);
 	margin-bottom: 1rem;
 }
 
