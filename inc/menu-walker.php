@@ -197,6 +197,18 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 	protected function montar_link( $item, $depth, $tem_filhos ) {
 		$atributos = $this->montar_atributos( $item );
 
+		/*
+		 * Item de 1º nível que existe só para abrir o painel: sem URL própria
+		 * (vazia ou "#"), o rótulo não vira link. Quem abre o painel é o hover
+		 * no desktop e o botão de toggle no toque e no teclado.
+		 */
+		if ( 0 === $depth && $tem_filhos && in_array( trim( (string) ( $item->url ?? '' ) ), array( '', '#' ), true ) ) {
+			return sprintf(
+				'<span class="site-nav__rotulo">%s</span>',
+				esc_html( $item->title )
+			);
+		}
+
 		// Cartão do painel de "Plataforma": título + descrição do item de menu.
 		if ( 1 === $depth && 'cartoes' === $this->painel ) {
 			$descricao = $item->description ?? '';

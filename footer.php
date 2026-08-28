@@ -6,9 +6,9 @@
  * - Bloco CTA azul, sobreposto à transição para o rodapé escuro (Customizer).
  * - Faixa branca da agência (template-parts/rodape-agencia.php), com o
  *   copyright do cliente e os links legais.
- * - Rodapé escuro: barra superior com logo + "powered by boomi" à esquerda
- *   e ícones sociais à direita (Customizer); abaixo, colunas de links
- *   (menu "rodape", onde cada item de 1º nível é o título de uma coluna).
+ * - Rodapé escuro: colunas de links (menu "rodape", onde cada item de 1º
+ *   nível é o título de uma coluna) e, abaixo delas, a barra com logo +
+ *   "powered by boomi" à esquerda e ícones sociais à direita (Customizer).
  * - Botões flutuantes: voltar ao topo e WhatsApp (Customizer).
  *
  * @package Cliconnect
@@ -58,6 +58,25 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 	</span>
 
 	<div class="site-footer__inner">
+
+		<?php if ( has_nav_menu( 'rodape' ) ) : ?>
+		<div class="site-footer__links">
+			<nav aria-label="<?php esc_attr_e( 'Links do rodapé', 'cli' ); ?>">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'rodape',
+						'container'      => false,
+						'menu_class'     => 'site-footer__grid',
+						'fallback_cb'    => false,
+						'depth'          => 3,
+					)
+				);
+				?>
+			</nav>
+		</div>
+		<?php endif; ?>
+
 		<div class="site-footer__top">
 
 			<div class="site-footer__brand-wrap">
@@ -94,24 +113,6 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 			<?php endif; ?>
 
 		</div>
-
-		<?php if ( has_nav_menu( 'rodape' ) ) : ?>
-		<div class="site-footer__links">
-			<nav aria-label="<?php esc_attr_e( 'Links do rodapé', 'cli' ); ?>">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'rodape',
-						'container'      => false,
-						'menu_class'     => 'site-footer__grid',
-						'fallback_cb'    => false,
-						'depth'          => 3,
-					)
-				);
-				?>
-			</nav>
-		</div>
-		<?php endif; ?>
 
 		<div class="site-footer__espaco" aria-hidden="true"></div>
 	</div>

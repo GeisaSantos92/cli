@@ -82,7 +82,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'metrica_1_rotulo'      => 'integrations per week',
 			'metrica_2_numero'      => '5 days',
 			'metrica_2_rotulo'      => 'until your integration is live',
-			'metrica_3_numero'      => '30k',
+			'metrica_3_numero'      => '+30k',
 			'metrica_3_rotulo'      => 'integrations already built',
 			'midia_1_eyebrow'       => 'Enterprise AI',
 			'midia_1_titulo'        => 'Build, govern and scale agents',

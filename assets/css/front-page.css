@@ -976,9 +976,20 @@
 	padding-bottom: 120px;
 }
 
+/*
+ * 728px é o que faz o H2 quebrar em "…quando assunto é / compliance e
+ * segurança", como no Figma. Precisa vencer o .secao__cabecalho .secao__titulo
+ * de 940px, que vale para as outras seções.
+ */
+.compliance .secao__cabecalho .compliance__titulo {
+	max-width: min(100%, 728px);
+}
+
 .compliance__grid {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
+	max-width: 1059px;
+	margin-inline: auto;
 	border: 1px solid var(--cor-borda);
 	border-radius: var(--raio-card);
 	background: var(--cor-fundo);

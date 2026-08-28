@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$selos = cliconnect_posts( 'cli_selo' );
+$selos = cliconnect_posts( 'cli_selo', 10 );
 
 if ( ! $selos ) {
 	return;
