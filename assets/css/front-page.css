@@ -137,8 +137,6 @@
 	border: 1px solid var(--cor-borda);
 	box-shadow: var(--sombra-card);
 	overflow: hidden;
-	animation: hero-flutua 7s ease-in-out infinite;
-	will-change: transform;
 }
 
 /* A arte já vem 74x74 (exportada em 2x) com a margem interna embutida. */
@@ -153,31 +151,23 @@
  * negativo de -37px acima recua meia bolha, então estas coordenadas são o
  * centro — exatamente onde cada linha termina.
  */
-.hero__logo--1 { left: 10.959%; top: 16.196%; animation-delay: 0.00s; }
-.hero__logo--2 { left: 8.333%; top: 46.741%; animation-delay: -0.45s; }
-.hero__logo--3 { left: 16.342%; top: 36.005%; animation-delay: -0.90s; }
-.hero__logo--4 { left: 12.658%; top: 60.491%; animation-delay: -1.35s; }
-.hero__logo--5 { left: 11.488%; top: 76.282%; animation-delay: -1.80s; }
-.hero__logo--6 { left: 6.434%; top: 29.946%; animation-delay: -2.25s; }
-.hero__logo--7 { left: 85.296%; top: 15.079%; animation-delay: -2.70s; }
-.hero__logo--8 { left: 20.581%; top: 79.087%; animation-delay: -3.15s; }
-.hero__logo--9 { left: 78.488%; top: 79.087%; animation-delay: -3.60s; }
-.hero__logo--10 { left: 85.648%; top: 61.304%; animation-delay: -4.05s; }
-.hero__logo--11 { left: 87.723%; top: 74.508%; animation-delay: -4.50s; }
-.hero__logo--12 { left: 85.825%; top: 38.810%; animation-delay: -4.95s; }
-.hero__logo--13 { left: 91.594%; top: 49.546%; animation-delay: -5.40s; }
-.hero__logo--14 { left: 77.960%; top: 29.946%; animation-delay: -5.85s; }
-.hero__logo--15 { left: 91.594%; top: 24.851%; animation-delay: -6.30s; }
-.hero__logo--16 { left: 20.053%; top: 22.979%; animation-delay: -6.75s; }
+.hero__logo--1  { left: 10.959%; top: 16.196%; }
+.hero__logo--2  { left: 8.333%;  top: 46.741%; }
+.hero__logo--3  { left: 16.342%; top: 36.005%; }
+.hero__logo--4  { left: 12.658%; top: 60.491%; }
+.hero__logo--5  { left: 11.488%; top: 76.282%; }
+.hero__logo--6  { left: 6.434%;  top: 29.946%; }
+.hero__logo--7  { left: 85.296%; top: 15.079%; }
+.hero__logo--8  { left: 20.581%; top: 79.087%; }
+.hero__logo--9  { left: 78.488%; top: 79.087%; }
+.hero__logo--10 { left: 85.648%; top: 61.304%; }
+.hero__logo--11 { left: 87.723%; top: 74.508%; }
+.hero__logo--12 { left: 85.825%; top: 38.810%; }
+.hero__logo--13 { left: 91.594%; top: 49.546%; }
+.hero__logo--14 { left: 77.960%; top: 29.946%; }
+.hero__logo--15 { left: 91.594%; top: 24.851%; }
+.hero__logo--16 { left: 20.053%; top: 22.979%; }
 
-/*
- * Amplitude curta de propósito: a malha não flutua junto, e um deslocamento
- * maior descolaria a ponta da linha da borda da bolha.
- */
-@keyframes hero-flutua {
-	0%, 100% { transform: translateY(0); }
-	50%      { transform: translateY(-6px); }
-}
 
 @media (max-width: 1280px) {
 	.hero__orbita {
