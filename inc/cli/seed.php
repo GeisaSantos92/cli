@@ -1599,9 +1599,9 @@ class Cliconnect_Seed {
 				'titulo' => 'Nuvem',
 				'url'    => $turl( 'nuvem' ),
 				'filhos' => array(
-					'AWS'             => $purl( 'aws' ),
-					'Google Cloud'    => $purl( 'google-cloud' ),
-					'Microsoft Azure' => $purl( 'microsoft-azure' ),
+					array( 'titulo' => 'AWS', 'url' => $purl( 'aws' ), 'classes' => 'link-sem-logo' ),
+					array( 'titulo' => 'Google Cloud', 'url' => $purl( 'google-cloud' ), 'classes' => 'link-sem-logo' ),
+					array( 'titulo' => 'Microsoft Azure', 'url' => $purl( 'microsoft-azure' ), 'classes' => 'link-sem-logo' ),
 				),
 			),
 			array(
@@ -1756,9 +1756,9 @@ class Cliconnect_Seed {
 							'titulo' => 'Nuvem',
 							'url'    => $turl( 'nuvem' ),
 							'filhos' => array(
-								'AWS'             => $purl( 'aws' ),
-								'Google Cloud'    => $purl( 'google-cloud' ),
-								'Microsoft Azure' => $purl( 'microsoft-azure' ),
+								array( 'titulo' => 'AWS', 'url' => $purl( 'aws' ), 'classes' => 'link-sem-logo' ),
+								array( 'titulo' => 'Google Cloud', 'url' => $purl( 'google-cloud' ), 'classes' => 'link-sem-logo' ),
+								array( 'titulo' => 'Microsoft Azure', 'url' => $purl( 'microsoft-azure' ), 'classes' => 'link-sem-logo' ),
 							),
 						),
 					),

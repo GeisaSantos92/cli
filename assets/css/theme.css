@@ -291,6 +291,21 @@ p {
 	padding: 12px 24px;
 }
 
+/*
+ * No mobile o ícone sai: com ele, rótulos como "Fale conosco no Whatsapp"
+ * quebram em duas linhas dentro do botão. O tracking negativo fecha os poucos
+ * pixels que ainda faltam para caber em uma linha só.
+ */
+@media (max-width: 640px) {
+	.botao {
+		letter-spacing: -0.01rem;
+	}
+
+	.botao svg {
+		display: none;
+	}
+}
+
 /* Link com seta (ex.: "Ver todas as postagens") */
 .link-seta {
 	display: inline-flex;
@@ -631,7 +646,6 @@ p {
 
 .site-nav__grupo-lista a:hover,
 .site-nav__grupo-lista a:focus-visible {
-	background: var(--cor-fundo-suave);
 	color: var(--cor-texto-marca);
 }
 
@@ -913,6 +927,15 @@ p {
 
 	.site-nav__painel-inner {
 		padding: 0 0 8px 16px;
+	}
+
+	/* Os cartões de "Plataforma" vão de borda a borda no drawer. */
+	.site-nav__painel--cartoes .site-nav__painel-inner {
+		padding-left: 0;
+	}
+
+	.nav-cartao__texto {
+		font-size: var(--tam-body-sm);
 	}
 
 	.site-nav__painel--cartoes .sub-menu,

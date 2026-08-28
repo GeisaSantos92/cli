@@ -105,8 +105,12 @@
 }
 
 @media (max-width: 600px) {
-	.cc-hero__orbita-img {
-		width: 280px;
+	.cc-hero {
+		padding-block: 24px;
+	}
+
+	.cc-hero__inner {
+		gap: 24px;
 	}
 }
 
@@ -800,6 +804,7 @@
 	border-radius: 16px;
 	box-shadow: 2px 6px 5px rgba(14, 52, 94, 0.1);
 	display: flex;
+	gap: 24px;
 	justify-content: space-between;
 	overflow: hidden;
 	padding: 54px 64px;
@@ -907,7 +912,7 @@
 
 .cc-depoimento__acao {
 	flex-shrink: 0;
-	padding-left: 24px;
+	padding-top: 24px;
 	position: relative;
 	width: 185px;
 	z-index: 1;
