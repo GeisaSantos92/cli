@@ -136,10 +136,10 @@
 }
 
 @keyframes sh-sinal {
-	0%      { transform: translate(-165px, -50%) rotate(-180deg); } /* -79.57 + -85.22 */
-	49.5%   { transform: translate(146px,  -50%) rotate(-180deg); } /* -79.57 + 225.51 */
-	49.633% { transform: translate(146px,  -50%) rotate(-360deg); } /* flip instantâneo */
-	100%    { transform: translate(-80px,  -50%) rotate(-360deg); } /* -79.57 + 0 */
+	0%      { transform: translate(-46px, -50%) rotate(-180deg); } /* x=262: borda esq. do conector */
+	49.5%   { transform: translate(17px,  -50%) rotate(-180deg); } /* x=325: borda dir. do conector */
+	49.633% { transform: translate(17px,  -50%) rotate(-360deg); } /* flip instantâneo */
+	100%    { transform: translate(-46px, -50%) rotate(-360deg); } /* volta ao início, loop */
 }
 
 /* --- 2. Seção Métricas ----------------------------------------------------- */
