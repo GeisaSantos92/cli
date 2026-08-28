@@ -745,6 +745,9 @@ class Cliconnect_Seed {
 			array( 'Peixoto', 'cliente-peixoto', false ),
 			array( 'SEG Imob', 'cliente-seg-imob', false ),
 			array( 'Utrip', 'cliente-utrip', false ),
+			array( 'Cargill', 'cliente-cargill', false ),
+			array( 'Cisco', 'cliente-cisco', false ),
+			array( 'Dell', 'cliente-dell', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -2088,7 +2091,7 @@ class Cliconnect_Seed {
 			// 6. Depoimento.
 			'dep_foto'  => $this->img( 'tc-dep-foto-vitoria' ),
 			'dep_nome'  => 'Vitória Nunes',
-			'dep_cargo' => 'Tech Lead',
+			'dep_cargo' => 'Time Tech',
 			'dep_texto' => 'O trabalho em equipe na CLI é real e acontece no dia a dia. Contar com um time que se ajuda para resolver problemas complexos e que está em total sintonia com ferramentas inovadoras torna a nossa rotina leve e realizadora. No final das contas, o sucesso das nossas entregas é fruto desse ecossistema, onde recebemos apoio de todas as áreas da empresa.',
 
 			// 7. Benefícios.
@@ -2220,9 +2223,19 @@ class Cliconnect_Seed {
 			'cc_impl_com_etapa_3' => 'Dados disponibilizados',
 
 			// 5. Boomi.
-			'cc_boomi_eyebrow' => 'Plataforma global',
-			'cc_boomi_titulo'  => 'Tecnologia de classe mundial com suporte para o mercado brasileiro',
-			'cc_boomi_texto'   => 'Quando você contrata a CLI Connect, tem acesso à mesma plataforma que grandes empresas globais usam para integrar seus sistemas, mas com o diferencial do suporte especializado no mercado brasileiro, preço acessível e serviço gerenciado incluso.',
+			'cc_boomi_eyebrow'        => 'Plataforma global',
+			'cc_boomi_titulo'         => 'Tecnologia de classe mundial com suporte para o mercado brasileiro',
+			'cc_boomi_texto'          => 'Quando você contrata a CLI Connect, tem acesso à mesma plataforma que grandes empresas globais usam para integrar seus sistemas, mas com o diferencial do suporte especializado no mercado brasileiro, preço acessível e serviço gerenciado incluso.',
+			'cc_boomi_logos_texto'    => 'Empresas que usam a Boomi',
+			'cc_boomi_logos_clientes' => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:cargill', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cisco', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:dell', 'cli_cliente' ),
+					)
+				)
+			),
 
 			// 6. Operações Críticas.
 			'cc_operacoes_eyebrow'  => 'Operações Críticas',

@@ -125,6 +125,19 @@ function cliconnect_acf_fields_cli_connect() {
 	$fields[] = $cc_text( 'boomi_eyebrow', 'Eyebrow', 'cc_boomi_eyebrow' );
 	$fields[] = $cc_text( 'boomi_titulo', 'Título', 'cc_boomi_titulo' );
 	$fields[] = $cc_textarea( 'boomi_texto', 'Texto de apoio', 'cc_boomi_texto', 3 );
+	$fields[] = $cc_text( 'boomi_logos_texto', 'Logos — legenda', 'cc_boomi_logos_texto' );
+	$fields[] = array(
+		'key'           => 'field_cc_boomi_logos_clientes',
+		'label'         => 'Logos — clientes',
+		'name'          => 'cc_boomi_logos_clientes',
+		'type'          => 'relationship',
+		'post_type'     => array( 'cli_cliente' ),
+		'filters'       => array( 'search' ),
+		'return_format' => 'id',
+		'min'           => 0,
+		'max'           => 4,
+		'instructions'  => 'Logos exibidos abaixo do texto (ex.: "Empresas que usam a Boomi"). O logo é a imagem destacada do cliente.',
+	);
 
 	/* --- 6. OPERAÇÕES CRÍTICAS ---------------------------------------------- */
 	$fields[] = $cc_tab( 'operacoes', '6 · Operações Críticas' );

@@ -12,9 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$eyebrow = cliconnect_campo_pagina( 'cc_boomi_eyebrow' );
-$titulo  = cliconnect_campo_pagina( 'cc_boomi_titulo' );
-$texto   = cliconnect_campo_pagina( 'cc_boomi_texto' );
+$eyebrow      = cliconnect_campo_pagina( 'cc_boomi_eyebrow' );
+$titulo       = cliconnect_campo_pagina( 'cc_boomi_titulo' );
+$texto        = cliconnect_campo_pagina( 'cc_boomi_texto' );
+$logos_texto  = cliconnect_campo_pagina( 'cc_boomi_logos_texto' );
+$logos_ids    = cliconnect_campo_pagina( 'cc_boomi_logos_clientes', array() );
+
+if ( ! is_array( $logos_ids ) ) {
+	$logos_ids = array();
+}
 
 /*
  * O cartão da direita é a mesma peça fechada usada na home
@@ -48,6 +54,22 @@ if ( ! $titulo && ! $cartao ) {
 
 			<?php if ( $texto ) : ?>
 				<p class="cc-boomi__corpo"><?php echo esc_html( $texto ); ?></p>
+			<?php endif; ?>
+
+			<?php if ( $logos_texto && $logos_ids ) : ?>
+				<div class="cc-boomi__logos">
+					<span class="cc-boomi__logos-texto"><?php echo esc_html( $logos_texto ); ?></span>
+					<div class="cc-boomi__logos-lista">
+						<?php foreach ( $logos_ids as $cliente_id ) : ?>
+							<?php $logo = cliconnect_thumb( (int) $cliente_id, 'medium' ); ?>
+							<?php if ( $logo ) : ?>
+								<span class="cc-boomi__logos-item">
+									<?php echo $logo; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								</span>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			<?php endif; ?>
 		</div>
 

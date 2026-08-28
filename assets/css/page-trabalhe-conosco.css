@@ -336,6 +336,7 @@
 .tc-depoimento__inner {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
+	background: var(--cor-fundo);
 	border-bottom: 2px solid rgba(39, 62, 128, 0.05);
 	padding-bottom: 24px;
 	position: relative;

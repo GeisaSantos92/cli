@@ -549,6 +549,35 @@
 	line-height: 1.6;
 }
 
+.cc-boomi__logos {
+	align-items: center;
+	border-top: 1px solid rgba(31, 36, 45, 0.1);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px 24px;
+	margin-top: 32px;
+	padding-top: 24px;
+}
+
+.cc-boomi__logos-texto {
+	color: var(--cor-texto-secundario, #566f9d);
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+.cc-boomi__logos-lista {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+}
+
+.cc-boomi__logos-item img {
+	display: block;
+	height: 36px;
+	width: auto;
+}
+
 .cc-boomi__cartao {
 	aspect-ratio: 3 / 2;
 }

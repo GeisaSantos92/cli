@@ -267,7 +267,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'valor_4_texto'        => 'We encourage new ideas and creativity to anticipate trends and build innovative solutions responsibly.',
 			'valor_5_titulo'       => 'Collaboration',
 			'valor_5_texto'        => 'We are one team. We share knowledge, achievements and lessons learned in a spirit of partnership and harmony.',
-			'dep_cargo'            => 'Tech Lead',
+			'dep_cargo'            => 'Tech Team',
 			'dep_texto'            => 'Teamwork at CLI is real and it happens every day. Having a team that helps each other solve complex problems, in full sync with innovative tools, makes our routine light and rewarding. In the end, the success of our deliveries comes from this ecosystem, where we get support from every area of the company.',
 			'beneficios_eyebrow'   => 'BENEFITS',
 			'beneficios_titulo'    => 'Everything you need to do your best work.',
@@ -443,6 +443,16 @@ trait Cliconnect_Seed_En_Paginas {
 			'cc_boomi_eyebrow'        => 'Global platform',
 			'cc_boomi_titulo'         => 'World-class technology with support built for the Brazilian market',
 			'cc_boomi_texto'          => 'When you hire CLI Connect you get the same platform that large global companies use to integrate their systems, with the added advantage of specialised support for the Brazilian market, affordable pricing and managed service included.',
+			'cc_boomi_logos_texto'    => 'Companies using Boomi',
+			'cc_boomi_logos_clientes' => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:cargill', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cisco', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:dell', 'cli_cliente' ),
+					)
+				)
+			),
 			'cc_operacoes_eyebrow'    => 'Critical Operations',
 			'cc_operacoes_titulo'     => 'Some integrations',
 			'cc_operacoes_titulo_2'   => 'simply cannot fail',

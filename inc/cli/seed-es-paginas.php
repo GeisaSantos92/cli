@@ -332,6 +332,16 @@ trait Cliconnect_Seed_Es_Paginas {
 			'cc_boomi_eyebrow'        => 'Plataforma global',
 			'cc_boomi_titulo'         => 'Tecnología de clase mundial con soporte para el mercado latinoamericano',
 			'cc_boomi_texto'          => 'Al contratar CLI Connect accede a la misma plataforma que las grandes empresas globales usan para integrar sus sistemas, con la ventaja de un soporte especializado, un precio accesible y el servicio gestionado incluido.',
+			'cc_boomi_logos_texto'    => 'Empresas que usan Boomi',
+			'cc_boomi_logos_clientes' => array_values(
+				array_filter(
+					array(
+						$this->id_do_seed( 'cliente:cargill', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:cisco', 'cli_cliente' ),
+						$this->id_do_seed( 'cliente:dell', 'cli_cliente' ),
+					)
+				)
+			),
 			'cc_operacoes_eyebrow'    => 'Operaciones Críticas',
 			'cc_operacoes_titulo'     => 'Algunas integraciones',
 			'cc_operacoes_titulo_2'   => 'simplemente no pueden fallar',
@@ -441,7 +451,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'valor_4_texto'        => 'Impulsamos nuevas ideas y la creatividad para anticipar tendencias y generar soluciones innovadoras con responsabilidad.',
 			'valor_5_titulo'       => 'Colaboración',
 			'valor_5_texto'        => 'Somos un equipo unido. Compartimos conocimiento, logros y aprendizajes con espíritu de colaboración y armonía.',
-			'dep_cargo'            => 'Tech Lead',
+			'dep_cargo'            => 'Equipo Tech',
 			'dep_texto'            => 'El trabajo en equipo en CLI es real y ocurre todos los días. Contar con un equipo que se ayuda para resolver problemas complejos y que está en total sintonía con herramientas innovadoras hace que nuestra rutina sea ligera y satisfactoria. Al final, el éxito de nuestras entregas es fruto de ese ecosistema, donde recibimos apoyo de todas las áreas de la empresa.',
 			'beneficios_eyebrow'   => 'BENEFICIOS',
 			'beneficios_titulo'    => 'Todo para que pueda hacer su mejor trabajo.',
