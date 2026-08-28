@@ -229,7 +229,11 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 			);
 		}
 
-		// Link de coluna: ganha o logo quando existe uma Integração de mesmo nome.
+		/*
+		 * Link de coluna: ganha o logo quando existe uma Integração de mesmo
+		 * nome — a menos que o item traga a classe `link-sem-logo`, usada onde
+		 * a marca não deve aparecer (os provedores de nuvem, por exemplo).
+		 */
 		if ( $depth >= 2 ) {
 			// "Ver todos" dentro de um grupo de coluna (class link-ver-todos no item).
 			if ( in_array( 'link-ver-todos', (array) $item->classes, true ) ) {
@@ -241,7 +245,8 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 				);
 			}
 
-			$logo = cliconnect_logo_integracao( $item->title );
+			$sem_logo = in_array( 'link-sem-logo', (array) $item->classes, true );
+			$logo     = $sem_logo ? '' : cliconnect_logo_integracao( $item->title );
 
 			return sprintf(
 				'<a%1$s>%2$s%3$s</a>',
