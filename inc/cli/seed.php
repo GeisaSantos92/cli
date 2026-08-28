@@ -14112,8 +14112,9 @@ class Cliconnect_Seed {
 	/**
 	 * Preenche a solução ChatGPT.
 	 *
-	 * Seções: 11 · Diagrama, 12 · Integrações, 9 · Aceleradores e 10 · FAQ.
-	 * Hero, Pilares, Diferencial, Selos e Plataforma foram cadastrados manualmente.
+	 * Todas as seções (Hero, Pilares, Casos, Diagrama, Integrações, Selos,
+	 * Diferencial, Plataforma, Aceleradores e FAQ), a partir do frame
+	 * "Tecnologia - ChatGPT" do Figma.
 	 *
 	 * @return void
 	 */
@@ -14137,6 +14138,44 @@ class Cliconnect_Seed {
 		$post_id = (int) $posts[0];
 
 		$campos = array(
+			// 1 · Hero.
+			'solucao_hero_eyebrow'    => 'integre o seu chatgpt',
+			'solucao_hero_titulo'     => 'Conecte o ChatGPT aos dados e sistemas da sua empresa',
+			'solucao_hero_corpo'      => 'Leve IA para processos reais conectando modelos da OpenAI a ERPs, CRMs, bases de dados e aplicações corporativas para automatizar tarefas e acelerar decisões.',
+			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
+			'solucao_hero_btn1_url'   => '/contato/',
+			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
+			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_imagem'     => $this->img( 'chatgpt-hero' ),
+
+			// 3 · Pilares.
+			'solucao_pilares_titulo'    => 'Transforme IA em processos conectados',
+			'solucao_pilares_1_icone'   => $this->img( 'chatgpt-pilar-1' ),
+			'solucao_pilares_1_titulo'  => 'Automatize tarefas com IA',
+			'solucao_pilares_1_desc'    => 'Use modelos da OpenAI para interpretar informações, gerar respostas e executar etapas dentro dos processos corporativos.',
+			'solucao_pilares_2_icone'   => $this->img( 'chatgpt-pilar-2' ),
+			'solucao_pilares_2_titulo'  => 'Conecte IA aos seus sistemas',
+			'solucao_pilares_2_desc'    => 'Integre modelos de IA a CRM, ERP, bancos de dados e aplicações sem criar processos paralelos.',
+			'solucao_pilares_3_icone'   => $this->img( 'chatgpt-pilar-3' ),
+			'solucao_pilares_3_titulo'  => 'Dê contexto aos modelos',
+			'solucao_pilares_3_desc'    => 'Envie dados relevantes dos sistemas corporativos para gerar respostas baseadas no contexto real da operação.',
+
+			// 5 · Casos de uso.
+			'solucao_casos_eyebrow'    => 'casos de uso',
+			'solucao_casos_titulo'     => 'Aplique IA aos processos que movem o negócio',
+			'solucao_casos_1_icone'    => $this->img( 'chatgpt-caso-1' ),
+			'solucao_casos_1_titulo'   => 'Consulte dados do ERP com IA',
+			'solucao_casos_2_icone'    => $this->img( 'chatgpt-caso-2' ),
+			'solucao_casos_2_titulo'   => 'Automatize atendimento',
+			'solucao_casos_3_icone'    => $this->img( 'chatgpt-caso-3' ),
+			'solucao_casos_3_titulo'   => 'Analise documentos automaticamente',
+			'solucao_casos_4_icone'    => $this->img( 'chatgpt-caso-4' ),
+			'solucao_casos_4_titulo'   => 'Classifique e encaminhe solicitações',
+			'solucao_casos_5_icone'    => $this->img( 'chatgpt-caso-5' ),
+			'solucao_casos_5_titulo'   => 'Crie agentes conectados',
+			'solucao_casos_cta_texto'  => 'Agende uma demonstração',
+			'solucao_casos_cta_url'    => '/contato/',
+
 			// 11 · Diagrama — motor de integração.
 			'solucao_diagrama_titulo' => 'Um novo jeito de conectar IA aos seus sistemas',
 			'solucao_diagrama_imagem' => $this->img( 'chatgpt-motor' ),
@@ -14146,6 +14185,30 @@ class Cliconnect_Seed {
 			'solucao_int_titulo'    => 'Integre todos os seus sistema com o ChatGPT',
 			'solucao_int_imagem'    => $this->img( 'chatgpt-integracoes' ),
 			'solucao_int_subtitulo' => 'Milhares de integrações já prontas para uso',
+
+			// 7 · Selos — compliance & segurança.
+			'solucao_selos_eyebrow' => 'compliance & segurança',
+			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
+			'solucao_selos_corpo'   => 'Seus dados, processos e integrações protegidos pelos mais altos padrões globais.',
+
+			// 8 · Diferencial técnico.
+			'solucao_dif_eyebrow'     => 'diferencial técnico',
+			'solucao_dif_titulo'      => 'Integre IA com controle sobre seus dados',
+			'solucao_dif_corpo'       => 'Conecte os modelos da OpenAI aos sistemas corporativos mantendo controle sobre os dados enviados, os fluxos executados e as regras de acesso.',
+			'solucao_dif_topico_1'    => 'Controle quais dados chegam aos modelos',
+			'solucao_dif_topico_2'    => 'Proteja dados em trânsito e repouso',
+			'solucao_dif_topico_3'    => 'Aplique regras antes de executar ações',
+			'solucao_dif_imagem'      => $this->img( 'chatgpt-dif' ),
+			'solucao_dif_antes_selos' => 0,
+
+			// 6 · Plataforma única.
+			'solucao_plat_eyebrow'  => 'plataforma única',
+			'solucao_plat_titulo'   => 'Centralize IA e integrações em uma única plataforma',
+			'solucao_plat_corpo'    => 'Conectar ChatGPT a um sistema resolve um caso. Centralizar IA, dados e aplicações em uma plataforma permite escalar novos agentes e automações sem multiplicar integrações.',
+			'solucao_plat_topico_1' => 'Conecte IA a múltiplos sistemas',
+			'solucao_plat_topico_2' => 'Reutilize conexões em novos agentes',
+			'solucao_plat_topico_3' => 'Orquestre processos em uma arquitetura única',
+			'solucao_plat_imagem'   => $this->img( 'chatgpt-plat' ),
 
 			// 9 · Aceleradores — MCP Server.
 			'solucao_acel_eyebrow'  => 'MCP server',
