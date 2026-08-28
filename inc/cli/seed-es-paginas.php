@@ -97,7 +97,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'metrica_1_rotulo'     => 'integraciones por semana',
 			'metrica_2_numero'     => '5 días',
 			'metrica_2_rotulo'     => 'hasta que su integración esté lista',
-			'metrica_3_numero'     => '30 mil',
+			'metrica_3_numero'     => '+30 mil',
 			'metrica_3_rotulo'     => 'integraciones ya construidas',
 			'midia_1_eyebrow'      => 'IA corporativa',
 			'midia_1_titulo'       => 'Cree, gobierne y escale agentes',

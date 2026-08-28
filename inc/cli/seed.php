@@ -919,8 +919,8 @@ class Cliconnect_Seed {
 		$itens = array(
 			array( 'AICPA SOC 2', 'selo-aicpa-soc-2' ),
 			array( 'AICPA SOC', 'selo-aicpa-soc' ),
-			array( 'ISO/IEC 27001', 'selo-iso-27001' ),
 			array( 'ISO/IEC 27701', 'selo-iso-27701' ),
+			array( 'ISO/IEC 27001', 'selo-iso-27001' ),
 			array( 'ISO/IEC 27018', 'selo-iso-27018' ),
 			array( 'EU GDPR Compliant', 'selo-eu-gdpr' ),
 			array( 'FedRAMP', 'selo-fedramp' ),
@@ -1196,7 +1196,7 @@ class Cliconnect_Seed {
 			'metrica_1_rotulo'      => 'integrações por semana',
 			'metrica_2_numero'      => '5 dias',
 			'metrica_2_rotulo'      => 'até a sua integração estar pronta',
-			'metrica_3_numero'      => '30 mil',
+			'metrica_3_numero'      => '+30 mil',
 			'metrica_3_rotulo'      => 'integrações já prontas para uso',
 
 			// 6. Bloco de mídia 1 — IA corporativa.
@@ -1630,8 +1630,9 @@ class Cliconnect_Seed {
 			'CLI — Menu Principal',
 			array(
 				array(
+					// Sem URL: o item só abre o painel de cartões (issue #93).
 					'titulo' => 'Plataforma',
-					'url'    => '/plataforma/',
+					'url'    => '#',
 					'filhos' => array(
 						array(
 							'titulo'    => 'CLI Connect',
@@ -1659,11 +1660,57 @@ class Cliconnect_Seed {
 
 		// --- Rodapé (colunas) — depth=3 ----------------------------------------
 		// Nível 1 = coluna visual (grupo); nível 2 = seção; nível 3 = links.
+		/*
+		 * As colunas de soluções são as mesmas do mega menu. Reaproveitar a árvore
+		 * do $solucoes_mega — em vez de repetir as listas — é o que impede os dois
+		 * menus de voltarem a divergir, que foi o problema da issue #105.
+		 */
+		$coluna = function ( $titulo ) use ( $solucoes_mega ) {
+			foreach ( $solucoes_mega as $grupo ) {
+				if ( $titulo === $grupo['titulo'] ) {
+					return $grupo;
+				}
+			}
+
+			return array( 'titulo' => $titulo, 'url' => '#', 'filhos' => array() );
+		};
+
+		// O rodapé do Figma usa outros dois rótulos para as mesmas colunas.
+		$renomear = function ( $grupo, $titulo ) {
+			$grupo['titulo'] = $titulo;
+
+			return $grupo;
+		};
+
 		$this->montar_menu(
 			'rodape',
 			'CLI — Rodapé',
 			array(
-				// Coluna 1: Plataforma + Recursos
+				// Coluna 1: Sistemas
+				array(
+					'titulo' => 'col-sistemas',
+					'url'    => '#',
+					'filhos' => array( $renomear( $coluna( 'Tecnologia' ), 'Sistemas' ) ),
+				),
+				// Coluna 2: Indústria
+				array(
+					'titulo' => 'col-industria',
+					'url'    => '#',
+					'filhos' => array( $coluna( 'Indústria' ) ),
+				),
+				// Coluna 3: Departamento + Nuvem
+				array(
+					'titulo' => 'col-departamento-nuvem',
+					'url'    => '#',
+					'filhos' => array( $coluna( 'Departamento' ), $coluna( 'Nuvem' ) ),
+				),
+				// Coluna 4: Iniciativas
+				array(
+					'titulo' => 'col-iniciativas',
+					'url'    => '#',
+					'filhos' => array( $renomear( $coluna( 'Por Iniciativa' ), 'Iniciativas' ) ),
+				),
+				// Coluna 5: Plataforma + Recursos
 				array(
 					'titulo' => 'col-plataforma-recursos',
 					'url'    => '#',
@@ -1684,102 +1731,6 @@ class Cliconnect_Seed {
 								'Blog'             => $blog_url,
 								'Trabalhe Conosco' => '/trabalhe-conosco/',
 								'Contato'          => '/contato/',
-							),
-						),
-					),
-				),
-				// Coluna 2: Tecnologia
-				array(
-					'titulo' => 'col-tecnologia',
-					'url'    => '#',
-					'filhos' => array(
-						array(
-							'titulo' => 'Tecnologia',
-							'url'    => $turl( 'tecnologia' ),
-							'filhos' => array(
-								'Claude'                     => $purl( 'claude' ),
-								'ChatGPT'                    => $purl( 'chatgpt' ),
-								'SAP'                        => $purl( 'sap' ),
-								'Salesforce'                 => $purl( 'salesforce' ),
-								'Salesforce Sales Cloud'     => $purl( 'salesforce-sales-cloud' ),
-								'Salesforce Service Cloud'   => $purl( 'salesforce-service-cloud' ),
-								'Salesforce Marketing Cloud' => $purl( 'salesforce-marketing-cloud' ),
-								'TOTVS Protheus'             => $purl( 'totvs-protheus' ),
-								'Sankhya'                    => $purl( 'sankhya' ),
-								'Senior'                     => $purl( 'senior' ),
-								'Dynamics 365'               => $purl( 'dynamics-365' ),
-								array(
-									'titulo'  => 'Ver todos',
-									'url'     => $turl( 'tecnologia' ),
-									'classes' => 'link-ver-todos',
-								),
-							),
-						),
-					),
-				),
-				// Coluna 3: Indústria
-				array(
-					'titulo' => 'col-industria',
-					'url'    => '#',
-					'filhos' => array(
-						array(
-							'titulo' => 'Indústria',
-							'url'    => $turl( 'industria' ),
-							'filhos' => array(
-								'Serviços Financeiros' => $purl( 'servicos-financeiros' ),
-								'Manufatura'           => $purl( 'manufatura' ),
-								'Logística (3PL)'      => $purl( 'logistica-3pl' ),
-								'Software (ISV)'       => $purl( 'software-isv' ),
-								'Varejo'               => $purl( 'varejo' ),
-								'Hotelaria e Turismo'  => $purl( 'hotelaria-e-turismo' ),
-								'Seguros'              => $purl( 'seguros' ),
-							),
-						),
-					),
-				),
-				// Coluna 4: Departamento + Nuvem
-				array(
-					'titulo' => 'col-departamento-nuvem',
-					'url'    => '#',
-					'filhos' => array(
-						array(
-							'titulo' => 'Departamento',
-							'url'    => $turl( 'departamento' ),
-							'filhos' => array(
-								'Recursos Humanos (RH)'         => $purl( 'recursos-humanos-rh' ),
-								'Operações de Receita (RevOps)' => $purl( 'operacoes-de-receita-revops' ),
-								'Marketing'                     => $purl( 'marketing' ),
-								'Financeiro'                    => $purl( 'financeiro' ),
-							),
-						),
-						array(
-							'titulo' => 'Nuvem',
-							'url'    => $turl( 'nuvem' ),
-							'filhos' => array(
-								array( 'titulo' => 'AWS', 'url' => $purl( 'aws' ), 'classes' => 'link-sem-logo' ),
-								array( 'titulo' => 'Google Cloud', 'url' => $purl( 'google-cloud' ), 'classes' => 'link-sem-logo' ),
-								array( 'titulo' => 'Microsoft Azure', 'url' => $purl( 'microsoft-azure' ), 'classes' => 'link-sem-logo' ),
-							),
-						),
-					),
-				),
-				// Coluna 5: Por Iniciativa
-				array(
-					'titulo' => 'col-iniciativas',
-					'url'    => '#',
-					'filhos' => array(
-						array(
-							'titulo' => 'Por Iniciativa',
-							'url'    => $turl( 'por-iniciativa' ),
-							'filhos' => array(
-								'Atualização de Sistemas Legados' => $purl( 'atualizacao-de-sistemas-legados' ),
-								'IA Corporativa'                  => $purl( 'ia-corporativa' ),
-								'Compras ao Pagamento'            => $purl( 'compras-ao-pagamento' ),
-								'Pedido ao Recebimento'           => $purl( 'pedido-ao-recebimento' ),
-								'Jornada do Colaborador'          => $purl( 'jornada-do-colaborador' ),
-								'Soberania de Dados'              => $purl( 'soberania-de-dados' ),
-								'Visão 360° do Cliente'           => $purl( 'visao-360-do-cliente' ),
-								'Modernização de ERP'             => $purl( 'modernizacao-de-erp' ),
 							),
 						),
 					),

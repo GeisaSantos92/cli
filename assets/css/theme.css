@@ -428,7 +428,8 @@ p {
 	gap: 20px;
 }
 
-.site-nav__list a {
+.site-nav__list a,
+.site-nav__rotulo {
 	display: inline-flex;
 	align-items: center;
 	gap: 2px;
@@ -441,10 +442,17 @@ p {
 	transition: color 0.2s ease;
 }
 
+/* Rótulo de item que só abre painel: não é link, então não é clicável. */
+.site-nav__rotulo {
+	cursor: default;
+}
+
 .site-nav__list a:hover,
 .site-nav__list a:focus-visible,
 .site-nav__list .current-menu-item > a,
-.site-nav__list .current-menu-ancestor > a {
+.site-nav__list .current-menu-ancestor > a,
+.site-nav__item--has-children:hover > .site-nav__row > .site-nav__rotulo,
+.site-nav__item--has-children:focus-within > .site-nav__row > .site-nav__rotulo {
 	color: var(--cor-texto-marca);
 }
 
@@ -902,7 +910,8 @@ p {
 		gap: 4px;
 	}
 
-	.site-nav__list a {
+	.site-nav__list a,
+	.site-nav__rotulo {
 		padding: 12px 0;
 		font-size: var(--tam-body);
 	}
@@ -1032,13 +1041,13 @@ p {
 	padding: clamp(48px, 6vw, 72px) var(--margem-lateral) 0;
 }
 
-/* Barra superior: logo+powered à esquerda, ícones sociais à direita */
+/* Barra inferior: logo+powered à esquerda, ícones sociais à direita */
 .site-footer__top {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding-block: 24px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .site-footer__brand-wrap {
@@ -1083,7 +1092,7 @@ p {
  *   nível 3 (li) = link individual
  */
 .site-footer__links {
-	padding-top: clamp(40px, 5vw, 80px);
+	padding-bottom: clamp(40px, 5vw, 80px);
 }
 
 .site-footer__grid {
@@ -1189,29 +1198,9 @@ p {
 }
 
 @media (max-width: 768px) {
-	/* Flex column no inner permite reordenar logo e links */
-	.site-footer__inner {
-		display: flex;
-		flex-direction: column;
-	}
-
-	/* Links sobem (order 0 é padrão mas explícito para clareza) */
-	.site-footer__links {
-		order: 0;
-	}
-
-	/* Logo + sociais descem abaixo dos links */
 	.site-footer__top {
-		order: 1;
 		flex-wrap: wrap;
 		gap: 16px;
-		border-bottom: none;
-		border-top: 1px solid rgba(255, 255, 255, 0.05);
-	}
-
-	/* Espaço do planeta fica por último */
-	.site-footer__espaco {
-		order: 2;
 	}
 
 	/* Colunas do menu empilhadas em coluna única */
