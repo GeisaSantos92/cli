@@ -53,16 +53,31 @@ while ( have_posts() ) :
 		array(
 			'post__not_in' => array( get_the_ID() ),
 			'meta_query'   => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				'relation' => 'AND',
 				array(
-					'key'     => 'em_andamento',
-					'compare' => 'NOT EXISTS',
+					'relation' => 'OR',
+					array(
+						'key'     => 'em_andamento',
+						'compare' => 'NOT EXISTS',
+					),
+					array(
+						'key'     => 'em_andamento',
+						'value'   => '1',
+						'compare' => '!=',
+					),
 				),
 				array(
-					'key'     => 'em_andamento',
-					'value'   => '1',
-					'compare' => '!=',
+					'relation' => 'OR',
+					array(
+						'key'     => 'oculto_no_arquivo',
+						'compare' => 'NOT EXISTS',
+					),
+					array(
+						'key'     => 'oculto_no_arquivo',
+						'value'   => '1',
+						'compare' => '!=',
+					),
 				),
-				'relation' => 'OR',
 			),
 		)
 	);

@@ -384,6 +384,15 @@ function cliconnect_acf_fields_cpt() {
 					'default_value' => 0,
 					'ui'           => 1,
 				),
+				array(
+					'key'           => 'field_case_oculto_no_arquivo',
+					'label'         => 'Ocultar na listagem de cases',
+					'name'          => 'oculto_no_arquivo',
+					'type'          => 'true_false',
+					'instructions'  => 'Marque para o case não aparecer em /cases/ nem em "Outros cases". Use para cases que existem apenas como card de métrica em outra página.',
+					'default_value' => 0,
+					'ui'            => 1,
+				),
 			),
 		)
 	);

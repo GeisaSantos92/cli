@@ -24,6 +24,11 @@ $cases_completos = array();
 $cases_andamento = array();
 
 foreach ( $todos_cases as $case ) {
+	// Cases que existem só como card de métrica em outra página ficam fora daqui.
+	if ( get_field( 'oculto_no_arquivo', $case->ID ) ) {
+		continue;
+	}
+
 	if ( get_field( 'em_andamento', $case->ID ) ) {
 		$cases_andamento[] = $case;
 	} else {

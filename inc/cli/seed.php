@@ -1104,7 +1104,44 @@ class Cliconnect_Seed {
 		update_field( 'metrica_texto', 'De ganho em velocidade de análise operacional', $petro2 );
 		$this->definir_thumb( $petro2, 'case-petroreconcavo' );
 
-		WP_CLI::log( '  cases: 5.' );
+		/*
+		 * Os dois clones acima existem só para os cards de métrica da home.
+		 * No frame da página Cases eles não aparecem — a listagem mostra três
+		 * cases completos e três faixas de "case em andamento".
+		 */
+		update_field( 'oculto_no_arquivo', 1, $moura2 );
+		update_field( 'oculto_no_arquivo', 1, $petro2 );
+
+		// 6 a 8. Cases em andamento — só logo e rótulo na listagem.
+		$andamento = array(
+			'brz'     => array( 'BRZ Empreendimentos', 'cliente-brz' ),
+			'legrand' => array( 'Legrand', 'cliente-legrand' ),
+			'sbc'     => array( 'Sociedade Brasileira de Cardiologia', 'cliente-sbc' ),
+		);
+
+		$ordem = 5;
+
+		foreach ( $andamento as $chave => $dados ) {
+			list( $nome, $arquivo ) = $dados;
+
+			$id = $this->upsert(
+				'case:andamento-' . $chave,
+				array(
+					'post_type'  => 'cli_case',
+					'post_title' => $nome,
+					'menu_order' => $ordem++,
+				)
+			);
+
+			if ( ! $id ) {
+				continue;
+			}
+
+			update_field( 'em_andamento', 1, $id );
+			update_field( 'logo', $this->img( $arquivo ), $id );
+		}
+
+		WP_CLI::log( sprintf( '  cases: %d (%d em andamento).', 5 + count( $andamento ), count( $andamento ) ) );
 
 		return array(
 			'panasonic' => $panasonic,
