@@ -49,6 +49,14 @@ Diretrizes para manter o site rápido, seguro e vivo por muitos anos.
 **Search Console / Analytics:** sem plugin dedicado. Search Console via plugin de SEO;
 GA/GTM injetado por `inc/analytics.php` lendo o Customizer (só em produção).
 
+**Quem manda no `<head>`:** com o Rank Math ativo, o plugin é a fonte de verdade de
+`description`, Open Graph, Twitter Card, canonical e JSON-LD. O `inc/seo.php` do tema
+só imprime quando não há plugin de SEO (`cliconnect_plugin_seo_ativo()`) — ele é o
+fallback, não um segundo emissor. Title e description das páginas ficam no seed
+(`configurar_seo()` em português, `seo_en()` / `seo_es()` nas traduções), gravados como
+`rank_math_title` / `rank_math_description`, para não depender de clicar página a
+página no painel.
+
 ## Plugins de risco (evitar)
 
 - **Page/grid builders e "listagens sem código"**: prendem design/queries em shortcodes ou

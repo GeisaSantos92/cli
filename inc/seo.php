@@ -2,14 +2,31 @@
 /**
  * Meta tags de SEO, Open Graph, Twitter Card e Schema.org (JSON-LD).
  *
- * Sem plugin: tudo gerado aqui com dados já disponíveis no tema
- * (ACF, Customizer, wp_get_document_title).
+ * Política (issue #148): com o Rank Math ativo, **ele** é a fonte de verdade do
+ * <head> — o tema não compete. Sem o plugin, tudo aqui volta a valer, gerado
+ * com dados que o tema já tem (ACF, Customizer, wp_get_document_title).
+ *
+ * Sem essa guarda o front sai com duas `description`, dois blocos Open Graph /
+ * Twitter e duas Organization em JSON-LD.
  *
  * @package Cliconnect
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+/**
+ * Há um plugin de SEO cuidando do <head>?
+ *
+ * Hoje o site usa Rank Math. A checagem é por constante/classe do plugin, não
+ * por caminho de arquivo, para continuar valendo se ele for movido ou
+ * renomeado.
+ *
+ * @return bool
+ */
+function cliconnect_plugin_seo_ativo() {
+	return defined( 'RANK_MATH_VERSION' ) || class_exists( 'RankMath' );
 }
 
 /**
@@ -72,11 +89,16 @@ function cliconnect_og_image_url() {
 /**
  * Imprime meta description, Open Graph e Twitter Card no <head>.
  *
- * Hookado em wp_head com prioridade 5 (antes dos scripts do tema).
+ * Hookado em wp_head com prioridade 5 (antes dos scripts do tema). Só imprime
+ * quando não há plugin de SEO ativo — é o fallback do tema.
  *
  * @return void
  */
 function cliconnect_print_seo_meta() {
+	if ( cliconnect_plugin_seo_ativo() ) {
+		return;
+	}
+
 	$desc     = cliconnect_meta_description();
 	$og_image = cliconnect_og_image_url();
 	$og_url   = is_singular() ? (string) get_permalink() : home_url( '/' );
@@ -119,13 +141,14 @@ add_action( 'wp_head', 'cliconnect_print_seo_meta', 5 );
 /**
  * Imprime JSON-LD de Organization na home.
  *
- * Inclui redes sociais registradas no Customizer (sameAs),
- * o logo e a URL canônica — base para rich snippets de marca.
+ * Inclui redes sociais registradas no Customizer (sameAs), o logo e a URL
+ * canônica — base para rich snippets de marca. Como a meta acima, só sai
+ * quando não há plugin de SEO cuidando do grafo.
  *
  * @return void
  */
 function cliconnect_print_schema_org() {
-	if ( ! is_front_page() ) {
+	if ( cliconnect_plugin_seo_ativo() || ! is_front_page() ) {
 		return;
 	}
 

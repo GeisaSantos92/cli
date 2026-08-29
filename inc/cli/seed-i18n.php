@@ -298,6 +298,9 @@ trait Cliconnect_Seed_I18n {
 		WP_CLI::log( '  strings do Customizer…' );
 		$this->traduzir_strings_polylang();
 
+		WP_CLI::log( '  SEO das páginas…' );
+		$this->traduzir_seo();
+
 		WP_CLI::log( '  traduções órfãs…' );
 		$this->remover_traducoes_orfas();
 	}
@@ -702,6 +705,25 @@ trait Cliconnect_Seed_I18n {
 		$mo->export_to_db( $idioma );
 
 		WP_CLI::log( sprintf( '    strings do Customizer: %d.', count( $traducoes ) ) );
+	}
+
+	/**
+	 * Grava title e description do Rank Math nas páginas do idioma atual.
+	 *
+	 * O texto vem de `seo_{idioma}()`, no trait de conteúdo; idioma sem esse
+	 * método não recebe meta e herda o template do Rank Math, em vez de herdar
+	 * o português.
+	 *
+	 * @return void
+	 */
+	protected function traduzir_seo() {
+		$mapa = $this->dados( 'seo' );
+
+		if ( ! $mapa ) {
+			return;
+		}
+
+		WP_CLI::log( sprintf( '    SEO: %d páginas.', $this->aplicar_seo( $mapa, $this->sufixo() ) ) );
 	}
 
 	/**

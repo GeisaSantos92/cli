@@ -336,6 +336,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Ajustando o Customizer…' );
 		$this->configurar_customizer();
 
+		WP_CLI::log( '— Ajustando o SEO…' );
+		$this->configurar_seo();
+
 		WP_CLI::log( '— Criando as versões traduzidas…' );
 		$this->traduzir_site( $paginas, $termos_solucao );
 
@@ -2207,6 +2210,174 @@ class Cliconnect_Seed {
 		update_option( 'blogdescription', 'Integrações ilimitadas. Custo previsível. Sem surpresas.' );
 
 		WP_CLI::log( sprintf( '  customizer: %d opções.', count( $mods ) ) );
+	}
+
+	/**
+	 * Title e meta description das páginas, em português.
+	 *
+	 * Chave = slug da página; valor = [ title, description ]. Title na casa dos
+	 * 60 caracteres e description na dos 160 — acima disso o Google trunca.
+	 *
+	 * As traduções ficam em `seo_en()` / `seo_es()`, nos traits de conteúdo.
+	 *
+	 * @return array<string,array{0:string,1:string}>
+	 */
+	protected function seo() {
+		return array(
+			'home'             => array(
+				'CLI Connect — integrações ilimitadas, custo previsível',
+				'Conecte ERP, CRM, e-commerce e nuvem numa só camada de integração powered by Boomi. Custo fixo, integrações ilimitadas e time especialista.',
+			),
+			'blog'             => array(
+				'Blog da CLI Connect — integração de sistemas na prática',
+				'Artigos sobre integração de sistemas, ERP, CRM e automação de processos, escritos por quem coloca projeto em produção.',
+			),
+			'contato'          => array(
+				'Fale com a CLI Connect',
+				'Converse com o nosso time sobre a sua integração. Retorno rápido por e-mail, telefone ou WhatsApp.',
+			),
+			'plataforma'       => array(
+				'Plataforma de integração — CLI Connect',
+				'Uma camada única para conectar ERP, CRM, e-commerce e nuvem, com governança, monitoramento e mais de 300 conectores prontos.',
+			),
+			'cli-connect'      => array(
+				'CLI Connect — integração como serviço contínuo',
+				'Custo fixo, integrações ilimitadas e um time dedicado cuidando da sua camada de integração, sem projeto novo a cada conexão.',
+			),
+			'cli-signature'    => array(
+				'CLI Signature — squad dedicado de integração',
+				'Gerente de projeto e arquiteto dedicados ao seu roadmap de integração, com governança, ritos de acompanhamento e previsibilidade.',
+			),
+			'solucoes'         => array(
+				'Soluções de integração por sistema e por área',
+				'Catálogo de integrações por ERP, CRM, nuvem, indústria e área de negócio — do SAP ao Salesforce, com conectores prontos.',
+			),
+			'integracao-sap'   => array(
+				'Integração SAP — conecte o SAP ao resto da operação',
+				'Integre SAP ECC, S/4HANA e Business One a CRM, e-commerce, fiscal e dados, sem desenvolvimento ponto a ponto.',
+			),
+			'sistemas'         => array(
+				'Sistemas integrados pela CLI Connect',
+				'Mais de 300 conectores prontos para ERP, CRM, e-commerce, nuvem e ferramentas de dados. Veja se o seu sistema já está na lista.',
+			),
+			'trabalhe-conosco' => array(
+				'Trabalhe conosco — CLI Connect',
+				'Vagas, cultura e benefícios de um time que vive de integrar sistemas críticos. Veja como é trabalhar na CLI Connect.',
+			),
+			'privacidade'      => array(
+				'Política de Privacidade — CLI Connect',
+				'Como a CLI Connect coleta, usa e protege os dados pessoais de quem visita o site e contrata os nossos serviços.',
+			),
+			'termos'           => array(
+				'Termos de Uso — CLI Connect',
+				'Condições de uso do site e dos serviços da CLI Connect.',
+			),
+		);
+	}
+
+	/**
+	 * Ajusta o Rank Math e grava o SEO das páginas em português.
+	 *
+	 * O <head> é responsabilidade do plugin (ver a política em inc/seo.php), e
+	 * o que o painel não preenche sozinho vem daqui: description da home e o
+	 * title/description de cada página. Sem plugin instalado, sai sem barulho.
+	 *
+	 * @return void
+	 */
+	protected function configurar_seo() {
+		$titulos = get_option( 'rank-math-options-titles' );
+
+		if ( ! is_array( $titulos ) ) {
+			WP_CLI::warning( '  Rank Math não encontrado — SEO das páginas não configurado.' );
+
+			return;
+		}
+
+		$seo = $this->seo();
+
+		// Fallback da home, para quando a página em si não tiver meta própria.
+		$titulos['homepage_description'] = $seo['home'][1];
+
+		/*
+		 * Página não é artigo: o padrão "article" do Rank Math coloca um
+		 * Article genérico (com autor e data) em página institucional. "off"
+		 * deixa só o WebPage do grafo.
+		 */
+		$titulos['pt_page_default_rich_snippet'] = 'off';
+
+		update_option( 'rank-math-options-titles', $titulos );
+
+		$gravadas = $this->aplicar_seo( $seo );
+
+		WP_CLI::log( sprintf( '  SEO: %d páginas com title e description.', $gravadas ) );
+
+		$this->limpar_modulos_rank_math();
+	}
+
+	/**
+	 * Desliga módulos do Rank Math cujo plugin de destino não está instalado.
+	 *
+	 * WooCommerce, BuddyPress, bbPress e Web Stories vêm ligados de fábrica e
+	 * enchem o painel de abas que não levam a nada. A checagem é pelo plugin em
+	 * si, então o módulo volta sozinho se o plugin um dia entrar.
+	 *
+	 * @return void
+	 */
+	protected function limpar_modulos_rank_math() {
+		$modulos = get_option( 'rank_math_modules' );
+
+		if ( ! is_array( $modulos ) ) {
+			return;
+		}
+
+		$dependencias = array(
+			'woocommerce' => class_exists( 'WooCommerce' ),
+			'buddypress'  => function_exists( 'buddypress' ),
+			'bbpress'     => class_exists( 'bbPress' ),
+			'web-stories' => defined( 'WEBSTORIES_VERSION' ),
+		);
+
+		$ativos = array_values(
+			array_filter(
+				$modulos,
+				static function ( $modulo ) use ( $dependencias ) {
+					return ! isset( $dependencias[ $modulo ] ) || $dependencias[ $modulo ];
+				}
+			)
+		);
+
+		if ( count( $ativos ) === count( $modulos ) ) {
+			return;
+		}
+
+		update_option( 'rank_math_modules', $ativos );
+
+		WP_CLI::log( sprintf( '  Rank Math: %d módulos sem plugin desligados.', count( $modulos ) - count( $ativos ) ) );
+	}
+
+	/**
+	 * Grava title e description do Rank Math num conjunto de páginas.
+	 *
+	 * @param array<string,array{0:string,1:string}> $mapa   slug da página => [ title, description ].
+	 * @param string                                 $sufixo Sufixo do slug de seed (ex.: ':en').
+	 * @return int Quantas páginas foram gravadas.
+	 */
+	protected function aplicar_seo( $mapa, $sufixo = '' ) {
+		$gravadas = 0;
+
+		foreach ( $mapa as $slug => $textos ) {
+			$id = $this->buscar( 'pagina:' . $slug . $sufixo, 'page' );
+
+			if ( ! $id ) {
+				continue;
+			}
+
+			update_post_meta( $id, 'rank_math_title', $textos[0] );
+			update_post_meta( $id, 'rank_math_description', $textos[1] );
+			++$gravadas;
+		}
+
+		return $gravadas;
 	}
 
 	/* =====================================================================

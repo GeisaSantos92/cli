@@ -215,6 +215,66 @@ trait Cliconnect_Seed_En_Paginas {
 	}
 
 	/**
+	 * Title e meta description das páginas, em inglês.
+	 *
+	 * Chave = slug da página em português (o mesmo do seed base).
+	 *
+	 * @return array<string,array{0:string,1:string}>
+	 */
+	protected function seo_en() {
+		return array(
+			'home'             => array(
+				'CLI Connect — unlimited integrations, predictable cost',
+				'Connect ERP, CRM, e-commerce and cloud in a single integration layer powered by Boomi. Fixed cost, unlimited integrations, expert team.',
+			),
+			'blog'             => array(
+				'CLI Connect blog — systems integration in practice',
+				'Articles on systems integration, ERP, CRM and process automation, written by the people who put projects into production.',
+			),
+			'contato'          => array(
+				'Talk to CLI Connect',
+				'Tell our team about your integration. We reply quickly by email, phone or WhatsApp.',
+			),
+			'plataforma'       => array(
+				'Integration platform — CLI Connect',
+				'One layer to connect ERP, CRM, e-commerce and cloud, with governance, monitoring and more than 300 ready-made connectors.',
+			),
+			'cli-connect'      => array(
+				'CLI Connect — integration as a continuous service',
+				'Fixed cost, unlimited integrations and a dedicated team looking after your integration layer — no new project for every connection.',
+			),
+			'cli-signature'    => array(
+				'CLI Signature — a dedicated integration squad',
+				'A project manager and an architect dedicated to your integration roadmap, with governance, regular rituals and predictable delivery.',
+			),
+			'solucoes'         => array(
+				'Integration solutions by system and by area',
+				'A catalogue of integrations by ERP, CRM, cloud, industry and business area — from SAP to Salesforce, with ready-made connectors.',
+			),
+			'integracao-sap'   => array(
+				'SAP integration — connect SAP to the rest of your operation',
+				'Integrate SAP ECC, S/4HANA and Business One with CRM, e-commerce, tax and data systems, without point-to-point development.',
+			),
+			'sistemas'         => array(
+				'Systems integrated by CLI Connect',
+				'More than 300 ready-made connectors for ERP, CRM, e-commerce, cloud and data tools. Check whether your system is already on the list.',
+			),
+			'trabalhe-conosco' => array(
+				'Work with us — CLI Connect',
+				'Openings, culture and benefits at a team that lives on integrating critical systems. See what working at CLI Connect is like.',
+			),
+			'privacidade'      => array(
+				'Privacy Policy — CLI Connect',
+				'How CLI Connect collects, uses and protects the personal data of people who visit the site and hire our services.',
+			),
+			'termos'           => array(
+				'Terms of Use — CLI Connect',
+				'Conditions for using the CLI Connect website and services.',
+			),
+		);
+	}
+
+	/**
 	 * Strings de opção (Customizer e descrição do site) em inglês.
 	 *
 	 * @return array<string,string>
