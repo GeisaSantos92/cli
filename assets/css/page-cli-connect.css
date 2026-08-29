@@ -539,7 +539,7 @@
 .cc-boomi__titulo {
 	color: var(--cor-texto-primario, #1f242d);
 	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h3, 48px);
+	font-size: var(--tam-h4, 36px);
 	font-weight: 600;
 	letter-spacing: -0.03em;
 	line-height: 1.1;
