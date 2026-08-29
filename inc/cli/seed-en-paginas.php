@@ -225,6 +225,9 @@ trait Cliconnect_Seed_En_Paginas {
 			'Acessar Plataforma'                                      => 'Access Platform',
 			"Planeje a evolução\ndas suas integrações"                 => "Plan the evolution\nof your integrations",
 			'Fale conosco no Whatsapp'                                 => 'Talk to us on WhatsApp',
+			'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa' => 'We use cookies to improve your experience. By continuing to browse, you agree to our',
+			'política de privacidade'                                  => 'privacy policy',
+			'Concordar'                                                => 'Agree',
 			'Integrações ilimitadas. Custo previsível. Sem surpresas.' => 'Unlimited integrations. Predictable cost. No surprises.',
 		);
 	}

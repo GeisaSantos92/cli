@@ -66,6 +66,9 @@ trait Cliconnect_Seed_Es_Paginas {
 			'Acessar Plataforma'                                      => 'Acceder a la Plataforma',
 			"Planeje a evolução\ndas suas integrações"                 => "Planifique la evolución\nde sus integraciones",
 			'Fale conosco no Whatsapp'                                 => 'Hable con nosotros por WhatsApp',
+			'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa' => 'Usamos cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra',
+			'política de privacidade'                                  => 'política de privacidad',
+			'Concordar'                                                => 'Aceptar',
 			'Integrações ilimitadas. Custo previsível. Sem surpresas.' => 'Integraciones ilimitadas. Costo previsible. Sin sorpresas.',
 		);
 	}

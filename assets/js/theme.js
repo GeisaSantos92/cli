@@ -23,6 +23,7 @@
 		initMetricasCounters();
 		initCaseScrollSpy();
 		initFooterCta();
+		initCookieBanner();
 	});
 
 	/* ----- Seletor de idiomas (globo do header) ---------------------------- */
@@ -306,6 +307,47 @@
 
 		Array.prototype.forEach.call(sections, function (section) {
 			observer.observe(section);
+		});
+	}
+
+	/* ----- Banner de cookies ---------------------------------------------- */
+
+	/*
+	 * O banner nasce com [hidden] no PHP. Só aparece quando não há aceite
+	 * gravado — assim quem já concordou não vê nem o flash. A escolha fica em
+	 * localStorage (mesma origem), não em cookie: é aviso, não consentimento
+	 * granular.
+	 */
+	function initCookieBanner() {
+		var banner = document.querySelector('[data-cookie-banner]');
+		if (!banner) return;
+
+		var CHAVE = 'cliconnect_cookies_ok';
+
+		function lembrado() {
+			try {
+				return window.localStorage.getItem(CHAVE) === '1';
+			} catch (e) {
+				// Modo privado ou storage bloqueado: mostra o banner sempre.
+				return false;
+			}
+		}
+
+		if (lembrado()) return;
+
+		banner.hidden = false;
+
+		var botao = banner.querySelector('[data-cookie-aceitar]');
+		if (!botao) return;
+
+		botao.addEventListener('click', function () {
+			try {
+				window.localStorage.setItem(CHAVE, '1');
+			} catch (e) {
+				// Sem storage, o banner volta no próximo carregamento.
+			}
+
+			banner.hidden = true;
 		});
 	}
 

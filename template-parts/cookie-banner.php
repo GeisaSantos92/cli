@@ -36,9 +36,7 @@ $cliconnect_link_url   = cliconnect_url_privacidade();
 	<p class="cookie-banner__texto">
 		<?php echo esc_html( $cliconnect_texto ); ?>
 		<?php if ( $cliconnect_link_texto && $cliconnect_link_url ) : ?>
-			<a class="cookie-banner__link" href="<?php echo esc_url( $cliconnect_link_url ); ?>">
-				<?php echo esc_html( $cliconnect_link_texto ); ?>
-			</a>
+			<a class="cookie-banner__link" href="<?php echo esc_url( $cliconnect_link_url ); ?>"><?php echo esc_html( $cliconnect_link_texto ); ?></a>.
 		<?php endif; ?>
 	</p>
 

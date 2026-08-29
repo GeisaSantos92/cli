@@ -1358,6 +1358,73 @@ p {
 	height: 32px;
 }
 
+/* --- Banner de cookies ----------------------------------------------------- */
+
+/*
+ * Fica à esquerda de propósito: WhatsApp e "voltar ao topo" ocupam a direita.
+ * Nasce com [hidden] no PHP; o theme.js remove o atributo quando ainda não há
+ * aceite gravado, então quem já concordou nunca vê o flash.
+ */
+.cookie-banner {
+	position: fixed;
+	left: 20px;
+	bottom: 20px;
+	z-index: 90;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+	width: min(400px, calc(100vw - 40px));
+	padding: 20px;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-card);
+	background: var(--cor-fundo);
+	box-shadow: var(--sombra-flutuante);
+}
+
+.cookie-banner[hidden] {
+	display: none;
+}
+
+.cookie-banner__texto {
+	margin: 0;
+	font-size: var(--tam-body-sm);
+	line-height: 1.5;
+	color: var(--cor-texto-suave);
+}
+
+.cookie-banner__link {
+	color: var(--cor-texto-marca);
+	text-decoration: underline;
+}
+
+.cookie-banner__botao {
+	align-self: stretch;
+	padding: 12px 24px;
+	min-height: 44px;
+	font-size: var(--tam-body);
+}
+
+@media (min-width: 601px) {
+	.cookie-banner__botao {
+		align-self: flex-end;
+	}
+}
+
+@media (max-width: 600px) {
+	.cookie-banner {
+		left: 16px;
+		right: 16px;
+		/* Sobe acima do WhatsApp flutuante (64px de altura + 20px de margem). */
+		bottom: 96px;
+		width: auto;
+	}
+
+	.cookie-banner__botao {
+		align-self: stretch;
+	}
+}
+
 /* ==========================================================================
    CONTEÚDO INTERNO (páginas, posts, arquivos, busca, 404)
    ========================================================================== */

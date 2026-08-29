@@ -623,3 +623,6 @@ msgctxt "block description"
 msgid "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks."
 msgstr "Band with badge, title and a grid of metrics (number + label). Example of the parent/child pattern with InnerBlocks."
 
+#: template-parts/cookie-banner.php
+msgid "Aviso de cookies"
+msgstr "Cookie notice"

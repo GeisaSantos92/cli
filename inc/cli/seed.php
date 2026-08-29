@@ -2176,6 +2176,11 @@ class Cliconnect_Seed {
 			'cliconnect_social_youtube'   => 'https://www.youtube.com/@cliconnect',
 			'cliconnect_phone'            => '+55 11 99999-9999',
 			'cliconnect_email_geral'      => 'contato@cliconnect.com.br',
+
+			// Banner de cookies: texto vazio esconde o banner (ver cookie-banner.php).
+			'cliconnect_cookies_texto'      => 'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa',
+			'cliconnect_cookies_link_texto' => 'política de privacidade',
+			'cliconnect_cookies_botao'      => 'Concordar',
 		);
 
 		foreach ( $mods as $chave => $valor ) {
