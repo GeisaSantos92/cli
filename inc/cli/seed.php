@@ -2800,7 +2800,7 @@ class Cliconnect_Seed {
 			// 3. SAP Integrado (Conectar).
 			'sap_con_eyebrow' => 'SAP INTEGRADO',
 			'sap_con_titulo'  => "Seu SAP pronto para\nconectar o que vem pela frente",
-			'sap_con_texto'   => 'Uma plataforma de integração que cresce com o seu negócio, permitindo conectar novos sistemas, canais e processos sem retrabalho.',
+			'sap_con_texto'   => 'Integre aplicações modernas, plataformas digitais e iniciativas de inteligência artificial sem comprometer a estabilidade dos processos críticos da empresa.',
 			'sap_con_imagem'  => $this->img( 'sap-conectar' ),
 
 			// 4. SAP Sincronizado.

@@ -554,7 +554,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'sap_vel_com_3'          => "Data made\navailable",
 			'sap_con_eyebrow'        => 'SAP INTEGRATED',
 			'sap_con_titulo'         => "Your SAP ready to connect\nwhatever comes next",
-			'sap_con_texto'          => 'An integration platform that grows with your business, letting you connect new systems, channels and processes without rework.',
+			'sap_con_texto'          => 'Integrate modern applications, digital platforms and artificial intelligence initiatives without compromising the stability of the company’s critical processes.',
 			'sap_sin_eyebrow'        => 'SAP IN SYNC',
 			'sap_sin_titulo'         => "Automatic updates\nwhenever something changes in SAP",
 			'sap_sin_texto'          => 'Orders, records, stock and other information are synchronised automatically with the connected systems, keeping the whole operation up to date with no manual work.',

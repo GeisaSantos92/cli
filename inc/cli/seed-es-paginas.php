@@ -179,7 +179,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'sap_vel_com_3'          => "Datos\ndisponibles",
 			'sap_con_eyebrow'        => 'SAP INTEGRADO',
 			'sap_con_titulo'         => "Su SAP listo para\nconectar lo que viene",
-			'sap_con_texto'          => 'Una plataforma de integración que crece con su negocio y le permite conectar nuevos sistemas, canales y procesos sin retrabajo.',
+			'sap_con_texto'          => 'Integre aplicaciones modernas, plataformas digitales e iniciativas de inteligencia artificial sin comprometer la estabilidad de los procesos críticos de la empresa.',
 			'sap_sin_eyebrow'        => 'SAP SINCRONIZADO',
 			'sap_sin_titulo'         => "Actualizaciones automáticas\ncada vez que algo cambia en SAP",
 			'sap_sin_texto'          => 'Pedidos, registros, inventarios y demás información se sincronizan automáticamente con los sistemas conectados, manteniendo toda la operación al día sin procesos manuales.',
