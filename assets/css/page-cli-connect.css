@@ -2220,6 +2220,8 @@
 	border-radius: var(--raio-card);
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
+	margin-inline: auto;
+	max-width: 1059px;
 	overflow: hidden;
 }
 
