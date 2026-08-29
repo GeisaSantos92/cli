@@ -1156,59 +1156,100 @@ class Cliconnect_Seed {
 
 		$itens = array(
 			array(
-				'Panasonic agiliza insights e processa dados quatro vezes mais rápido com a CLI Connect',
-				'<p>Com ERP, e-commerce e sistemas fiscais conectados em uma única estrutura, a Panasonic passou a acompanhar eventos críticos do negócio em tempo real.</p>',
-				'blog-1',
+				'titulo'  => 'Panasonic agiliza insights e processa dados quatro vezes mais rápido com a CLI Connect',
+				'lead'    => 'Com ERP, e-commerce e sistemas fiscais conectados em uma única estrutura, a Panasonic passou a acompanhar eventos críticos do negócio em tempo real.',
+				'corpo'   => '<p>Antes da integração, cada área da Panasonic trabalhava com o seu próprio recorte da informação. O time comercial olhava o e-commerce, o financeiro olhava o ERP e a apuração fiscal só fechava quando alguém consolidava as planilhas — sempre depois do fato consumado.</p>
+<h2>O gargalo não era o dado, era o caminho até ele</h2>
+<p>O diagnóstico mostrou que os dados já existiam em todos os sistemas. O que faltava era um caminho automático entre eles. Cada transferência dependia de exportação manual, e o intervalo entre um ciclo e outro escondia divergências que só apareciam no fechamento.</p>
+<p>A CLI Connect conectou ERP, plataforma de e-commerce e sistemas fiscais em um único fluxo de eventos. Cada movimentação relevante passa a ser publicada assim que acontece, e os sistemas interessados a recebem sem intervenção humana.</p>
+<h2>Resultado: quatro vezes mais rápido</h2>
+<p>O tempo de processamento dos dados caiu para um quarto do original, e o time deixou de gastar horas por semana em consolidação manual. Mais importante que a velocidade, porém, foi a mudança de postura: divergências passaram a ser tratadas no dia, e não no fechamento do mês.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'Reforma tributária: como preparar suas integrações para o novo modelo de impostos',
-				'<p>A transição exige simular impactos, adequar campos e manter todos os sistemas seguindo a nova legislação. Veja como automatizar essa adaptação.</p>',
-				'blog-1',
+				'titulo'  => 'Reforma tributária: como preparar suas integrações para o novo modelo de impostos',
+				'lead'    => 'A transição exige simular impactos, adequar campos e manter todos os sistemas seguindo a nova legislação ao mesmo tempo. Veja como automatizar essa adaptação.',
+				'corpo'   => '<p>A reforma tributária muda o cálculo, muda os campos e muda o momento em que o imposto é apurado. Para quem tem ERP, e-commerce, faturamento e sistemas fiscais conversando entre si, o desafio não é apenas atualizar uma regra — é atualizar a mesma regra em todos os pontos onde ela aparece.</p>
+<h2>Comece pelo mapa, não pelo código</h2>
+<p>O primeiro passo é levantar em quantos sistemas o cálculo tributário é reproduzido hoje. É comum encontrar a mesma lógica duplicada no ERP, em uma rotina do e-commerce e em algum relatório gerencial que ninguém lembra quem escreveu. Cada duplicata é um ponto de divergência durante a transição.</p>
+<h2>Simule antes de virar a chave</h2>
+<p>Com as integrações centralizadas, dá para rodar o modelo antigo e o novo em paralelo sobre a mesma base de transações e comparar o resultado. A diferença entre os dois cenários é o melhor indicador de onde a adaptação ainda não está correta.</p>
+<p>Quando a apuração passa por um fluxo único de integração, ajustar a regra deixa de ser um projeto por sistema e vira uma alteração em um lugar só — que se propaga para toda a operação.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'iPaaS na prática: por que o custo previsível muda o jogo das integrações',
-				'<p>Cobrança por volume de chamadas penaliza justamente quem cresce. Entenda o modelo de mensalidade fixa com integrações ilimitadas.</p>',
-				'blog-1',
+				'titulo'  => 'iPaaS na prática: por que o custo previsível muda o jogo das integrações',
+				'lead'    => 'Cobrança por volume de chamadas penaliza justamente quem cresce. Entenda o modelo de mensalidade fixa com integrações ilimitadas.',
+				'corpo'   => '<p>A maioria das plataformas de integração cobra por consumo: número de chamadas, volume de dados, quantidade de conectores ativos. O modelo parece justo no começo, quando o uso é baixo, e vira um problema exatamente quando a operação dá certo.</p>
+<h2>O efeito colateral da cobrança por volume</h2>
+<p>Quando cada integração nova aumenta a fatura, a discussão deixa de ser técnica e passa a ser orçamentária. Times começam a agrupar eventos para economizar chamadas, adiar automações que fariam sentido e manter processos manuais que já poderiam ter sido resolvidos.</p>
+<h2>O que muda com mensalidade fixa</h2>
+<p>Com custo previsível, a pergunta volta a ser a certa: esse processo deve ser automatizado? A resposta passa a depender do valor para o negócio, não do impacto na conta do mês seguinte.</p>
+<p>Na prática, empresas com custo fixo integram mais, integram antes e chegam a um patamar de automação que o modelo por consumo desestimula.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'Integração entre SAP e e-commerce: o que muda quando o pedido entra sozinho no ERP',
-				'<p>Digitação manual de pedido é o gargalo silencioso do varejo. Veja como um fluxo de eventos elimina o retrabalho entre a loja e o SAP.</p>',
-				'blog-1',
+				'titulo'  => 'Integração entre SAP e e-commerce: o que muda quando o pedido entra sozinho no ERP',
+				'lead'    => 'Digitação manual de pedido é o gargalo silencioso do varejo. Veja como um fluxo de eventos elimina o retrabalho entre a loja e o SAP.',
+				'corpo'   => '<p>Em muitas operações, o pedido nasce no e-commerce e termina digitado à mão no SAP. Entre um ponto e outro há uma planilha, um e-mail ou um relatório exportado de madrugada — e, junto com eles, o atraso e o erro de digitação.</p>
+<h2>O custo que não aparece no relatório</h2>
+<p>O retrabalho de digitação raramente é medido, porque está diluído na rotina de várias pessoas. Ele aparece de outra forma: pedido faturado com atraso, estoque desatualizado no site e cliente ligando para saber onde está a entrega.</p>
+<h2>Um fluxo de eventos no lugar do arquivo</h2>
+<p>Com a integração por eventos, cada pedido aprovado no e-commerce vira imediatamente um documento no SAP, com cliente, itens, condição comercial e impostos já resolvidos. O caminho de volta também é automático: status de faturamento e código de rastreio retornam para a loja sem ninguém consultar outro sistema.</p>
+<p>O ganho mais visível é a velocidade. O mais duradouro é a confiança: as duas pontas passam a mostrar a mesma informação.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'Monitoramento de integrações: como enxergar o erro antes do cliente ligar',
-				'<p>Alertas, reprocessamento automático e histórico de cada transação transformam a operação de integração em algo previsível.</p>',
-				'blog-1',
+				'titulo'  => 'Monitoramento de integrações: como enxergar o erro antes do cliente ligar',
+				'lead'    => 'Alertas, reprocessamento automático e histórico de cada transação transformam a operação de integração em algo previsível.',
+				'corpo'   => '<p>Integração que funciona é invisível. O problema é que integração que falha também costuma ser — até o momento em que alguém percebe que um pedido não chegou, uma nota não foi emitida ou um saldo está errado há três dias.</p>
+<h2>Três camadas de visibilidade</h2>
+<p>A primeira é o alerta: saber que uma transação falhou no momento em que ela falha. A segunda é o histórico: conseguir abrir a transação, ver o que foi enviado, o que voltou e por que parou. A terceira é o reprocessamento: corrigir a causa e reenviar sem refazer o caminho manualmente.</p>
+<h2>Operação gerenciada é diferente de painel</h2>
+<p>Ter um painel de erros ajuda, mas alguém precisa olhar para ele. Em uma operação gerenciada, o acompanhamento é contínuo e a maior parte das falhas transitórias é resolvida antes de virar chamado.</p>
+<p>O objetivo não é eliminar o erro — sistemas externos vão continuar ficando fora do ar. É garantir que o erro seja detectado, tratado e comunicado dentro de um tempo previsível.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'Conectores prontos ou desenvolvimento sob medida: quando cada caminho compensa',
-				'<p>Nem toda integração precisa de código. Um comparativo honesto entre biblioteca de conectores e projeto tradicional no SAP.</p>',
-				'blog-1',
+				'titulo'  => 'Conectores prontos ou desenvolvimento sob medida: quando cada caminho compensa',
+				'lead'    => 'Nem toda integração precisa de código. Um comparativo honesto entre biblioteca de conectores e projeto tradicional no SAP.',
+				'corpo'   => '<p>A escolha entre usar um conector pronto e desenvolver a integração do zero costuma ser tratada como questão de preferência técnica. Na prática, é uma decisão sobre prazo, manutenção e quem vai sustentar aquilo daqui a dois anos.</p>
+<h2>Quando o conector pronto ganha</h2>
+<p>Processos padronizados — pedido, nota, cadastro, estoque, título financeiro — já foram resolvidos centenas de vezes. Nesses casos, o conector entrega em dias o que um projeto entregaria em meses, e a atualização do sistema de destino deixa de ser um risco do seu time.</p>
+<h2>Quando o desenvolvimento se justifica</h2>
+<p>Regras realmente específicas do negócio, que representam diferencial competitivo, merecem código próprio. O erro é usar esse caminho para o trivial, gastando o tempo do time especialista em algo que já existe pronto.</p>
+<p>A combinação costuma ser a melhor resposta: conectores para o que é padrão, desenvolvimento para o que é seu.</p>',
+				'arquivo' => 'blog-1',
 			),
 			array(
-				'Agentes de IA conectados ao ERP: da pergunta em linguagem natural à ação no sistema',
-				'<p>Consultar estoque, abrir pedido, checar título em aberto. O que muda quando o agente tem acesso governado aos sistemas da empresa.</p>',
-				'blog-1',
+				'titulo'  => 'Agentes de IA conectados ao ERP: da pergunta em linguagem natural à ação no sistema',
+				'lead'    => 'Consultar estoque, abrir pedido, checar título em aberto. O que muda quando o agente tem acesso governado aos sistemas da empresa.',
+				'corpo'   => '<p>Um agente de IA sem acesso aos sistemas responde bem sobre o mundo e mal sobre a sua empresa. Conectado ao ERP, ao CRM e às plataformas internas, ele passa a responder com o dado real — e, com as permissões certas, a executar o processo.</p>
+<h2>Contexto é acesso, não prompt</h2>
+<p>A qualidade da resposta depende menos da instrução escrita e mais do que o agente consegue consultar. Saldo de estoque, situação de um pedido, histórico do cliente: são consultas de integração, não de linguagem.</p>
+<h2>Governança antes da autonomia</h2>
+<p>Executar ação em sistema corporativo exige limites explícitos: o que o agente pode consultar, o que pode alterar e em que ponto uma aprovação humana é obrigatória. Sem isso, a automação vira risco.</p>
+<p>O caminho que funciona é gradual — primeiro consulta, depois execução assistida, por último autonomia em processos de baixo impacto e alto volume.</p>',
+				'arquivo' => 'blog-1',
 			),
 		);
 
 		foreach ( $itens as $indice => $item ) {
-			list( $titulo, $conteudo, $arquivo ) = $item;
-
 			$data = gmdate( 'Y-m-d H:i:s', $agora - ( $indice * DAY_IN_SECONDS ) );
 
 			$id = $this->upsert(
-				'post:' . sanitize_title( $titulo ),
+				'post:' . sanitize_title( $item['titulo'] ),
 				array(
 					'post_type'    => 'post',
-					'post_title'   => $titulo,
-					'post_content' => $conteudo,
+					'post_title'   => $item['titulo'],
+					'post_excerpt' => $item['lead'],
+					'post_content' => $item['corpo'],
 					'post_date'    => $data,
 				)
 			);
 
 			if ( $id ) {
-				$this->definir_thumb( $id, $arquivo );
+				$this->definir_thumb( $id, $item['arquivo'] );
 
 				if ( $categoria ) {
 					wp_set_object_terms( $id, $categoria, 'category' );

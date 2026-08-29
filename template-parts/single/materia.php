@@ -9,8 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$cliconnect_titulo    = get_the_title();
-$cliconnect_subtitulo = get_the_excerpt();
+$cliconnect_titulo = get_the_title();
+
+/*
+ * O lead é o resumo escrito à mão. Com get_the_excerpt() o WordPress monta um
+ * resumo a partir do conteúdo quando o campo está vazio, e o subtítulo acaba
+ * repetindo o primeiro parágrafo da matéria — no layout ele é um texto próprio.
+ */
+$cliconnect_subtitulo = has_excerpt() ? get_the_excerpt() : '';
 $cliconnect_data      = get_the_date( 'j F Y' );
 $cliconnect_cats      = get_the_category();
 ?>
