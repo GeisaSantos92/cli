@@ -3006,7 +3006,7 @@ class Cliconnect_Seed {
 			'ct_form_texto'         => 'Tire dúvidas, avalie possibilidades e descubra como a CLI pode apoiar sua operação com integrações, automação e IA corporativa.',
 			'ct_form_email'         => 'atendimento@cliconsultoria.com.br',
 			'ct_form_telefone'      => '(31) 4042-2051',
-			'ct_form_facebook_url'  => 'https://www.facebook.com/cliconsultoria',
+			'ct_form_linkedin_url'  => 'https://www.linkedin.com/company/cliconnect/',
 			'ct_form_instagram_url' => 'https://www.instagram.com/cliconsultoria',
 			'ct_form_whatsapp_url'  => 'https://wa.me/553140422051',
 			'ct_form_cf7_id'        => $cf7_id,

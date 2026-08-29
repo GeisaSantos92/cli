@@ -14,10 +14,14 @@
 		var(--cor-fundo-suave);
 }
 
+/*
+ * Proporção do Figma: coluna de texto 672 e coluna do formulário 640, coladas
+ * (x=672) dentro do content de 1312 — por isso fr em vez de px, e gap zero.
+ */
 .ct-formulario__inner {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 80px;
+	grid-template-columns: 672fr 640fr;
+	gap: 0;
 	align-items: center;
 }
 
@@ -46,10 +50,12 @@
 	margin: -32px 0 0; /* compensa o gap de 48px no flex: título + texto ficam juntos */
 }
 
+/* Os cards ocupam 364px dentro da coluna de 672, como no frame. */
 .ct-formulario__cards {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	max-width: 364px;
 }
 
 /* Cards brancos de informação */
@@ -129,9 +135,15 @@ a.ct-card__valor:focus-visible {
 	/* Alinha pelo topo, não pelo centro da grid */
 }
 
+/*
+ * O cartão branco tem 560px alinhados à direita da coluna de 640; com o padding
+ * de 40 os campos fecham nos 480px do frame.
+ */
 .ct-form-wrapper {
 	background: var(--cor-fundo);
 	padding: 40px;
+	max-width: 560px;
+	margin-left: auto;
 }
 
 .ct-form-aviso {
@@ -354,6 +366,11 @@ a.ct-card__valor:focus-visible {
 	.ct-formulario__inner {
 		grid-template-columns: 1fr;
 		gap: 48px;
+	}
+
+	.ct-formulario__cards,
+	.ct-form-wrapper {
+		max-width: none;
 	}
 
 	.ct-formulario__col-info {

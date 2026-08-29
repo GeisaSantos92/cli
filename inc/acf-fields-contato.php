@@ -67,7 +67,7 @@ function cliconnect_acf_fields_contato() {
 	$fields[] = $ct_textarea( 'form_texto', 'Texto de apoio', 'ct_form_texto', 3 );
 	$fields[] = $ct_text( 'form_email', 'E-mail de contato', 'ct_form_email' );
 	$fields[] = $ct_text( 'form_telefone', 'Telefone', 'ct_form_telefone' );
-	$fields[] = $ct_text( 'form_facebook_url', 'URL — Facebook', 'ct_form_facebook_url' );
+	$fields[] = $ct_text( 'form_linkedin_url', 'URL — LinkedIn', 'ct_form_linkedin_url' );
 	$fields[] = $ct_text( 'form_instagram_url', 'URL — Instagram', 'ct_form_instagram_url' );
 	$fields[] = $ct_text( 'form_whatsapp_url', 'URL — WhatsApp', 'ct_form_whatsapp_url' );
 	$fields[] = array_merge(

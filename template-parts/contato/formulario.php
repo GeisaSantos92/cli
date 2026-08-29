@@ -10,7 +10,7 @@
  *   ct_form_texto        — parágrafo de apoio
  *   ct_form_email        — e-mail de contato (exibido no card)
  *   ct_form_telefone     — telefone (exibido no card)
- *   ct_form_facebook_url — URL do Facebook
+ *   ct_form_linkedin_url — URL do LinkedIn
  *   ct_form_instagram_url — URL do Instagram
  *   ct_form_whatsapp_url — URL do WhatsApp
  *   ct_form_cf7_id       — ID do formulário Contact Form 7
@@ -26,7 +26,7 @@ $titulo   = cliconnect_campo_pagina( 'ct_form_titulo' );
 $texto    = cliconnect_campo_pagina( 'ct_form_texto' );
 $email    = cliconnect_campo_pagina( 'ct_form_email' );
 $telefone = cliconnect_campo_pagina( 'ct_form_telefone' );
-$fb_url   = cliconnect_campo_pagina( 'ct_form_facebook_url' );
+$li_url   = cliconnect_campo_pagina( 'ct_form_linkedin_url' );
 $ig_url   = cliconnect_campo_pagina( 'ct_form_instagram_url' );
 $wa_url   = cliconnect_campo_pagina( 'ct_form_whatsapp_url' );
 
@@ -85,17 +85,17 @@ if ( ! $titulo ) {
 					</div>
 				<?php endif; ?>
 
-				<?php if ( $fb_url || $ig_url || $wa_url ) : ?>
+				<?php if ( $li_url || $ig_url || $wa_url ) : ?>
 					<div class="ct-card">
 						<p class="ct-card__titulo"><?php esc_html_e( 'Nossas redes', 'cli' ); ?></p>
 						<div class="ct-redes">
-							<?php if ( $fb_url ) : ?>
+							<?php if ( $li_url ) : ?>
 								<a class="ct-rede"
-								   href="<?php echo esc_url( $fb_url ); ?>"
+								   href="<?php echo esc_url( $li_url ); ?>"
 								   target="_blank"
 								   rel="noopener noreferrer"
-								   aria-label="<?php esc_attr_e( 'Facebook', 'cli' ); ?>">
-									<img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/social-facebook.svg' ) ); ?>" width="40" height="40" alt="" aria-hidden="true">
+								   aria-label="<?php esc_attr_e( 'LinkedIn', 'cli' ); ?>">
+									<img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/social-linkedin.svg' ) ); ?>" width="40" height="40" alt="" aria-hidden="true">
 								</a>
 							<?php endif; ?>
 							<?php if ( $ig_url ) : ?>
