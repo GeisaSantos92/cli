@@ -501,7 +501,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'cc_np_bullet_1'          => 'Queries several systems at once',
 			'cc_np_bullet_2'          => 'Runs flows with no manual step',
 			'cc_np_bullet_3'          => 'Keeps the full history of the operation',
-			'cc_parceiro_eyebrow'     => 'OFFICIAL PARTNER',
+			'cc_parceiro_eyebrow'     => 'TIME SAVINGS',
 			'cc_parceiro_titulo'      => 'Integrate your systems with far less time and technical effort',
 			'cc_parceiro_texto'       => 'With CLI Connect you remove the complexity and the development time of the traditional approach, making integrations up to 5x faster than solutions built from scratch.',
 			'cc_parceiro_esq_titulo'  => 'CLI Connect',

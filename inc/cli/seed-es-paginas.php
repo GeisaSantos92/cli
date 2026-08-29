@@ -390,7 +390,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'cc_np_bullet_1'          => 'Consulta varios sistemas a la vez',
 			'cc_np_bullet_2'          => 'Ejecuta flujos sin intervención manual',
 			'cc_np_bullet_3'          => 'Conserva todo el historial de la operación',
-			'cc_parceiro_eyebrow'     => 'SOCIO OFICIAL',
+			'cc_parceiro_eyebrow'     => 'AHORRO DE TIEMPO',
 			'cc_parceiro_titulo'      => 'Integre sus sistemas con mucho menos tiempo y esfuerzo técnico',
 			'cc_parceiro_texto'       => 'Con CLI Connect elimina la complejidad y el tiempo del desarrollo tradicional, logrando integraciones hasta 5 veces más rápidas que las soluciones construidas desde cero.',
 			'cc_parceiro_esq_titulo'  => 'CLI Connect',

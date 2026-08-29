@@ -2320,7 +2320,7 @@ class Cliconnect_Seed {
 			'cc_np_imagem'    => $this->img( 'cc-na-pratica' ),
 
 			// 7. Parceiro Oficial (Comparativo).
-			'cc_parceiro_eyebrow'   => 'PARCEIRO OFICIAL',
+			'cc_parceiro_eyebrow'   => 'ECONOMIA DE TEMPO',
 			'cc_parceiro_titulo'    => 'Integre seus sistemas com muito menos tempo e esforço técnico',
 			'cc_parceiro_texto'     => 'Com o CLI Connect você elimina a complexidade e o tempo de desenvolvimento tradicional, permitindo integrações até 5x mais rápidas que soluções baseadas no desenvolvimento tradicional.',
 			'cc_parceiro_esq_titulo' => 'CLI Connect',
