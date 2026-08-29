@@ -121,6 +121,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Contato…' );
 		$this->preencher_contato( $paginas['contato'] );
 
+		WP_CLI::log( '— Preenchendo Política de Privacidade…' );
+		$this->preencher_privacidade( $paginas['privacidade'] );
+
 		WP_CLI::log( '— Criando Soluções (taxonomia)…' );
 		$termos_solucao = $this->criar_solucoes();
 
@@ -1924,7 +1927,9 @@ class Cliconnect_Seed {
 		$this->montar_menu(
 			'rodape_legal',
 			'CLI — Rodapé Legal',
-			array()
+			array(
+				'Política de Privacidade' => '/privacidade/',
+			)
 		);
 	}
 
@@ -2978,6 +2983,75 @@ class Cliconnect_Seed {
 		}
 
 		return $ids;
+	}
+
+	/**
+	 * Preenche a página Política de Privacidade.
+	 *
+	 * O corpo é um rascunho estruturado nas seções que a LGPD pede — serve para
+	 * a página não nascer vazia, mas o texto final é do jurídico da CLI e deve
+	 * ser editado no admin (campo WYSIWYG, sem deploy).
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_privacidade( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-privacidade.php' );
+
+		$campos = array(
+			'pv_titulo'        => 'Política de Privacidade',
+			'pv_lead'          => 'Esta política explica quais dados pessoais a CLI Connect coleta, por que os coleta e quais são os seus direitos sobre eles.',
+			'pv_atualizado_em' => 'Atualizado em 28 de agosto de 2026',
+			'pv_corpo'         => $this->texto_privacidade(),
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+	}
+
+	/**
+	 * Rascunho do corpo da Política de Privacidade.
+	 *
+	 * @return string HTML.
+	 */
+	protected function texto_privacidade() {
+		return '<p><strong>Rascunho para revisão jurídica.</strong> A estrutura abaixo cobre as seções exigidas pela LGPD (Lei 13.709/2018) e deve ser revisada e aprovada pelo jurídico da CLI antes da publicação definitiva. O texto é editável no painel, sem necessidade de deploy.</p>
+<h2>1. Quem é a controladora dos seus dados</h2>
+<p>A CLI Connect é a controladora dos dados pessoais tratados neste site, e é responsável por decidir como e para que eles são usados. Os dados de contato para assuntos de privacidade estão na última seção desta política.</p>
+<h2>2. Quais dados coletamos</h2>
+<p>Coletamos apenas os dados necessários para responder a quem nos procura e para entender como o site é usado:</p>
+<ul>
+<li><strong>Dados que você informa:</strong> nome, e-mail, telefone e o conteúdo da mensagem enviada pelos formulários do site.</li>
+<li><strong>Dados de navegação:</strong> páginas visitadas, origem do acesso e informações técnicas do navegador, coletados por cookies e ferramentas de análise.</li>
+</ul>
+<h2>3. Para que usamos esses dados</h2>
+<ul>
+<li>Responder a solicitações de contato, propostas e demonstrações.</li>
+<li>Enviar comunicações sobre nossos serviços, quando você autoriza.</li>
+<li>Entender o uso do site e melhorar a experiência de navegação.</li>
+<li>Cumprir obrigações legais e regulatórias.</li>
+</ul>
+<h2>4. Bases legais</h2>
+<p>O tratamento se apoia no consentimento do titular, na execução de contrato ou de procedimentos preliminares a pedido do titular, no cumprimento de obrigação legal e no legítimo interesse da CLI Connect, sempre nos limites do artigo 7º da LGPD.</p>
+<h2>5. Com quem compartilhamos</h2>
+<p>Não vendemos dados pessoais. Compartilhamos informações apenas com fornecedores que operam a nosso serviço — hospedagem, e-mail, CRM e ferramentas de análise —, sempre sob contrato e no limite necessário para a prestação do serviço, ou quando exigido por autoridade competente.</p>
+<h2>6. Cookies</h2>
+<p>Usamos cookies para manter o site funcionando, lembrar preferências e medir audiência. Você pode bloquear ou apagar cookies nas configurações do seu navegador; algumas funcionalidades podem deixar de funcionar corretamente.</p>
+<h2>7. Por quanto tempo guardamos</h2>
+<p>Mantemos os dados pelo tempo necessário às finalidades desta política ou pelos prazos exigidos por lei. Encerrada a finalidade e vencidos os prazos legais, os dados são eliminados ou anonimizados.</p>
+<h2>8. Seus direitos</h2>
+<p>A LGPD garante a você o direito de confirmar a existência de tratamento, acessar seus dados, corrigir dados incompletos ou desatualizados, solicitar anonimização, bloqueio ou eliminação, pedir a portabilidade, revogar o consentimento e obter informação sobre com quem compartilhamos seus dados. Para exercer qualquer um deles, use o contato abaixo.</p>
+<h2>9. Segurança</h2>
+<p>Adotamos medidas técnicas e administrativas para proteger os dados pessoais contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
+<h2>10. Alterações desta política</h2>
+<p>Esta política pode ser atualizada a qualquer momento. A data da última atualização fica indicada no topo desta página.</p>
+<h2>11. Fale com a gente sobre privacidade</h2>
+<p>Dúvidas, solicitações ou pedidos relacionados aos seus dados pessoais podem ser enviados para <a href="mailto:atendimento@cliconsultoria.com.br">atendimento@cliconsultoria.com.br</a>.</p>';
 	}
 
 	/**

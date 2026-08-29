@@ -367,7 +367,13 @@ trait Cliconnect_Seed_Es_Solucoes {
 			)
 		);
 
-		$this->montar_menu_traduzido( 'rodape_legal', 'CLI — Pie legal (ES)', array() );
+		$this->montar_menu_traduzido(
+			'rodape_legal',
+			'CLI — Pie legal (ES)',
+			array(
+				'Política de Privacidad' => $this->url_pagina_traduzida( 'privacidade' ),
+			)
+		);
 	}
 
 	/* =====================================================================

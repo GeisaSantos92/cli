@@ -655,6 +655,55 @@ trait Cliconnect_Seed_En_Paginas {
 	}
 
 	/* =====================================================================
+	   POLÍTICA DE PRIVACIDADE
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto da Política de Privacidade em inglês.
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_en_privacidade() {
+		return array(
+			'pv_titulo'        => 'Privacy Policy',
+			'pv_lead'          => 'This policy explains which personal data CLI Connect collects, why we collect it and what rights you have over it.',
+			'pv_atualizado_em' => 'Last updated on August 28, 2026',
+			'pv_corpo'         => '<p><strong>Draft pending legal review.</strong> The structure below covers the sections required by the Brazilian data protection law (LGPD, Law 13.709/2018) and must be reviewed and approved by CLI legal before final publication. The text is editable in the admin, with no deploy needed.</p>
+<h2>1. Who controls your data</h2>
+<p>CLI Connect is the controller of the personal data processed on this website and decides how and why it is used. Contact details for privacy matters are in the last section of this policy.</p>
+<h2>2. What data we collect</h2>
+<p>We collect only what we need in order to answer the people who reach out to us and to understand how the site is used:</p>
+<ul>
+<li><strong>Data you provide:</strong> name, e-mail, phone number and the content of the message sent through the forms on this site.</li>
+<li><strong>Browsing data:</strong> pages visited, traffic source and technical information about your browser, collected through cookies and analytics tools.</li>
+</ul>
+<h2>3. Why we use it</h2>
+<ul>
+<li>To answer contact requests, proposals and demo bookings.</li>
+<li>To send communications about our services, when you agree to receive them.</li>
+<li>To understand how the site is used and improve the browsing experience.</li>
+<li>To comply with legal and regulatory obligations.</li>
+</ul>
+<h2>4. Legal bases</h2>
+<p>Processing relies on the data subject\'s consent, on the performance of a contract or preliminary procedures requested by the data subject, on compliance with a legal obligation and on the legitimate interest of CLI Connect, always within the limits of article 7 of the LGPD.</p>
+<h2>5. Who we share it with</h2>
+<p>We do not sell personal data. We share information only with suppliers that operate on our behalf — hosting, e-mail, CRM and analytics tools — always under contract and limited to what the service requires, or when required by a competent authority.</p>
+<h2>6. Cookies</h2>
+<p>We use cookies to keep the site working, remember preferences and measure audience. You can block or delete cookies in your browser settings; some features may stop working properly.</p>
+<h2>7. How long we keep it</h2>
+<p>We keep data for as long as the purposes in this policy require, or for the periods required by law. Once the purpose is fulfilled and the legal periods have expired, data is deleted or anonymised.</p>
+<h2>8. Your rights</h2>
+<p>The LGPD gives you the right to confirm that processing exists, access your data, correct incomplete or outdated data, request anonymisation, blocking or deletion, request portability, withdraw consent and be informed about who we share your data with. To exercise any of them, use the contact below.</p>
+<h2>9. Security</h2>
+<p>We apply technical and administrative measures to protect personal data against unauthorised access, loss, alteration or improper disclosure.</p>
+<h2>10. Changes to this policy</h2>
+<p>This policy may be updated at any time. The date of the latest update is shown at the top of this page.</p>
+<h2>11. Talk to us about privacy</h2>
+<p>Questions or requests about your personal data can be sent to <a href="mailto:atendimento@cliconsultoria.com.br">atendimento@cliconsultoria.com.br</a>.</p>',
+		);
+	}
+
+	/* =====================================================================
 	   UTILITÁRIOS
 	   ===================================================================== */
 

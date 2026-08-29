@@ -653,4 +653,53 @@ trait Cliconnect_Seed_Es_Paginas {
 			)
 		);
 	}
+
+	/* =====================================================================
+	   POLÍTICA DE PRIVACIDAD
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto de la Política de Privacidad en español.
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_es_privacidade() {
+		return array(
+			'pv_titulo'        => 'Política de Privacidad',
+			'pv_lead'          => 'Esta política explica qué datos personales recoge CLI Connect, por qué los recoge y cuáles son sus derechos sobre ellos.',
+			'pv_atualizado_em' => 'Actualizado el 28 de agosto de 2026',
+			'pv_corpo'         => '<p><strong>Borrador pendiente de revisión jurídica.</strong> La estructura siguiente cubre las secciones exigidas por la ley brasileña de protección de datos (LGPD, Ley 13.709/2018) y debe ser revisada y aprobada por el área jurídica de CLI antes de su publicación definitiva. El texto es editable en el panel, sin necesidad de despliegue.</p>
+<h2>1. Quién es la responsable de sus datos</h2>
+<p>CLI Connect es la responsable de los datos personales tratados en este sitio y decide cómo y para qué se utilizan. Los datos de contacto para asuntos de privacidad están en la última sección de esta política.</p>
+<h2>2. Qué datos recogemos</h2>
+<p>Recogemos solo los datos necesarios para responder a quien nos contacta y para entender cómo se usa el sitio:</p>
+<ul>
+<li><strong>Datos que usted facilita:</strong> nombre, correo electrónico, teléfono y el contenido del mensaje enviado por los formularios del sitio.</li>
+<li><strong>Datos de navegación:</strong> páginas visitadas, origen del acceso e información técnica del navegador, recogidos mediante cookies y herramientas de análisis.</li>
+</ul>
+<h2>3. Para qué los usamos</h2>
+<ul>
+<li>Responder a solicitudes de contacto, propuestas y demostraciones.</li>
+<li>Enviar comunicaciones sobre nuestros servicios, cuando usted lo autoriza.</li>
+<li>Entender el uso del sitio y mejorar la experiencia de navegación.</li>
+<li>Cumplir obligaciones legales y regulatorias.</li>
+</ul>
+<h2>4. Bases legales</h2>
+<p>El tratamiento se apoya en el consentimiento del titular, en la ejecución de un contrato o de trámites previos solicitados por el titular, en el cumplimiento de una obligación legal y en el interés legítimo de CLI Connect, siempre dentro de los límites del artículo 7 de la LGPD.</p>
+<h2>5. Con quién los compartimos</h2>
+<p>No vendemos datos personales. Compartimos información únicamente con proveedores que operan por nuestra cuenta — alojamiento, correo, CRM y herramientas de análisis —, siempre bajo contrato y en la medida necesaria para la prestación del servicio, o cuando lo exija una autoridad competente.</p>
+<h2>6. Cookies</h2>
+<p>Usamos cookies para mantener el sitio en funcionamiento, recordar preferencias y medir audiencia. Puede bloquear o borrar las cookies en la configuración de su navegador; algunas funcionalidades pueden dejar de funcionar correctamente.</p>
+<h2>7. Cuánto tiempo los conservamos</h2>
+<p>Conservamos los datos durante el tiempo necesario para las finalidades de esta política o durante los plazos exigidos por ley. Cumplida la finalidad y vencidos los plazos legales, los datos se eliminan o se anonimizan.</p>
+<h2>8. Sus derechos</h2>
+<p>La LGPD le garantiza el derecho a confirmar la existencia del tratamiento, acceder a sus datos, corregir datos incompletos o desactualizados, solicitar la anonimización, el bloqueo o la eliminación, pedir la portabilidad, revocar el consentimiento y obtener información sobre con quién compartimos sus datos. Para ejercer cualquiera de ellos, utilice el contacto indicado abajo.</p>
+<h2>9. Seguridad</h2>
+<p>Adoptamos medidas técnicas y administrativas para proteger los datos personales contra accesos no autorizados, pérdida, alteración o divulgación indebida.</p>
+<h2>10. Cambios en esta política</h2>
+<p>Esta política puede actualizarse en cualquier momento. La fecha de la última actualización figura en la parte superior de esta página.</p>
+<h2>11. Hable con nosotros sobre privacidad</h2>
+<p>Las dudas o solicitudes relacionadas con sus datos personales pueden enviarse a <a href="mailto:atendimento@cliconsultoria.com.br">atendimento@cliconsultoria.com.br</a>.</p>',
+		);
+	}
 }

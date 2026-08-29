@@ -153,6 +153,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página Política de Privacidade.
+	if ( cliconnect_e_pagina( 'privacidade' ) ) {
+		wp_enqueue_style(
+			'cliconnect-privacidade',
+			get_theme_file_uri( '/assets/css/page-privacidade.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-privacidade.css' )
+		);
+	}
+
 	// Página CLI Connect.
 	if ( cliconnect_e_pagina( 'cli-connect' ) ) {
 		wp_enqueue_style(
