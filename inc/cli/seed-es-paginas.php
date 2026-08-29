@@ -290,8 +290,8 @@ trait Cliconnect_Seed_Es_Paginas {
 	 */
 	protected function texto_es_cli_connect() {
 		return array(
-			'cc_hero_titulo'          => 'Integraciones que mantienen',
-			'cc_hero_titulo_destaque' => 'su operación en movimiento',
+			'cc_hero_titulo'          => 'Integraciones que mantienen su',
+			'cc_hero_titulo_destaque' => 'operación en movimiento',
 			'cc_hero_texto'           => 'Conecte SAP, ERP, CRM y aplicaciones críticas en una plataforma preparada para operaciones en tiempo real. Automatice eventos de negocio con seguridad, monitoreo continuo y una única mensualidad.',
 			'cc_hero_botao'           => $this->link_traduzido( 'Solicite una demostración', '/contato/' ),
 			'cc_brands_titulo'        => 'Grandes empresas confían en CLI',

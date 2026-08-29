@@ -401,8 +401,8 @@ trait Cliconnect_Seed_En_Paginas {
 	 */
 	protected function texto_en_cli_connect() {
 		return array(
-			'cc_hero_titulo'          => 'Integrations that keep',
-			'cc_hero_titulo_destaque' => 'your operation moving',
+			'cc_hero_titulo'          => 'Integrations that keep your',
+			'cc_hero_titulo_destaque' => 'operation moving',
 			'cc_hero_texto'           => 'Connect SAP, ERPs, CRMs and critical applications on a platform built for real-time operations. Automate business events with security, continuous monitoring and a single monthly fee.',
 			'cc_hero_botao'           => $this->link_traduzido( 'Book a demo', '/contato/' ),
 			'cc_brands_titulo'        => 'Major companies trust CLI',

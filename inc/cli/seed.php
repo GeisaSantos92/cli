@@ -2171,8 +2171,8 @@ class Cliconnect_Seed {
 		$campos = array(
 			// 1. Hero.
 			'cc_hero_eyebrow'          => '',
-			'cc_hero_titulo'           => 'Integrações que mantêm a',
-			'cc_hero_titulo_destaque'  => 'sua operação em movimento',
+			'cc_hero_titulo'           => 'Integrações que mantêm a sua',
+			'cc_hero_titulo_destaque'  => 'operação em movimento',
 			'cc_hero_texto'            => 'Conecte SAP, ERPs, CRMs e aplicações críticas em uma plataforma preparada para operações em tempo real. Automatize eventos de negócio com segurança, monitoramento contínuo e uma única mensalidade.',
 			'cc_hero_botao'            => $this->link( 'Agende uma demonstração', '/contato/' ),
 			'cc_hero_imagem'           => $this->img( 'cc-hero-orbit' ),

@@ -30,7 +30,8 @@
 	align-items: center;
 	display: grid;
 	gap: 48px;
-	grid-template-columns: 1fr 1fr;
+	/* Proporção do Figma: coluna de texto 671px sobre o content de 1312 (gap 48). */
+	grid-template-columns: 671fr 593fr;
 }
 
 .cc-hero__conteudo {
@@ -51,21 +52,24 @@
 	margin-bottom: 24px;
 }
 
+/*
+ * O título é um texto corrido: as duas partes ficam na mesma linha e só a cor
+ * muda, como no Figma. Nada de quebra forçada entre elas.
+ */
 .cc-hero__titulo-linha {
-	display: block;
+	display: inline;
 }
 
 .cc-hero__titulo-destaque {
 	color: var(--cor-texto-marca);
-	display: block;
+	display: inline;
 }
 
 .cc-hero__texto {
 	color: var(--cor-texto-secundario, #566f9d);
-	font-size: var(--tam-corpo, 16px);
+	font-size: var(--tam-body-lg, 18px);
 	line-height: 1.6;
 	margin-bottom: 32px;
-	max-width: 520px;
 }
 
 .cc-hero__botao {
