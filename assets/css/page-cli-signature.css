@@ -424,7 +424,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 24px 16px;
+	padding: 30px 16px;
 	border-right: 1px solid rgba(39, 62, 128, 0.1);
 	border-bottom: 1px solid rgba(39, 62, 128, 0.1);
 }
@@ -441,7 +441,7 @@
 }
 
 .cs-selo-item img {
-	max-height: 96px;
+	max-height: 121px;
 	width: auto;
 	max-width: 100%;
 	object-fit: contain;
