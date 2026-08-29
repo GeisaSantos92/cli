@@ -1116,11 +1116,44 @@ class Cliconnect_Seed {
 	}
 
 	/**
-	 * Posts do blog exibidos na home.
+	 * Categoria «Integração» — a única categoria do blog no layout aprovado.
+	 *
+	 * @return int ID do termo, ou 0 se não deu para criar.
+	 */
+	protected function categoria_blog() {
+		$termo = get_term_by( 'slug', 'integracao', 'category' );
+
+		if ( $termo ) {
+			return (int) $termo->term_id;
+		}
+
+		$novo = wp_insert_term( 'Integração', 'category', array( 'slug' => 'integracao' ) );
+
+		if ( is_wp_error( $novo ) ) {
+			WP_CLI::warning( '  Categoria "Integração": ' . $novo->get_error_message() );
+
+			return 0;
+		}
+
+		$termo_id = (int) $novo['term_id'];
+		update_term_meta( $termo_id, self::META, 'categoria:integracao' );
+
+		return $termo_id;
+	}
+
+	/**
+	 * Posts do blog exibidos na home e na listagem.
+	 *
+	 * São 7: o primeiro vira o destaque da listagem e os outros 6 preenchem
+	 * as duas fileiras da grade, como no layout. A data é escalonada em dias
+	 * para que a ordenação por data seja determinística entre execuções.
 	 *
 	 * @return void
 	 */
 	protected function criar_posts() {
+		$categoria = $this->categoria_blog();
+		$agora     = strtotime( current_time( 'mysql' ) );
+
 		$itens = array(
 			array(
 				'Panasonic agiliza insights e processa dados quatro vezes mais rápido com a CLI Connect',
@@ -1137,10 +1170,32 @@ class Cliconnect_Seed {
 				'<p>Cobrança por volume de chamadas penaliza justamente quem cresce. Entenda o modelo de mensalidade fixa com integrações ilimitadas.</p>',
 				'blog-1',
 			),
+			array(
+				'Integração entre SAP e e-commerce: o que muda quando o pedido entra sozinho no ERP',
+				'<p>Digitação manual de pedido é o gargalo silencioso do varejo. Veja como um fluxo de eventos elimina o retrabalho entre a loja e o SAP.</p>',
+				'blog-1',
+			),
+			array(
+				'Monitoramento de integrações: como enxergar o erro antes do cliente ligar',
+				'<p>Alertas, reprocessamento automático e histórico de cada transação transformam a operação de integração em algo previsível.</p>',
+				'blog-1',
+			),
+			array(
+				'Conectores prontos ou desenvolvimento sob medida: quando cada caminho compensa',
+				'<p>Nem toda integração precisa de código. Um comparativo honesto entre biblioteca de conectores e projeto tradicional no SAP.</p>',
+				'blog-1',
+			),
+			array(
+				'Agentes de IA conectados ao ERP: da pergunta em linguagem natural à ação no sistema',
+				'<p>Consultar estoque, abrir pedido, checar título em aberto. O que muda quando o agente tem acesso governado aos sistemas da empresa.</p>',
+				'blog-1',
+			),
 		);
 
-		foreach ( $itens as $item ) {
+		foreach ( $itens as $indice => $item ) {
 			list( $titulo, $conteudo, $arquivo ) = $item;
+
+			$data = gmdate( 'Y-m-d H:i:s', $agora - ( $indice * DAY_IN_SECONDS ) );
 
 			$id = $this->upsert(
 				'post:' . sanitize_title( $titulo ),
@@ -1148,11 +1203,16 @@ class Cliconnect_Seed {
 					'post_type'    => 'post',
 					'post_title'   => $titulo,
 					'post_content' => $conteudo,
+					'post_date'    => $data,
 				)
 			);
 
 			if ( $id ) {
 				$this->definir_thumb( $id, $arquivo );
+
+				if ( $categoria ) {
+					wp_set_object_terms( $id, $categoria, 'category' );
+				}
 			}
 		}
 
