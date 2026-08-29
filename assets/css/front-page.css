@@ -5,6 +5,18 @@
    declarados em theme.css.
    ========================================================================== */
 
+/* --- Animação de entrada do hero ------------------------------------------ */
+
+/*
+ * Duração e curva ficam num par de tokens para que logos e linhas entrem
+ * juntos: mexer aqui muda a órbita inteira de uma vez.
+ */
+:root {
+	--orbita-duration: 0.9s;
+	--orbita-easing: ease-out;
+	--orbita-delay: 1s;
+}
+
 /* --- Escalas de título por seção (o <h2> padrão é H2/60px) ---------------- */
 
 .boomi__texto h2,
@@ -62,6 +74,46 @@
 	gap: 24px;
 }
 
+/*
+ * Entrada sequencial do conteúdo: título → subtítulo → botões → (órbita, em 1s)
+ * → eyebrow. Os delays são o roteiro combinado na issue #129.
+ */
+.hero__titulo,
+.hero__subtitulo,
+.hero__acoes,
+.hero .eyebrow--pill {
+	opacity: 0;
+	animation: hero-revela 0.6s ease-out both;
+}
+
+.hero__titulo {
+	animation-delay: 0s;
+}
+
+.hero__subtitulo {
+	animation-delay: 0.4s;
+}
+
+.hero__acoes {
+	animation-delay: 0.8s;
+}
+
+.hero .eyebrow--pill {
+	animation-delay: 1.2s;
+}
+
+@keyframes hero-revela {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
 /* Largura do título espelha o Figma (1183px): mantém duas linhas no desktop. */
 .hero__titulo {
 	max-width: 1183px;
@@ -110,22 +162,53 @@
  * O preserveAspectRatio="none" do SVG é proposital — faz a malha acompanhar a
  * deformação da caixa junto com as bolhas, em vez de descolar delas.
  */
+/*
+ * A camada de linhas cobre o hero inteiro e usa o mesmo sistema de coordenadas
+ * dele: o front-page.js escreve <line> em pixels medidos do próprio DOM, sem
+ * viewBox e sem porcentagem, então nada descola quando a caixa muda de forma.
+ */
 .hero__linhas {
 	position: absolute;
-	left: 6.4343%;
-	top: 15.0794%;
-	width: 85.1594%;
-	height: 64.0079%;
-}
-
-.hero__linhas-img {
-	display: block;
+	inset: 0;
+	z-index: 0;
 	width: 100%;
 	height: 100%;
+	overflow: visible;
+	pointer-events: none;
 }
 
+.hero__linhas-grupo line {
+	fill: none;
+	stroke-width: 1px;
+	stroke-dasharray: 4 6;
+	stroke-linecap: round;
+	opacity: 0;
+	stroke-dashoffset: var(--linha-comprimento, 0);
+	animation: linha-desenha var(--orbita-duration) var(--orbita-easing) forwards;
+	animation-delay: var(--orbita-delay);
+}
+
+@keyframes linha-desenha {
+	from {
+		opacity: 0;
+		stroke-dashoffset: var(--linha-comprimento, 0);
+	}
+
+	to {
+		opacity: 1;
+		stroke-dashoffset: 0;
+	}
+}
+
+/*
+ * `--start-x`/`--start-y` são o vetor até o centro do título, calculados no JS
+ * para cada bolha: por isso um único @keyframes serve às 16.
+ */
 .hero__logo {
 	position: absolute;
+	will-change: transform;
+	animation: hero-entrada var(--orbita-duration) var(--orbita-easing) both;
+	animation-delay: var(--orbita-delay);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -168,10 +251,59 @@
 .hero__logo--15 { left: 91.594%; top: 24.851%; }
 .hero__logo--16 { left: 20.053%; top: 22.979%; }
 
+@keyframes hero-entrada {
+	from {
+		opacity: 0;
+		transform: translate(var(--start-x, 0), var(--start-y, 0));
+	}
 
+	to {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}
+
+/* Telas intermediárias mantêm a órbita, só encolhem as bolhas. */
 @media (max-width: 1280px) {
-	.hero__orbita {
+	.hero__logo {
+		scale: 0.85;
+	}
+}
+
+@media (max-width: 1100px) {
+	.hero__logo {
+		scale: 0.7;
+	}
+}
+
+@media (max-width: 960px) {
+	.hero__logo {
+		scale: 0.55;
+	}
+}
+
+@media (max-width: 800px) {
+	.hero__orbita,
+	.hero__linhas {
 		display: none;
+	}
+}
+
+/* Quem pediu menos movimento vê o hero pronto, sem entrada nem linhas. */
+@media (prefers-reduced-motion: reduce) {
+	.hero__titulo,
+	.hero__subtitulo,
+	.hero__acoes,
+	.hero .eyebrow--pill,
+	.hero__logo {
+		animation: none;
+		opacity: 1;
+	}
+
+	.hero__linhas-grupo line {
+		animation: none;
+		opacity: 1;
+		stroke-dashoffset: 0;
 	}
 }
 

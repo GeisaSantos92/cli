@@ -64,6 +64,14 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/front-page.css' )
 		);
+		// Órbita do hero: linhas e vetores de entrada medidos do DOM.
+		wp_enqueue_script(
+			'cliconnect-front-page',
+			get_theme_file_uri( '/assets/js/front-page.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/front-page.js' ),
+			true
+		);
 	}
 
 	// Arquivo de cases.

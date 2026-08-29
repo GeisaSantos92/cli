@@ -5,10 +5,11 @@
  * Título, subtítulo e CTA vêm do ACF da página inicial. Os logos que flutuam
  * ao redor são as Integrações marcadas com "Exibir na órbita do Hero".
  *
- * A órbita é uma peça só: a malha de linhas pontilhadas (assets/img/hero-linhas.svg)
- * e as 16 bolhas dividem a mesma caixa e as mesmas porcentagens, tiradas do frame
- * do Figma. É isso que mantém cada linha ancorada na sua bolha em qualquer
- * largura — por isso as posições ficam em `.hero__logo--N` no CSS, e não aqui.
+ * A órbita tem duas camadas na mesma caixa: as 16 bolhas, posicionadas em
+ * porcentagens tiradas do frame do Figma (`.hero__logo--N`, no CSS), e uma
+ * camada SVG vazia. Quem desenha as linhas é o front-page.js, medindo a posição
+ * real do título e de cada bolha — assim elas continuam ancoradas em qualquer
+ * largura e acompanham a animação de entrada.
  *
  * @package Cliconnect
  */
@@ -37,21 +38,10 @@ $orbita = cliconnect_posts(
 
 	<?php if ( $orbita ) : ?>
 	<div class="hero__orbita" aria-hidden="true">
-		<span class="hero__linhas">
-			<?php
-			echo cliconnect_imagem_tema( // phpcs:ignore WordPress.Security.EscapeOutput -- montado com escape em cliconnect_imagem_tema().
-				'hero-linhas.svg',
-				array(
-					'alt'     => '',
-					'class'   => 'hero__linhas-img',
-					'width'   => 1304,
-					'height'  => 512,
-					// Acima da dobra: lazy atrasaria a malha na primeira pintura.
-					'loading' => 'eager',
-				)
-			);
-			?>
-		</span>
+		<svg class="hero__linhas" focusable="false" role="presentation">
+			<defs class="hero__linhas-defs"></defs>
+			<g class="hero__linhas-grupo"></g>
+		</svg>
 
 		<?php foreach ( $orbita as $indice => $logo ) : ?>
 			<span class="hero__logo hero__logo--<?php echo (int) ( $indice + 1 ); ?>">
