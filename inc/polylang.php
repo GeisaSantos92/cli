@@ -38,6 +38,9 @@ function cliconnect_strings_customizer() {
 		'cliconnect_header_cta_texto' => __( 'Cabeçalho — texto do CTA', 'cli' ),
 		'cliconnect_cta_titulo'       => __( 'Rodapé — título do CTA', 'cli' ),
 		'cliconnect_cta_botao_texto'  => __( 'Rodapé — texto do botão do CTA', 'cli' ),
+		'cliconnect_cookies_texto'      => __( 'Cookies — texto do banner', 'cli' ),
+		'cliconnect_cookies_link_texto' => __( 'Cookies — rótulo do link', 'cli' ),
+		'cliconnect_cookies_botao'      => __( 'Cookies — texto do botão', 'cli' ),
 	);
 }
 

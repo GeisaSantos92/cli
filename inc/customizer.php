@@ -180,6 +180,9 @@ function cliconnect_customize_register( $wp_customize ) {
 		'cliconnect_cta_botao_texto'  => array( 'Rodapé — texto do botão do CTA', 'Ex.: Fale conosco no Whatsapp', 'text' ),
 		'cliconnect_cta_botao_url'    => array( 'Rodapé — URL do botão do CTA', '', 'url' ),
 		'cliconnect_whatsapp_url'     => array( 'URL do botão flutuante de WhatsApp', 'Deixe vazio para não exibir o botão.', 'url' ),
+		'cliconnect_cookies_texto'      => array( 'Cookies — texto do banner', 'Deixe vazio para não exibir o banner.', 'text' ),
+		'cliconnect_cookies_link_texto' => array( 'Cookies — rótulo do link', 'Ex.: política de privacidade', 'text' ),
+		'cliconnect_cookies_botao'      => array( 'Cookies — texto do botão', 'Ex.: Concordar', 'text' ),
 	);
 
 	foreach ( $cliconnect_textos as $cliconnect_id => $cliconnect_config ) {

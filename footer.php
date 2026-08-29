@@ -10,6 +10,7 @@
  *   nível é o título de uma coluna) e, abaixo delas, a barra com logo +
  *   "powered by boomi" à esquerda e ícones sociais à direita (Customizer).
  * - Botões flutuantes: voltar ao topo e WhatsApp (Customizer).
+ * - Banner de cookies, flutuante à esquerda (template-parts/cookie-banner.php).
  *
  * @package Cliconnect
  */
@@ -140,6 +141,8 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 	<?php echo cliconnect_icone( 'whatsapp', 32 ); // SVG estático. ?>
 </a>
 <?php endif; ?>
+
+<?php get_template_part( 'template-parts/cookie-banner' ); ?>
 
 <?php wp_footer(); ?>
 </body>

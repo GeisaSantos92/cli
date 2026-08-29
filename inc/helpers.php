@@ -423,3 +423,26 @@ function cliconnect_enfase( $texto, $tag = 'em' ) {
 		$escapado
 	);
 }
+
+/**
+ * Permalink da página Política de Privacidade no idioma corrente.
+ *
+ * Com Polylang, a tradução tem slug próprio: partimos da página em português
+ * e pedimos ao plugin a versão do idioma atual. Sem o plugin (ou sem tradução)
+ * devolve a própria página; sem a página, a URL previsível.
+ *
+ * @return string
+ */
+function cliconnect_url_privacidade() {
+	$pagina = get_page_by_path( 'privacidade' );
+	$id     = $pagina ? (int) $pagina->ID : 0;
+
+	if ( $id && function_exists( 'pll_get_post' ) ) {
+		$traduzida = (int) pll_get_post( $id );
+		$id        = $traduzida ? $traduzida : $id;
+	}
+
+	$link = $id ? get_permalink( $id ) : '';
+
+	return $link ? $link : home_url( '/privacidade/' );
+}
