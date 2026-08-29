@@ -159,6 +159,14 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/page-contato.css' )
 		);
+		// Máscara do telefone no formulário.
+		wp_enqueue_script(
+			'cliconnect-contato',
+			get_theme_file_uri( '/assets/js/page-contato.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/page-contato.js' ),
+			true
+		);
 	}
 
 	// Página Política de Privacidade.

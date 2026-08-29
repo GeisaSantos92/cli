@@ -175,7 +175,7 @@ trait Cliconnect_Seed_En_Paginas {
 [text* ct-nome placeholder "Name"]</label>
 
 <label>Phone
-[tel* ct-telefone placeholder "Phone"]</label>
+[tel* ct-telefone placeholder "+55 (00) 00000-0000"]</label>
 
 <label>Email
 [email* ct-email placeholder "Email"]</label>
@@ -224,7 +224,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'Portal do Cliente'                                       => 'Client Portal',
 			'Acessar Plataforma'                                      => 'Access Platform',
 			"Planeje a evolução\ndas suas integrações"                 => "Plan the evolution\nof your integrations",
-			'Fale conosco no Whatsapp'                                 => 'Talk to us on WhatsApp',
+			'Fale conosco no WhatsApp'                                 => 'Talk to us on WhatsApp',
 			'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa' => 'We use cookies to improve your experience. By continuing to browse, you agree to our',
 			'política de privacidade'                                  => 'privacy policy',
 			'Concordar'                                                => 'Agree',

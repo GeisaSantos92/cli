@@ -446,3 +446,28 @@ function cliconnect_url_privacidade() {
 
 	return $link ? $link : home_url( '/privacidade/' );
 }
+
+/**
+ * Monta o `href` de um telefone em E.164 a partir do número exibido.
+ *
+ * O texto visível fica no padrão brasileiro — `(31) 4042-2051` — e o link
+ * precisa do formato discável. Números já em formato internacional (com `+`)
+ * só perdem a pontuação; os demais recebem o código do Brasil.
+ *
+ * @param string $telefone Telefone como exibido na tela.
+ * @return string `tel:+55...`, ou string vazia se não sobrar dígito.
+ */
+function cliconnect_tel_href( $telefone ) {
+	$telefone = (string) ( $telefone ?? '' );
+	$digitos  = preg_replace( '/\D/', '', $telefone );
+
+	if ( ! $digitos ) {
+		return '';
+	}
+
+	if ( ! str_starts_with( trim( $telefone ), '+' ) ) {
+		$digitos = '55' . $digitos;
+	}
+
+	return 'tel:+' . $digitos;
+}

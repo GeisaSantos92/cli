@@ -2168,7 +2168,7 @@ class Cliconnect_Seed {
 			'cliconnect_header_cta_texto' => 'Acessar Plataforma',
 			'cliconnect_header_cta_url'   => 'https://plataforma.cliconnect.com.br/',
 			'cliconnect_cta_titulo'       => "Planeje a evolução\ndas suas integrações",
-			'cliconnect_cta_botao_texto'  => 'Fale conosco no Whatsapp',
+			'cliconnect_cta_botao_texto'  => 'Fale conosco no WhatsApp',
 			'cliconnect_cta_botao_url'    => 'https://wa.me/5511999999999',
 			'cliconnect_whatsapp_url'     => 'https://wa.me/5511999999999',
 			'cliconnect_social_linkedin'  => 'https://www.linkedin.com/company/cliconnect/',
@@ -2431,7 +2431,7 @@ class Cliconnect_Seed {
 			'cc_operacoes_titulo'   => 'Algumas integrações',
 			'cc_operacoes_titulo_2' => 'simplesmente não podem falhar',
 			'cc_operacoes_texto'    => 'Proteja processos críticos com integrações preparadas para operar continuamente, sem comprometer o negócio.',
-			'cc_operacoes_bullet_1' => 'Processos industriais em operações contínua',
+			'cc_operacoes_bullet_1' => 'Processos industriais em operações contínuas',
 			'cc_operacoes_bullet_2' => 'Pedidos, cotações e faturamento sem falhas ou atrasos',
 			'cc_operacoes_bullet_3' => 'Transações e movimentações sem interrupções',
 
@@ -2456,7 +2456,7 @@ class Cliconnect_Seed {
 			// 5. Destaque CTA.
 			'cc_destaque_titulo' => 'A forma mais segura de conectar, evoluir e governar sua operação.',
 			'cc_destaque_texto'  => 'Tenha uma operação conectada com custos previsível, suporte especializado e uma estrutura preparada para acompanhar as mudanças do seu negócio.',
-			'cc_destaque_botao'  => $this->link( 'Fale conosco no Whatsapp', '/contato/' ),
+			'cc_destaque_botao'  => $this->link( 'Fale conosco no WhatsApp', '/contato/' ),
 
 			// 6. Depoimento.
 			'cc_dep_foto'  => $this->img( 'cc-dep-joao' ),
@@ -3100,7 +3100,8 @@ class Cliconnect_Seed {
 	 * Cria o formulário Contact Form 7 da página Contato.
 	 *
 	 * Idempotente: se já existir um post wpcf7_contact_form com o slug
-	 * "contato-cli", retorna o ID existente sem duplicar.
+	 * "contato-cli", reaproveita o post e regrava o corpo e as mensagens — é
+	 * assim que uma correção de texto no seed chega a um site já semeado.
 	 *
 	 * @return int ID do post CF7, ou 0 em caso de erro.
 	 */
@@ -3120,16 +3121,14 @@ class Cliconnect_Seed {
 			)
 		);
 
-		if ( $existente ) {
-			return (int) $existente[0]->ID;
-		}
+		$cf7_id = $existente ? (int) $existente[0]->ID : 0;
 
 		// Template do formulário (shortcodes CF7).
 		$form_template = '<label>Nome
 [text* ct-nome placeholder "Nome"]</label>
 
 <label>Telefone
-[tel* ct-telefone placeholder "Telefone"]</label>
+[tel* ct-telefone placeholder "(00) 00000-0000"]</label>
 
 <label>E-mail
 [email* ct-email placeholder "E-mail"]</label>
@@ -3141,14 +3140,16 @@ class Cliconnect_Seed {
 
 [submit "Enviar"]';
 
-		$cf7_id = wp_insert_post(
-			array(
-				'post_title'  => 'Contato CLI',
-				'post_name'   => 'contato-cli',
-				'post_type'   => 'wpcf7_contact_form',
-				'post_status' => 'publish',
-			)
-		);
+		if ( ! $cf7_id ) {
+			$cf7_id = wp_insert_post(
+				array(
+					'post_title'  => 'Contato CLI',
+					'post_name'   => 'contato-cli',
+					'post_type'   => 'wpcf7_contact_form',
+					'post_status' => 'publish',
+				)
+			);
+		}
 
 		if ( is_wp_error( $cf7_id ) || ! $cf7_id ) {
 			WP_CLI::warning( 'Falha ao criar formulário CF7: ' . ( is_wp_error( $cf7_id ) ? $cf7_id->get_error_message() : 'erro desconhecido' ) );

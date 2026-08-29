@@ -177,7 +177,7 @@ function cliconnect_customize_register( $wp_customize ) {
 		'cliconnect_portal_url'       => array( 'Cabeçalho — URL do link secundário', '', 'url' ),
 		'cliconnect_header_cta_texto' => array( 'Cabeçalho — texto do botão principal', 'Ex.: Acessar Plataforma', 'text' ),
 		'cliconnect_header_cta_url'   => array( 'Cabeçalho — URL do botão principal', '', 'url' ),
-		'cliconnect_cta_botao_texto'  => array( 'Rodapé — texto do botão do CTA', 'Ex.: Fale conosco no Whatsapp', 'text' ),
+		'cliconnect_cta_botao_texto'  => array( 'Rodapé — texto do botão do CTA', 'Ex.: Fale conosco no WhatsApp', 'text' ),
 		'cliconnect_cta_botao_url'    => array( 'Rodapé — URL do botão do CTA', '', 'url' ),
 		'cliconnect_whatsapp_url'     => array( 'URL do botão flutuante de WhatsApp', 'Deixe vazio para não exibir o botão.', 'url' ),
 		'cliconnect_cookies_texto'      => array( 'Cookies — texto do banner', 'Deixe vazio para não exibir o banner.', 'text' ),

@@ -78,7 +78,9 @@ if ( ! $titulo ) {
 							<?php if ( $telefone ) : ?>
 								<div class="ct-card__item">
 									<span class="ct-card__label"><?php esc_html_e( 'Telefone', 'cli' ); ?></span>
-									<span class="ct-card__valor"><?php echo esc_html( $telefone ); ?></span>
+									<a class="ct-card__valor" href="<?php echo esc_url( cliconnect_tel_href( $telefone ) ); ?>">
+										<?php echo esc_html( $telefone ); ?>
+									</a>
 								</div>
 							<?php endif; ?>
 						</div>
