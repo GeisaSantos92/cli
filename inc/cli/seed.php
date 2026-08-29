@@ -435,6 +435,28 @@ class Cliconnect_Seed {
 	}
 
 	/**
+	 * Busca um post já criado pelo seed a partir do identificador estável.
+	 *
+	 * @param string $slug      Identificador do seed (ex.: "integracao:sap").
+	 * @param string $post_type Tipo do post.
+	 * @return int ID do post, ou 0 se não existir.
+	 */
+	protected function buscar( $slug, $post_type ) {
+		$ids = get_posts(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,   // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $slug,        // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		return $ids ? (int) $ids[0] : 0;
+	}
+
+	/**
 	 * Importa os arquivos de assets/seed/ para a biblioteca de mídia.
 	 *
 	 * @return void
@@ -1012,6 +1034,20 @@ class Cliconnect_Seed {
 	protected function criar_cases() {
 		$excerpt_padrao = 'A implementação do CLI Connect permitiu integrar sistemas, automatizar eventos e aumentar a visibilidade sobre toda a operação.';
 
+		/*
+		 * Barra lateral "Tecnologias Utilizadas" do case: cinco boxes de logo,
+		 * como no frame. Depende de criar_integracoes(), que roda antes.
+		 */
+		$tecnologias = array();
+
+		foreach ( array( 'SAP', 'TOTVS', 'Senior', 'Sankhya', 'MV' ) as $sistema ) {
+			$integracao_id = $this->buscar( 'integracao:' . sanitize_title( $sistema ), 'cli_integracao' );
+
+			if ( $integracao_id ) {
+				$tecnologias[] = $integracao_id;
+			}
+		}
+
 		// 1. Panasonic — duas métricas.
 		$panasonic = $this->upsert(
 			'case:panasonic',
@@ -1040,6 +1076,7 @@ class Cliconnect_Seed {
 		update_field( 'solucao_texto', '<p>A CLI implementou uma arquitetura centralizada de integrações utilizando o CLI Connect, conectando os principais sistemas da operação em uma única estrutura governada.</p><p>Além das integrações, foram criados eventos automáticos para sincronização de informações, notificações operacionais e atualização de processos críticos. A empresa também passou a utilizar uma biblioteca de automações prontas, acelerando a implementação de novas demandas e reduzindo a necessidade de projetos isolados para cada integração.</p>', $panasonic );
 		update_field( 'impacto_titulo', 'Mais agilidade, previsibilidade e controle', $panasonic );
 		update_field( 'impacto_texto', '<p>Com a nova arquitetura de integrações, a Panasonic reduziu drasticamente o tempo de implementação de novos conectores e eliminou grande parte das intervenções manuais no processo operacional, ganhando visibilidade em tempo real sobre toda a cadeia de dados.</p>', $panasonic );
+		update_field( 'integracoes', $tecnologias, $panasonic );
 		$this->definir_thumb( $panasonic, 'case-panasonic' );
 
 		// 2. Moura — sem métricas.
@@ -1054,6 +1091,7 @@ class Cliconnect_Seed {
 		);
 
 		update_field( 'logo', $this->img( 'case-logo-moura' ), $moura );
+		update_field( 'integracoes', $tecnologias, $moura );
 		$this->definir_thumb( $moura, 'case-moura' );
 
 		// 3. PetroRecôncavo — uma métrica.
@@ -1070,6 +1108,7 @@ class Cliconnect_Seed {
 		update_field( 'logo', $this->img( 'case-logo-petroreconcavo' ), $petro );
 		update_field( 'metrica_numero', '10%', $petro );
 		update_field( 'metrica_texto', 'Redução de tempo gasto na triagem', $petro );
+		update_field( 'integracoes', $tecnologias, $petro );
 		$this->definir_thumb( $petro, 'case-petroreconcavo' );
 
 		// 4. Moura clone — "Evitou perda de 15% das vendas mensais".

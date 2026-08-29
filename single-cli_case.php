@@ -52,32 +52,21 @@ while ( have_posts() ) :
 		3,
 		array(
 			'post__not_in' => array( get_the_ID() ),
+			/*
+			 * Só o arquivo /cases/ respeita `oculto_no_arquivo`: no frame, os
+			 * cases que servem de card de métrica na home aparecem aqui.
+			 */
 			'meta_query'   => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-				'relation' => 'AND',
 				array(
-					'relation' => 'OR',
-					array(
-						'key'     => 'em_andamento',
-						'compare' => 'NOT EXISTS',
-					),
-					array(
-						'key'     => 'em_andamento',
-						'value'   => '1',
-						'compare' => '!=',
-					),
+					'key'     => 'em_andamento',
+					'compare' => 'NOT EXISTS',
 				),
 				array(
-					'relation' => 'OR',
-					array(
-						'key'     => 'oculto_no_arquivo',
-						'compare' => 'NOT EXISTS',
-					),
-					array(
-						'key'     => 'oculto_no_arquivo',
-						'value'   => '1',
-						'compare' => '!=',
-					),
+					'key'     => 'em_andamento',
+					'value'   => '1',
+					'compare' => '!=',
 				),
+				'relation' => 'OR',
 			),
 		)
 	);
