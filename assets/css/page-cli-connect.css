@@ -308,7 +308,7 @@
 .cc-impl__titulo {
 	color: var(--cor-texto-primario, #1f242d);
 	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h3, 48px);
+	font-size: var(--tam-h4, 36px);
 	font-weight: 600;
 	letter-spacing: -0.01em;
 	line-height: 1.15;
@@ -484,7 +484,7 @@
 
 @media (max-width: 768px) {
 	.cc-impl__titulo {
-		font-size: clamp(28px, 5vw, 40px);
+		font-size: clamp(28px, 4.5vw, 36px);
 	}
 
 	.cc-impl__card {
