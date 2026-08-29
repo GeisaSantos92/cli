@@ -16,7 +16,7 @@ gh auth status
 |---|---|
 | Repo git com remote no GitHub | `gh` resolve sozinho; `--repo` é opcional |
 | Repo git sem remote | descubra o repo com o usuário e use `--repo` em todo comando `gh` |
-| **Pasta sem git** (caso desta cópia do tema) | `--repo` obrigatório; **avise que branch/commit/PR não são possíveis** e ofereça `git init` |
+| **Pasta sem git** (caso desta cópia do tema) | `--repo` obrigatório; **avise que o commit não é possível** e ofereça `git init` |
 | `gh auth status` falhando | peça ao usuário `gh auth login` (é interativo — sugira `! gh auth login`) |
 
 Nunca rode `git init`, `git remote add` ou `git clone` por conta própria: são mudanças
@@ -52,24 +52,26 @@ gh issue close <n> --repo <r> --comment "Resolvido em <sha>"      # só com OK d
 **Contexto extra**
 ```bash
 gh api repos/<r>/commits -q '.[0:5][] | "\(.sha[0:7]) \(.commit.message|split("\n")[0])"'
-gh pr list --repo <r> --state all --limit 5
 gh issue view <n> --repo <r> --web    # abre no navegador do usuário
 ```
 
-Ações de escrita (`comment`, `close`, `edit`, `pr create`) são **visíveis para outras
+Ações de escrita (`comment`, `close`, `edit`) são **visíveis para outras
 pessoas**. Só execute com autorização explícita para aquela ação.
 
 ---
 
-## 3. Branch e commit
+## 3. Commit na `main`
 
-Convenção observada no repositório (`daniilomello/cli-connect`): **Conventional
-Commits** (`feat:`, `fix:`, `docs:`, `refactor:`, `style:`, `chore:`), em uma linha,
-em português no corpo.
+Convenção observada no repositório (`daniilomello/cli-connect`): **Conventional Commits**
+(`feat:`, `fix:`, `docs:`, `refactor:`, `style:`, `chore:`), em uma linha, em português
+no corpo.
+
+O trabalho vai **direto na `main`**: sem branch de feature, sem PR.
 
 ```bash
-git checkout -b fix/13-hover-dropdown      # tipo/numero-resumo-em-kebab
-git add -A
+git rev-parse --abbrev-ref HEAD    # main
+git pull --rebase
+git add <caminhos da issue>
 git commit -m "$(cat <<'EOF'
 fix(menu): aplica o hover dos cartões do dropdown conforme o Figma
 
@@ -85,8 +87,10 @@ EOF
 
 Regras:
 
-- **Nunca commite direto na branch padrão** (`main`) — crie a branch antes.
-- Um commit por issue; o `Closes #N` no corpo liga os dois.
+- **Commite na `main`.** Não crie branch `fix/...` e **não abra PR** — o repositório tem
+  só `main` e é assim que este projeto trabalha.
+- Um commit por issue; o `Closes #N` no corpo liga os dois (sem PR ele não fecha a issue
+  sozinho — é rastro, não automação).
 - Só rode `git commit`/`git push` quando o usuário tiver escolhido essa entrega na
   Fase 4. `git push` publica — precisa de OK explícito.
 - Não use `git add -A` se houver arquivo não relacionado no working tree; confira com
@@ -97,20 +101,32 @@ Arquivos que **não** entram no commit (já em `.gitignore`, confirme mesmo assi
 
 ---
 
-## 4. Pull request
+## 4. Deixar a main local em dia
+
+Passo obrigatório de fechamento: **antes de concluir a issue e antes de começar a
+próxima**, a `main` local precisa estar com o trabalho dentro, limpa e sincronizada.
 
 ```bash
-gh pr create --repo <r> \
-  --base main --head fix/13-hover-dropdown \
-  --title "fix: hover dos cartões do dropdown" \
-  --body-file /tmp/pr-13.md
+git pull --rebase
+git push            # publica — só com OK do usuário
+git status -sb      # sem arquivo pendente, sem "behind"
+git log --oneline -3
 ```
 
-O corpo precisa referenciar a issue (`Closes #13`) para o merge fechá-la. Modelo em
-[`entrega.md`](entrega.md).
+Se a sessão não estiver na `main` (worktree ou branch de apoio — não é o fluxo padrão
+desta skill), traga o trabalho antes de fechar:
 
-Se o usuário não usa PR (o repositório hoje tem só `main` e nenhum PR), commit na branch
-+ comentário na issue é entrega suficiente — confirme na Fase 4 em vez de impor o fluxo.
+```bash
+git -C <pasta principal do tema> checkout main
+git -C <pasta principal do tema> merge --ff-only <branch>
+```
+
+Se o `--ff-only` recusar, a `main` andou: rebase a branch em cima dela e repita. Nunca
+conclua deixando o commit só na worktree — o site local (seed, captura, validação) roda
+na pasta principal, na `main`.
+
+Se o usuário recusar o `push`, feche mesmo assim, mas relate: "commit `<sha>` na `main`
+local; falta publicar".
 
 ---
 

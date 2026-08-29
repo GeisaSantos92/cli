@@ -4,7 +4,8 @@ description: >
   Implementa issues do GitHub neste projeto usando a CLI `gh`. Lê a issue por inteiro
   (descrição, comentários e imagens anexadas), investiga o código afetado, apresenta ao
   usuário um diagnóstico do que está errado e um plano do que será alterado — e só
-  implementa depois do OK. Fecha com validação, commit/PR e comentário na issue. Use
+  implementa depois do OK. Fecha com validação, commit direto na `main`, sincronização
+  da main local e comentário na issue. Use
   quando pedirem "implementar a issue #X", "resolver a issue", "pega as issues abertas",
   "corrigir o que está no GitHub", "trabalhar nas issues".
 ---
@@ -29,7 +30,7 @@ Se a issue for sobre criar uma página nova, use a skill `criar-pagina` em vez d
    - **Fora de um repo git** (é o caso desta pasta) → todo comando `gh` precisa de
      `--repo owner/nome`. Confirme com o usuário qual é (para este tema, o provável é
      `daniilomello/cli-connect` — **pergunte, não assuma**) e avise: sem git local,
-     **não dá para criar branch, commit nem PR**; a entrega será os arquivos alterados.
+     **não dá para commitar**; a entrega será os arquivos alterados.
      Ofereça `git init` + `git remote add` se ele quiser o fluxo completo.
 
 2. **Descobrir quais issues.** Se o usuário não disse o número:
@@ -41,7 +42,8 @@ Se a issue for sobre criar uma página nova, use a skill `criar-pagina` em vez d
    Mostre a lista e pergunte quais implementar (uma, várias ou todas).
 
 3. **Várias issues** → trate uma por vez, do começo ao fim (análise → OK → implementação
-   → validação), com commit próprio. Só agrupe se o usuário pedir, e mesmo assim
+   → validação → commit na `main` → main local atualizada). Só comece a próxima depois
+   que a Fase 7 da anterior estiver fechada. Só agrupe se o usuário pedir, e mesmo assim
    apresente um briefing por issue.
 
 Detalhes e receitas do `gh`: [`references/contexto-repo.md`](references/contexto-repo.md).
@@ -120,12 +122,13 @@ Depois do briefing, chame `AskUserQuestion`:
 | Pergunta | Opções |
 |---|---|
 | Confirma o entendimento e o plano da #X? | **Sim, implementar** · **Ajustar** (o usuário descreve) · **Não implementar agora** |
-| Como entregar? | **Branch + commit + PR** · **Branch + commit** (sem PR) · **Só alterar os arquivos** (sem git) |
+| Como entregar? | **Commit direto na `main`** (padrão) · **Só alterar os arquivos** (sem commit) |
 
 Regras do portão:
 
 - Se a resposta pedir ajuste, **refaça o briefing** e pergunte de novo.
 - A pergunta de entrega só existe se houver git local; sem git, informe a limitação.
+  **Nunca ofereça branch nem PR** — este repositório trabalha direto na `main`.
 - Se a issue estiver vaga demais para um plano honesto, diga isso e peça a informação
   que falta (ou proponha comentar na issue pedindo esclarecimento) em vez de chutar.
 - Se o pedido da issue conflitar com `CLAUDE.md` (ex.: pede plugin novo, bloco FSE,
@@ -166,29 +169,50 @@ Só depois do OK. Regras não negociáveis (resumo de `CLAUDE.md`):
 
 ## Fase 7 — Entregar
 
-Conforme a opção escolhida na Fase 4:
+O fluxo deste repositório é **commit direto na `main`**. Não crie branch de feature e
+**nunca abra PR** — nem para "facilitar a revisão", nem porque a mudança é grande.
 
-**Branch e commit** (nunca commite direto na `main`):
-```bash
-git checkout -b fix/13-hover-dropdown
-git add -A && git commit   # mensagem convencional, ver contexto-repo.md
-```
+1. **Confira o ponto de partida.**
+   ```bash
+   git rev-parse --abbrev-ref HEAD   # tem que ser main
+   git status --short                # só os arquivos desta issue
+   git pull --rebase                 # traz o que já subiu de outra máquina/sessão
+   ```
+   Se a sessão estiver numa worktree ou em outra branch, traga o trabalho para a `main`
+   antes de commitar — receita em [`references/contexto-repo.md`](references/contexto-repo.md) §4.
 
-**PR:**
-```bash
-gh pr create --title "fix: hover dos cartões do dropdown" --body "Closes #13 ..." --fill-verbose
-```
+2. **Commit** — um por issue, Conventional Commits, `Closes #N` no corpo (modelo em
+   [`references/entrega.md`](references/entrega.md)):
+   ```bash
+   git add <caminhos da issue>       # -A só se o working tree tiver apenas isso
+   git commit -m "fix(menu): ..."
+   ```
 
-**Comentário na issue** (quando não houver PR):
-```bash
-gh issue comment 13 --repo <repo> --body "..."
-```
+3. **Atualizar a main local — obrigatório antes de concluir.** A issue só está entregue
+   quando a `main` local contém o commit, está limpa e não está atrás do remoto:
+   ```bash
+   git pull --rebase
+   git push                          # publica — só com OK do usuário
+   git status -sb                    # limpo, sem "behind"
+   git log --oneline -3
+   ```
+   Se o usuário não autorizar o `push`, tudo bem — mas diga explicitamente que a `main`
+   local está à frente do remoto e o que falta para publicar.
 
-**Fechar a issue**: só se o usuário pedir — `gh issue close`. Um PR com `Closes #13`
-fecha sozinho no merge; não feche à mão nesse caso.
+4. **Comentário na issue** (opcional, só com autorização — é público):
+   ```bash
+   gh issue comment 13 --repo <repo> --body "Resolvido na main em <sha>. ..."
+   ```
 
-Feche a conversa com: arquivos alterados, como validou, o que ficou fora, e um pedido
-explícito para o usuário conferir o resultado.
+5. **Fechar a issue**: só se o usuário pedir — `gh issue close`. Sem PR, nada fecha
+   sozinho; não feche por conta própria.
 
-Modelos de mensagem de commit, corpo de PR e comentário:
+**Antes de iniciar a próxima issue**, repita o passo 3: `main` local limpa, com o commit
+da issue anterior dentro e sincronizada. Nunca comece uma issue nova em cima de trabalho
+não commitado — o commit seguinte misturaria as duas.
+
+Feche a conversa com: arquivos alterados, como validou, o que ficou fora, o sha do commit
+e o estado da `main` (local e remoto), e um pedido explícito para o usuário conferir.
+
+Modelos de mensagem de commit e comentário:
 [`references/entrega.md`](references/entrega.md).

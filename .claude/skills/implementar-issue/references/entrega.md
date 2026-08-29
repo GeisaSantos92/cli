@@ -1,4 +1,4 @@
-# Entrega — commit, PR, comentário e fechamento
+# Entrega — commit na `main`, comentário e fechamento
 
 Modelos prontos. Adapte o conteúdo; mantenha a estrutura.
 
@@ -21,40 +21,33 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 - Escopos usuais deste tema: `menu`, `home`, `rodape`, `header`, `seed`, `acf`, `css`,
   `cpt`, `enqueue`, `docs`.
 - Corpo: **por que**, não o diff. Duas ou três linhas bastam.
-- `Closes #N` liga o commit à issue.
+- `Closes #N` liga o commit à issue (rastro; sem PR não fecha sozinho).
+- O commit vai direto na `main` — nunca em branch de feature, nunca via PR.
 
 ---
 
-## 2. Corpo do PR
+## 2. Depois do commit — main local em dia
 
-```markdown
-Closes #13
+Fechamento obrigatório da Fase 7, antes de concluir e antes de pegar a próxima issue:
 
-## O que a issue pedia
-O dropdown do menu não seguia o Figma: faltava o estado de hover dos cartões.
-
-## O que foi feito
-- `inc/menu-walker.php` — seta ↗ (`cliconnect_icone('seta-nordeste')`) em cada cartão.
-- `assets/css/theme.css` — hover/`:focus-visible` do `.nav-cartao`: fundo, sombra e
-  revelação da seta, com os tokens existentes.
-
-## Como validar
-1. `./bin/wp cliconnect seed` (não necessário — não houve mudança de conteúdo).
-2. Abrir a home e passar o mouse sobre os cartões do painel "Plataforma".
-3. Navegar por teclado (Tab) — o mesmo estado aparece no foco.
-
-## Fora de escopo
-Mega menu de "Soluções" (não citado na issue).
+```bash
+git pull --rebase
+git push          # publica — só com OK do usuário
+git status -sb    # limpo, sem "behind"
+git log --oneline -3
 ```
+
+Relate no fechamento o sha do commit e o estado da `main`: sincronizada com o remoto ou
+à frente dele (push não autorizado). Nada de PR — este repositório não usa.
 
 ---
 
 ## 3. Comentário na issue
 
-Quando a entrega for por commit direto na branch, sem PR:
+Sempre opcional e sempre com autorização — não existe PR para narrar a mudança:
 
 ```markdown
-Implementado em `fix/13-hover-dropdown` (`a14125e`).
+Implementado na `main` (`a14125e`).
 
 **O que mudou**
 - `inc/menu-walker.php` — seta ↗ nos cartões do painel.
@@ -75,8 +68,8 @@ Comentário é público para quem tem acesso ao repositório — poste só com a
 
 ## 4. Fechar a issue
 
-- **Com PR**: não feche à mão. O `Closes #N` fecha no merge.
-- **Sem PR**: só com pedido explícito do usuário.
+- Como não há PR, **nada fecha a issue sozinho** — nem o `Closes #N` do commit.
+- Feche só com pedido explícito do usuário:
   ```bash
   gh issue close 13 --repo <r> --comment "Resolvido em <sha>."
   ```
@@ -95,8 +88,8 @@ Termine sempre com, em texto:
 3. **Como validou** — `php -l`, seed, captura, teste manual — e o que **não** deu para
    validar automaticamente (estados de `:hover`, e-mail, integração externa).
 4. **O que ficou fora** e por quê.
-5. **Estado no GitHub** — branch criada? commit? PR? comentário? issue aberta ou
-   fechada?
+5. **Estado do git e do GitHub** — sha do commit na `main`, se o push foi feito, se
+   houve comentário, issue aberta ou fechada.
 6. Um pedido explícito de conferência: *"dá uma olhada no resultado e me diz se pode
    fechar a issue"*.
 
