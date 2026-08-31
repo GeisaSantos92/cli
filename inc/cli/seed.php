@@ -5169,7 +5169,7 @@ class Cliconnect_Seed {
 
 			// 3 · Pilares.
 			'solucao_pilares_eyebrow'      => 'pilares',
-			'solucao_pilares_titulo'       => 'Reconstrua sua arquitetura, não o seu negócio.',
+			'solucao_pilares_titulo'       => "Reconstrua sua arquitetura,\nnão o seu negócio.",
 			'solucao_pilares_1_icone'      => $this->img( 'pedido-ao-recebimento-pilar-1' ),
 			'solucao_pilares_1_titulo'     => 'Elimine retrabalho operacional',
 			'solucao_pilares_1_desc'       => 'Automatize a troca de dados entre pedido, faturamento e cobrança, eliminando lançamentos manuais.',
@@ -5182,7 +5182,7 @@ class Cliconnect_Seed {
 
 			// 4 · Casos de Uso.
 			'solucao_casos_eyebrow'        => 'casos de uso',
-			'solucao_casos_titulo'         => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_titulo'         => "Integrações mais rápidas,\nseguras e inteligentes",
 			'solucao_casos_1_icone'        => $this->img( 'pedido-ao-recebimento-caso-1' ),
 			'solucao_casos_1_titulo'       => 'Fature automaticamente',
 			'solucao_casos_1_desc'         => 'Converta pedidos fechados no CRM em faturamento e emissão de nota fiscal no ERP.',

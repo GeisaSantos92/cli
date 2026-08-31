@@ -54,7 +54,7 @@ $arrow_url = get_theme_file_uri( '/assets/img/solucao-casos-arrow.svg' );
 				<?php endif; ?>
 
 				<?php if ( $titulo ) : ?>
-					<h2 class="sc-casos__titulo"><?php echo esc_html( $titulo ); ?></h2>
+					<h2 class="sc-casos__titulo"><?php echo nl2br( esc_html( $titulo ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 				<?php endif; ?>
 			</div>
 

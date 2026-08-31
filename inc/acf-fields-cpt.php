@@ -708,8 +708,10 @@ function cliconnect_acf_fields_cpt() {
 					'key'          => 'field_solucao_pilares_titulo',
 					'label'        => 'Título da seção',
 					'name'         => 'solucao_pilares_titulo',
-					'type'         => 'text',
-					'instructions' => 'Ex.: "Integrações mais rápidas, seguras e inteligentes"',
+					'type'         => 'textarea',
+					'rows'         => 2,
+					'new_lines'    => '',
+					'instructions' => 'Ex.: "Integrações mais rápidas, seguras e inteligentes". Quebra de linha vira &lt;br&gt; quando o Figma pedir 2 linhas.',
 				),
 				// Card 1
 				array(
@@ -826,10 +828,13 @@ function cliconnect_acf_fields_cpt() {
 				'instructions' => 'Ex.: "casos de uso"',
 			),
 			array(
-				'key'   => 'field_solucao_casos_titulo',
-				'label' => 'Título da seção',
-				'name'  => 'solucao_casos_titulo',
-				'type'  => 'text',
+				'key'        => 'field_solucao_casos_titulo',
+				'label'      => 'Título da seção',
+				'name'       => 'solucao_casos_titulo',
+				'type'       => 'textarea',
+				'rows'       => 2,
+				'new_lines'  => '',
+				'instructions' => 'Quebra de linha vira &lt;br&gt; quando o Figma pedir 2 linhas.',
 			),
 			array(
 				'key'           => 'field_solucao_casos_1_icone',
