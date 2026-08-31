@@ -4870,6 +4870,7 @@ class Cliconnect_Seed {
 			'solucao_dif_topico_2'     => 'Automatize fluxos com apoio de IA',
 			'solucao_dif_topico_3'     => 'Reduza a dependência da equipe de TI',
 			'solucao_dif_imagem'       => $this->img( 'operacoes-de-receita-revops-dif' ),
+			'solucao_dif_antes_selos'  => 1,
 		);
 
 		foreach ( $campos as $nome => $valor ) {
