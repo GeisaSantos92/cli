@@ -4695,6 +4695,7 @@ class Cliconnect_Seed {
 			'solucao_dif_topico_2'     => 'Elimine atrasos entre marketing e CRM',
 			'solucao_dif_topico_3'     => 'Monitore integrações em tempo real',
 			'solucao_dif_imagem'       => $this->img( 'marketing-dif' ),
+			'solucao_dif_antes_selos'  => 1,
 
 			// 7 · Selos.
 			'solucao_selos_eyebrow'    => 'compliance & segurança',
