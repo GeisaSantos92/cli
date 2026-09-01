@@ -2167,13 +2167,13 @@ class Cliconnect_Seed {
 		 */
 		$mods = array(
 			'cliconnect_portal_texto'     => 'Portal do Cliente',
-			'cliconnect_portal_url'       => 'https://portal.cliconnect.com.br/',
+			'cliconnect_portal_url'       => 'https://cliconsultoria.my.site.com/cliente',
 			'cliconnect_header_cta_texto' => 'Acessar Plataforma',
-			'cliconnect_header_cta_url'   => 'https://plataforma.cliconnect.com.br/',
+			'cliconnect_header_cta_url'   => 'https://platform.boomi.com',
 			'cliconnect_cta_titulo'       => "Planeje a evolução\ndas suas integrações",
 			'cliconnect_cta_botao_texto'  => 'Fale conosco no WhatsApp',
-			'cliconnect_cta_botao_url'    => 'https://wa.me/5511999999999',
-			'cliconnect_whatsapp_url'     => 'https://wa.me/5511999999999',
+			'cliconnect_cta_botao_url'    => 'https://wa.me/553140422051',
+			'cliconnect_whatsapp_url'     => 'https://wa.me/553140422051',
 			'cliconnect_social_linkedin'  => 'https://www.linkedin.com/company/cliconnect/',
 			'cliconnect_social_instagram' => 'https://www.instagram.com/cliconnect/',
 			'cliconnect_social_youtube'   => 'https://www.youtube.com/@cliconnect',
@@ -10293,8 +10293,8 @@ class Cliconnect_Seed {
 			'solucao_hero_corpo'      => 'Integre o OnBlox aos ERPs, e-commerce e aplicativos de rastreamento para sincronizar estoque, operações logísticas e gestão de frota sem processos manuais.',
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
-			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/onblox/',
+			'solucao_hero_btn2_texto' => 'Conheça o OnBlox',
+			'solucao_hero_btn2_url'   => 'https://onblox.com',
 			'solucao_hero_imagem'     => $this->img( 'onblox-hero' ),
 
 			// 2 · Pilares.
