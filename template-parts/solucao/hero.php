@@ -26,6 +26,7 @@ $btn1_url        = cliconnect_campo_pagina( 'solucao_hero_btn1_url' );
 $btn2_texto      = cliconnect_campo_pagina( 'solucao_hero_btn2_texto' );
 $btn2_url        = cliconnect_campo_pagina( 'solucao_hero_btn2_url' );
 $imagem_id       = cliconnect_campo_pagina( 'solucao_hero_imagem', 0 );
+$btn2_externo    = $btn2_url && str_starts_with( $btn2_url, 'http' );
 
 if ( ! $titulo && ! $titulo_destaque ) {
 	return;
@@ -71,7 +72,7 @@ $titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__t
 						<?php endif; ?>
 
 						<?php if ( $btn2_url && $btn2_texto ) : ?>
-							<a class="botao botao--contorno" href="<?php echo esc_url( $btn2_url ); ?>">
+							<a class="botao botao--contorno" href="<?php echo esc_url( $btn2_url ); ?>"<?php if ( $btn2_externo ) : ?> target="_blank" rel="noopener noreferrer"<?php endif; ?>>
 								<?php echo esc_html( $btn2_texto ); ?>
 							</a>
 						<?php endif; ?>

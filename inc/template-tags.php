@@ -108,7 +108,7 @@ function cliconnect_header_acoes() {
 
 	if ( $portal_texto && $portal_url ) {
 		printf(
-			'<a class="site-header__link-cliente" href="%1$s">%2$s</a>',
+			'<a class="site-header__link-cliente" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
 			esc_url( $portal_url ),
 			esc_html( $portal_texto )
 		);
@@ -116,7 +116,7 @@ function cliconnect_header_acoes() {
 
 	if ( $cta_texto && $cta_url ) {
 		printf(
-			'<a class="site-header__cta" href="%1$s">%2$s</a>',
+			'<a class="site-header__cta" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
 			esc_url( $cta_url ),
 			esc_html( $cta_texto )
 		);
