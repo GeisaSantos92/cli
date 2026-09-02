@@ -19,12 +19,13 @@ if ( ! $post_destaque ) {
 	return;
 }
 
-$titulo        = get_the_title( $post_destaque );
-$permalink     = get_permalink( $post_destaque );
-$excerpt       = get_the_excerpt( $post_destaque );
-$data          = get_the_date( 'j F Y', $post_destaque );
-$categorias    = get_the_category( $post_destaque->ID );
-$categoria     = ! empty( $categorias ) ? $categorias[0]->name : '';
+$titulo         = get_the_title( $post_destaque );
+$permalink      = get_permalink( $post_destaque );
+$excerpt        = get_the_excerpt( $post_destaque );
+$data           = get_the_date( 'j F Y', $post_destaque );
+$categorias     = get_the_category( $post_destaque->ID );
+$categoria      = ! empty( $categorias ) ? $categorias[0]->name : '';
+$categoria_link = ! empty( $categorias ) ? get_category_link( $categorias[0]->term_id ) : '';
 ?>
 
 <section class="blog-destaque">
@@ -46,37 +47,47 @@ $categoria     = ! empty( $categorias ) ? $categorias[0]->name : '';
 		</nav>
 
 		<!-- Post em destaque -->
-		<a
-			class="blog-destaque__conteudo"
-			href="<?php echo esc_url( $permalink ); ?>"
-			aria-label="<?php echo esc_attr( $titulo ); ?>"
-		>
-			<div class="blog-destaque__imagem">
-				<?php echo cliconnect_thumb( $post_destaque->ID, 'large', array( 'alt' => '' ) ); ?>
-			</div>
+		<div class="blog-destaque__conteudo">
+			<a
+				class="blog-destaque__imagem-link"
+				href="<?php echo esc_url( $permalink ); ?>"
+				aria-label="<?php echo esc_attr( $titulo ); ?>"
+			>
+				<div class="blog-destaque__imagem">
+					<?php echo cliconnect_thumb( $post_destaque->ID, 'large', array( 'alt' => '' ) ); ?>
+				</div>
+			</a>
 
 			<div class="blog-destaque__info">
-				<?php if ( $categoria ) : ?>
+				<?php if ( $categoria && $categoria_link ) : ?>
 					<div class="blog-tag">
-						<span><?php echo esc_html( mb_strtoupper( $categoria ) ); ?></span>
+						<a href="<?php echo esc_url( $categoria_link ); ?>">
+							<?php echo esc_html( mb_strtoupper( $categoria ) ); ?>
+						</a>
 					</div>
 				<?php endif; ?>
 
-				<h1 class="blog-destaque__titulo">
-					<?php echo esc_html( $titulo ); ?>
-				</h1>
+				<a
+					class="blog-destaque__info-link"
+					href="<?php echo esc_url( $permalink ); ?>"
+					aria-label="<?php echo esc_attr( $titulo ); ?>"
+				>
+					<h1 class="blog-destaque__titulo">
+						<?php echo esc_html( $titulo ); ?>
+					</h1>
 
-				<p class="blog-destaque__data">
-					<?php echo esc_html( $data ); ?>
-				</p>
-
-				<?php if ( $excerpt ) : ?>
-					<p class="blog-destaque__excerpt">
-						<?php echo esc_html( $excerpt ); ?>
+					<p class="blog-destaque__data">
+						<?php echo esc_html( $data ); ?>
 					</p>
-				<?php endif; ?>
+
+					<?php if ( $excerpt ) : ?>
+						<p class="blog-destaque__excerpt">
+							<?php echo esc_html( $excerpt ); ?>
+						</p>
+					<?php endif; ?>
+				</a>
 			</div>
-		</a>
+		</div>
 
 	</div>
 </section>
