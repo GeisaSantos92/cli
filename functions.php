@@ -85,6 +85,7 @@ cliconnect_require( '/inc/menu-walker.php' );
 cliconnect_require( '/inc/helpers.php' );
 cliconnect_require( '/inc/polylang.php' );
 cliconnect_require( '/inc/pagination.php' );
+cliconnect_require( '/inc/blog-filters.php' );
 cliconnect_require( '/inc/login.php' );
 cliconnect_require( '/inc/smtp.php' );
 

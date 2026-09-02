@@ -3,26 +3,22 @@
  * Blog — Seção destaque: breadcrumb + post principal em evidência.
  *
  * @package Cliconnect
+ *
+ * @var array $args {
+ *     @type WP_Post $post Post em destaque (o mais recente, só na 1ª página).
+ * }
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$posts_destaque = cliconnect_posts(
-	'post',
-	1,
-	array(
-		'orderby' => 'date',
-		'order'   => 'DESC',
-	)
-);
+$post_destaque = $args['post'] ?? null;
 
-if ( ! $posts_destaque ) {
+if ( ! $post_destaque ) {
 	return;
 }
 
-$post_destaque = $posts_destaque[0];
 $titulo        = get_the_title( $post_destaque );
 $permalink     = get_permalink( $post_destaque );
 $excerpt       = get_the_excerpt( $post_destaque );

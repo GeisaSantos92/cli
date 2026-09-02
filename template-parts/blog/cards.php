@@ -1,23 +1,19 @@
 <?php
 /**
- * Blog — Seção cards: grade com os demais artigos (offset do destaque).
+ * Blog — Seção cards: grade com os demais artigos da página atual.
  *
  * @package Cliconnect
+ *
+ * @var array $args {
+ *     @type WP_Post[] $posts Posts do grid (todos, exceto o destaque na 1ª página).
+ * }
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$posts_grade = cliconnect_posts(
-	'post',
-	6,
-	array(
-		'orderby' => 'date',
-		'order'   => 'DESC',
-		'offset'  => 1,
-	)
-);
+$posts_grade = $args['posts'] ?? array();
 
 if ( ! $posts_grade ) {
 	return;
