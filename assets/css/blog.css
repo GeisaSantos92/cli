@@ -269,6 +269,13 @@
 	padding-bottom: 160px;
 }
 
+/* Paginação — .site-blog não tem o padding-bottom do .site-main, então o
+   componente global (assets/css/theme.css) fica colado na faixa de CTA
+   seguinte sem esse respiro extra embaixo. */
+.site-blog .pagination {
+	margin-bottom: clamp(40px, 6vw, 80px);
+}
+
 .blog-cards__grade {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
