@@ -1071,7 +1071,7 @@ class Cliconnect_Seed {
 		update_field( 'autor', 'João da Silva', $panasonic );
 		update_field( 'cargo', 'Head de operações na Panasonic', $panasonic );
 		update_field( 'retrato', $this->img( 'case-retrato' ), $panasonic );
-		update_field( 'video', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', $panasonic );
+		update_field( 'video', 'https://www.youtube.com/watch?v=Ox8vbKkS29M', $panasonic );
 		update_field( 'metrica_numero', '+85%', $panasonic );
 		update_field( 'metrica_texto', 'Redução no tempo de implementação de novas integrações', $panasonic );
 		update_field( 'metrica_numero_2', '+60%', $panasonic );
