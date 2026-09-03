@@ -145,6 +145,9 @@ function cliconnect_print_seo_meta() {
 		}
 	}
 
+	// Canonical — aponta para a URL canônica da página atual.
+	printf( '<link rel="canonical" href="%s">' . "\n", esc_url( $og_url ) );
+
 	// Twitter / X Card.
 	$twitter_card = $og_image ? 'summary_large_image' : 'summary';
 	printf( '<meta name="twitter:card" content="%s">' . "\n", esc_attr( $twitter_card ) );

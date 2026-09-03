@@ -810,7 +810,8 @@
 	margin: 0;
 }
 
-/* Grade de badges: 5 colunas × 2 linhas, container branco com borda */
+/* Grade de badges: 5 colunas × 2 linhas, container branco com borda.
+   max-width de 1060px (5 × 212 px) centrado nos 1312 px do container — Figma frame 258. */
 .ss-selos__grade {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
@@ -819,6 +820,8 @@
 	border: 1px solid var(--cor-borda);
 	border-radius: 24px;
 	overflow: hidden;
+	max-width: 1060px;
+	margin-inline: auto;
 	width: 100%;
 }
 

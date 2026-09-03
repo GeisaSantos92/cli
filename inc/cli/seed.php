@@ -2174,9 +2174,9 @@ class Cliconnect_Seed {
 			'cliconnect_cta_botao_texto'  => 'Fale conosco no WhatsApp',
 			'cliconnect_cta_botao_url'    => 'https://wa.me/553140422051',
 			'cliconnect_whatsapp_url'     => 'https://wa.me/553140422051',
-			'cliconnect_social_linkedin'  => 'https://www.linkedin.com/company/cliconnect/',
-			'cliconnect_social_instagram' => 'https://www.instagram.com/cliconnect/',
-			'cliconnect_social_youtube'   => 'https://www.youtube.com/@cliconnect',
+			'cliconnect_social_linkedin'  => 'https://www.linkedin.com/company/cli-connect/',
+			'cliconnect_social_instagram' => 'https://www.instagram.com/cliconnect.io/',
+			'cliconnect_social_youtube'   => 'https://www.youtube.com/watch?v=Ox8vbKkS29M',
 			'cliconnect_phone'            => '+55 11 99999-9999',
 			'cliconnect_email_geral'      => 'contato@cliconnect.com.br',
 
@@ -2403,11 +2403,11 @@ class Cliconnect_Seed {
 			'hero_eyebrow' => 'TRABALHE CONOSCO',
 			'hero_titulo'  => 'Construa soluções que movem grandes empresas.',
 			'hero_texto'   => 'Na CLI, você faz parte de um time que conecta tecnologias, simplifica operações e ajuda empresas a evoluírem todos os dias. Trabalhe remotamente, participe de projetos desafiadores e cresça ao lado de profissionais apaixonados por inovação.',
-			'hero_botao'   => $this->link( 'Veja nossas vagas', '/trabalhe-conosco/#vagas' ),
+			'hero_botao'   => $this->link( 'Veja nossas vagas', 'https://cliconsultoria.inhire.app/vagas' ),
 
 			// 2. Somos a CLI.
 			'sobre_titulo'  => 'Somos a CLI',
-			'sobre_texto_1' => 'Com 13 anos de história, somos uma empresa de tecnologia e parceria que conecta cultura, pessoas e soluções. Nossa proposta é transformar continuamente técnico em capacidade humana, gerando impacto real para clientes, parceiros e para o mundo.',
+			'sobre_texto_1' => 'Com 13 anos de história, somos uma empresa de tecnologia e parceria que conecta cultura, pessoas e soluções. Nossa proposta é transformar conhecimento técnico em capacidade humana, gerando impacto real para clientes, parceiros e para o mundo.',
 			'sobre_texto_2' => 'Temos uma trajetória sólida, com mais de 75 clientes ativos e mais de 500 integrações prontas para uso. Acreditamos que grandes soluções são construídas por equipes que colaboram, aprendem constantemente e têm autonomia para fazer acontecer.',
 			'sobre_foto_1'  => $this->img( 'tc-sobre-equipe' ),
 
@@ -2426,7 +2426,7 @@ class Cliconnect_Seed {
 			// 5. Valores.
 			'valores_eyebrow' => 'VALORES',
 			'valores_titulo'  => 'Mais do que integrar tecnologia, nós integramos pessoas',
-			'valores_cta'     => $this->link( 'Confira nossas vagas', '/trabalhe-conosco/#vagas' ),
+			'valores_cta'     => $this->link( 'Confira nossas vagas', 'https://cliconsultoria.inhire.app/vagas' ),
 
 			'valor_1_icone'  => 'shield',
 			'valor_1_titulo' => 'Confiança',
@@ -2496,7 +2496,7 @@ class Cliconnect_Seed {
 			'jeito_item_4_texto'   => 'Estudamos, documentamos, registramos. Aprender é parte do trabalho.',
 			'jeito_item_5_titulo'  => 'Compartilhamento',
 			'jeito_item_5_texto'   => 'Compartilhamos conhecimento, tempo e oportunidades.',
-			'jeito_botao'          => $this->link( 'Ver vagas', '/trabalhe-conosco/#vagas' ),
+			'jeito_botao'          => $this->link( 'Ver vagas', 'https://cliconsultoria.inhire.app/vagas' ),
 
 			// 9. Blog.
 			'tc_blog_titulo' => 'Conheça mais sobre a CLI',
@@ -3256,8 +3256,8 @@ class Cliconnect_Seed {
 			'ct_form_texto'         => 'Tire dúvidas, avalie possibilidades e descubra como a CLI pode apoiar sua operação com integrações, automação e IA corporativa.',
 			'ct_form_email'         => 'atendimento@cliconsultoria.com.br',
 			'ct_form_telefone'      => '(31) 4042-2051',
-			'ct_form_linkedin_url'  => 'https://www.linkedin.com/company/cliconnect/',
-			'ct_form_instagram_url' => 'https://www.instagram.com/cliconsultoria',
+			'ct_form_linkedin_url'  => 'https://www.linkedin.com/company/cli-connect/',
+			'ct_form_instagram_url' => 'https://www.instagram.com/cliconnect.io/',
 			'ct_form_whatsapp_url'  => 'https://wa.me/553140422051',
 			'ct_form_cf7_id'        => $cf7_id,
 		);
@@ -6623,7 +6623,7 @@ class Cliconnect_Seed {
 			'solucao_hero_imagem'          => $this->img( 'salesforce-hero' ),
 
 			// 2 · Pilares.
-			'solucao_pilares_titulo'   => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_pilares_titulo'   => "Integrações mais rápidas,\nseguras e inteligentes",
 			'solucao_pilares_1_icone'  => $this->img( 'salesforce-pilar-1' ),
 			'solucao_pilares_1_titulo' => 'Fluxos de aprovação automatizados',
 			'solucao_pilares_1_desc'   => 'Dispare fluxos de aprovação automaticamente sempre que houver mudanças no Salesforce',
@@ -7426,7 +7426,7 @@ class Cliconnect_Seed {
 		$campos = array(
 			// 3 · Casos de Uso.
 			'solucao_casos_eyebrow' => 'casos de uso',
-			'solucao_casos_titulo'  => 'Integrações mais rápidas, seguras e inteligentes',
+			'solucao_casos_titulo'  => "Integrações mais rápidas,\nseguras e inteligentes",
 
 			'solucao_casos_1_icone'  => $this->img( 'salesforce-caso-1' ),
 			'solucao_casos_1_titulo' => 'Lead-to-Quote',
