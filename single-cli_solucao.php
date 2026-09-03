@@ -48,6 +48,8 @@ if ( cliconnect_campo_pagina( 'solucao_dif_antes_selos' ) ) {
 	}
 }
 
+get_template_part( 'template-parts/single/breadcrumb-solucao' );
+
 foreach ( $cliconnect_secoes as $cliconnect_secao ) {
 	get_template_part( 'template-parts/solucao/' . $cliconnect_secao );
 }

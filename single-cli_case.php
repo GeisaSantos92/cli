@@ -72,6 +72,8 @@ while ( have_posts() ) :
 	);
 	?>
 
+<?php get_template_part( 'template-parts/single/breadcrumb-case' ); ?>
+
 <main id="primary" class="site-case-single">
 
 	<!-- ====================================================================

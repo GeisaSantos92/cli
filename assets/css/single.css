@@ -9,74 +9,7 @@
 
 
 /* ==========================================================================
-   1. BREADCRUMB — Home › Blog › Título do post
-   ========================================================================== */
-
-.post-breadcrumb {
-	display: flex;
-	justify-content: center;
-	background: var(--cor-fundo);
-	padding-inline: var(--margem-lateral);
-}
-
-.post-breadcrumb__inner {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	width: 100%;
-	max-width: 800px;
-	padding: 24px 0;
-}
-
-.post-breadcrumb__home {
-	display: flex;
-	align-items: center;
-	color: var(--cor-texto-muted, #9a9c9f);
-	text-decoration: none;
-	transition: color 0.15s;
-	flex-shrink: 0;
-}
-
-.post-breadcrumb__home:hover {
-	color: var(--cor-texto-marca);
-}
-
-.post-breadcrumb svg {
-	display: block;
-	flex-shrink: 0;
-}
-
-.post-breadcrumb__link {
-	font-family: var(--fonte-titulo);
-	font-size: var(--tam-body);
-	font-weight: 600;
-	line-height: 1.6;
-	color: var(--cor-texto-muted, #9a9c9f);
-	text-decoration: none;
-	white-space: nowrap;
-	flex-shrink: 0;
-	transition: color 0.15s;
-}
-
-.post-breadcrumb__link:hover {
-	color: var(--cor-texto-marca);
-}
-
-.post-breadcrumb__atual {
-	font-family: var(--fonte-titulo);
-	font-size: var(--tam-body);
-	font-weight: 600;
-	line-height: 1.6;
-	color: var(--cor-texto-alt);            /* #566f9d */
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	min-width: 0;
-}
-
-
-/* ==========================================================================
-   2. SEÇÃO PRINCIPAL — conteúdo centralizado em 800px
+   1. SEÇÃO PRINCIPAL — conteúdo centralizado em 800px
    ========================================================================== */
 
 .post-secao {

@@ -102,8 +102,13 @@ function cliconnect_print_seo_meta() {
 	$desc     = cliconnect_meta_description();
 	$og_image = cliconnect_og_image_url();
 	$og_url   = is_singular() ? (string) get_permalink() : home_url( '/' );
-	$og_type  = is_singular( 'post' ) ? 'article' : 'website';
+	$og_type  = is_singular( array( 'post', 'cli_case' ) ) ? 'article' : 'website';
 	$titulo   = wp_get_document_title();
+
+	// Locale do idioma atual (Polylang ou fallback pt_BR).
+	$locale = function_exists( 'pll_current_language' )
+		? (string) pll_current_language( 'locale' )
+		: get_locale();
 
 	if ( $desc ) {
 		printf( '<meta name="description" content="%s">' . "\n", esc_attr( $desc ) );
@@ -114,6 +119,7 @@ function cliconnect_print_seo_meta() {
 	printf( '<meta property="og:title" content="%s">' . "\n", esc_attr( $titulo ) );
 	printf( '<meta property="og:url" content="%s">' . "\n", esc_url( $og_url ) );
 	printf( '<meta property="og:site_name" content="%s">' . "\n", esc_attr( get_bloginfo( 'name' ) ) );
+	printf( '<meta property="og:locale" content="%s">' . "\n", esc_attr( $locale ) );
 
 	if ( $desc ) {
 		printf( '<meta property="og:description" content="%s">' . "\n", esc_attr( $desc ) );
@@ -121,6 +127,22 @@ function cliconnect_print_seo_meta() {
 
 	if ( $og_image ) {
 		printf( '<meta property="og:image" content="%s">' . "\n", esc_url( $og_image ) );
+		// Dimensões mínimas recomendadas para WhatsApp/Facebook/LinkedIn.
+		printf( '<meta property="og:image:width" content="1200">' . "\n" );
+		printf( '<meta property="og:image:height" content="630">' . "\n" );
+	}
+
+	// og:locale:alternate — versões traduzidas disponíveis (Polylang).
+	if ( function_exists( 'pll_the_languages' ) ) {
+		$linguas = pll_the_languages( array( 'raw' => 1 ) );
+		foreach ( $linguas as $lingua ) {
+			if ( ! empty( $lingua['current_lang'] ) ) {
+				continue;
+			}
+			if ( ! empty( $lingua['locale'] ) ) {
+				printf( '<meta property="og:locale:alternate" content="%s">' . "\n", esc_attr( $lingua['locale'] ) );
+			}
+		}
 	}
 
 	// Twitter / X Card.
@@ -309,3 +331,125 @@ function cliconnect_alt_fallback( $attr, $attachment ) {
 	return $attr;
 }
 add_filter( 'wp_get_attachment_image_attributes', 'cliconnect_alt_fallback', 20, 2 );
+
+/**
+ * Imprime JSON-LD BreadcrumbList para CPTs públicos e posts do blog.
+ *
+ * Só age quando não há plugin de SEO ativo. Gera a trilha correspondente
+ * ao breadcrumb visual exibido pelo tema:
+ * - Blog (singular):   Início › Blog › Título
+ * - Case (singular):   Início › Cases › Título
+ * - Solução (single):  Início › Soluções › [Categoria] › Título
+ *
+ * @return void
+ */
+function cliconnect_print_schema_breadcrumb() {
+	if ( cliconnect_plugin_seo_ativo() ) {
+		return;
+	}
+
+	if ( ! is_singular( array( 'post', 'cli_case', 'cli_solucao' ) ) ) {
+		return;
+	}
+
+	$home_url   = home_url( '/' );
+	$home_label = get_bloginfo( 'name' );
+	$itens      = array(
+		array(
+			'@type'    => 'ListItem',
+			'position' => 1,
+			'name'     => $home_label,
+			'item'     => $home_url,
+		),
+	);
+
+	$post_type = get_post_type();
+
+	if ( 'post' === $post_type ) {
+		$blog_page_id  = (int) get_option( 'page_for_posts' );
+		$blog_url      = $blog_page_id ? get_permalink( $blog_page_id ) : home_url( '/blog/' );
+		$itens[]       = array(
+			'@type'    => 'ListItem',
+			'position' => 2,
+			'name'     => __( 'Blog', 'cli' ),
+			'item'     => $blog_url,
+		);
+		$itens[]       = array(
+			'@type'    => 'ListItem',
+			'position' => 3,
+			'name'     => wp_strip_all_tags( get_the_title() ),
+			'item'     => (string) get_permalink(),
+		);
+	} elseif ( 'cli_case' === $post_type ) {
+		$arquivo_url = get_post_type_archive_link( 'cli_case' );
+		if ( $arquivo_url ) {
+			$itens[] = array(
+				'@type'    => 'ListItem',
+				'position' => 2,
+				'name'     => __( 'Cases', 'cli' ),
+				'item'     => $arquivo_url,
+			);
+		}
+		$itens[] = array(
+			'@type'    => 'ListItem',
+			'position' => $arquivo_url ? 3 : 2,
+			'name'     => wp_strip_all_tags( get_the_title() ),
+			'item'     => (string) get_permalink(),
+		);
+	} elseif ( 'cli_solucao' === $post_type ) {
+		$arquivo_url = get_post_type_archive_link( 'cli_solucao' );
+		$posicao     = 2;
+
+		if ( $arquivo_url ) {
+			$itens[] = array(
+				'@type'    => 'ListItem',
+				'position' => $posicao++,
+				'name'     => __( 'Soluções', 'cli' ),
+				'item'     => $arquivo_url,
+			);
+		}
+
+		$termos = get_the_terms( get_the_ID(), 'cli_categoria_solucao' );
+		if ( $termos && ! is_wp_error( $termos ) ) {
+			$cat = null;
+			foreach ( $termos as $termo ) {
+				if ( 0 === (int) $termo->parent ) {
+					$cat = $termo;
+					break;
+				}
+			}
+			if ( ! $cat ) {
+				$cat = $termos[0];
+			}
+			$cat_url = get_term_link( $cat );
+			if ( ! is_wp_error( $cat_url ) ) {
+				$itens[] = array(
+					'@type'    => 'ListItem',
+					'position' => $posicao++,
+					'name'     => $cat->name,
+					'item'     => $cat_url,
+				);
+			}
+		}
+
+		$itens[] = array(
+			'@type'    => 'ListItem',
+			'position' => $posicao,
+			'name'     => wp_strip_all_tags( get_the_title() ),
+			'item'     => (string) get_permalink(),
+		);
+	}
+
+	$schema = array(
+		'@context'        => 'https://schema.org',
+		'@type'           => 'BreadcrumbList',
+		'itemListElement' => $itens,
+	);
+
+	printf(
+		'<script type="application/ld+json">%s</script>' . "\n",
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE )
+	);
+}
+add_action( 'wp_head', 'cliconnect_print_schema_breadcrumb', 6 );

@@ -1734,3 +1734,77 @@ p {
 .faq__resposta > * + * {
 	margin-top: 0.8em;
 }
+
+
+/* ==========================================================================
+   BREADCRUMB — componente compartilhado (blog, cases, soluções).
+
+   Uso padrão (blog — 800px):   class="post-breadcrumb"
+   Uso largo (cases/soluções):  class="post-breadcrumb post-breadcrumb--larga"
+   ========================================================================== */
+
+.post-breadcrumb {
+	display: flex;
+	justify-content: center;
+	background: var(--cor-fundo);
+	padding-inline: var(--margem-lateral);
+}
+
+.post-breadcrumb__inner {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	width: 100%;
+	max-width: 800px;
+	padding: 24px 0;
+}
+
+.post-breadcrumb--larga .post-breadcrumb__inner {
+	max-width: var(--largura-conteudo);
+}
+
+.post-breadcrumb__home {
+	display: flex;
+	align-items: center;
+	color: var(--cor-texto-muted, #9a9c9f);
+	text-decoration: none;
+	transition: color 0.15s;
+	flex-shrink: 0;
+}
+
+.post-breadcrumb__home:hover {
+	color: var(--cor-texto-marca);
+}
+
+.post-breadcrumb svg {
+	display: block;
+	flex-shrink: 0;
+}
+
+.post-breadcrumb__link {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-muted, #9a9c9f);
+	text-decoration: none;
+	white-space: nowrap;
+	flex-shrink: 0;
+	transition: color 0.15s;
+}
+
+.post-breadcrumb__link:hover {
+	color: var(--cor-texto-marca);
+}
+
+.post-breadcrumb__atual {
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto-alt);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	min-width: 0;
+}
