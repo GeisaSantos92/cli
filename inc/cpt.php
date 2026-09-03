@@ -296,3 +296,41 @@ function cliconnect_admin_order_cpts( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'cliconnect_admin_order_cpts' );
+
+/**
+ * Bloqueia acesso anônimo aos endpoints REST dos CPTs privados.
+ *
+ * CPTs com public=false e show_in_rest=true ficam acessíveis via
+ * /wp-json/wp/v2/{cpt}/ sem autenticação (retornam 200 vazio, mas revelam
+ * a existência do endpoint e podem vazar dados se as capabilities mudarem).
+ * Este filtro garante que apenas usuários logados acessem esses endpoints.
+ *
+ * @param mixed           $result  Resultado a ser retornado (null = continuar normalmente).
+ * @param WP_REST_Server  $server  Instância do servidor REST.
+ * @param WP_REST_Request $request Requisição atual.
+ * @return mixed WP_Error 401 para anônimos, ou $result inalterado.
+ */
+function cliconnect_rest_proteger_cpts_privados( $result, $server, $request ) {
+	if ( null !== $result ) {
+		return $result;
+	}
+
+	$cpts_privados = array( 'cli_agente', 'cli_integracao', 'cli_cliente', 'cli_evento', 'cli_faq', 'cli_selo' );
+	$rota          = $request->get_route();
+
+	foreach ( $cpts_privados as $cpt ) {
+		if ( preg_match( '#^/wp/v2/' . preg_quote( $cpt, '#' ) . '(/|$)#', $rota ) ) {
+			if ( ! is_user_logged_in() ) {
+				return new WP_Error(
+					'rest_forbidden',
+					__( 'Acesso restrito. É necessário estar autenticado.', 'cli' ),
+					array( 'status' => 401 )
+				);
+			}
+			break;
+		}
+	}
+
+	return $result;
+}
+add_filter( 'rest_pre_dispatch', 'cliconnect_rest_proteger_cpts_privados', 10, 3 );
