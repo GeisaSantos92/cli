@@ -104,3 +104,100 @@ function cliconnect_login_logo_text() {
 	return get_bloginfo( 'name' );
 }
 add_filter( 'login_headertext', 'cliconnect_login_logo_text' );
+
+/* ==========================================================================
+   Proteção básica contra brute force via Transients
+   — max 10 tentativas por IP em janela de 15 minutos.
+   ========================================================================== */
+
+define( 'CLICONNECT_LOGIN_MAX_TENTATIVAS', 10 );
+define( 'CLICONNECT_LOGIN_BLOQUEIO_SEG', 15 * MINUTE_IN_SECONDS );
+
+/**
+ * Retorna o IP do solicitante sem confiar em cabeçalhos de proxy.
+ *
+ * @return string IP sanitizado.
+ */
+function cliconnect_login_obter_ip() {
+	return preg_replace( '/[^0-9a-fA-F:.]/', '', (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ) );
+}
+
+/**
+ * Chave de transient para o IP informado.
+ *
+ * @param string $ip IP do solicitante.
+ * @return string
+ */
+function cliconnect_login_chave( $ip ) {
+	return 'cliconnect_login_' . md5( $ip );
+}
+
+/**
+ * Incrementa o contador de falhas no transient após tentativa inválida.
+ *
+ * @return void
+ */
+function cliconnect_login_registrar_falha() {
+	$ip    = cliconnect_login_obter_ip();
+	$chave = cliconnect_login_chave( $ip );
+	set_transient( $chave, (int) get_transient( $chave ) + 1, CLICONNECT_LOGIN_BLOQUEIO_SEG );
+}
+add_action( 'wp_login_failed', 'cliconnect_login_registrar_falha' );
+
+/**
+ * Bloqueia o login quando o IP ultrapassou o limite de tentativas.
+ *
+ * @param WP_User|WP_Error|null $user     Resultado anterior do authenticate.
+ * @param string                $username Usuário submetido.
+ * @param string                $password Senha submetida.
+ * @return WP_User|WP_Error|null
+ */
+function cliconnect_login_verificar_bloqueio( $user, $username, $password ) {
+	if ( empty( $username ) && empty( $password ) ) {
+		return $user;
+	}
+
+	$falhas = (int) get_transient( cliconnect_login_chave( cliconnect_login_obter_ip() ) );
+
+	if ( $falhas >= CLICONNECT_LOGIN_MAX_TENTATIVAS ) {
+		return new WP_Error(
+			'cliconnect_too_many_attempts',
+			__( 'Muitas tentativas de login malsucedidas. Tente novamente em 15 minutos.', 'cli' )
+		);
+	}
+
+	return $user;
+}
+add_filter( 'authenticate', 'cliconnect_login_verificar_bloqueio', 30, 3 );
+
+/**
+ * Zera o contador de falhas para o IP após login bem-sucedido.
+ *
+ * @return void
+ */
+function cliconnect_login_limpar_falhas() {
+	delete_transient( cliconnect_login_chave( cliconnect_login_obter_ip() ) );
+}
+add_action( 'wp_login', 'cliconnect_login_limpar_falhas' );
+
+/**
+ * Normaliza as mensagens de erro de login para não revelar se o usuário existe.
+ *
+ * @param WP_Error $errors   Objeto de erros da tela de login.
+ * @return WP_Error
+ */
+function cliconnect_login_normalizar_erros( $errors ) {
+	if ( $errors->has_errors() && ! $errors->get_error_code() === 'cliconnect_too_many_attempts' ) {
+		$codes = $errors->get_error_codes();
+		$skip  = array( 'cliconnect_too_many_attempts', 'empty_username', 'empty_password' );
+		foreach ( $codes as $code ) {
+			if ( ! in_array( $code, $skip, true ) ) {
+				$errors->remove( $code );
+				$errors->add( $code, __( 'Nome de usuário ou senha inválidos.', 'cli' ) );
+			}
+		}
+	}
+
+	return $errors;
+}
+add_filter( 'wp_login_errors', 'cliconnect_login_normalizar_erros' );
