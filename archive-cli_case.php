@@ -44,8 +44,8 @@ foreach ( $todos_cases as $case ) {
 	     ================================================================ -->
 	<section class="cases-hero">
 		<div class="cases-hero__bg" aria-hidden="true">
-			<?php echo cliconnect_imagem_tema( 'cases-hero-bg.png', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
-			<?php echo cliconnect_imagem_tema( 'cases-hero-bg2.png', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
+			<?php echo cliconnect_imagem_tema( 'cases-hero-bg.png', array( 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
+			<?php echo cliconnect_imagem_tema( 'cases-hero-bg2.png', array( 'alt' => '', 'loading' => 'eager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
 		</div>
 		<div class="container">
 			<div class="cases-hero__chamada">
