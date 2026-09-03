@@ -187,3 +187,125 @@ function cliconnect_print_schema_org() {
 	);
 }
 add_action( 'wp_head', 'cliconnect_print_schema_org', 6 );
+
+/**
+ * Imprime JSON-LD para singles dos CPTs públicos (cli_case e cli_solucao).
+ *
+ * Só age quando não há plugin de SEO ativo. Usa dados disponíveis no post
+ * sem depender de campos ACF específicos para não quebrar se os campos mudarem.
+ *
+ * - cli_case    → Article (case study com imagem e descrição)
+ * - cli_solucao → Service (solução/produto com provider Organization)
+ *
+ * @return void
+ */
+function cliconnect_print_schema_cpt() {
+	if ( cliconnect_plugin_seo_ativo() ) {
+		return;
+	}
+
+	if ( ! is_singular( array( 'cli_case', 'cli_solucao' ) ) ) {
+		return;
+	}
+
+	$post_type = get_post_type();
+	$titulo    = wp_strip_all_tags( get_the_title() );
+	$url       = (string) get_permalink();
+	$descricao = '';
+
+	global $post;
+	if ( $post->post_excerpt ) {
+		$descricao = wp_strip_all_tags( $post->post_excerpt );
+	} elseif ( $post->post_content ) {
+		$descricao = wp_trim_words( wp_strip_all_tags( $post->post_content ), 30, '' );
+	}
+
+	$imagem_url = '';
+	if ( has_post_thumbnail() ) {
+		$src = wp_get_attachment_image_url( (int) get_post_thumbnail_id(), 'cli-case-hero' );
+		if ( $src ) {
+			$imagem_url = $src;
+		}
+	}
+
+	if ( 'cli_case' === $post_type ) {
+		$schema = array(
+			'@context'  => 'https://schema.org',
+			'@type'     => 'Article',
+			'headline'  => $titulo,
+			'url'       => $url,
+			'publisher' => array(
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+				'url'   => home_url( '/' ),
+			),
+		);
+
+		if ( $descricao ) {
+			$schema['description'] = $descricao;
+		}
+		if ( $imagem_url ) {
+			$schema['image'] = $imagem_url;
+		}
+	} else {
+		// cli_solucao → Service.
+		$schema = array(
+			'@context'    => 'https://schema.org',
+			'@type'       => 'Service',
+			'name'        => $titulo,
+			'url'         => $url,
+			'provider'    => array(
+				'@type' => 'Organization',
+				'name'  => get_bloginfo( 'name' ),
+				'url'   => home_url( '/' ),
+			),
+		);
+
+		if ( $descricao ) {
+			$schema['description'] = $descricao;
+		}
+		if ( $imagem_url ) {
+			$schema['image'] = $imagem_url;
+		}
+	}
+
+	printf(
+		'<script type="application/ld+json">%s</script>' . "\n",
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE )
+	);
+}
+add_action( 'wp_head', 'cliconnect_print_schema_cpt', 6 );
+
+/**
+ * Fallback de alt text para campos ACF de imagem sem alt preenchido.
+ *
+ * Quando o cliente faz upload sem preencher o campo "Texto alternativo" na
+ * biblioteca de mídia, wp_get_attachment_image() retorna alt="". Este filtro
+ * preenche o alt com o título do anexo (derivado do nome do arquivo) como
+ * último recurso — apenas quando nenhum alt foi armazenado no banco.
+ *
+ * Não interfere com imagens explicitamente decorativas (alt="" passado pelo
+ * tema nos atributos), pois nesses casos o alt já está no array $attr.
+ *
+ * @param array      $attr       Atributos da tag <img>.
+ * @param WP_Post    $attachment Post do anexo.
+ * @return array Atributos com alt preenchido se estava vazio.
+ */
+function cliconnect_alt_fallback( $attr, $attachment ) {
+	// alt="" passado explicitamente pelo tema = decorativa. Respeita.
+	if ( array_key_exists( 'alt', $attr ) ) {
+		return $attr;
+	}
+
+	// alt do banco também vazio → usa o título do anexo como fallback.
+	if ( empty( $attr['alt'] ) ) {
+		$titulo = trim( get_the_title( $attachment->ID ) );
+		if ( $titulo ) {
+			$attr['alt'] = $titulo;
+		}
+	}
+
+	return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'cliconnect_alt_fallback', 20, 2 );
