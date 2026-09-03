@@ -86,7 +86,7 @@ $titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__t
 				<?php echo cliconnect_imagem_tema( 'solucao-hero-grade.png', array( 'alt' => '', 'class' => 'sh-hero__grade', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 				<?php if ( $imagem_id ) : ?>
-					<?php echo wp_get_attachment_image( $imagem_id, 'large', false, array( 'class' => 'sh-hero__imagem', 'loading' => 'eager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo wp_get_attachment_image( $imagem_id, 'large', false, array( 'class' => 'sh-hero__imagem', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php endif; ?>
 
 				<div class="sh-hero__sinal">

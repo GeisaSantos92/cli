@@ -52,7 +52,7 @@ if ( ! $titulo && ! $titulo_destaque ) {
 
 		<?php if ( $imagem ) : ?>
 			<div class="cc-hero__orbita" aria-hidden="true">
-				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-hero__orbita-img', 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
+				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-hero__orbita-img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 			</div>
 		<?php endif; ?>
 
