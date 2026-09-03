@@ -206,7 +206,34 @@ function cliconnect_logo_integracao( $nome ) {
 }
 
 /**
+ * Versão do cache de CPTs — incrementada no save/delete de qualquer post.
+ *
+ * @return int
+ */
+function cliconnect_posts_cache_version() {
+	return (int) get_option( 'cliconnect_posts_cache_v', 1 );
+}
+
+/**
+ * Invalida o cache de CPTs ao salvar ou excluir qualquer post.
+ *
+ * @param int $post_id ID do post afetado.
+ * @return void
+ */
+function cliconnect_posts_cache_bust( $post_id ) {
+	if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+		return;
+	}
+	update_option( 'cliconnect_posts_cache_v', cliconnect_posts_cache_version() + 1, false );
+}
+add_action( 'save_post', 'cliconnect_posts_cache_bust' );
+add_action( 'delete_post', 'cliconnect_posts_cache_bust' );
+
+/**
  * Busca posts de um CPT de catálogo, já ordenados por menu_order.
+ *
+ * Resultados são armazenados em transients por 1 hora e invalidados
+ * automaticamente sempre que qualquer post é salvo ou excluído.
  *
  * @param string $post_type Slug do CPT.
  * @param int    $limite    Quantidade máxima (-1 para todos).
@@ -229,7 +256,18 @@ function cliconnect_posts( $post_type, $limite = -1, $extra = array() ) {
 		$extra
 	);
 
-	return get_posts( $args );
+	$version   = cliconnect_posts_cache_version();
+	$cache_key = 'cliconnect_posts_v' . $version . '_' . md5( (string) wp_json_encode( $args ) );
+	$cached    = get_transient( $cache_key );
+
+	if ( false !== $cached ) {
+		return $cached;
+	}
+
+	$posts = get_posts( $args );
+	set_transient( $cache_key, $posts, HOUR_IN_SECONDS );
+
+	return $posts;
 }
 
 /**
