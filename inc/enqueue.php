@@ -242,18 +242,18 @@ function cliconnect_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'cliconnect_enqueue_assets' );
 
 /**
- * Adiciona o atributo `defer` ao script principal do tema.
+ * Adiciona o atributo `defer` a todos os scripts enfileirados pelo tema.
  *
- * O script já está no footer (5º parâmetro = true), mas `defer` garante que
- * o parser HTML não seja bloqueado durante a execução — melhora FCP/LCP.
- * O JS usa ready() que detecta readyState corretamente com ou sem defer.
+ * Todos os handles com prefixo `cliconnect-` recebem defer. Scripts já no
+ * footer sem defer ainda podem bloquear o parser em conexões lentas; com defer
+ * o browser baixa e executa após o parsing do HTML — melhora FCP/LCP.
  *
  * @param string $tag    HTML da tag <script>.
  * @param string $handle Handle do script.
  * @return string HTML modificado.
  */
-function cliconnect_defer_script( $tag, $handle ) {
-	if ( 'cliconnect-theme' !== $handle ) {
+function cliconnect_defer_scripts( $tag, $handle ) {
+	if ( ! str_starts_with( $handle, 'cliconnect-' ) ) {
 		return $tag;
 	}
 
@@ -263,7 +263,7 @@ function cliconnect_defer_script( $tag, $handle ) {
 
 	return str_replace( ' src=', ' defer src=', $tag );
 }
-add_filter( 'script_loader_tag', 'cliconnect_defer_script', 10, 2 );
+add_filter( 'script_loader_tag', 'cliconnect_defer_scripts', 10, 2 );
 
 /**
  * Pré-carrega as fontes do texto corrido (evita FOUT no conteúdo acima da dobra).

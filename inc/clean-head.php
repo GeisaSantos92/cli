@@ -19,6 +19,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Desativa o XML-RPC — não há uso legítimo neste site.
+ *
+ * Previne brute force amplificado via system.multicall e uso do servidor
+ * como vetor de DDoS por amplificação de pingback.
+ */
+add_filter( 'xmlrpc_enabled', '__return_false' );
+
+/**
+ * Bloqueia a enumeração de usuários via REST API para não autenticados.
+ *
+ * Por padrão /wp-json/wp/v2/users/ expõe login e nome de todos os usuários
+ * sem autenticação, reduzindo o esforço de ataques de brute force pela metade.
+ *
+ * @param array $endpoints Endpoints REST registrados.
+ * @return array Endpoints sem a rota de usuários para anônimos.
+ */
+function cliconnect_rest_ocultar_usuarios( $endpoints ) {
+	if ( is_user_logged_in() ) {
+		return $endpoints;
+	}
+
+	unset( $endpoints['/wp/v2/users'] );
+	unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+
+	return $endpoints;
+}
+add_filter( 'rest_endpoints', 'cliconnect_rest_ocultar_usuarios' );
+
+/**
  * Remove metatags e links desnecessários do wp_head.
  *
  * @return void
