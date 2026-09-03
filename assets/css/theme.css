@@ -1808,3 +1808,57 @@ p {
 	text-overflow: ellipsis;
 	min-width: 0;
 }
+
+/* --- Compliance / Selos (compartilhado: home + CLI Connect) ---------------- */
+
+.compliance {
+	background: var(--cor-fundo-suave);
+}
+
+/*
+ * 728px é o que faz o H2 quebrar em "…quando assunto é / compliance e
+ * segurança", como no Figma. Precisa vencer o .secao__cabecalho .secao__titulo
+ * de 940px, que vale para as outras seções.
+ */
+.compliance .secao__cabecalho .compliance__titulo {
+	max-width: min(100%, 728px);
+}
+
+.compliance__grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	max-width: 1059px;
+	margin-inline: auto;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-card);
+	background: var(--cor-fundo);
+	overflow: hidden;
+}
+
+.compliance__selo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 32px 24px;
+	border-right: 1px solid var(--cor-borda);
+	border-bottom: 1px solid var(--cor-borda);
+	min-height: 160px;
+}
+
+.compliance__selo img {
+	max-height: 96px;
+	width: auto;
+	object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+	.compliance__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 640px) {
+	.compliance__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

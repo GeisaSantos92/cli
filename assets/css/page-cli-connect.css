@@ -2213,47 +2213,7 @@
 }
 
 .compliance {
-	background: var(--cor-fundo-suave);
 	padding-top: 120px;
 	padding-bottom: 160px;
-}
-
-.compliance__grid {
-	background: var(--cor-fundo);
-	border: 1px solid var(--cor-borda);
-	border-radius: var(--raio-card);
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	margin-inline: auto;
-	max-width: 1059px;
-	overflow: hidden;
-}
-
-.compliance__selo {
-	align-items: center;
-	border-bottom: 1px solid var(--cor-borda);
-	border-right: 1px solid var(--cor-borda);
-	display: flex;
-	justify-content: center;
-	min-height: 160px;
-	padding: 32px 24px;
-}
-
-.compliance__selo img {
-	max-height: 96px;
-	object-fit: contain;
-	width: auto;
-}
-
-@media (max-width: 1024px) {
-	.compliance__grid {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-@media (max-width: 640px) {
-	.compliance__grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
 }
 
