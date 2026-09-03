@@ -42,3 +42,37 @@ function cliconnect_print_analytics() {
 	echo "\n" . $snippet . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput
 }
 add_action( 'wp_head', 'cliconnect_print_analytics', 20 );
+
+/**
+ * Imprime o iframe <noscript> do GTM logo após a abertura do <body>.
+ *
+ * Necessário para rastrear usuários com JavaScript desabilitado.
+ * Extrai o ID GTM-XXXXXX do snippet salvo no Customizer — sem duplicar
+ * a configuração. Respeita as mesmas condições de cliconnect_print_analytics().
+ *
+ * @return void
+ */
+function cliconnect_print_gtm_noscript() {
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		return;
+	}
+
+	if ( is_user_logged_in() ) {
+		return;
+	}
+
+	$snippet = (string) ( get_theme_mod( 'cliconnect_ga_tag' ) ?? '' );
+
+	// Extrai o GTM ID do snippet (ex.: GTM-P2W894RT).
+	if ( ! preg_match( '/GTM-[A-Z0-9]+/', $snippet, $matches ) ) {
+		return;
+	}
+
+	$gtm_id = $matches[0];
+
+	printf(
+		'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=%s" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>' . "\n",
+		esc_attr( $gtm_id )
+	);
+}
+add_action( 'wp_body_open', 'cliconnect_print_gtm_noscript', 1 );
