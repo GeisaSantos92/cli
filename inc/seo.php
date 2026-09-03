@@ -468,28 +468,19 @@ add_action( 'wp_head', 'cliconnect_print_schema_breadcrumb', 6 );
  * - attachment: página de anexo não tem conteúdo próprio; indexá-la dilui a
  *   autoridade do domínio e raramente gera tráfego qualificado.
  *
- * @param WP_Sitemap_Provider[] $providers Mapa de provedores registrados.
- * @return WP_Sitemap_Provider[]
+ * @param WP_Post_Type[] $post_types Mapa de post types candidatos ao sitemap.
+ * @return WP_Post_Type[]
  */
-function cliconnect_sitemap_remover_attachment( $providers ) {
+function cliconnect_sitemap_filtrar_post_types( $post_types ) {
 	if ( cliconnect_plugin_seo_ativo() ) {
-		return $providers;
+		return $post_types;
 	}
 
-	if ( isset( $providers['posts'] ) && method_exists( $providers['posts'], 'get_object_subtypes' ) ) {
-		// Filtramos no nível do post type, não no provider inteiro.
-		add_filter(
-			'wp_sitemaps_post_types',
-			function ( $post_types ) {
-				unset( $post_types['attachment'] );
-				return $post_types;
-			}
-		);
-	}
+	unset( $post_types['attachment'] );
 
-	return $providers;
+	return $post_types;
 }
-add_filter( 'wp_sitemaps_add_provider', 'cliconnect_sitemap_remover_attachment', 10, 1 );
+add_filter( 'wp_sitemaps_post_types', 'cliconnect_sitemap_filtrar_post_types' );
 
 /**
  * Remove taxonomias sem conteúdo semântico do sitemap nativo.
