@@ -35,7 +35,7 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 
 			<?php if ( $cta_texto && $cta_url ) : ?>
 				<a class="botao botao--branco" href="<?php echo esc_url( $cta_url ); ?>">
-					<?php echo cliconnect_icone( 'whatsapp' ); // SVG estático. ?>
+					<?php echo cliconnect_icone( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 					<?php echo esc_html( $cta_texto ); ?>
 				</a>
 			<?php endif; ?>
@@ -127,7 +127,7 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 	data-voltar-ao-topo
 	aria-label="<?php esc_attr_e( 'Voltar ao topo', 'cli' ); ?>"
 >
-	<?php echo cliconnect_icone( 'chevron-cima', 28 ); // SVG estático. ?>
+	<?php echo cliconnect_icone( 'chevron-cima', 28 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 </button>
 
 <?php if ( $whatsapp ) : ?>
@@ -138,7 +138,7 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 	rel="noopener noreferrer"
 	aria-label="<?php esc_attr_e( 'Falar no WhatsApp', 'cli' ); ?>"
 >
-	<?php echo cliconnect_icone( 'whatsapp', 32 ); // SVG estático. ?>
+	<?php echo cliconnect_icone( 'whatsapp', 32 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 </a>
 <?php endif; ?>
 

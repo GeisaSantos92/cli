@@ -489,7 +489,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'hero_eyebrow'         => 'TRABAJA CON NOSOTROS',
 			'hero_titulo'          => 'Construya soluciones que mueven a grandes empresas.',
 			'hero_texto'           => 'En CLI forma parte de un equipo que conecta tecnologías, simplifica operaciones y ayuda a las empresas a evolucionar todos los días. Trabaje en remoto, participe en proyectos desafiantes y crezca junto a profesionales apasionados por la innovación.',
-			'hero_botao'           => $this->link_traduzido( 'Vea nuestras vacantes', '/trabalhe-conosco/#vagas' ),
+			'hero_botao'           => $this->link_traduzido( 'Vea nuestras vacantes', 'https://cliconsultoria.inhire.app/vagas' ),
 			'sobre_titulo'         => 'Somos CLI',
 			'sobre_texto_1'        => 'Con 13 años de historia, somos una empresa de tecnología y colaboración que conecta cultura, personas y soluciones. Nuestro propósito es transformar continuamente la capacidad técnica en capacidad humana, generando un impacto real para clientes, socios y para el mundo.',
 			'sobre_texto_2'        => 'Tenemos una trayectoria sólida, con más de 75 clientes activos y más de 500 integraciones listas para usar. Creemos que las grandes soluciones las construyen equipos que colaboran, aprenden constantemente y tienen autonomía para hacer que las cosas pasen.',
@@ -503,7 +503,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'tc_frase_parte_2'     => 'Pero son las personas las que transforman negocios.',
 			'valores_eyebrow'      => 'VALORES',
 			'valores_titulo'       => 'Más que integrar tecnología, integramos personas',
-			'valores_cta'          => $this->link_traduzido( 'Vea nuestras vacantes', '/trabalhe-conosco/#vagas' ),
+			'valores_cta'          => $this->link_traduzido( 'Vea nuestras vacantes', 'https://cliconsultoria.inhire.app/vagas' ),
 			'valor_1_titulo'       => 'Confianza',
 			'valor_1_texto'        => 'Actuamos con transparencia, seguridad y respeto. Cumplimos lo que prometemos y construimos relaciones de confianza duraderas con clientes y equipos.',
 			'valor_2_titulo'       => 'Igualdad',
@@ -543,7 +543,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'jeito_item_4_texto'   => 'Estudiamos, documentamos, registramos. Aprender es parte del trabajo.',
 			'jeito_item_5_titulo'  => 'Compartir',
 			'jeito_item_5_texto'   => 'Compartimos conocimiento, tiempo y oportunidades.',
-			'jeito_botao'          => $this->link_traduzido( 'Ver vacantes', '/trabalhe-conosco/#vagas' ),
+			'jeito_botao'          => $this->link_traduzido( 'Ver vacantes', 'https://cliconsultoria.inhire.app/vagas' ),
 			'tc_blog_titulo'       => 'Conozca más sobre CLI',
 		);
 	}

@@ -38,9 +38,9 @@ $categoria_link = ! empty( $categorias ) ? get_category_link( $categorias[0]->te
 				href="<?php echo esc_url( home_url( '/' ) ); ?>"
 				aria-label="<?php esc_attr_e( 'Início', 'cli' ); ?>"
 			>
-				<?php echo cliconnect_icone( 'casa', 20 ); // SVG estático — lista fechada. ?>
+				<?php echo cliconnect_icone( 'casa', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 			</a>
-			<?php echo cliconnect_icone( 'seta-direita', 16 ); ?>
+			<?php echo cliconnect_icone( 'seta-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 			<span class="blog-destaque__breadcrumb-atual">
 				<?php esc_html_e( 'Blog', 'cli' ); ?>
 			</span>
@@ -54,7 +54,7 @@ $categoria_link = ! empty( $categorias ) ? get_category_link( $categorias[0]->te
 				aria-label="<?php echo esc_attr( $titulo ); ?>"
 			>
 				<div class="blog-destaque__imagem">
-					<?php echo cliconnect_thumb( $post_destaque->ID, 'cli-blog-destaque', array( 'alt' => '' ) ); ?>
+					<?php echo cliconnect_thumb( $post_destaque->ID, 'cli-blog-destaque', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 				</div>
 			</a>
 

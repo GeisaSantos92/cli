@@ -71,7 +71,7 @@ function cliconnect_logo( $variant = 'claro', $width = 120 ) {
 	}
 
 	if ( $logo_id ) {
-		echo wp_get_attachment_image(
+		echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 			$logo_id,
 			'full',
 			false,
@@ -80,7 +80,7 @@ function cliconnect_logo( $variant = 'claro', $width = 120 ) {
 				'style' => 'width:' . $width . 'px;height:auto;',
 				'alt'   => esc_attr( get_bloginfo( 'name' ) ),
 			)
-		); // wp_get_attachment_image já escapa.
+		);
 
 		return;
 	}
@@ -175,8 +175,8 @@ function cliconnect_seletor_idiomas() {
 			aria-controls="seletor-idiomas"
 			aria-label="<?php esc_attr_e( 'Mudar o idioma', 'cli' ); ?>"
 		>
-			<?php echo cliconnect_icone( 'portal', 20 ); // SVG estático. ?>
-			<?php echo cliconnect_icone( 'chevron-baixo', 16 ); // SVG estático. ?>
+			<?php echo cliconnect_icone( 'portal', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
+			<?php echo cliconnect_icone( 'chevron-baixo', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 		</button>
 
 		<ul class="site-header__idiomas-lista" id="seletor-idiomas">

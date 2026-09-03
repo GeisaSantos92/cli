@@ -130,7 +130,7 @@ if ( ! $titulo ) {
 		<div class="ct-formulario__col-form">
 			<div class="ct-form-wrapper">
 				<?php if ( $cf7_id && shortcode_exists( 'contact-form-7' ) ) : ?>
-					<?php echo do_shortcode( '[contact-form-7 id="' . absint( $cf7_id ) . '"]' ); ?>
+					<?php echo do_shortcode( '[contact-form-7 id="' . absint( $cf7_id ) . '"]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- do_shortcode com shortcode registrado e ID sanitizado com absint(). ?>
 				<?php else : ?>
 					<p class="ct-form-aviso">
 						<?php esc_html_e( 'Formulário não configurado. Insira o ID do formulário CF7 no painel ACF.', 'cli' ); ?>

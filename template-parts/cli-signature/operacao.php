@@ -70,7 +70,7 @@ if ( ! $titulo_1 && ! $cards ) {
 				<?php foreach ( $cards as $card ) : ?>
 					<li class="cs-op-card">
 						<div class="cs-op-card__icone-wrap" aria-hidden="true">
-							<?php echo cliconnect_icone_ms( 'automation' ); ?>
+							<?php echo cliconnect_icone_ms( 'automation' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone_ms retorna HTML seguro de ícone Material Symbols. ?>
 						</div>
 						<p class="cs-op-card__titulo"><?php echo esc_html( $card['titulo'] ); ?></p>
 						<?php if ( $card['texto'] ) : ?>

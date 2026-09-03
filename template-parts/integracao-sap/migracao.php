@@ -51,10 +51,10 @@ $cloud    = $uri . '/assets/img/sap-mig-cloud.svg';
 						<a
 							class="sap-migracao__botao"
 							href="<?php echo esc_url( $botao['url'] ); ?>"
-							<?php echo ( '_blank' === ( $botao['target'] ?? '' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
+							<?php echo ( '_blank' === ( $botao['target'] ?? '' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>
 						>
 							<?php echo esc_html( $botao['title'] ); ?>
-							<?php echo cliconnect_icone( 'seta-direita', 24 ); ?>
+							<?php echo cliconnect_icone( 'seta-direita', 24 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 						</a>
 					</div>
 				<?php endif; ?>

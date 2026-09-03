@@ -49,7 +49,7 @@ if ( ! $titulo && ! $beneficios ) {
 				<article class="tc-beneficio">
 					<?php if ( $beneficio['icone'] ) : ?>
 						<span class="tc-beneficio__icone">
-							<?php echo cliconnect_icone_ms( $beneficio['icone'] ); ?>
+							<?php echo cliconnect_icone_ms( $beneficio['icone'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone_ms retorna HTML seguro de ícone Material Symbols. ?>
 						</span>
 					<?php endif; ?>
 					<h3 class="tc-beneficio__titulo"><?php echo esc_html( $beneficio['nome'] ); ?></h3>

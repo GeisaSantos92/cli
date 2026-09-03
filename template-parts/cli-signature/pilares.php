@@ -68,7 +68,7 @@ if ( ! $titulo && ! $cards ) {
 						<?php if ( $card['imagem'] ) : ?>
 							<div class="cs-pilar-card__imagem">
 								<?php
-								echo wp_get_attachment_image(
+								echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 									$card['imagem'],
 									'large',
 									false,

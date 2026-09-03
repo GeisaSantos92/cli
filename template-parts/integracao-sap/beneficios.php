@@ -63,12 +63,12 @@ $elipse = $uri . '/assets/img/sap-ben-elipse.svg';
 				<?php foreach ( $itens as $idx => $item ) : ?>
 					<li role="presentation">
 						<button
-							class="sap-beneficios__topico<?php echo 0 === $idx ? ' sap-beneficios__topico--ativo' : ''; ?>"
+							class="sap-beneficios__topico<?php echo 0 === $idx ? ' sap-beneficios__topico--ativo' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>"
 							role="tab"
-							aria-selected="<?php echo 0 === $idx ? 'true' : 'false'; ?>"
-							aria-controls="sap-ben-painel-<?php echo $idx; ?>"
-							id="sap-ben-tab-<?php echo $idx; ?>"
-							data-tab="<?php echo $idx; ?>"
+							aria-selected="<?php echo 0 === $idx ? 'true' : 'false'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal booleana. ?>"
+							aria-controls="sap-ben-painel-<?php echo (int) $idx; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>"
+							id="sap-ben-tab-<?php echo (int) $idx; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>"
+							data-tab="<?php echo (int) $idx; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>"
 						>
 							<?php echo esc_html( $item['rotulo'] ); ?>
 						</button>
@@ -80,14 +80,14 @@ $elipse = $uri . '/assets/img/sap-ben-elipse.svg';
 			<div class="sap-beneficios__paineis">
 				<?php foreach ( $itens as $idx => $item ) : ?>
 					<div
-						class="sap-beneficios__painel<?php echo 0 === $idx ? ' sap-beneficios__painel--ativo' : ''; ?>"
+						class="sap-beneficios__painel<?php echo 0 === $idx ? ' sap-beneficios__painel--ativo' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>"
 						role="tabpanel"
-						id="sap-ben-painel-<?php echo $idx; ?>"
-						aria-labelledby="sap-ben-tab-<?php echo $idx; ?>"
-						<?php echo 0 !== $idx ? 'hidden' : ''; ?>
+						id="sap-ben-painel-<?php echo (int) $idx; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>"
+						aria-labelledby="sap-ben-tab-<?php echo (int) $idx; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>"
+						<?php echo 0 !== $idx ? 'hidden' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>
 					>
 						<div class="sap-beneficios__check-wrap" aria-hidden="true">
-							<?php echo cliconnect_icone( 'check', 20 ); ?>
+							<?php echo cliconnect_icone( 'check', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 						</div>
 						<p class="sap-beneficios__desc"><?php echo esc_html( $item['desc'] ); ?></p>
 						<img class="sap-beneficios__elipse" src="<?php echo esc_url( $elipse ); ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">

@@ -54,7 +54,7 @@ if ( ! $titulo ) {
 
 		<?php if ( $imagem ) : ?>
 			<div class="cc-pratica__visual">
-				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-pratica__img', 'alt' => '' ) ); ?>
+				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-pratica__img', 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 			</div>
 		<?php endif; ?>
 

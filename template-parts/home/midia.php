@@ -29,7 +29,7 @@ if ( ! $titulo ) {
 }
 ?>
 
-<section class="secao midia<?php echo $invertida ? ' midia--invertida' : ''; ?>">
+<section class="secao midia<?php echo $invertida ? ' midia--invertida' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>">
 	<div class="container">
 		<div class="midia__grid">
 
@@ -54,7 +54,7 @@ if ( ! $titulo ) {
 			</div>
 
 			<?php if ( $imagem ) : ?>
-				<div class="midia__imagem"><?php echo $imagem; // wp_get_attachment_image escapa. ?></div>
+				<div class="midia__imagem"><?php echo $imagem; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente via cliconnect_campo_imagem(). ?></div>
 			<?php endif; ?>
 
 		</div>

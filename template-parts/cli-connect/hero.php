@@ -44,7 +44,7 @@ if ( ! $titulo && ! $titulo_destaque ) {
 			<?php endif; ?>
 
 			<?php if ( $botao ) : ?>
-				<a class="cc-hero__botao botao botao--primario" href="<?php echo esc_url( $botao['url'] ?? '' ); ?>"<?php echo ! empty( $botao['target'] ) ? ' target="_blank" rel="noopener"' : ''; ?>>
+				<a class="cc-hero__botao botao botao--primario" href="<?php echo esc_url( $botao['url'] ?? '' ); ?>"<?php echo ! empty( $botao['target'] ) ? ' target="_blank" rel="noopener"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>>
 					<?php echo esc_html( $botao['title'] ?? '' ); ?>
 				</a>
 			<?php endif; ?>
@@ -52,7 +52,7 @@ if ( ! $titulo && ! $titulo_destaque ) {
 
 		<?php if ( $imagem ) : ?>
 			<div class="cc-hero__orbita" aria-hidden="true">
-				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-hero__orbita-img', 'alt' => '' ) ); ?>
+				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-hero__orbita-img', 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 			</div>
 		<?php endif; ?>
 

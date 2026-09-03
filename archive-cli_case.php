@@ -44,8 +44,8 @@ foreach ( $todos_cases as $case ) {
 	     ================================================================ -->
 	<section class="cases-hero">
 		<div class="cases-hero__bg" aria-hidden="true">
-			<?php echo cliconnect_imagem_tema( 'cases-hero-bg.png', array( 'alt' => '' ) ); ?>
-			<?php echo cliconnect_imagem_tema( 'cases-hero-bg2.png', array( 'alt' => '' ) ); ?>
+			<?php echo cliconnect_imagem_tema( 'cases-hero-bg.png', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
+			<?php echo cliconnect_imagem_tema( 'cases-hero-bg2.png', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
 		</div>
 		<div class="container">
 			<div class="cases-hero__chamada">
@@ -95,7 +95,7 @@ foreach ( $todos_cases as $case ) {
 								<?php
 								$logo_img_id = absint( get_field( 'logo', $case->ID ) ?? 0 );
 								if ( $logo_img_id ) {
-									echo wp_get_attachment_image( $logo_img_id, 'cli-logo', false, array( 'alt' => esc_attr( $titulo ) ) );
+									echo wp_get_attachment_image( $logo_img_id, 'cli-logo', false, array( 'alt' => esc_attr( $titulo ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 								}
 								?>
 							</div>
@@ -170,7 +170,7 @@ foreach ( $todos_cases as $case ) {
 
 								<div class="case-andamento__logo">
 									<?php if ( $logo_id ) : ?>
-										<?php echo wp_get_attachment_image( $logo_id, 'cli-logo', false, array( 'alt' => get_the_title( $case ) ) ); ?>
+										<?php echo wp_get_attachment_image( $logo_id, 'cli-logo', false, array( 'alt' => get_the_title( $case ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 									<?php endif; ?>
 								</div>
 

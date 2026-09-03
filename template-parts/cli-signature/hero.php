@@ -35,7 +35,7 @@ if ( ! $titulo ) {
 	<?php if ( $bg_id ) : ?>
 		<div class="cs-hero__bg" aria-hidden="true">
 			<?php
-			echo wp_get_attachment_image(
+			echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 				$bg_id,
 				'full',
 				false,
@@ -71,7 +71,7 @@ if ( ! $titulo ) {
 				<div class="cs-hero__acoes">
 					<a class="botao botao--primario"
 					   href="<?php echo esc_url( $botao['url'] ?? '' ); ?>"
-					   <?php echo ! empty( $botao['target'] ) ? 'target="_blank" rel="noopener"' : ''; ?>>
+					   <?php echo ! empty( $botao['target'] ) ? 'target="_blank" rel="noopener"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>>
 						<?php echo esc_html( $botao['title'] ?? '' ); ?>
 					</a>
 				</div>

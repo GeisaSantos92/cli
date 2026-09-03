@@ -305,7 +305,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'hero_eyebrow'         => 'CAREERS',
 			'hero_titulo'          => 'Build solutions that move large companies forward.',
 			'hero_texto'           => 'At CLI you join a team that connects technologies, simplifies operations and helps companies evolve every day. Work remotely, take on challenging projects and grow alongside people who are passionate about innovation.',
-			'hero_botao'           => $this->link_traduzido( 'See our openings', '/trabalhe-conosco/#vagas' ),
+			'hero_botao'           => $this->link_traduzido( 'See our openings', 'https://cliconsultoria.inhire.app/vagas' ),
 			'sobre_titulo'         => 'We are CLI',
 			'sobre_texto_1'        => 'With 13 years of history, we are a technology and partnership company that connects culture, people and solutions. Our purpose is to keep turning technical skill into human capability, generating real impact for clients, partners and the world.',
 			'sobre_texto_2'        => 'We have a solid track record, with more than 75 active clients and over 500 integrations ready to use. We believe great solutions are built by teams that collaborate, learn constantly and have the autonomy to make things happen.',
@@ -319,7 +319,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'tc_frase_parte_2'     => 'But it is people who transform businesses.',
 			'valores_eyebrow'      => 'VALUES',
 			'valores_titulo'       => 'More than integrating technology, we integrate people',
-			'valores_cta'          => $this->link_traduzido( 'See our openings', '/trabalhe-conosco/#vagas' ),
+			'valores_cta'          => $this->link_traduzido( 'See our openings', 'https://cliconsultoria.inhire.app/vagas' ),
 			'valor_1_titulo'       => 'Trust',
 			'valor_1_texto'        => 'We act with transparency, safety and respect. We deliver what we promise and build lasting relationships of trust with clients and teams.',
 			'valor_2_titulo'       => 'Equality',
@@ -359,7 +359,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'jeito_item_4_texto'   => 'We study, document and record. Learning is part of the job.',
 			'jeito_item_5_titulo'  => 'Sharing',
 			'jeito_item_5_texto'   => 'We share knowledge, time and opportunities.',
-			'jeito_botao'          => $this->link_traduzido( 'See openings', '/trabalhe-conosco/#vagas' ),
+			'jeito_botao'          => $this->link_traduzido( 'See openings', 'https://cliconsultoria.inhire.app/vagas' ),
 			'tc_blog_titulo'       => 'Get to know CLI better',
 		);
 	}

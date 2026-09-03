@@ -64,7 +64,7 @@ $logos_prova = cliconnect_posts(
 									<?php
 									// 'medium' e não 'thumbnail': o thumbnail é cortado em quadrado
 									// e decepa as laterais dos logos horizontais.
-									echo cliconnect_thumb( $logo_cliente->ID, 'medium', array( 'alt' => get_the_title( $logo_cliente ) ) );
+									echo cliconnect_thumb( $logo_cliente->ID, 'medium', array( 'alt' => get_the_title( $logo_cliente ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente.
 									?>
 								</span>
 							<?php endforeach; ?>

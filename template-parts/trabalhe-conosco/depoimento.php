@@ -27,7 +27,7 @@ if ( ! $texto ) {
 		<div class="tc-depoimento__autor">
 			<?php if ( $foto ) : ?>
 				<div class="tc-depoimento__foto">
-					<?php echo wp_get_attachment_image( $foto, 'medium', false, array( 'alt' => esc_attr( $nome ), 'loading' => 'lazy' ) ); ?>
+					<?php echo wp_get_attachment_image( $foto, 'medium', false, array( 'alt' => esc_attr( $nome ), 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 				</div>
 			<?php endif; ?>
 			<?php if ( $nome ) : ?>

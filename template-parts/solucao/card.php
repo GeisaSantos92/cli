@@ -26,7 +26,7 @@ $nome        = get_the_title();
 		<div class="sl-card__logo">
 			<?php
 			if ( has_post_thumbnail() ) {
-				echo wp_get_attachment_image(
+				echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 					get_post_thumbnail_id(),
 					'medium',
 					false,

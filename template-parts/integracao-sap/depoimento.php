@@ -84,7 +84,7 @@ $vector_url = get_template_directory_uri() . '/assets/img/sap-dep-vector.svg';
 					<a
 						class="sap-depoimento__botao"
 						href="<?php echo esc_url( $botao['url'] ); ?>"
-						<?php echo ! empty( $botao['target'] ) ? 'target="' . esc_attr( $botao['target'] ) . '" rel="noopener noreferrer"' : ''; ?>
+						<?php echo ! empty( $botao['target'] ) ? 'target="' . esc_attr( $botao['target'] ) . '" rel="noopener noreferrer"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- target é esc_attr escapado; rel é string literal. ?>
 					>
 						<?php echo esc_html( $botao['title'] ); ?>
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">

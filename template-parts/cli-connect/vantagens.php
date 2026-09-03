@@ -57,7 +57,7 @@ $icones_ms = array(
 				?>
 				<div class="cc-vantagens__card">
 					<div class="cc-vantagens__icone-wrap" aria-hidden="true">
-						<?php echo cliconnect_icone_ms( $icones_ms[ $i ] ?? '' ); ?>
+						<?php echo cliconnect_icone_ms( $icones_ms[ $i ] ?? '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone_ms retorna HTML seguro de ícone Material Symbols. ?>
 					</div>
 					<h3 class="cc-vantagens__card-titulo"><?php echo esc_html( $card_titulo ); ?></h3>
 					<?php if ( $card_texto ) : ?>

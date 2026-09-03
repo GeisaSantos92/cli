@@ -39,7 +39,7 @@ $foto_id = absint( cliconnect_campo_pagina( 'sobre_foto_1', 0 ) );
 
 		<?php if ( $foto_id ) : ?>
 			<div class="tc-sobre__imagem" aria-hidden="true">
-				<?php echo wp_get_attachment_image( $foto_id, 'large', false, array( 'alt' => '', 'loading' => 'lazy' ) ); ?>
+				<?php echo wp_get_attachment_image( $foto_id, 'large', false, array( 'alt' => '', 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 			</div>
 		<?php endif; ?>
 

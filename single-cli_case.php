@@ -86,7 +86,7 @@ while ( have_posts() ) :
 				<?php if ( $retrato_id ) : ?>
 					<div class="case-intro__imagem">
 						<?php
-						echo wp_get_attachment_image(
+						echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 							$retrato_id,
 							'cli-case-hero',
 							false,
@@ -139,7 +139,7 @@ while ( have_posts() ) :
 											 * object-fit: contain do .case-topicos__logo-box img
 											 * controla a exibição sem distorção.
 											 */
-											echo wp_get_attachment_image(
+											echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 												$logo_id,
 												'full',
 												false,
@@ -181,7 +181,7 @@ while ( have_posts() ) :
 						<div class="case-video">
 							<?php if ( $retrato_id ) : ?>
 								<?php
-								echo wp_get_attachment_image(
+								echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 									$retrato_id,
 									'full',
 									false,
@@ -197,7 +197,7 @@ while ( have_posts() ) :
 									rel="noopener noreferrer"
 									aria-label="<?php esc_attr_e( 'Assistir ao vídeo', 'cli' ); ?>"
 								>
-									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); ?>
+									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
 								</a>
 							<?php endif; ?>
 						</div>
@@ -329,7 +329,7 @@ while ( have_posts() ) :
 								<?php if ( $outro_logo_id ) : ?>
 									<div class="case-outro-card__logo">
 										<?php
-										echo wp_get_attachment_image(
+										echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 											$outro_logo_id,
 											'medium',
 											false,

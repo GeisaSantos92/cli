@@ -38,7 +38,7 @@ $titulo  = cliconnect_campo( 'eventos_titulo' );
 
 					<?php if ( has_post_thumbnail( $evento->ID ) ) : ?>
 						<div class="evento-card__imagem">
-							<?php echo cliconnect_thumb( $evento->ID, 'large', array( 'alt' => get_the_title( $evento ) ) ); ?>
+							<?php echo cliconnect_thumb( $evento->ID, 'large', array( 'alt' => get_the_title( $evento ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 						</div>
 					<?php endif; ?>
 

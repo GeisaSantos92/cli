@@ -59,7 +59,7 @@ if ( ! $titulo_azul && ! $titulo_escuro ) {
 		<?php if ( $imagem_id ) : ?>
 			<div class="sap-hero__imagem-wrap">
 				<?php
-				echo wp_get_attachment_image(
+				echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 					$imagem_id,
 					'large',
 					false,

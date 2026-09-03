@@ -40,7 +40,7 @@ if ( ! $posts_grade ) {
 						aria-label="<?php echo esc_attr( $titulo ); ?>"
 					>
 						<div class="blog-card__imagem">
-							<?php echo cliconnect_thumb( $artigo->ID, 'cli-blog-card', array( 'alt' => '' ) ); ?>
+							<?php echo cliconnect_thumb( $artigo->ID, 'cli-blog-card', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 						</div>
 					</a>
 

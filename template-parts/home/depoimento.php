@@ -36,7 +36,7 @@ if ( ! $destaque_id && ! $metricas ) {
 				<div class="depoimento__conteudo">
 					<?php if ( $logo ) : ?>
 						<span class="depoimento__logo">
-							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $destaque_id ) ) ); ?>
+							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $destaque_id ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 						</span>
 					<?php endif; ?>
 
@@ -56,7 +56,7 @@ if ( ! $destaque_id && ! $metricas ) {
 
 				<?php if ( $retrato ) : ?>
 				<div class="depoimento__midia">
-					<?php echo wp_get_attachment_image( $retrato, 'large', false, array( 'alt' => '' ) ); ?>
+					<?php echo wp_get_attachment_image( $retrato, 'large', false, array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 
 					<?php if ( $video ) : ?>
 						<a
@@ -65,7 +65,7 @@ if ( ! $destaque_id && ! $metricas ) {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<span><?php echo cliconnect_icone( 'play', 30 ); // SVG estático. ?></span>
+							<span><?php echo cliconnect_icone( 'play', 30 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?></span>
 							<span class="visually-hidden">
 								<?php
 								/* translators: %s: nome do case */
@@ -100,7 +100,7 @@ if ( ! $destaque_id && ! $metricas ) {
 
 					<?php if ( $logo ) : ?>
 						<span class="case-metrica__logo">
-							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $case_id ) ) ); ?>
+							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $case_id ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 						</span>
 					<?php endif; ?>
 				</article>

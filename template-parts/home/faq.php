@@ -50,7 +50,7 @@ $titulo  = cliconnect_campo( 'faq_titulo' );
 							data-faq-gatilho
 						>
 							<span><?php echo esc_html( get_the_title( $pergunta ) ); ?></span>
-							<?php echo cliconnect_icone( 'chevron-baixo', 20 ); // SVG estático. ?>
+							<?php echo cliconnect_icone( 'chevron-baixo', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 						</button>
 					</h3>
 

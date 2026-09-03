@@ -33,11 +33,11 @@ $legenda = cliconnect_campo( 'agentes_legenda' );
 					$status      = get_field( 'status', $agente->ID ) ?? '';
 					$integracoes = get_field( 'integracoes', $agente->ID ) ?? array();
 					?>
-					<article class="agente-card" <?php echo $passada ? 'aria-hidden="true"' : ''; ?>>
+					<article class="agente-card" <?php echo $passada ? 'aria-hidden="true"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>>
 
 						<header class="agente-card__topo">
 							<span class="agente-card__icone">
-								<?php echo cliconnect_icone( $icone ); // SVG estático. ?>
+								<?php echo cliconnect_icone( $icone ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 							</span>
 							<?php if ( $status ) : ?>
 								<span class="agente-card__status"><?php echo esc_html( $status ); ?></span>
@@ -56,7 +56,7 @@ $legenda = cliconnect_campo( 'agentes_legenda' );
 							<div class="agente-card__integracoes">
 								<?php foreach ( $integracoes as $integracao_id ) : ?>
 									<span class="agente-card__integracao">
-										<?php echo cliconnect_thumb( $integracao_id, 'medium', array( 'alt' => '' ) ); ?>
+										<?php echo cliconnect_thumb( $integracao_id, 'medium', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 									</span>
 								<?php endforeach; ?>
 							</div>

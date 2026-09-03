@@ -46,7 +46,7 @@ for ( $i = 1; $i <= 3; $i++ ) {
 					<div class="cc-solucao__card">
 						<?php if ( $card['imagem'] ) : ?>
 							<div class="cc-solucao__card-imagem">
-								<?php echo wp_get_attachment_image( (int) $card['imagem'], 'large', false, array( 'class' => 'cc-solucao__card-img', 'alt' => '' ) ); ?>
+								<?php echo wp_get_attachment_image( (int) $card['imagem'], 'large', false, array( 'class' => 'cc-solucao__card-img', 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 							</div>
 						<?php endif; ?>
 

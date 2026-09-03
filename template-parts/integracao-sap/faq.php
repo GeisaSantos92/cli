@@ -59,7 +59,7 @@ if ( ! $titulo || ! $itens ) {
 						data-faq-gatilho
 					>
 						<span><?php echo esc_html( $item['pergunta'] ); ?></span>
-						<?php echo cliconnect_icone( 'chevron-baixo', 20 ); // SVG estático. ?>
+						<?php echo cliconnect_icone( 'chevron-baixo', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 					</button>
 				</h3>
 

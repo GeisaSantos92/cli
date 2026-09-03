@@ -44,7 +44,7 @@ $texto   = cliconnect_campo( 'compliance_texto' );
 				<?php foreach ( $selos as $selo ) : ?>
 					<li class="cs-selo-item">
 						<?php
-						echo wp_get_attachment_image(
+						echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
 							get_post_thumbnail_id( $selo->ID ),
 							'medium',
 							false,

@@ -91,7 +91,7 @@ $grafico_dev = cliconnect_imagem_tema(
 							<?php if ( $item ) : ?>
 							<li class="cc-parceiro__item">
 								<span class="cc-parceiro__pill cc-parceiro__pill--cli">
-									<span class="cc-parceiro__icone cc-parceiro__icone--esq-<?php echo (int) $i; ?>" aria-hidden="true"></span>
+									<span class="cc-parceiro__icone cc-parceiro__icone--esq-<?php echo (int) $i; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>" aria-hidden="true"></span>
 								</span>
 								<span class="cc-parceiro__item-texto"><?php echo esc_html( $item ); ?></span>
 							</li>
@@ -134,7 +134,7 @@ $grafico_dev = cliconnect_imagem_tema(
 							<?php if ( $item ) : ?>
 							<li class="cc-parceiro__item">
 								<span class="cc-parceiro__pill cc-parceiro__pill--dev">
-									<span class="cc-parceiro__icone cc-parceiro__icone--dir-<?php echo (int) $i; ?>" aria-hidden="true"></span>
+									<span class="cc-parceiro__icone cc-parceiro__icone--dir-<?php echo (int) $i; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>" aria-hidden="true"></span>
 								</span>
 								<span class="cc-parceiro__item-texto cc-parceiro__item-texto--dev"><?php echo esc_html( $item ); ?></span>
 							</li>

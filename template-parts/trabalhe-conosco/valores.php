@@ -46,7 +46,7 @@ if ( ! $titulo && ! $valores ) {
 				<article class="tc-valor">
 					<?php if ( $valor['icone'] ) : ?>
 						<span class="tc-valor__icone">
-							<?php echo cliconnect_icone_ms( $valor['icone'] ); ?>
+							<?php echo cliconnect_icone_ms( $valor['icone'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone_ms retorna HTML seguro de ícone Material Symbols. ?>
 						</span>
 					<?php endif; ?>
 					<h3 class="tc-valor__titulo"><?php echo esc_html( $valor['nome'] ); ?></h3>
@@ -60,10 +60,10 @@ if ( ! $titulo && ! $valores ) {
 				<a
 					class="tc-valores__cta"
 					href="<?php echo esc_url( $cta['url'] ); ?>"
-					<?php echo ( '_blank' === ( $cta['target'] ?? '' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
+					<?php echo ( '_blank' === ( $cta['target'] ?? '' ) ) ? 'target="_blank" rel="noopener noreferrer"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- string literal hardcoded. ?>
 				>
 					<?php echo esc_html( $cta['title'] ); ?>
-					<?php echo cliconnect_icone( 'seta-direita', 20 ); // SVG estático. ?>
+					<?php echo cliconnect_icone( 'seta-direita', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 				</a>
 			<?php endif; ?>
 		</div>

@@ -44,8 +44,8 @@ $orbita = cliconnect_posts(
 		</svg>
 
 		<?php foreach ( $orbita as $indice => $logo ) : ?>
-			<span class="hero__logo hero__logo--<?php echo (int) ( $indice + 1 ); ?>">
-				<?php echo cliconnect_thumb( $logo->ID, 'medium', array( 'alt' => '' ) ); // wp_get_attachment_image escapa. ?>
+			<span class="hero__logo hero__logo--<?php echo (int) ( $indice + 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cast (int), seguro. ?>">
+				<?php echo cliconnect_thumb( $logo->ID, 'medium', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 			</span>
 		<?php endforeach; ?>
 	</div>

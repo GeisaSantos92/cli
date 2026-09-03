@@ -63,7 +63,7 @@ if ( ! $titulo && ! $cards ) {
 					<li class="cs-card-cenario">
 
 						<span class="cs-card-cenario__icone-wrap" aria-hidden="true">
-							<?php echo cliconnect_icone( 'check', 16 ); // Saída controlada: cliconnect_icone valida contra lista. ?>
+							<?php echo cliconnect_icone( 'check', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 						</span>
 
 						<div class="cs-card-cenario__corpo">

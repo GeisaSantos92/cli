@@ -37,7 +37,7 @@ $uri = get_template_directory_uri();
 			<div class="cc-depoimento__perfil">
 				<?php if ( $foto ) : ?>
 					<div class="cc-depoimento__foto-wrap">
-						<?php echo wp_get_attachment_image( (int) $foto, 'medium', false, array( 'class' => 'cc-depoimento__foto-img', 'alt' => esc_attr( $nome ) ) ); ?>
+						<?php echo wp_get_attachment_image( (int) $foto, 'medium', false, array( 'class' => 'cc-depoimento__foto-img', 'alt' => esc_attr( $nome ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 					</div>
 				<?php endif; ?>
 

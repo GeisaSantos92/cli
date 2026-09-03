@@ -37,7 +37,7 @@ $link   = cliconnect_campo( 'blog_link', array() );
 			<?php if ( ! empty( $link['url'] ) ) : ?>
 				<a class="link-seta" href="<?php echo esc_url( $link['url'] ); ?>">
 					<?php echo esc_html( $link['title'] ?? '' ); ?>
-					<?php echo cliconnect_icone( 'seta-direita', 16 ); // SVG estático. ?>
+					<?php echo cliconnect_icone( 'seta-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 				</a>
 			<?php endif; ?>
 		</header>
@@ -47,7 +47,7 @@ $link   = cliconnect_campo( 'blog_link', array() );
 				<article class="card">
 					<?php if ( has_post_thumbnail( $artigo->ID ) ) : ?>
 						<a class="card__media" href="<?php echo esc_url( get_permalink( $artigo ) ); ?>">
-							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => get_the_title( $artigo ) ) ); ?>
+							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => get_the_title( $artigo ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 						</a>
 					<?php endif; ?>
 

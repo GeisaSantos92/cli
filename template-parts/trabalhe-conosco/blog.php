@@ -39,7 +39,7 @@ $titulo = cliconnect_campo_pagina( 'tc_blog_titulo' );
 				<article class="card">
 					<?php if ( has_post_thumbnail( $artigo->ID ) ) : ?>
 						<a class="card__media" href="<?php echo esc_url( get_permalink( $artigo ) ); ?>">
-							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => '' ) ); ?>
+							<?php echo cliconnect_thumb( $artigo->ID, 'large', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente. ?>
 						</a>
 					<?php endif; ?>
 

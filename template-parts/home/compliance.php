@@ -39,7 +39,7 @@ $texto   = cliconnect_campo( 'compliance_texto' );
 			<?php foreach ( $selos as $selo ) : ?>
 				<div class="compliance__selo">
 					<?php
-					echo cliconnect_thumb(
+					echo cliconnect_thumb( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_thumb é wrapper de wp_get_attachment_image que escapa internamente.
 						$selo->ID,
 						'medium',
 						array( 'alt' => get_the_title( $selo ) )
