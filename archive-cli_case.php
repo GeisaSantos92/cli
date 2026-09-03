@@ -95,7 +95,7 @@ foreach ( $todos_cases as $case ) {
 								<?php
 								$logo_img_id = absint( get_field( 'logo', $case->ID ) ?? 0 );
 								if ( $logo_img_id ) {
-									echo wp_get_attachment_image( $logo_img_id, 'medium', false, array( 'alt' => esc_attr( $titulo ) ) );
+									echo wp_get_attachment_image( $logo_img_id, 'cli-logo', false, array( 'alt' => esc_attr( $titulo ) ) );
 								}
 								?>
 							</div>
@@ -170,7 +170,7 @@ foreach ( $todos_cases as $case ) {
 
 								<div class="case-andamento__logo">
 									<?php if ( $logo_id ) : ?>
-										<?php echo wp_get_attachment_image( $logo_id, 'medium', false, array( 'alt' => get_the_title( $case ) ) ); ?>
+										<?php echo wp_get_attachment_image( $logo_id, 'cli-logo', false, array( 'alt' => get_the_title( $case ) ) ); ?>
 									<?php endif; ?>
 								</div>
 

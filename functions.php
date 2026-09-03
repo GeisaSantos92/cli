@@ -74,6 +74,7 @@ function cliconnect_setup() {
 add_action( 'after_setup_theme', 'cliconnect_setup' );
 
 // Infraestrutura do tema.
+cliconnect_require( '/inc/image-sizes.php' );
 cliconnect_require( '/inc/enqueue.php' );
 cliconnect_require( '/inc/clean-head.php' );
 cliconnect_require( '/inc/customizer.php' );

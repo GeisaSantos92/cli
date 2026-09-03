@@ -36,7 +36,7 @@ if ( ! $destaque_id && ! $metricas ) {
 				<div class="depoimento__conteudo">
 					<?php if ( $logo ) : ?>
 						<span class="depoimento__logo">
-							<?php echo wp_get_attachment_image( $logo, 'medium', false, array( 'alt' => get_the_title( $destaque_id ) ) ); ?>
+							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $destaque_id ) ) ); ?>
 						</span>
 					<?php endif; ?>
 
@@ -100,7 +100,7 @@ if ( ! $destaque_id && ! $metricas ) {
 
 					<?php if ( $logo ) : ?>
 						<span class="case-metrica__logo">
-							<?php echo wp_get_attachment_image( $logo, 'medium', false, array( 'alt' => get_the_title( $case_id ) ) ); ?>
+							<?php echo wp_get_attachment_image( $logo, 'cli-logo', false, array( 'alt' => get_the_title( $case_id ) ) ); ?>
 						</span>
 					<?php endif; ?>
 				</article>

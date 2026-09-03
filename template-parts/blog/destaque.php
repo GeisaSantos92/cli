@@ -54,7 +54,7 @@ $categoria_link = ! empty( $categorias ) ? get_category_link( $categorias[0]->te
 				aria-label="<?php echo esc_attr( $titulo ); ?>"
 			>
 				<div class="blog-destaque__imagem">
-					<?php echo cliconnect_thumb( $post_destaque->ID, 'large', array( 'alt' => '' ) ); ?>
+					<?php echo cliconnect_thumb( $post_destaque->ID, 'cli-blog-destaque', array( 'alt' => '' ) ); ?>
 				</div>
 			</a>
 

@@ -86,7 +86,7 @@ while ( have_posts() ) :
 						<?php
 						echo wp_get_attachment_image(
 							$retrato_id,
-							'large',
+							'cli-case-hero',
 							false,
 							array( 'class' => 'case-intro__foto', 'alt' => esc_attr( $titulo ) )
 						);

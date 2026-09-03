@@ -40,7 +40,7 @@ if ( ! $posts_grade ) {
 						aria-label="<?php echo esc_attr( $titulo ); ?>"
 					>
 						<div class="blog-card__imagem">
-							<?php echo cliconnect_thumb( $artigo->ID, 'medium', array( 'alt' => '' ) ); ?>
+							<?php echo cliconnect_thumb( $artigo->ID, 'cli-blog-card', array( 'alt' => '' ) ); ?>
 						</div>
 					</a>
 

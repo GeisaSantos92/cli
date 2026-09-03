@@ -19,6 +19,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Envia HTTP Security Headers em todas as respostas front-end.
+ *
+ * - X-Content-Type-Options: impede MIME sniffing.
+ * - X-Frame-Options: bloqueia carregamento do site em iframe (clickjacking).
+ * - Referrer-Policy: limita o referrer enviado a sites externos.
+ * - Permissions-Policy: desativa features de hardware desnecessárias.
+ *
+ * @return void
+ */
+function cliconnect_security_headers() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	header( 'X-Content-Type-Options: nosniff' );
+	header( 'X-Frame-Options: SAMEORIGIN' );
+	header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+	header( 'Permissions-Policy: camera=(), microphone=(), geolocation=()' );
+}
+add_action( 'send_headers', 'cliconnect_security_headers' );
+
+/**
  * Desativa o XML-RPC — não há uso legítimo neste site.
  *
  * Previne brute force amplificado via system.multicall e uso do servidor
