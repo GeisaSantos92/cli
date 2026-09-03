@@ -456,3 +456,56 @@ function cliconnect_print_schema_breadcrumb() {
 	);
 }
 add_action( 'wp_head', 'cliconnect_print_schema_breadcrumb', 6 );
+
+/* ==========================================================================
+   Sitemap nativo do WordPress — ajustes de qualidade de indexação
+   Só age quando o Rank Math não está ativo (ele substitui o sitemap inteiro).
+   ========================================================================== */
+
+/**
+ * Remove post types de conteúdo raso do sitemap nativo.
+ *
+ * - attachment: página de anexo não tem conteúdo próprio; indexá-la dilui a
+ *   autoridade do domínio e raramente gera tráfego qualificado.
+ *
+ * @param WP_Sitemap_Provider[] $providers Mapa de provedores registrados.
+ * @return WP_Sitemap_Provider[]
+ */
+function cliconnect_sitemap_remover_attachment( $providers ) {
+	if ( cliconnect_plugin_seo_ativo() ) {
+		return $providers;
+	}
+
+	if ( isset( $providers['posts'] ) && method_exists( $providers['posts'], 'get_object_subtypes' ) ) {
+		// Filtramos no nível do post type, não no provider inteiro.
+		add_filter(
+			'wp_sitemaps_post_types',
+			function ( $post_types ) {
+				unset( $post_types['attachment'] );
+				return $post_types;
+			}
+		);
+	}
+
+	return $providers;
+}
+add_filter( 'wp_sitemaps_add_provider', 'cliconnect_sitemap_remover_attachment', 10, 1 );
+
+/**
+ * Remove taxonomias sem conteúdo semântico do sitemap nativo.
+ *
+ * - post_format: raramente usado; quando vazio, a URL retorna 404 ou lista vazia.
+ *
+ * @param WP_Taxonomy[] $taxonomies Mapa de taxonomias candidatas ao sitemap.
+ * @return WP_Taxonomy[]
+ */
+function cliconnect_sitemap_filtrar_taxonomias( $taxonomies ) {
+	if ( cliconnect_plugin_seo_ativo() ) {
+		return $taxonomies;
+	}
+
+	unset( $taxonomies['post_format'] );
+
+	return $taxonomies;
+}
+add_filter( 'wp_sitemaps_taxonomies', 'cliconnect_sitemap_filtrar_taxonomias' );
