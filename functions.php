@@ -88,6 +88,7 @@ cliconnect_require( '/inc/polylang.php' );
 cliconnect_require( '/inc/pagination.php' );
 cliconnect_require( '/inc/blog-filters.php' );
 cliconnect_require( '/inc/login.php' );
+cliconnect_require( '/inc/spam.php' );
 cliconnect_require( '/inc/smtp.php' );
 
 // Conteúdo do projeto: CPTs e campos ACF (locais, via código).
