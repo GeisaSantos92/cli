@@ -29,3 +29,5 @@ assets/seed/
 !assets/**/*.png
 !assets/**/*.jpg
 !assets/**/*.jpeg
+__MACOSX/
+issue-62-screenshot.png
