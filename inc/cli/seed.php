@@ -1747,7 +1747,64 @@ class Cliconnect_Seed {
 
 		WP_CLI::log( sprintf( '  soluções: %d categorias, %d tipos.', count( $hierarquia ), count( $ids ) - count( $hierarquia ) ) );
 
+		$this->avisar_termos_solucao_orfaos( $tax );
+
 		return $ids;
+	}
+
+	/**
+	 * Avisa sobre termos de solução que ficaram sem nenhum post.
+	 *
+	 * Renomear a chave de um tipo na árvore de criar_solucoes() abandona o termo
+	 * antigo: o get_term_by( 'slug', ... ) passa a procurar a chave nova e o velho
+	 * fica para trás, sem post nenhum. O estrago é discreto — a URL do termo
+	 * continua respondendo 200 e serve uma página com o nome da tecnologia e
+	 * "Nenhuma solução encontrada nesta categoria". Foi assim que sobraram cinco
+	 * deles em /solucoes/tecnologia/ (issue #203).
+	 *
+	 * Avisa e não apaga de propósito. O seed já remove traduções órfãs em
+	 * remover_traducoes_orfas(), mas de lá para a lixeira, que dá para desfazer.
+	 * Termo não tem lixeira, e apagar sem confirmação num comando que se roda de
+	 * qualquer jeito é troca ruim. Quem confirma apaga com:
+	 *
+	 *     wp term delete cli_categoria_solucao <id>
+	 *
+	 * Sem relação nenhuma é o critério certo, não a contagem de publicados: um
+	 * termo cujo post virou rascunho mantém a relação, e não é órfão.
+	 *
+	 * @param string $tax Taxonomia das soluções.
+	 * @return void
+	 */
+	protected function avisar_termos_solucao_orfaos( $tax ) {
+		$termos = get_terms( array( 'taxonomy' => $tax, 'hide_empty' => false ) );
+
+		if ( is_wp_error( $termos ) ) {
+			return;
+		}
+
+		$orfaos = array();
+
+		foreach ( $termos as $termo ) {
+			if ( 0 === (int) $termo->parent ) {
+				continue;
+			}
+
+			$relacoes = get_objects_in_term( $termo->term_id, $tax );
+
+			if ( ! is_wp_error( $relacoes ) && empty( $relacoes ) ) {
+				$orfaos[] = $termo->slug;
+			}
+		}
+
+		if ( $orfaos ) {
+			WP_CLI::warning(
+				sprintf(
+					'  %d termo(s) de solução sem nenhum post — a URL responde 200 com a categoria vazia: %s',
+					count( $orfaos ),
+					implode( ', ', $orfaos )
+				)
+			);
+		}
 	}
 
 	/* =====================================================================
