@@ -1522,59 +1522,59 @@ class Cliconnect_Seed {
 			'tecnologia'     => array(
 				'nome'   => 'Tecnologias',
 				'filhos' => array(
-					'claude'                         => 'Claude',
-					'chatgpt'                        => 'ChatGPT',
-					'sap'                            => 'SAP',
-					'salesforce'                     => 'Salesforce',
-					'salesforce-sales-cloud'         => 'Salesforce Sales Cloud',
-					'salesforce-service-cloud'       => 'Salesforce Service Cloud',
-				'salesforce-marketing-cloud'     => 'Salesforce Marketing Cloud',
-					'totvs-protheus'                 => 'TOTVS Protheus',
-					'totvs-datasul'                  => 'TOTVS Datasul',
-					'totvs-winthor'                  => 'TOTVS Winthor',
-					'totvs-logix'                    => 'TOTVS Logix',
-					'sankhya'                        => 'Sankhya',
-					'senior'                         => 'Senior',
-					'dynamics-365'                   => 'Dynamics 365',
-					'rd-station-crm'                 => 'RD Station CRM',
-					'rd-station-marketing'           => 'RD Station Marketing',
-					'hubspot-crm'                    => 'HubSpot CRM',
-					'thomson-reuters-tax-one'        => 'Thomson Reuters Tax One',
-					'freshservice'                   => 'Freshservice',
-					'servicenow'                     => 'ServiceNow',
-					'portal-de-api'                  => 'Portal de API / MCP Server',
-				'zendesk'                        => 'Zendesk',
-				'bionexo'                        => 'Bionexo',
-				'tasy'                           => 'Tasy',
-				'mv'                             => 'MV',
-				'vtex'                           => 'VTEX',
-				'shopify'                        => 'Shopify',
-				'magento'                        => 'Magento / Adobe Commerce',
-				'onblox'                         => 'OnBlox (WMS/TMS)',
-				'narwal'                         => 'Narwal (Comex)',
-				'neogrid'                        => 'Neogrid',
-				'target-sistemas'                => 'Target Sistemas (ERP Distribuição)',
-				'sap-business-one'               => 'SAP Business One',
-				'sap-ecc'                        => 'SAP ECC',
-				'oracle-netsuite'                => 'Oracle NetSuite',
-				'totvs-consinco'                 => 'TOTVS Consinco',
-				'totvs-linx'                     => 'TOTVS Linx',
-				'totvs-rm'                       => 'TOTVS RM',
-				'arius-erp'                      => 'Arius ERP',
-				'ciss-poder-erp'                 => 'CISS Poder ERP',
-				'ifs-cloud'                      => 'IFS Cloud',
-				'qad-redzone'                    => 'QAD Redzone',
-				'rp-info'                        => 'RP Info',
-				'viasoft'                        => 'Viasoft',
-				'onclick-erp'                    => 'Onclick ERP',
-				'propz'                          => 'Propz',
-				'microsoft-teams'                => 'Microsoft Teams',
-				'snowflake'                      => 'Snowflake',
-				'databricks'                     => 'Databricks',
-				'aws'                            => 'AWS',
-				'microsoft-azure'                => 'Microsoft Azure',
-				'google-cloud'                   => 'Google Cloud',
-				'gemini'                         => 'Gemini',
+					'salesforce'                 => 'Salesforce',
+					'totvs-protheus'             => 'TOTVS Protheus',
+					'totvs-datasul'              => 'TOTVS Datasul',
+					'totvs-winthor'              => 'TOTVS Winthor',
+					'totvs-logix'                => 'TOTVS Logix',
+					'senior'                     => 'Senior',
+					'sankhya'                    => 'Sankhya',
+					'dynamics-365'               => 'Dynamics 365',
+					'salesforce-sales-cloud'     => 'Salesforce Sales Cloud',
+					'salesforce-service-cloud'   => 'Salesforce Service Cloud',
+					'salesforce-marketing-cloud' => 'Salesforce Marketing Cloud',
+					'rd-station-crm'             => 'RD Station CRM',
+					'rd-station-marketing'       => 'RD Station Marketing',
+					'thomson-reuters-tax-one'    => 'Thomson Reuters Tax One',
+					'freshservice'               => 'Freshservice',
+					'servicenow'                 => 'ServiceNow',
+					'portal-de-api'              => 'Portal de API / MCP Server',
+					'zendesk'                    => 'Zendesk',
+					'bionexo'                    => 'Bionexo',
+					'tasy'                       => 'Tasy',
+					'mv'                         => 'MV',
+					'vtex'                       => 'VTEX',
+					'shopify'                    => 'Shopify',
+					'magento'                    => 'Magento / Adobe Commerce',
+					'onblox'                     => 'OnBlox (WMS/TMS)',
+					'narwal'                     => 'Narwal (Comex)',
+					'neogrid'                    => 'Neogrid',
+					'target-sistemas'            => 'Target Sistemas (ERP Distribuição)',
+					'sap'                        => 'SAP',
+					'sap-business-one'           => 'SAP Business One',
+					'sap-ecc'                    => 'SAP ECC',
+					'oracle-netsuite'            => 'Oracle NetSuite',
+					'totvs-consinco'             => 'TOTVS Consinco',
+					'totvs-linx'                 => 'TOTVS Linx',
+					'totvs-rm'                   => 'TOTVS RM',
+					'arius-erp'                  => 'Arius ERP',
+					'ciss-poder-erp'             => 'CISS Poder ERP',
+					'qad-redzone'                => 'QAD Redzone',
+					'ifs-cloud'                  => 'IFS Cloud',
+					'rp-info'                    => 'RP Info',
+					'viasoft'                    => 'Viasoft',
+					'hubspot-crm'                => 'HubSpot CRM',
+					'onclick-erp'                => 'Onclick ERP',
+					'propz'                      => 'Propz',
+					'microsoft-teams'            => 'Microsoft Teams',
+					'snowflake'                  => 'Snowflake',
+					'databricks'                 => 'Databricks',
+					'aws'                        => 'AWS',
+					'microsoft-azure'            => 'Microsoft Azure',
+					'google-cloud'               => 'Google Cloud',
+					'chatgpt'                    => 'ChatGPT',
+					'claude'                     => 'Claude',
+					'gemini'                     => 'Gemini',
 				),
 			),
 			'industria'      => array(
@@ -1626,6 +1626,19 @@ class Cliconnect_Seed {
 		// Mapa retornado: chave_pai => term_id e chave_filho => term_id.
 		$ids = array();
 
+		/*
+		 * wp_set_object_terms() substitui os termos do post em vez de somar, então
+		 * chamá-la dentro do laço faz a última categoria apagar as anteriores.
+		 * Acumulamos por post e gravamos uma vez só, no fim.
+		 *
+		 * Hoje isso não muda o resultado: quando duas categorias declaram a mesma
+		 * chave (AWS e Google Cloud estão em Tecnologias e em Nuvem), o
+		 * get_term_by('slug', ...) abaixo devolve o mesmo termo para as duas, então
+		 * o post nunca chega a ter dois termos. Ver a issue #201 — a correção de lá
+		 * depende desta acumulação para funcionar.
+		 */
+		$termos_por_post = array();
+
 		foreach ( $hierarquia as $chave_pai => $dados_pai ) {
 			// Termo pai — busca por slug para sobreviver a renomeações.
 			$termo_pai = get_term_by( 'slug', $chave_pai, $tax );
@@ -1645,8 +1658,25 @@ class Cliconnect_Seed {
 			update_term_meta( $pai_id, self::META, $chave_pai );
 			$ids[ $chave_pai ] = $pai_id;
 
+			/*
+			 * Ordem de exibição: a posição nesta árvore vira menu_order, que é o
+			 * primeiro critério do orderby do catálogo
+			 * (taxonomy-cli_categoria_solucao.php) e da listagem do admin
+			 * (cliconnect_admin_order_cpts). Sem isso todos os posts ficam com
+			 * menu_order 0, o desempate por título assume e o catálogo sai em ordem
+			 * alfabética em vez da ordem curada do Figma.
+			 *
+			 * Quando duas categorias declaram a mesma chave (AWS e Google Cloud
+			 * estão em Tecnologias e em Nuvem), vale a última — que é a categoria
+			 * cujo termo o post de fato acaba tendo, então é a ordem dela que
+			 * aparece no catálogo. Ver a issue #201.
+			 */
+			$posicao = 0;
+
 			// Termos filhos + posts — busca por slug para sobreviver a renomeações.
 			foreach ( $dados_pai['filhos'] as $chave_filho => $nome_filho ) {
+				++$posicao;
+
 				$termo_filho = get_term_by( 'slug', $chave_filho, $tax );
 				if ( $termo_filho ) {
 					$filho_id = (int) $termo_filho->term_id;
@@ -1671,15 +1701,20 @@ class Cliconnect_Seed {
 						'post_title'  => $nome_filho,
 						'post_type'   => 'cli_solucao',
 						'post_status' => 'publish',
+						'menu_order'  => $posicao,
 					)
 				);
 
 				if ( $post_id ) {
-					wp_set_object_terms( $post_id, $filho_id, $tax );
+					$termos_por_post[ $post_id ][] = $filho_id;
 					// Logo para os cards do catálogo (sem efeito se o arquivo não existir).
 					$this->definir_thumb( $post_id, 'catalogo-logo-' . $chave_filho );
 				}
 			}
+		}
+
+		foreach ( $termos_por_post as $post_id => $termos ) {
+			wp_set_object_terms( $post_id, array_values( array_unique( array_map( 'intval', $termos ) ) ), $tax );
 		}
 
 		WP_CLI::log( sprintf( '  soluções: %d categorias, %d tipos.', count( $hierarquia ), count( $ids ) - count( $hierarquia ) ) );
