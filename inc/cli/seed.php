@@ -1840,7 +1840,7 @@ class Cliconnect_Seed {
 					'filhos' => $solucoes_mega,
 				),
 				array( 'titulo' => 'Integração SAP', 'url' => '/integracao-sap/' ),
-				array( 'titulo' => 'Cases', 'url' => $cases_url ),
+				// array( 'titulo' => 'Cases', 'url' => $cases_url ), // oculto
 				array( 'titulo' => 'Blog', 'url' => $blog_url ),
 				array( 'titulo' => 'Contato', 'url' => '/contato/' ),
 			)
@@ -1915,7 +1915,7 @@ class Cliconnect_Seed {
 							'titulo' => 'Recursos',
 							'url'    => '#',
 							'filhos' => array(
-								'Cases'            => $cases_url,
+								// 'Cases'         => $cases_url, // oculto
 								'Blog'             => $blog_url,
 								'Trabalhe Conosco' => '/trabalhe-conosco/',
 								'Contato'          => '/contato/',
