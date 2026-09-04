@@ -259,7 +259,7 @@ trait Cliconnect_Seed_En_Solucoes {
 					'filhos' => $solucoes_mega,
 				),
 				array( 'titulo' => 'SAP Integration', 'url' => $this->url_pagina_traduzida( 'integracao-sap' ) ),
-				array( 'titulo' => 'Case studies', 'url' => $cases_url ),
+				// array( 'titulo' => 'Case studies', 'url' => $cases_url ), // oculto
 				array( 'titulo' => 'Blog', 'url' => $blog_url ),
 				array( 'titulo' => 'Contact', 'url' => $this->url_pagina_traduzida( 'contato' ) ),
 			)
@@ -285,7 +285,7 @@ trait Cliconnect_Seed_En_Solucoes {
 							'titulo' => 'Resources',
 							'url'    => $this->url_pagina_traduzida( 'contato' ),
 							'filhos' => array(
-								'Case studies' => $cases_url,
+								// 'Case studies' => $cases_url, // oculto
 								'Blog'         => $blog_url,
 								'Careers'      => $this->url_pagina_traduzida( 'trabalhe-conosco' ),
 								'Contact'      => $this->url_pagina_traduzida( 'contato' ),
