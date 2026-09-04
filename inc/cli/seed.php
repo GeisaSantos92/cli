@@ -1569,9 +1569,18 @@ class Cliconnect_Seed {
 					'microsoft-teams'            => 'Microsoft Teams',
 					'snowflake'                  => 'Snowflake',
 					'databricks'                 => 'Databricks',
-					'aws'                        => 'AWS',
-					'microsoft-azure'            => 'Microsoft Azure',
-					'google-cloud'               => 'Google Cloud',
+					/*
+					 * AWS, Microsoft Azure e Google Cloud não entram aqui: os três
+					 * provedores de nuvem moram na categoria Nuvem, que tem catálogo
+					 * e entrada de menu próprios (issue #201). O frame do Figma do
+					 * catálogo de Tecnologias ainda os lista — divergência aceita.
+					 *
+					 * As linhas de aws/google-cloud que existiam aqui nunca tiveram
+					 * efeito: a chave é a mesma da categoria Nuvem e o
+					 * get_term_by('slug', ...) abaixo não distingue as duas árvores,
+					 * então elas só produziam os termos órfãos aws-tecnologia e
+					 * google-cloud-tecnologia, com zero posts.
+					 */
 					'chatgpt'                    => 'ChatGPT',
 					'claude'                     => 'Claude',
 					'gemini'                     => 'Gemini',
@@ -1603,7 +1612,9 @@ class Cliconnect_Seed {
 				'filhos' => array(
 					'aws'                            => 'AWS',
 					'google-cloud'                   => 'Google Cloud',
-					'azure'                          => 'Azure',
+					// A landing do Azure é a "microsoft-azure"; a antiga "azure" foi
+					// aposentada por duplicidade — ver cliconnect_redirecionar_urls_aposentadas().
+					'microsoft-azure'                => 'Microsoft Azure',
 				),
 			),
 			'por-iniciativa' => array(
@@ -1680,8 +1691,25 @@ class Cliconnect_Seed {
 				$termo_filho = get_term_by( 'slug', $chave_filho, $tax );
 				if ( $termo_filho ) {
 					$filho_id = (int) $termo_filho->term_id;
+					$mudancas = array();
+
 					if ( $termo_filho->name !== $nome_filho ) {
-						wp_update_term( $filho_id, $tax, array( 'name' => $nome_filho ) );
+						$mudancas['name'] = $nome_filho;
+					}
+
+					/*
+					 * Reconcilia o pai: sem isso, mover um tipo de categoria nesta
+					 * árvore não tem efeito num banco que já existe — o termo é
+					 * reaproveitado pelo slug e continua pendurado na categoria
+					 * antiga. Foi o que segurou o Microsoft Azure em Tecnologias
+					 * quando ele passou para Nuvem (issue #201).
+					 */
+					if ( (int) $termo_filho->parent !== $pai_id ) {
+						$mudancas['parent'] = $pai_id;
+					}
+
+					if ( $mudancas ) {
+						wp_update_term( $filho_id, $tax, $mudancas );
 					}
 				} else {
 					$ins_filho = wp_insert_term( $nome_filho, $tax, array( 'slug' => $chave_filho, 'parent' => $pai_id ) );

@@ -500,3 +500,37 @@ function cliconnect_sitemap_filtrar_taxonomias( $taxonomies ) {
 	return $taxonomies;
 }
 add_filter( 'wp_sitemaps_taxonomies', 'cliconnect_sitemap_filtrar_taxonomias' );
+
+/**
+ * Redireciona, com 301, URLs de conteúdo aposentado para o sucessor canônico.
+ *
+ * Não é um sistema de redirects — é um mapa curto e explícito, para os poucos
+ * casos em que uma URL já publicada deixou de existir e tem um destino óbvio.
+ * Se a lista crescer, o lugar disso passa a ser um plugin de redirects.
+ *
+ * - /solucao/azure/ → /solucao/microsoft-azure/ : havia duas landings publicadas
+ *   para a mesma tecnologia. A "azure" tinha o mesmo texto da "microsoft-azure"
+ *   e o próprio CTA dela já apontava para lá; só a "microsoft-azure" é mantida
+ *   pelo seed. Ver a issue #201.
+ *
+ * @return void
+ */
+function cliconnect_redirecionar_urls_aposentadas() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$mapa = array(
+		'/solucao/azure/'                 => '/solucao/microsoft-azure/',
+		'/en/solucao/azure-integration/'  => '/en/solucao/microsoft-azure-integration/',
+		'/es/solucao/azure-integracion/'  => '/es/solucao/microsoft-azure-integracion/',
+	);
+
+	$caminho = trailingslashit( wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ) ?? '' );
+
+	if ( isset( $mapa[ $caminho ] ) ) {
+		wp_safe_redirect( home_url( $mapa[ $caminho ] ), 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'cliconnect_redirecionar_urls_aposentadas' );
