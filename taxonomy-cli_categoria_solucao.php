@@ -127,7 +127,8 @@ if ( $is_pai ) :
 	<div class="cat-catalogo__chamada">
 		<div class="container">
 			<h1 class="cat-catalogo__titulo"><?php echo esc_html( $termo_atual->name ); ?></h1>
-			<p class="cat-catalogo__subtitulo"><?php esc_html_e( 'Integre todos os sistemas da sua empresa e automatize seus fluxos de trabalho de ponta a ponta. Clique na ferramenta desejada abaixo para ver os detalhes, vantagens e casos de uso de cada integração.', 'cli' ); ?></p>
+			<?php // A quebra de linha é a do Figma; renderiza via white-space: pre-line. ?>
+			<p class="cat-catalogo__subtitulo"><?php esc_html_e( "Integre todos os sistemas da sua empresa e automatize seus fluxos de trabalho de ponta a ponta.\nClique na ferramenta desejada abaixo para ver os detalhes, vantagens e casos de uso de cada integração.", 'cli' ); ?></p>
 		</div>
 	</div>
 
