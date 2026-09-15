@@ -22,8 +22,9 @@
 
 .cc-hero {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
+	background-image: linear-gradient(180deg, rgba(130, 172, 255, 0.2) 0%, rgba(199, 218, 255, 0) 24%);
 	overflow: hidden;
-	padding: var(--tam-secao-v, 80px) 0;
+	padding: clamp(80px, 8vw, 120px) 0;
 }
 
 .cc-hero__inner {
@@ -326,7 +327,6 @@
 	color: var(--cor-texto-secundario, #566f9d);
 	font-size: var(--tam-corpo, 16px);
 	line-height: 1.6;
-	max-width: 64ch;
 }
 
 /* Card branco */
@@ -863,14 +863,14 @@
 
 .cc-depoimento__card {
 	align-items: center;
-	background-color: #0041ba;
+	background: linear-gradient(135deg, #1d4dd6 0%, #0041ba 55%);
 	border-radius: 16px;
 	box-shadow: 2px 6px 5px rgba(14, 52, 94, 0.1);
 	display: flex;
 	gap: 24px;
 	justify-content: space-between;
 	overflow: hidden;
-	padding: 54px 64px;
+	padding: 40px 56px;
 	position: relative;
 }
 
@@ -1874,7 +1874,7 @@
 .cc-parceiro {
 	background-color: var(--cor-canvas-azul-01, #f5f9ff);
 	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-bottom: 120px;
 }
 
 .cc-parceiro__header {
@@ -2100,14 +2100,14 @@
 	background-color: rgba(245, 249, 255, 0.2);
 	border: 1px solid rgba(39, 62, 128, 0.1);
 	border-radius: 12px;
-	bottom: -52px;
+	bottom: -80px;
 	display: flex;
 	gap: 16px;
 	left: 50%;
 	padding: 24px;
 	position: absolute;
 	transform: translateX(-50%);
-	width: 546px;
+	width: 680px;
 }
 
 .cc-parceiro__destaque-icone {
