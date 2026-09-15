@@ -8,10 +8,20 @@
 /* --- 1. Seção Formulário --------------------------------------------------- */
 
 .ct-formulario {
+	position: relative;
+	overflow: hidden;
 	padding-block: 120px 80px;
 	background:
 		linear-gradient(180deg, rgba(130, 178, 255, 0.2) 0%, rgba(199, 220, 255, 0) 24%),
 		var(--cor-fundo-suave);
+}
+
+.ct-formulario__deco {
+	position: absolute;
+	top: -119px;
+	right: -626px;
+	width: 1216px;
+	pointer-events: none;
 }
 
 /*

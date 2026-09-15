@@ -50,6 +50,8 @@ if ( ! $titulo ) {
 ?>
 <section class="ct-formulario">
 
+	<img class="ct-formulario__deco" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/ct-form-deco.svg' ); ?>" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
 	<div class="container ct-formulario__inner">
 
 		<!-- Coluna esquerda: informações de contato -->
