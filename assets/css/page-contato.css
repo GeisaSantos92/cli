@@ -22,6 +22,7 @@
 	right: -626px;
 	width: 1216px;
 	pointer-events: none;
+	z-index: 0;
 }
 
 /*
@@ -29,6 +30,8 @@
  * (x=672) dentro do content de 1312 — por isso fr em vez de px, e gap zero.
  */
 .ct-formulario__inner {
+	position: relative;
+	z-index: 1;
 	display: grid;
 	grid-template-columns: 672fr 640fr;
 	gap: 0;
