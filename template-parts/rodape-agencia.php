@@ -30,22 +30,7 @@ $cliconnect_copyright = sprintf(
 			<div class="rodape-agencia__conteudo">
 				<p><?php echo $cliconnect_copyright; // phpcs:ignore WordPress.Security.EscapeOutput -- partes escapadas acima. ?></p>
 
-				<?php if ( has_nav_menu( 'rodape_legal' ) ) : ?>
-				<nav aria-label="<?php esc_attr_e( 'Links legais', 'cli' ); ?>">
-					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'rodape_legal',
-							'container'      => false,
-							'menu_class'     => 'rodape-agencia__legal',
-							'fallback_cb'    => false,
-							'depth'          => 1,
-						)
-					);
-					?>
-				</nav>
-				<?php endif; ?>
-			</div>
+				</div>
 
 			<div class="rodape-agencia__logos">
 				<a href="https://agenciar8.com.br" target="_blank" rel="noopener noreferrer"

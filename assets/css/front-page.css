@@ -58,7 +58,7 @@
 .hero {
 	position: relative;
 	overflow: hidden;
-	padding-block: clamp(56px, 8vw, 120px);
+	padding-block: clamp(80px, 8vw, 140px);
 	background:
 		linear-gradient(180deg, rgba(130, 172, 255, 0.2) 0%, rgba(199, 218, 255, 0) 24%),
 		var(--cor-fundo);
@@ -617,7 +617,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 22px;
-	padding: clamp(40px, 5vw, 64px) 32px;
+	padding: clamp(56px, 6vw, 80px) 32px;
 	background: transparent;
 	border: 0;
 	border-left: 1px solid var(--cor-borda-sutil);
@@ -1101,7 +1101,7 @@
 .evento-card__titulo {
 	font-family: var(--fonte-base);
 	font-size: var(--tam-h5);
-	font-weight: 500;
+	font-weight: 600;
 	line-height: 1.25;
 	letter-spacing: -0.01em;
 	color: var(--cor-texto);
@@ -1155,6 +1155,10 @@
 	padding: clamp(40px, 5vw, 64px) clamp(24px, 4vw, 56px);
 	background: var(--cor-primaria-escura);
 	color: #fff;
+}
+
+.integracoes__painel .eyebrow {
+	color: var(--cor-texto-clara-suave);
 }
 
 .integracoes__painel .integracoes__titulo {
@@ -1432,7 +1436,6 @@
 }
 
 .suporte__descricao strong {
-	color: var(--cor-texto);
 	font-weight: 600;
 }
 
