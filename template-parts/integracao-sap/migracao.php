@@ -28,7 +28,7 @@ if ( ! $titulo ) {
 
 $uri      = get_template_directory_uri();
 $diagonal = $uri . '/assets/img/sap-mig-diagonal.svg';
-$sap_logo = $uri . '/assets/img/sap-int-sap.png';
+$sap_logo = $uri . '/assets/img/sap-mig-sap-logo.png';
 $cloud    = $uri . '/assets/img/sap-mig-cloud.svg';
 ?>
 <section class="sap-migracao">

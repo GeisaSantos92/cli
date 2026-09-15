@@ -1085,12 +1085,12 @@
 	gap: 6px;
 	background: #fff;
 	border-radius: 8px;
-	padding: 16px 20px 12px;
-	min-width: 140px;
+	padding: 12px 16px 10px;
+	min-width: 110px;
 }
 
 .sap-migracao__sap-img {
-	width: 100px;
+	width: 80px;
 	height: auto;
 	display: block;
 }
