@@ -79,9 +79,9 @@
 }
 
 .blog-destaque__breadcrumb-atual {
-	font-family: var(--fonte-titulo);
+	font-family: var(--fonte-base);
 	font-size: var(--tam-body);
-	font-weight: 600;
+	font-weight: 400;
 	line-height: 1.6;
 	color: var(--cor-texto-alt);
 }
@@ -157,6 +157,10 @@
 	line-height: 1.6;
 	color: var(--cor-texto-suave);        /* #4a5364 */
 	margin: 24px 0 0;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 
 
@@ -281,7 +285,7 @@
 .blog-cards {
 	background: var(--cor-fundo);
 	padding-top: 120px;
-	padding-bottom: 160px;
+	padding-bottom: 80px;
 }
 
 /* Paginação — .site-blog não tem o padding-bottom do .site-main, então o

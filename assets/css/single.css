@@ -52,7 +52,7 @@
 .post-materia__titulo {
 	font-family: var(--fonte-titulo);
 	font-size: var(--tam-h3);              /* clamp(2rem, 3.4vw, 3rem) */
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 1.1;
 	letter-spacing: -0.04em;
 	color: var(--cor-texto-marca-escura);  /* #003187 */

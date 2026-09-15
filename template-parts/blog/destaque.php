@@ -40,7 +40,7 @@ $categoria_link = ! empty( $categorias ) ? get_category_link( $categorias[0]->te
 			>
 				<?php echo cliconnect_icone( 'casa', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 			</a>
-			<?php echo cliconnect_icone( 'seta-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
+			<?php echo cliconnect_icone( 'chevron-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 			<span class="blog-destaque__breadcrumb-atual">
 				<?php esc_html_e( 'Blog', 'cli' ); ?>
 			</span>

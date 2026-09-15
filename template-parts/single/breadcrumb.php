@@ -29,7 +29,7 @@ if ( ! $cliconnect_blog ) {
 			<?php echo cliconnect_icone( 'casa', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 		</a>
 
-		<?php echo cliconnect_icone( 'seta-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
+		<?php echo cliconnect_icone( 'chevron-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 
 		<a
 			class="post-breadcrumb__link"
@@ -38,7 +38,7 @@ if ( ! $cliconnect_blog ) {
 			<?php esc_html_e( 'Blog', 'cli' ); ?>
 		</a>
 
-		<?php echo cliconnect_icone( 'seta-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
+		<?php echo cliconnect_icone( 'chevron-direita', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 
 		<span class="post-breadcrumb__atual">
 			<?php echo esc_html( $cliconnect_titulo ); ?>
