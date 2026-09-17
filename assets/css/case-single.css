@@ -23,18 +23,26 @@
 	align-items: center;
 }
 
-/* Imagem quadrada com object-fit: cover e bordas arredondadas. */
+/* Card azul escuro com logo centralizada — fiel ao Figma (frame "Cases — single"). */
 .case-intro__imagem {
 	aspect-ratio: 1 / 1;
 	border-radius: var(--raio-card);
 	overflow: hidden;
+	background: linear-gradient(120deg, #0041ba 0%, #0b3fd0 60%, #2f57e8 100%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.case-intro__foto {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+.case-intro__logo {
+	width: auto;
+	height: auto;
+	max-width: 60%;
+	max-height: 50%;
+	object-fit: contain;
 	display: block;
+	/* Filter para logo colorida no fundo escuro: converte para branco */
+	filter: brightness(0) invert(1);
 }
 
 .case-intro__chamada {

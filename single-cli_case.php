@@ -29,6 +29,7 @@ while ( have_posts() ) :
 	$titulo          = get_the_title();
 	$excerpt         = get_the_excerpt();
 	$retrato_id      = absint( get_field( 'retrato' ) ?? 0 );
+	$logo_id         = absint( get_field( 'logo' ) ?? 0 );
 	$video_url       = get_field( 'video' ) ?? '';
 	$citacao         = get_field( 'citacao' ) ?? '';
 	$autor           = get_field( 'autor' ) ?? '';
@@ -83,14 +84,14 @@ while ( have_posts() ) :
 		<div class="container">
 			<div class="case-intro__grid">
 
-				<?php if ( $retrato_id ) : ?>
+				<?php if ( $logo_id ) : ?>
 					<div class="case-intro__imagem">
 						<?php
 						echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
-							$retrato_id,
-							'cli-case-hero',
+							$logo_id,
+							'large',
 							false,
-							array( 'class' => 'case-intro__foto', 'alt' => esc_attr( $titulo ) )
+							array( 'class' => 'case-intro__logo', 'alt' => esc_attr( $titulo ) )
 						);
 						?>
 					</div>

@@ -167,9 +167,8 @@
 	margin: 0;
 }
 
-/* Efeito hover sutil no título. */
-.case-container:hover .case-container__titulo {
-	color: var(--cor-texto-marca);
+.case-container:hover {
+	text-decoration: none;
 }
 
 .case-container__texto {
