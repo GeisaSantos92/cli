@@ -14372,8 +14372,8 @@ class Cliconnect_Seed {
 		$campos = array(
 			// 1 · Hero.
 			'solucao_hero_eyebrow'    => 'integre o seu gemini',
-			'solucao_hero_titulo'     => 'Conecte o Gemini aos seus sistemas e dados corporativos',
-			'solucao_hero_corpo'      => 'Gemini acessa dados, orquestra sistemas e executa ações com precisão — tudo integrado à operação da empresa.',
+			'solucao_hero_titulo'     => 'Conecte o Gemini aos sistemas da sua empresa',
+			'solucao_hero_corpo'      => 'Integre o Gemini a ERP, CRM, documentos e aplicações corporativas para consultar informações, analisar dados e transformar respostas em ações dentro dos processos.',
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
