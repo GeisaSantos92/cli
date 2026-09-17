@@ -11177,6 +11177,8 @@ class Cliconnect_Seed {
 			'solucao_casos_5_icone'   => $this->img( 'sap-ecc-caso-5' ),
 			'solucao_casos_5_titulo'  => 'Conecte agentes de IA',
 			'solucao_casos_5_desc'    => 'Disponibilize dados do ECC para agentes de IA sem expor o core do sistema.',
+			'solucao_casos_cta_texto' => 'Agende uma demonstração',
+			'solucao_casos_cta_url'   => '/contato/',
 			// 4 · Selos
 			'solucao_selos_eyebrow' => 'compliance & segurança',
 			'solucao_selos_titulo'  => 'Lideramos o mercado quando assunto é compliance e segurança',
