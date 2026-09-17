@@ -30,10 +30,22 @@ if ( $cliconnect_termos && ! is_wp_error( $cliconnect_termos ) ) {
 			break;
 		}
 	}
-	// Fallback: primeiro termo disponível.
+	// Fallback: posts têm apenas o termo filho (ex.: SAP, parent=Tecnologias).
+	// Sobe um nível para usar o pai como categoria intermediária e evitar duplicar
+	// o nome da solução no breadcrumb (ex.: "SAP → SAP").
 	if ( ! $cliconnect_cat ) {
-		$cliconnect_cat      = $cliconnect_termos[0];
-		$cliconnect_cat_link = (string) get_term_link( $cliconnect_cat );
+		$primeiro = $cliconnect_termos[0];
+		if ( $primeiro->parent ) {
+			$pai = get_term( (int) $primeiro->parent, 'cli_categoria_solucao' );
+			if ( $pai && ! is_wp_error( $pai ) ) {
+				$cliconnect_cat      = $pai;
+				$cliconnect_cat_link = (string) get_term_link( $pai );
+			}
+		}
+		if ( ! $cliconnect_cat ) {
+			$cliconnect_cat      = $primeiro;
+			$cliconnect_cat_link = (string) get_term_link( $cliconnect_cat );
+		}
 	}
 }
 ?>
