@@ -171,6 +171,11 @@
 	text-decoration: none;
 }
 
+/* Efeito hover no título: muda para cor de marca. */
+.case-container:hover .case-container__titulo {
+	color: var(--cor-texto-marca);
+}
+
 .case-container__texto {
 	font-family: var(--fonte-base);
 	font-size: var(--tam-body-lg); /* 18px */
