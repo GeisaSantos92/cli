@@ -11656,6 +11656,7 @@ class Cliconnect_Seed {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 			WP_CLI::log( sprintf( '  TOTVS Linx FAQ: %d perguntas vinculadas.', count( $faq_ids ) ) );
 		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  TOTVS Linx: todas as seções preenchidas.' );
 	}
 
@@ -11806,6 +11807,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  TOTVS RM: todas as seções preenchidas.' );
 	}
 
@@ -11952,6 +11954,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( sprintf( '  Arius ERP FAQ: %d perguntas vinculadas.', count( $faq_ids ) ) );
 		WP_CLI::log( '  Arius ERP: todas as seções preenchidas.' );
 	}
@@ -12110,7 +12113,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
-
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  CISS Poder ERP: todas as seções preenchidas.' );
 	}
 
@@ -12272,7 +12275,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
-
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  IFS Cloud: todas as seções preenchidas.' );
 	}
 
@@ -12433,7 +12436,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
-
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  Viasoft: todas as seções preenchidas.' );
 	}
 
@@ -13074,7 +13077,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
-
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  RP Info: todas as seções preenchidas.' );
 	}
 
@@ -13235,7 +13238,7 @@ class Cliconnect_Seed {
 		if ( ! empty( $faq_ids ) ) {
 			update_field( 'solucao_faq_itens', $faq_ids, $post_id );
 		}
-
+		update_field( 'solucao_faq_titulo', 'Dúvidas Frequentes', $post_id );
 		WP_CLI::log( '  QAD Redzone: todas as seções preenchidas.' );
 	}
 
