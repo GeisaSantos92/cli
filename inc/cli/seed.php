@@ -13613,8 +13613,8 @@ class Cliconnect_Seed {
 		$campos  = array(
 			// 1 · Hero.
 			'solucao_hero_eyebrow'    => 'para o seu Databricks',
-			'solucao_hero_titulo'     => 'Conecte o Databricks ao core do negócio com dados sempre prontos para IA',
-			'solucao_hero_corpo'      => 'Integre Databricks aos seus sistemas transacionais, ERP e CRM para alimentar modelos de machine learning em tempo real e transformar dados corporativos em decisões inteligentes.',
+			'solucao_hero_titulo'     => 'Leve dados operacionais ao Databricks prontos para IA',
+			'solucao_hero_corpo'      => 'Conecte ERP, CRM e sistemas de negócio ao Lakehouse do Databricks para treinar modelos com dados atualizados e transformar previsões em ações.',
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
