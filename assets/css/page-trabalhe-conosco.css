@@ -315,7 +315,7 @@
 /* Fundo branco com blob elíptico lavanda (via ::after centrado). */
 .tc-depoimento {
 	background: var(--cor-fundo);
-	padding-block: clamp(2.5rem, 4vw, 3.5rem);
+	padding-block: 7.5rem; /* 120px — conforme Figma */
 	position: relative;
 	overflow: hidden;
 }
@@ -351,6 +351,21 @@
 	justify-content: center;
 	gap: 1rem;
 	min-height: 286px;
+}
+
+.tc-depoimento__foto {
+	position: relative;
+	width: 124px;
+	border-radius: var(--raio);
+	overflow: hidden;
+}
+
+.tc-depoimento__foto::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to bottom, #87afff, rgba(135, 175, 255, 0));
+	pointer-events: none;
 }
 
 .tc-depoimento__foto img {
@@ -614,6 +629,10 @@
 }
 
 @media (max-width: 768px) {
+	.tc-depoimento {
+		padding-block: 3rem;
+	}
+
 	.tc-sobre__inner,
 	.tc-depoimento__inner {
 		grid-template-columns: 1fr;
