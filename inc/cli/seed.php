@@ -1793,7 +1793,11 @@ class Cliconnect_Seed {
 			// 3. Camadas (a ilustração é asset do tema).
 			'camadas_titulo'        => "Tudo o que você precisa.\nCom custo previsível.",
 			'camadas_texto'         => "Pague um custo fixo e use à vontade nosso serviço de integração.\nQuanto mais a sua operação cresce, mais você se beneficia.",
-			'camadas_botao'         => $this->link( 'Entenda o que está incluso', '/plataforma/' ),
+			'camadas_botao'         => array(
+				'title'  => 'Entenda o que está incluso',
+				'url'    => self::WHATSAPP,
+				'target' => '_blank',
+			),
 
 			// 4. Boomi.
 			'boomi_eyebrow'         => 'Plataforma global',
@@ -2446,7 +2450,7 @@ class Cliconnect_Seed {
 					'filhos' => array(
 						array(
 							'titulo' => 'Plataforma',
-							'url'    => '/plataforma/',
+							'url'    => '#', // Sem URL: só agrupa CLI Connect e CLI Signature.
 							'filhos' => array(
 								'CLI Connect'   => '/cli-connect/',
 								'CLI Signature' => '/cli-signature/',
@@ -4001,7 +4005,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'servicos-financeiros-hero' ),
 
 			// 2 · Métricas.
@@ -4170,7 +4174,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'manufatura-hero' ),
 
 			// 2 · Métricas.
@@ -4340,7 +4344,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'software-isv-hero' ),
 
 			// 2 · Métricas.
@@ -4508,7 +4512,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'logistica-3pl-hero' ),
 
 			// 2 · Métricas.
@@ -4676,7 +4680,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'varejo-hero' ),
 
 			// 2 · Métricas.
@@ -4790,7 +4794,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'seguros-hero' ),
 
 			// 2 · Métricas.
@@ -5016,7 +5020,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'hotelaria-e-turismo-hero' ),
 
 			// 2 · Métricas.
@@ -5177,7 +5181,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'    => '/contato/',
 			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_btn2_url'    => self::WHATSAPP,
 			'solucao_hero_imagem'      => $this->img( 'marketing-hero' ),
 
 			// 2 · Métricas.
@@ -5355,7 +5359,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'  => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'    => '/contato/',
 			'solucao_hero_btn2_texto'  => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'    => '/plataforma/',
+			'solucao_hero_btn2_url'    => self::WHATSAPP,
 			'solucao_hero_imagem'      => $this->img( 'operacoes-de-receita-revops-hero' ),
 
 			// 3 · Pilares.
@@ -5524,7 +5528,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'   => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'     => '/contato/',
 			'solucao_hero_btn2_texto'   => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'     => '/plataforma/',
+			'solucao_hero_btn2_url'     => self::WHATSAPP,
 			'solucao_hero_imagem'       => $this->img( 'financeiro-hero' ),
 
 			// 2 · Métricas.
@@ -14645,7 +14649,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça a plataforma',
-			'solucao_hero_btn2_url'        => '/plataforma/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'recursos-humanos-rh-hero' ),
 
 			// 2 · Métricas.

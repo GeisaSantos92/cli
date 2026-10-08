@@ -221,7 +221,7 @@ trait Cliconnect_Seed_Es_Solucoes {
 			array(
 				array(
 					'titulo' => 'Plataforma',
-					'url'    => $this->url_pagina_traduzida( 'plataforma' ),
+					'url'    => '#', // Sem URL, como no português: só abre o painel de cartões.
 					'filhos' => array(
 						array(
 							'titulo'    => 'CLI Connect',
@@ -257,7 +257,7 @@ trait Cliconnect_Seed_Es_Solucoes {
 					'filhos' => array(
 						array(
 							'titulo' => 'Plataforma',
-							'url'    => $this->url_pagina_traduzida( 'plataforma' ),
+							'url'    => '#', // Sem URL: só agrupa CLI Connect e CLI Signature.
 							'filhos' => array(
 								'CLI Connect'   => $this->url_pagina_traduzida( 'cli-connect' ),
 								'CLI Signature' => $this->url_pagina_traduzida( 'cli-signature' ),

@@ -74,7 +74,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'agentes_legenda'       => '30,000+ integrations ready to use',
 			'camadas_titulo'        => "Everything you need.\nAt a predictable cost.",
 			'camadas_texto'         => "Pay a flat fee and use our integration service as much as you want.\nThe more your operation grows, the more you gain.",
-			'camadas_botao'         => $this->link_traduzido( 'See what is included', '/plataforma/' ),
+			'camadas_botao'         => $this->link_traduzido( 'See what is included', self::WHATSAPP, '_blank' ),
 			'boomi_eyebrow'         => 'Global platform',
 			'boomi_titulo'          => 'World-class technology with support built for the Brazilian market',
 			'boomi_texto'           => '<p>Get the same platform that large global companies use to integrate their systems, with the added advantage of <strong>specialised support for the Brazilian market</strong>, affordable pricing and managed service included.</p>',

@@ -152,7 +152,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'agentes_legenda'      => 'Más de 30.000 integraciones listas para usar',
 			'camadas_titulo'       => "Todo lo que necesita.\nCon un costo previsible.",
 			'camadas_texto'        => "Pague una tarifa fija y use nuestro servicio de integración sin límites.\nCuanto más crece su operación, más se beneficia.",
-			'camadas_botao'        => $this->link_traduzido( 'Vea qué está incluido', '/plataforma/' ),
+			'camadas_botao'        => $this->link_traduzido( 'Vea qué está incluido', self::WHATSAPP, '_blank' ),
 			'boomi_eyebrow'        => 'Plataforma global',
 			'boomi_titulo'         => 'Tecnología de clase mundial con soporte para el mercado latinoamericano',
 			'boomi_texto'          => '<p>Acceda a la misma plataforma que las grandes empresas globales usan para integrar sus sistemas, con la ventaja de un <strong>soporte especializado</strong>, un precio accesible y el servicio gestionado incluido.</p>',
