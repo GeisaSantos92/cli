@@ -626,3 +626,35 @@ msgstr "Band with badge, title and a grid of metrics (number + label). Example o
 #: template-parts/cookie-banner.php
 msgid "Aviso de cookies"
 msgstr "Cookie notice"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar"
+msgstr "Share"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no LinkedIn"
+msgstr "Share on LinkedIn"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no WhatsApp"
+msgstr "Share on WhatsApp"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no X"
+msgstr "Share on X"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no Facebook"
+msgstr "Share on Facebook"
+
+#: template-parts/single/compartilhar.php
+msgid "Enviar por e-mail"
+msgstr "Send by email"
+
+#: template-parts/single/compartilhar.php
+msgid "Copiar link"
+msgstr "Copy link"
+
+#: template-parts/single/compartilhar.php
+msgid "Link copiado"
+msgstr "Link copied"

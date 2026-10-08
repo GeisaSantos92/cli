@@ -626,3 +626,35 @@ msgstr ""
 #: template-parts/cookie-banner.php
 msgid "Aviso de cookies"
 msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no LinkedIn"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no WhatsApp"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no X"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no Facebook"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Enviar por e-mail"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Copiar link"
+msgstr ""
+
+#: template-parts/single/compartilhar.php
+msgid "Link copiado"
+msgstr ""

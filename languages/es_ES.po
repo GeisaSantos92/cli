@@ -626,3 +626,35 @@ msgstr "Franja con badge, título y cuadrícula de indicadores (número + etique
 #: template-parts/cookie-banner.php
 msgid "Aviso de cookies"
 msgstr "Aviso de cookies"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar"
+msgstr "Compartir"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no LinkedIn"
+msgstr "Compartir en LinkedIn"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no WhatsApp"
+msgstr "Compartir en WhatsApp"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no X"
+msgstr "Compartir en X"
+
+#: template-parts/single/compartilhar.php
+msgid "Compartilhar no Facebook"
+msgstr "Compartir en Facebook"
+
+#: template-parts/single/compartilhar.php
+msgid "Enviar por e-mail"
+msgstr "Enviar por correo electrónico"
+
+#: template-parts/single/compartilhar.php
+msgid "Copiar link"
+msgstr "Copiar enlace"
+
+#: template-parts/single/compartilhar.php
+msgid "Link copiado"
+msgstr "Enlace copiado"

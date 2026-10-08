@@ -84,6 +84,8 @@ $cliconnect_cats      = get_the_category();
 			</div>
 			<?php endif; ?>
 
+			<?php get_template_part( 'template-parts/single/compartilhar' ); ?>
+
 		</article>
 
 	</div>

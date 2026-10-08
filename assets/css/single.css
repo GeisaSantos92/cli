@@ -238,6 +238,79 @@
 	white-space: nowrap;
 }
 
+/* --- Compartilhar ---------------------------------------------------------- */
+
+.post-compartilhar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px 24px;
+	padding-top: 24px;
+	width: 100%;
+}
+
+.post-compartilhar__label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg);         /* 18px */
+	font-weight: 600;
+	line-height: 1.6;
+	color: var(--cor-texto);
+	white-space: nowrap;
+}
+
+.post-compartilhar__lista {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.post-compartilhar__botao {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-pill);
+	background: var(--cor-fundo-suave);
+	color: var(--cor-texto-marca);
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.post-compartilhar__botao[hidden] {
+	display: none;
+}
+
+.post-compartilhar__botao svg {
+	width: 20px;
+	height: 20px;
+}
+
+.post-compartilhar__botao:hover,
+.post-compartilhar__botao:focus-visible,
+.post-compartilhar__botao.is-copiado {
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+}
+
+.post-compartilhar__aviso {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	font-weight: 500;
+	color: var(--cor-texto-alt);
+}
+
+.post-compartilhar__aviso:empty {
+	display: none;
+}
+
 /* --- Responsivo ------------------------------------------------------------ */
 
 @media (max-width: 640px) {

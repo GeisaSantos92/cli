@@ -112,6 +112,14 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/single.css' )
 		);
+
+		wp_enqueue_script(
+			'cliconnect-single',
+			get_theme_file_uri( '/assets/js/single.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/single.js' ),
+			true
+		);
 	}
 
 	// Página Trabalhe Conosco.
