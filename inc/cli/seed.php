@@ -45,6 +45,12 @@ class Cliconnect_Seed {
 	const META = '_cliconnect_seed';
 
 	/**
+	 * Link do WhatsApp comercial — destino dos CTAs "Conheça nossa solução"
+	 * das soluções (Figma) e valor inicial do botão flutuante e do Contato.
+	 */
+	const WHATSAPP = 'https://wa.me/553140422051';
+
+	/**
 	 * Cache de anexos importados (slug do arquivo => attachment ID).
 	 *
 	 * @var array<string,int>
@@ -2707,8 +2713,8 @@ class Cliconnect_Seed {
 			'cliconnect_header_cta_url'   => 'https://platform.boomi.com',
 			'cliconnect_cta_titulo'       => "Planeje a evolução\ndas suas integrações",
 			'cliconnect_cta_botao_texto'  => 'Fale conosco no WhatsApp',
-			'cliconnect_cta_botao_url'    => 'https://wa.me/553140422051',
-			'cliconnect_whatsapp_url'     => 'https://wa.me/553140422051',
+			'cliconnect_cta_botao_url'    => self::WHATSAPP,
+			'cliconnect_whatsapp_url'     => self::WHATSAPP,
 			'cliconnect_social_linkedin'  => 'https://www.linkedin.com/company/cli-connect/',
 			'cliconnect_social_instagram' => 'https://www.instagram.com/cliconnect.io/',
 			'cliconnect_social_youtube'   => 'https://www.youtube.com/watch?v=Ox8vbKkS29M',
@@ -3800,7 +3806,7 @@ class Cliconnect_Seed {
 			'ct_form_telefone'      => '(31) 4042-2051',
 			'ct_form_linkedin_url'  => 'https://www.linkedin.com/company/cli-connect/',
 			'ct_form_instagram_url' => 'https://www.instagram.com/cliconnect.io/',
-			'ct_form_whatsapp_url'  => 'https://wa.me/553140422051',
+			'ct_form_whatsapp_url'  => self::WHATSAPP,
 			'ct_form_cf7_id'        => $cf7_id,
 		);
 
@@ -7161,7 +7167,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/salesforce/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'salesforce-hero' ),
 
 			// 2 · Pilares.
@@ -7217,7 +7223,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-sales-cloud/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'salesforce-sc-hero' ),
 
 			// 2 · Pilares.
@@ -7440,7 +7446,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-service-cloud/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'salesforce-svc-hero' ),
 			// 2 · Pilares
 			'solucao_pilares_titulo'   => 'Conecte toda a operação de atendimento',
@@ -7564,7 +7570,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/salesforce-marketing-cloud/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'salesforce-mc-hero' ),
 			// 2 · Pilares
 			'solucao_pilares_titulo'   => 'Transforme dados em jornadas relevantes',
@@ -7707,7 +7713,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/sap/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'sap-hero' ),
 
 			// 2 · Pilares.
@@ -8035,7 +8041,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-datasul/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'totvs-datasul-hero' ),
 
 			// 2 · Pilares.
@@ -8138,7 +8144,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-winthor/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'totvs-winthor-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'       => 'Conecte sua operação de distribuição',
@@ -8241,7 +8247,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-logix/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'totvs-logix-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'       => 'Mantenha sua logística conectada em tempo real',
@@ -8370,7 +8376,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/senior/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'senior-hero' ),
 
 			// 2 · Pilares.
@@ -8468,7 +8474,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/sankhya/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'sankhya-hero' ),
 
 			// 2 · Pilares.
@@ -8566,7 +8572,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/dynamics-365/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'dynamics-365-hero' ),
 
 			// 2 · Pilares.
@@ -8700,7 +8706,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/rd-station-crm/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'rd-station-hero' ),
 
 			// 2 · Pilares.
@@ -8835,7 +8841,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/rd-station-marketing/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'rd-station-marketing-hero' ),
 
 			// 2 · Pilares.
@@ -8975,7 +8981,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/hubspot-crm/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'hubspot-crm-hero' ),
 
 			// 2 · Pilares.
@@ -9125,7 +9131,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/thomson-reuters-tax-one/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'thomson-reuters-tax-one-hero' ),
 
 			// 2 · Pilares.
@@ -9261,7 +9267,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/freshservice/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'freshservice-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Transforme o Freshservice em uma plataforma de processos',
@@ -9405,7 +9411,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/servicenow/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'servicenow-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Transforme o ServiceNow em uma central de processos',
@@ -9501,7 +9507,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/portal-de-api/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'portal-de-api-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Democratize o acesso aos sistemas internos',
@@ -9635,7 +9641,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/zendesk/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'zendesk-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Transforme o Zendesk em uma central de atendimento conectada',
@@ -9731,7 +9737,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/bionexo/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'bionexo-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Conecte compras hospitalares aos sistemas internos',
@@ -9860,7 +9866,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'tasy-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Amplie o valor dos dados do Tasy',
@@ -9989,7 +9995,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'      => $this->img( 'mv-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Amplie a conectividade do SOUL MV',
@@ -10370,7 +10376,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto'      => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'        => '/contato/',
 			'solucao_hero_btn2_texto'      => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'        => '/solucoes/tecnologia/totvs-protheus/',
+			'solucao_hero_btn2_url'        => self::WHATSAPP,
 			'solucao_hero_imagem'          => $this->img( 'totvs-hero' ),
 
 			// 2 · Pilares.
@@ -10532,7 +10538,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/vtex/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'vtex-hero' ),
 
 			// 2 · Pilares.
@@ -10684,7 +10690,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/shopify/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'shopify-hero' ),
 
 			// 2 · Pilares.
@@ -10987,7 +10993,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/narwal/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'narwal-hero' ),
 			// 2 · Pilares
 			'solucao_pilares_titulo'   => 'Conecte toda a operação de comércio exterior',
@@ -11132,7 +11138,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/neogrid/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'neogrid-hero' ),
 			// 2 · Pilares
 			'solucao_pilares_titulo'   => 'Amplie o valor da sua rede Neogrid',
@@ -11277,7 +11283,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/target-sistemas/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'target-sistemas-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Escale sua operação de distribuição conectada',
@@ -11422,7 +11428,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/sap-business-one/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'sap-business-one-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Escale seu SAP Business One conectado',
@@ -11568,7 +11574,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/sap-ecc/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'sap-ecc-hero' ),
 			// 2 · Pilares
 			'solucao_pilares_titulo'   => 'Modernize seu SAP ECC em produção',
@@ -11714,7 +11720,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/oracle-netsuite/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'oracle-netsuite-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Escale seu NetSuite conectado',
@@ -11861,7 +11867,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/totvs-consinco/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'totvs-consinco-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Integre toda operação do varejo alimentar',
@@ -12007,7 +12013,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/totvs-linx/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'totvs-linx-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Escale sua operação Linx conectada',
@@ -12159,7 +12165,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/totvs-rm/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'totvs-rm-hero' ),
 			// 2 · Pilares.
 			'solucao_pilares_titulo'   => 'Amplie o potencial do TOTVS RM',
@@ -12310,7 +12316,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/arius-erp/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'arius-erp-hero' ),
 
 			// 2 · Pilares.
@@ -12465,7 +12471,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/ciss-poder-erp/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'ciss-poder-erp-hero' ),
 
 			// 2 · Pilares.
@@ -12627,7 +12633,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/ifs-cloud/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'ifs-cloud-hero' ),
 
 			// 2 · Pilares.
@@ -12788,7 +12794,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/viasoft/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'viasoft-hero' ),
 
 			// 2 · Pilares.
@@ -12947,7 +12953,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/onclick-erp/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'onclick-erp-hero' ),
 
 			// 2 · Pilares.
@@ -13103,7 +13109,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/propz/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'propz-hero' ),
 
 			// 2 · Pilares.
@@ -13266,7 +13272,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucoes/tecnologia/microsoft-teams/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'microsoft-teams-hero' ),
 
 			// 2 · Pilares.
@@ -13429,7 +13435,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/rp-info/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'rp-info-hero' ),
 
 			// 2 · Pilares.
@@ -13590,7 +13596,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/qad-redzone/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'qad-redzone-hero' ),
 
 			// 2 · Pilares.
@@ -13751,7 +13757,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/magento/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'magento-hero' ),
 
 			// 2 · Pilares.
@@ -13898,7 +13904,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/snowflake/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'snowflake-hero' ),
 
 			// 2 · Pilares.
@@ -14045,7 +14051,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/databricks/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'databricks-hero' ),
 
 			// 2 · Pilares.
@@ -14194,7 +14200,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/aws/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'aws-hero' ),
 
 			// 2 Pilares
@@ -14338,7 +14344,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/microsoft-azure/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'microsoft-azure-hero' ),
 
 			// 2 Pilares
@@ -14482,7 +14488,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/solucao/google-cloud/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'google-cloud-hero' ),
 
 			// 2 Pilares
@@ -14804,7 +14810,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'gemini-hero' ),
 
 			// 3 · Pilares.
@@ -14975,7 +14981,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'claude-hero' ),
 
 			// 3 · Pilares.
@@ -15147,7 +15153,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn1_texto' => 'Agende uma demonstração',
 			'solucao_hero_btn1_url'   => '/contato/',
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
-			'solucao_hero_btn2_url'   => '/plataforma/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'chatgpt-hero' ),
 
 			// 3 · Pilares.

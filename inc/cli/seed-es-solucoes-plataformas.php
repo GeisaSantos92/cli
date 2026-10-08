@@ -708,6 +708,8 @@ trait Cliconnect_Seed_Es_Solucoes_Plataformas {
 	protected function texto_es_solucao_onblox() {
 		return $this->solucao_es(
 			array(
+				'solucao_hero_btn2_texto'  => 'Conozca OnBlox',
+				'solucao_hero_btn2_url'    => 'https://onblox.com',
 				'solucao_hero_eyebrow'     => 'para su onblox',
 				'solucao_hero_titulo'      => 'Conecte WMS y TMS al ERP y a las transportadoras en tiempo real',
 				'solucao_hero_corpo'       => 'Integre OnBlox a los ERP, al e-commerce y a las aplicaciones de rastreo para sincronizar inventario, operaciones logísticas y gestión de flota sin procesos manuales.',

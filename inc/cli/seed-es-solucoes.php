@@ -394,7 +394,7 @@ trait Cliconnect_Seed_Es_Solucoes {
 			'solucao_hero_btn1_texto' => 'Solicite una demostración',
 			'solucao_hero_btn1_url'   => '/es/contacto/',
 			'solucao_hero_btn2_texto' => 'Conozca nuestra solución',
-			'solucao_hero_btn2_url'   => '/es/plataforma-de-integracion/',
+			'solucao_hero_btn2_url'   => self::WHATSAPP, // Figma: CTA para o WhatsApp comercial.
 			'solucao_pilares_eyebrow' => 'Pilares',
 			'solucao_casos_eyebrow'   => 'casos de uso',
 			'solucao_casos_cta_texto' => 'Solicite una demostración',

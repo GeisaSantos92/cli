@@ -411,8 +411,10 @@ trait Cliconnect_Seed_En_Solucoes {
 		return array(
 			'solucao_hero_btn1_texto' => 'Book a demo',
 			'solucao_hero_btn1_url'   => '/en/contact/',
-			'solucao_hero_btn2_texto' => 'Explore the platform',
-			'solucao_hero_btn2_url'   => '/en/platform/',
+			// Figma: o segundo CTA do hero leva ao WhatsApp comercial. As landings de
+			// indústria/departamento sobrescrevem com "Explore the platform".
+			'solucao_hero_btn2_texto' => 'Discover our solution',
+			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_pilares_eyebrow' => 'Pillars',
 			'solucao_casos_eyebrow'   => 'Use cases',
 			'solucao_casos_cta_texto' => 'Book a demo',
@@ -448,6 +450,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_servicos_financeiros() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For financial services',
 				'solucao_hero_titulo'          => 'From rollout to production in weeks.',
 				'solucao_hero_titulo_destaque' => 'Because banks do not wait.',
@@ -491,6 +495,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_manufatura() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For manufacturing',
 				'solucao_hero_titulo'          => 'Connect your plant from the shop floor to the cloud',
 				'solucao_hero_titulo_destaque' => 'without stopping the operation.',
@@ -532,6 +538,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_logistica_3pl() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For logistics',
 				'solucao_hero_titulo'          => 'Connect customers, carriers and logistics systems',
 				'solucao_hero_titulo_destaque' => 'on a single platform',
@@ -573,6 +581,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_software_isv() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For software companies',
 				'solucao_hero_titulo'          => 'Ship native integrations to your customers',
 				'solucao_hero_titulo_destaque' => 'without rebuilding connectors for every project',
@@ -614,6 +624,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_varejo() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For retail',
 				'solucao_hero_titulo'          => 'Connect',
 				'solucao_hero_titulo_destaque' => 'the whole journey',
@@ -658,6 +670,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_hotelaria_e_turismo() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For hospitality',
 				'solucao_hero_titulo'          => 'Connect data, properties and guests',
 				'solucao_hero_titulo_destaque' => 'in one integrated experience',
@@ -699,6 +713,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_seguros() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For insurance',
 				'solucao_hero_titulo'          => 'Connect legacy systems and',
 				'solucao_hero_titulo_destaque' => 'speed up the launch',
@@ -743,6 +759,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_recursos_humanos_rh() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'      => 'Explore the platform',
+				'solucao_hero_btn2_url'        => '/en/platform/',
 				'solucao_hero_eyebrow'         => 'For your HR team',
 				'solucao_hero_titulo'          => 'Connect the whole employee lifecycle in',
 				'solucao_hero_titulo_destaque' => 'a single operation',
@@ -790,6 +808,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_operacoes_de_receita_revops() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'  => 'Explore the platform',
+				'solucao_hero_btn2_url'    => '/en/platform/',
 				'solucao_hero_eyebrow'     => 'For your revenue operations',
 				'solucao_hero_titulo'      => 'Connect the whole revenue operation.',
 				'solucao_hero_corpo'       => 'Synchronise CRM, marketing and customer success in real time to remove bottlenecks, speed up handoffs and keep the whole funnel up to date.',
@@ -831,6 +851,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_marketing() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'  => 'Explore the platform',
+				'solucao_hero_btn2_url'    => '/en/platform/',
 				'solucao_hero_eyebrow'     => 'For your marketing team',
 				'solucao_hero_titulo'      => 'Connect marketing, CRM and analytics in real time',
 				'solucao_hero_corpo'       => 'Get out of the IT queue, synchronise information in real time and deliver more relevant campaigns with intelligent automation across every platform in your ecosystem.',
@@ -878,6 +900,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_financeiro() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'  => 'Explore the platform',
+				'solucao_hero_btn2_url'    => '/en/platform/',
 				'solucao_hero_eyebrow'     => 'for your finance team',
 				'solucao_hero_titulo'      => 'Connect the whole financial ecosystem.',
 				'solucao_hero_corpo'       => 'Integrate ERPs, banks and planning platforms to speed up the close, automate audits and keep every business unit in sync.',
@@ -2567,6 +2591,8 @@ trait Cliconnect_Seed_En_Solucoes {
 	protected function texto_en_solucao_onblox() {
 		return $this->solucao_en(
 			array(
+				'solucao_hero_btn2_texto'  => 'Explore OnBlox',
+				'solucao_hero_btn2_url'    => 'https://onblox.com',
 				'solucao_hero_eyebrow'     => 'for your OnBlox',
 				'solucao_hero_titulo'      => 'Connect WMS and TMS to the ERP and carriers in real time',
 				'solucao_hero_corpo'       => 'Integrate OnBlox with ERPs, e-commerce and tracking apps to synchronise stock, logistics operations and fleet management with no manual steps.',
