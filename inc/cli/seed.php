@@ -1226,9 +1226,12 @@ class Cliconnect_Seed {
 	/**
 	 * Posts do blog exibidos na home e na listagem.
 	 *
-	 * São 7: o primeiro vira o destaque da listagem e os outros 6 preenchem
-	 * as duas fileiras da grade, como no layout. A data é escalonada em dias
-	 * para que a ordenação por data seja determinística entre execuções.
+	 * Os 7 primeiros vieram do layout: o primeiro vira o destaque da listagem e
+	 * os outros 6 preenchem as duas fileiras da grade. A data deles é escalonada
+	 * em dias para que a ordenação seja determinística entre execuções. Os
+	 * seguintes foram publicados pelo painel e guardam a data, a capa
+	 * (`assets/seed/blog-N.png`) e a categoria reais — `'categoria' => false`
+	 * mantém o post em "Sem categoria".
 	 *
 	 * @return void
 	 */
@@ -1314,10 +1317,422 @@ class Cliconnect_Seed {
 <p>O caminho que funciona é gradual — primeiro consulta, depois execução assistida, por último autonomia em processos de baixo impacto e alto volume.</p>',
 				'arquivo' => 'blog-1',
 			),
+			// Posts publicados pelo painel, trazidos para o seed com data e capa reais.
+			array(
+				'titulo'    => 'Eficiência Operacional: Integração de Sistemas Reduz Custos 2026',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p>A <strong>eficiência operacional</strong> é crucial, e em 2026, empresas que ainda lidam com sistemas que não se comunicam, como SAP, Salesforce e plataformas de e-commerce, enfrentam um desafio significativo. O resultado é conhecido por quem opera no dia a dia: planilhas de conciliação manual, pedido lançado duas vezes, estoque que não bate, time de vendas sem visibilidade do que o financeiro já sabe.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Isso não é um problema de tecnologia. É um problema de custo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A conta que ninguém coloca no orçamento: o impacto da falta de integração</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Cada sistema que não se comunica com outro gera trabalho manual para compensar essa falha. Multiplique isso por dezenas de processos, times e horas por semana, e o custo real da falta de integração aparece: retrabalho, erro humano, decisão tomada com dado desatualizado, cliente que espera mais do que deveria.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A resposta tradicional para esse problema costuma ser: "vamos contratar desenvolvedores e construir as integrações". Só que isso tem um custo alto e um prazo longo. No meio do caminho, o time de TI ainda precisa manter tudo isso funcionando, atualizado e seguro, além de todas as outras prioridades que já tem na fila.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Serviço Gerenciado CLI: uma alternativa inteligente para a integração de sistemas</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>É aqui que entra o modelo de <strong>Serviço Gerenciado</strong> da CLI. Em vez de a empresa montar e manter uma equipe interna para construir APIs do zero, a CLI entrega a conexão entre os sistemas já pronta, testada e monitorada continuamente.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Vantagens do Serviço Gerenciado da CLI:</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Sem equipe de desenvolvimento dedicada.</strong> A empresa não precisa contratar, treinar ou reter desenvolvedores especializados em integração — um recurso caro e disputado no mercado.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Conexão já operacional.</strong> SAP, Salesforce, plataformas de e-commerce e outros sistemas passam a trocar dados automaticamente, sem depender de projetos internos de meses.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Monitoramento contínuo.</strong> A integração não é entregue e esquecida. Ela é acompanhada, ajustada e corrigida antes que um problema vire prejuízo.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Velocidade de mercado: o diferencial da eficiência operacional</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Empresas com processos automatizados respondem mais rápido. Um pedido que entra no e-commerce já atualiza o estoque no ERP e já gera o registro no CRM — sem intervenção manual, sem atraso, sem erro de digitação. Isso não é conveniência: é vantagem competitiva. Em mercados onde a diferença entre ganhar e perder um cliente é medida em horas, empresas com sistemas integrados simplesmente respondem antes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Quando se soma o custo evitado com desenvolvedores, o tempo interno recuperado, a redução de erros operacionais e o ganho de velocidade nos processos, a <strong>integração de sistemas</strong> deixa de ser um item de TI e passa a ser uma decisão financeira. Em 2026, a pergunta para quem lidera operações não é mais "vale a pena integrar os sistemas?" — é <strong>quanto está custando não integrar</strong>.</p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-2',
+				'data'      => '2026-09-22 16:42:15',
+			),
+			array(
+				'titulo'    => 'Sem integração, até a melhor das IAs fica isolada na empresa',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p><strong>Sem integração, até a melhor das IA\'s fica isolada</strong>. A conectividade é o próximo campo de batalha da inteligência artificial (IA) corporativa. Nos últimos anos, boa parte da conversa sobre inteligência artificial nas empresas girou em torno de questionamentos simples: qual modelo é mais capaz? Qual responde melhor? Raciocina mais? Gera código infalível? Mas essas perguntas não se atêm a um problema silencioso e muito mais determinante para o resultado de negócio: de que adianta a melhor das IAs se ela não integra todos os dados?</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Uma inteligência sem contexto é uma inteligência incompleta</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Um agente de IA que não acessa o ERP não sabe se um pedido está atrasado. Um assistente que não conversa com o CRM não sabe se aquele cliente já reclamou três vezes esse mês. Um copiloto que não tem acesso ao sistema financeiro não pode dizer, com segurança, se uma despesa está dentro do orçamento.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Em todos esses casos, a inteligência existe — mas fica isolada, presa numa bolha de raciocínio genérico, desconectada da realidade operacional da empresa. E uma IA isolada, por mais sofisticada que seja, tem valor limitado.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">O gargalo não é o modelo, é a falta de conexão</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>As organizações costumam investir pesado em modelos, licenças e experimentos de IA generativa, mas subestimam o desafio real: conectar esses modelos, de forma segura e governada, às dezenas de sistemas que sustentam a operação — ERP, CRM, sistemas de RH, plataformas de BI, bancos de dados legados, ferramentas internas construídas ao longo de décadas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Esse gargalo tem nome: <strong>falta de uma camada de conectividade</strong>. Sem ela, cada integração vira um projeto isolado, feito sob medida, difícil de manter e ainda mais difícil de auditar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>O resultado é previsível: pilotos de IA que nunca saem do papel, ou que saem, mas de forma frágil, sem controle de acesso, sem rastreabilidade e sem governança sobre quem viu o quê.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">CLI Connect: o ponto que faltava para a integração da IA</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>É exatamente nesse momento que entra a proposta da <strong>CLI Connect</strong>: criar uma camada de conectividade padronizada entre modelos de IA e as fontes de dados corporativas, permitindo que agentes acessem informações de ERP, CRM e outros sistemas críticos sem que cada integração precise ser reinventada do zero.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Na prática, isso significa três coisas para quem planeja a estratégia de IA de longo prazo:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Acesso unificado a múltiplas fontes.</strong></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Segurança como parte da prevenção e não remediação.</strong></li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Governança e rastreabilidade.</strong></li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>A CLI transforma a IA em um agente que enxerga a empresa como ela realmente é — com segurança, com controle e com governança. Entre em contato para traçarmos o plano perfeito para você.</p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-3',
+				'data'      => '2026-09-08 16:41:05',
+			),
+			array(
+				'titulo'    => 'Automatização de Eventos: Eficiência e Precisão para sua Empresa',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p>A <strong>automatização de eventos</strong> é a chave para acelerar o ritmo operacional da sua empresa. Para isso, não basta ter softwares de ponta; seus sistemas precisam conversar entre si em tempo real. Em grande parte das médias e grandes corporações, o verdadeiro gargalo não está nas ferramentas isoladas, mas sim no atraso e na falta de sincronia entre os dados de cada departamento. Com a automatização de eventos, seu ecossistema tecnológico passa a funcionar sob o princípio de ação e reação imediata, eliminando de vez a lentidão operacional.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Como a automatização de eventos funciona na prática?</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>Com a automatização de eventos, seu sistema passa a funcionar sob o princípio de ação e reação imediata. Como resultado, você garante a redução da lentidão operacional. Ou seja, se uma nota fiscal é emitida ou um dado é alterado no SAP, a automatização captura essa mudança no exato segundo em que ela ocorre. Assim, a plataforma orquestra e dispara atualizações para múltiplos departamentos e sistemas externos de uma só vez, sem que ninguém precise apertar um botão.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A CLI Connect não vende ou substitui os seus softwares atuais, mas faz tudo isso acontecer de forma segura, rodando sob a infraestrutura da Boomi. A Boomi é o software de integração mais seguro do mercado global e o único com as 11 principais certificações de segurança e compliance.</p>
+<!-- /wp:paragraph --></blockquote>
+<!-- /wp:quote -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Os impactos da automatização de eventos no seu negócio</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Abaixo, veja como essa tecnologia transforma processos complexos em fluxos invisíveis e eficientes:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li>Entrada de Nota Fiscal e Provisão Automatizada</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Quando a nota fiscal do fornecedor entra no sistema, <strong>os eventos automáticos eliminam o risco de descasamento financeiro</strong>. No mesmo instante, o Financeiro visualiza a provisão exata do fluxo de caixa e o setor de Suprimentos sabe que a entrega foi realizada. Isso elimina conciliações manuais ao fim do mês.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true,"start":2} -->
+<ol start="2" class="wp-block-list"><!-- wp:list-item -->
+<li>Sincronização de Estoque e Contabilidade</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Esqueça relatórios de inventário atrasados. Se uma mercadoria sai do centro de distribuição, <strong>o estoque físico é atualizado no e-commerce e, no mesmo segundo, o sistema atualiza a conta contábil de estoque</strong>. Sua empresa passa a operar com estoque real, evitando quebras de vendas ou capital de giro travado desnecessariamente.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"ordered":true,"start":3} -->
+<ol start="3" class="wp-block-list"><!-- wp:list-item -->
+<li>Captura Pró-ativa de Variações de Preço</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Se o fornecedor faturou um valor diferente do combinado no Pedido de Compras, a automatização de eventos captura o erro na entrada. O sistema alerta a área de Compras imediatamente para <strong>renegociação e ajusta a margem contábil na hora, impedindo que a falha estoure no balanço final.</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A atuação da CLI Connect não se limita aos cenários acima. Também estruturamos e resolvemos a integração de absolutamente qualquer sistema, plataforma (ERPs, CRMs, e-commerces) ou setor que a sua empresa necessite conectar, com mais de 200 plataformas já integradas com sucesso no mercado.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Respostas imediatas ao mercado</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Ao implementar a <strong>automatização de eventos</strong>, sua empresa deixa de descobrir problemas ou oportunidades apenas no relatório da semana seguinte. <strong>Seu negócio ganha o poder de reagir no exato momento em que o mercado muda</strong>, posicionando sua marca à frente dos concorrentes que ainda dependem de processos manuais.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Além disso, em um cenário complexo de constantes mudanças regulatórias no Brasil, como a transição para a Reforma Tributária, os eventos automáticos garantem que cada movimentação gere os impostos exatos em tempo real. Assim, blindam a empresa contra multas e fiscalizações.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Toda a sua operação rodando na mesma pulsação</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Com a integração inteligente, a TI deixa de ser uma barreira ou um centro de custos e passa a ser o motor de crescimento do negócio. A área de negócios ganha autonomia e velocidade, deixando de depender de filas internas de desenvolvimento técnico para tarefas operacionais rotineiras.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>O resultado prático é ter a sua operação totalmente sob controle, fazendo com que seu <strong>Comercial</strong>, sua <strong>Contabilidade</strong> e sua <strong>Logística</strong> operem em perfeita sincronia, sem ruídos e com segurança absoluta.</p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-4',
+				'data'      => '2026-08-28 16:23:00',
+			),
+			array(
+				'titulo'    => 'Como conectar a ERP para unificar e controlar os dados?',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p>Empresas de alta performance investem horas preciosas tentando alinhar os dados de diferentes plataformas corporativas. Muitas vezes, a culpa por gargalos de produtividade recai injustamente sobre o ERP. O verdadeiro desafio operacional, no entanto, não é o sistema em si, mas a ausência de uma arquitetura centralizada que orquestre o fluxo de informações de ponta a ponta.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>Os Limites da Troca de Sistemas</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Substituir softwares pode parecer a saída mais lógica para otimizar a operação. De fato, a troca de plataformas ajuda a resolver alguns problemas isolados de conectividade nativa entre ferramentas específicas. Contudo, para corporações com alto volume de transações, isso não soluciona o desafio estrutural do fluxo de dados.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Mesmo com sistemas modernos que conseguem se conectar a determinados setores, a realidade de uma grande empresa envolve um ecossistema complexo: logística, <em>Business Intelligence</em>, obrigações fiscais e CRMs trabalhando simultaneamente.<br><br>Depender apenas de conexões nativas significa lidar com integrações fragmentadas, exigindo que seu time gaste um tempo valioso fazendo pontes manuais. O que a sua diretoria precisa não é de mais um software para administrar, mas sim de uma orquestração inteligente entre os que já operam e sustentam a empresa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading"><strong>CLI Connect: Governança, Previsibilidade e Alta Performance</strong></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A CLI Connect não vende novos sistemas de gestão; nós fazemos os que você já contratou conversarem com sincronia perfeita. Operamos como uma plataforma de integração <em>powered by Boomi</em>, a única infraestrutura do mercado com as 11 maiores certificações globais de conformidade e segurança cibernética — incluindo SOC 1, SOC 2, FedRAMP e ISO 27001. Isso assegura que o tráfego dos seus dados ocorra com blindagem absoluta e governança corporativa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Nós entregamos um serviço gerenciado que compreende o seu modelo de negócio, atuando com especialistas e consultores experientes baseados no Brasil para garantir a agilidade e o suporte direto que um gestor precisa. Tudo isso é formatado em um modelo de assinatura de valor fixo mensal, eliminando o risco de cobranças variáveis por volume de tráfego e garantindo escala sustentável para o seu caixa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Se a sua operação exige sincronização precisa para tomada de decisão rápida e segura, fale com nossos consultores e descubra como a CLI Connect pode integrar o seu negócio ao futuro</p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-5',
+				'data'      => '2026-08-07 16:21:00',
+				'categoria' => false,
+			),
+			array(
+				'titulo'    => 'Saiba como verificar a segurança da automação em seus fluxos',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p><strong>Saiba como verificar a segurança do sistema de automações utilizado em seus fluxos</strong>. A maioria das empresas enxerga a integração entre operações apenas como um "ligar sistemas". Antigamente, até poderíamos concordar, mas hoje a realidade exige um ponto de vista diferente, e os negócios que permanecem no escuro acabam ficando para trás.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">O risco das automações precárias</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Criar automações isoladas com programadores internos da sua própria empresa representa um risco não só para o fluxo operacional, como para a segurança da própria empresa e seus respectivos clientes. Manualmente, esses ambientes se tornam propícios a vazamento de dados por falta de cibersegurança ou até retrabalhos. Além disso, as informações podem se chocar, com possíveis erros, o que compromete a integridade de toda a operação.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>A consequência? Menos credibilidade, menos confiança, menos clientes. Se você não consegue entregar estabilidade na sua gestão, o impacto recai diretamente sobre o financeiro.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">As classificações de segurança do mercado</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A escolha da tecnologia base para uma plataforma é uma decisão de segurança nacional e corporativa. Por isso, certificações de segurança funcionam como um <strong>selo de auditoria contínua</strong>. Elas são essenciais para garantir a segurança da informação Boomi e a governança de dados para integrações em um ambiente empresarial.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Principais certificações de segurança:</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list {"ordered":true} -->
+<ol class="wp-block-list"><!-- wp:list-item -->
+<li><strong>SOC 1 &amp; SOC 2:</strong> Focam no controle, segurança, disponibilidade e confidencialidade dos dados que trafegam entre seus sistemas.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>HIPAA:</strong> Garante o mais alto nível de proteção para dados sensíveis, crucial em qualquer operação que envolva informações de saúde ou sigilo absoluto.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>PCI:</strong> Certificação fundamental para o tráfego de dados de cartões de crédito e pagamentos, essencial para e-commerce e varejo.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>FedRAMP Moderate &amp; StateRAMP:</strong> Padrões rigorosos de segurança em nuvem, originalmente criados para o setor governamental, que elevam a barra de proteção para o setor privado.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>ISO 27001:</strong> O padrão ouro para Gestão da Segurança da Informação (SGSI), garantindo que os riscos são geridos de forma sistêmica.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>ISO 27701:</strong> Extensão focada na privacidade de informações, essencial para conformidade com a LGPD e regulamentações de privacidade global.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>ISO 27017 &amp; ISO 27018:</strong> Focam especificamente na segurança em nuvem e na proteção de dados de identificação pessoal (PII) em ambientes de <em>cloud</em>.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>IRAP:</strong> Uma certificação de alto nível que avalia a conformidade de segurança, atestando que a arquitetura está preparada para ambientes de missão crítica.</li>
+<!-- /wp:list-item --></ol>
+<!-- /wp:list -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Sua escolha para integrações seguras</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A tecnologia Boomi é a única que possui todas essas certificações, e justamente por essa razão a CLI se baseia nela. Na CLI Connect, atendemos aos padrões mais rígidos de proteção de dados financeiros e corporativos, exigidos por grandes empresas e reguladores internacionais.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Ao escolher uma solução com essas certificações, você reduz drasticamente o risco de inconformidade nas auditorias da sua própria empresa. Além disso, o maior risco em integrações é a exposição de dados durante a troca entre sistemas.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Já pensou se o ERP envia dados sensíveis para o e-commerce? Com a CLI Connect, isso não acontece. A Boomi utiliza criptografia de ponta e trilhas de auditoria (<em>Audit Log</em>) que garantem a rastreabilidade total.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Essas certificações exigem que a plataforma tenha alta disponibilidade e protocolos de recuperação contra falhas, assegurando que seu fluxo de dados não seja interrompido. Segurança e performance andam juntas para evitar auditorias negativas e vazamentos.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Isso é fundamental para a automação de processos corporativos. Automatizar com a CLI é blindar o ecossistema da empresa com o que há de mais seguro no mundo, garantindo a sua integração segura de sistemas B2B.</p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-6',
+				'data'      => '2026-07-22 16:08:40',
+				'categoria' => false,
+			),
+			array(
+				'titulo'    => 'Como escolher a empresa ideal para terceirizar automações de TI',
+				'lead'      => '',
+				'corpo'     => '<!-- wp:paragraph -->
+<p>Gerenciar múltiplos plataformas exige aquilo que todos os gestores possuem de mais valioso: o tempo. Além disso, diversos sistemas atuando em conjunto demandam um alto nível organizacional, caso contrário, a empresa corre o risco de entrar em situação de ineficiência orçamentária. Por isso, <strong>saber como definir a empresa ideal para tercerizar as automações do seu setor de TI</strong> é a decisão mais inteligente estrategicamente que um líder de qualidade pode tomar em 2026.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Integração de sistemas B2B: Como identificar uma solução eficiente</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>O receio na hora de investir em um <em>Single Supplier</em> de automações é totalmente comum. Afinal, não adianta optar por um sistema que não vai acompanhar o nível de performance da sua empresa e impulsionar a produtividade do fluxo operacional. Então, na hora de definir uma parceria de <strong>automação de processos operacionais</strong>, fique atento a esses fatores:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">É uma plataforma tecnológica e segura?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Um bom diferencial é conferir se ela se atém às classificações do American Institute of Certified Public Accountants (AICPA).</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Oferece atendimento humanizado?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Qualquer assistência deve ser de fácil acesso e com retorno ágil.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Garante estabilidade?</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Se a cada troca, atualização e ajuste você tiver que pagar cada vez mais, não compensa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">A solução para a infraestrutura de dados da empresa e governança de dados corporativos</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>A CLI entrega a experiência de mercado que falta em implementações genéricas: curadoria, atendimento ágil via WhatsApp/E-mail e expertise local nos sistemas que seu negócio usa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Um serviço de automação com auxílio humanizado, por ser baseada no Brasil, une o suporte especializado com a tecnologia de classe mundial, garantindo a continuidade do negócio. A sua consolidação por meio do software <em>Boomi</em>, detentora das 11 certificações globais do AICPA, incluindo SOC 1, SOC 2 e ISO 27001, garante a troca de dados financeiros criptografados e alinhada às normas do mercado, promovendo a <strong>segurança de dados Boomi</strong>. Tudo isso por um único valor mensal.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Simplifique sua gestão e garanta a estabilidade da sua infraestrutura com a CLI Connect, uma solução única e robusta para <strong>integração de sistemas B2B</strong>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p></p>
+<!-- /wp:paragraph -->',
+				'arquivo'   => 'blog-7',
+				'data'      => '2026-07-08 16:48:44',
+				'categoria' => false,
+			),
 		);
 
 		foreach ( $itens as $indice => $item ) {
-			$data = gmdate( 'Y-m-d H:i:s', $agora - ( $indice * DAY_IN_SECONDS ) );
+			$data = $item['data'] ?? gmdate( 'Y-m-d H:i:s', $agora - ( $indice * DAY_IN_SECONDS ) );
 
 			$id = $this->upsert(
 				'post:' . sanitize_title( $item['titulo'] ),
@@ -1333,7 +1748,7 @@ class Cliconnect_Seed {
 			if ( $id ) {
 				$this->definir_thumb( $id, $item['arquivo'] );
 
-				if ( $categoria ) {
+				if ( $categoria && ( $item['categoria'] ?? true ) ) {
 					wp_set_object_terms( $id, $categoria, 'category' );
 				}
 			}
