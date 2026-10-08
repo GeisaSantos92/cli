@@ -22,6 +22,8 @@ $cliconnect_secoes = array(
 ?>
 
 <main id="primary" class="site-privacidade">
+	<?php get_template_part( 'template-parts/single/breadcrumb-pagina' ); ?>
+
 	<div class="pv-pagina">
 		<div class="container">
 			<div class="pv-coluna">

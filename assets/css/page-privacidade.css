@@ -8,7 +8,7 @@
 
 .pv-pagina {
 	background: var(--cor-fundo);
-	padding-block: 80px 120px;
+	padding-block: 40px 120px;             /* o breadcrumb acima já abre o respiro do topo */
 }
 
 .pv-coluna {
