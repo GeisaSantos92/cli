@@ -63,7 +63,7 @@ function cliconnect_meta_description() {
  *
  * Prioridade:
  *  - Imagem destacada do post/página (singular)
- *  - Logo claro salvo no Customizer
+ *  - Card padrão da marca (cliconnect_og_imagem_padrao())
  *
  * @return string URL da imagem, ou string vazia.
  */
@@ -75,16 +75,82 @@ function cliconnect_og_image_url() {
 		}
 	}
 
-	$logo_id = absint( get_theme_mod( 'cliconnect_logo_claro' ) ?? 0 );
-	if ( $logo_id ) {
-		$src = wp_get_attachment_image_url( $logo_id, 'large' );
-		if ( $src ) {
-			return $src;
-		}
+	return cliconnect_og_imagem_padrao()['url'];
+}
+
+/**
+ * Imagem padrão de compartilhamento (WhatsApp, Discord, LinkedIn, Slack…).
+ *
+ * Card 1200×630 da marca, sem texto de idioma, para servir a pt/en/es. Logo
+ * centralizado e estreito: o WhatsApp recorta a miniatura num quadrado central.
+ * É arquivo do tema (não mídia do banco), então a URL acompanha o domínio de
+ * cada ambiente sem search-replace.
+ *
+ * @return array{url:string,width:int,height:int,type:string,alt:string}
+ */
+function cliconnect_og_imagem_padrao() {
+	return array(
+		'url'    => get_theme_file_uri( '/assets/img/og-padrao.png' ),
+		'width'  => 1200,
+		'height' => 630,
+		'type'   => 'image/png',
+		'alt'    => get_bloginfo( 'name' ),
+	);
+}
+
+/**
+ * Rank Math: usa a imagem padrão do tema quando a página não tem nenhuma.
+ *
+ * O plugin só acha imagem em post com destaque; home, páginas institucionais,
+ * soluções e cases saíam sem og:image — e o link compartilhado virava um card
+ * só de texto. Roda depois da busca do próprio plugin (add_additional_images),
+ * então imagem destacada ou definida no painel continua tendo prioridade.
+ *
+ * @param \RankMath\OpenGraph\Image $imagem Coletor de imagens da rede atual.
+ * @return void
+ */
+function cliconnect_rank_math_og_padrao( $imagem ) {
+	if ( $imagem->has_images() ) {
+		return;
 	}
 
-	return '';
+	$imagem->add_image( cliconnect_og_imagem_padrao() );
 }
+add_action( 'rank_math/opengraph/facebook/add_additional_images', 'cliconnect_rank_math_og_padrao' );
+add_action( 'rank_math/opengraph/twitter/add_additional_images', 'cliconnect_rank_math_og_padrao' );
+
+/**
+ * Rank Math: description de solução e case a partir do ACF.
+ *
+ * O padrão do plugin para esses CPTs é %excerpt%, mas o texto deles vive em
+ * campos ACF — sem excerpt, a página saía sem meta description e o card do
+ * link compartilhado ficava só com o título. Description preenchida no painel
+ * continua valendo: o filtro só age quando o plugin não achou nada.
+ *
+ * @param string $descricao Description calculada pelo Rank Math.
+ * @return string
+ */
+function cliconnect_rank_math_descricao_acf( $descricao ) {
+	if ( '' !== trim( (string) $descricao ) || ! function_exists( 'get_field' ) ) {
+		return $descricao;
+	}
+
+	$campos = array(
+		'cli_solucao' => 'solucao_hero_corpo',
+		'cli_case'    => 'desafio_texto',
+	);
+
+	$tipo = get_post_type();
+
+	if ( ! is_singular( array_keys( $campos ) ) || ! isset( $campos[ $tipo ] ) ) {
+		return $descricao;
+	}
+
+	$texto = wp_strip_all_tags( (string) ( get_field( $campos[ $tipo ] ) ?? '' ) );
+
+	return $texto ? wp_html_excerpt( $texto, 160, '…' ) : $descricao;
+}
+add_filter( 'rank_math/frontend/description', 'cliconnect_rank_math_descricao_acf' );
 
 /**
  * Imprime meta description, Open Graph e Twitter Card no <head>.

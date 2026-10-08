@@ -2840,6 +2840,13 @@ class Cliconnect_Seed {
 		 */
 		$titulos['pt_page_default_rich_snippet'] = 'off';
 
+		/*
+		 * O "enhanced sharing" acrescenta twitter:label/data ao card do link
+		 * (Slack, Discord). Em página institucional ele só diz "Tempo para
+		 * leitura: Menos de um minuto" — ruído. Fica ligado nos posts do blog.
+		 */
+		$titulos['pt_page_slack_enhanced_sharing'] = 'off';
+
 		update_option( 'rank-math-options-titles', $titulos );
 
 		$gravadas = $this->aplicar_seo( $seo );
