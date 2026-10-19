@@ -632,6 +632,15 @@ function cliconnect_acf_fields_cpt() {
 					'preview_size'  => 'medium',
 					'instructions'  => 'Visual da solução — logos conectados, diagrama, etc. Proporção quadrada.',
 				),
+				array(
+					'key'           => 'field_solucao_hero_video',
+					'label'         => 'Vídeo (.mp4, coluna direita)',
+					'name'          => 'solucao_hero_video',
+					'type'          => 'file',
+					'return_format' => 'id',
+					'mime_types'    => 'mp4',
+					'instructions'  => 'Quando preenchido, toca em loop no lugar da imagem. Proporção quadrada.',
+				),
 
 				// ----- Aba: 2 · Métricas ---------------------------------------
 				array(
@@ -1145,6 +1154,15 @@ function cliconnect_acf_fields_cpt() {
 				'type'          => 'image',
 				'return_format' => 'id',
 				'preview_size'  => 'medium',
+			),
+			array(
+				'key'           => 'field_solucao_acel_video',
+				'label'         => 'Vídeo (.mp4, coluna direita)',
+				'name'          => 'solucao_acel_video',
+				'type'          => 'file',
+				'return_format' => 'id',
+				'mime_types'    => 'mp4',
+				'instructions'  => 'Quando preenchido, toca em loop no lugar da imagem.',
 			),
 
 			// ----- Aba: 6 · Plataforma Única --------------------------------

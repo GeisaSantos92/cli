@@ -187,6 +187,15 @@ function cliconnect_acf_fields_cli_connect() {
 		$fields[] = $cc_text( "np_bullet_{$i}", "Bullet {$i}", "cc_np_bullet_{$i}" );
 	}
 	$fields[] = $cc_image( 'np_imagem', 'Imagem', 'cc_np_imagem' );
+	$fields[] = array(
+		'key'           => 'field_cc_np_video',
+		'label'         => 'Vídeo (.mp4)',
+		'name'          => 'cc_np_video',
+		'type'          => 'file',
+		'return_format' => 'id',
+		'mime_types'    => 'mp4',
+		'instructions'  => 'Quando preenchido, toca em loop no lugar da imagem.',
+	);
 
 	/* --- 8b. VANTAGENS ------------------------------------------------------ */
 	$fields[] = $cc_tab( 'vantagens', '8b · Vantagens' );

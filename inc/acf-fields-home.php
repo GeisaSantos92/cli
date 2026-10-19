@@ -189,6 +189,15 @@ function cliconnect_acf_fields_home() {
 			'return_format' => 'id',
 			'preview_size'  => 'medium',
 		);
+		$fields[] = array(
+			'key'           => "field_home_midia_{$b}_video",
+			'label'         => 'Vídeo (.mp4)',
+			'name'          => "midia_{$b}_video",
+			'type'          => 'file',
+			'return_format' => 'id',
+			'mime_types'    => 'mp4',
+			'instructions'  => 'Quando preenchido, toca em loop no lugar da imagem.',
+		);
 	}
 
 	/* --- 8. DEPOIMENTO / CASES ------------------------------------------- */

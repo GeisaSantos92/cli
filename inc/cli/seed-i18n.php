@@ -49,12 +49,23 @@ trait Cliconnect_Seed_I18n {
 	/**
 	 * Tipos de campo ACF cujo valor é um (ou vários) ID de post.
 	 *
-	 * Precisam ser remapeados para a tradução do alvo; mídia fica de fora
-	 * de propósito — a mesma imagem serve a todos os idiomas.
+	 * Precisam ser remapeados para a tradução do alvo. Mídia segue regra
+	 * própria: ver $campos_de_midia.
 	 *
 	 * @var string[]
 	 */
 	protected $campos_de_post = array( 'post_object', 'relationship', 'page_link' );
+
+	/**
+	 * Tipos de campo ACF que guardam o ID de um anexo.
+	 *
+	 * A mesma mídia serve a todos os idiomas, exceto quando existe em
+	 * assets/seed/ uma versão com o código do idioma no nome
+	 * (`cs-pilar-2.png` → `cs-pilar-2-en.png`): arte com texto embutido.
+	 *
+	 * @var string[]
+	 */
+	protected $campos_de_midia = array( 'image', 'file' );
 
 	/**
 	 * Tipos de campo ACF que carregam texto redigido.
@@ -936,7 +947,7 @@ trait Cliconnect_Seed_I18n {
 		$thumb = get_post_thumbnail_id( $origem_id );
 
 		if ( $thumb ) {
-			set_post_thumbnail( $traducao_id, $thumb );
+			set_post_thumbnail( $traducao_id, $this->midia_do_idioma( $thumb ) );
 		}
 
 		$this->copiar_taxonomias( $origem_id, $traducao_id );
@@ -1046,6 +1057,10 @@ trait Cliconnect_Seed_I18n {
 			return $this->traduzir_referencia( $valor );
 		}
 
+		if ( in_array( $tipo, $this->campos_de_midia, true ) && is_numeric( $valor ) ) {
+			return $this->midia_do_idioma( (int) $valor );
+		}
+
 		if ( 'link' === $tipo && is_array( $valor ) ) {
 			$valor['url'] = $this->traduzir_caminho( $valor['url'] ?? '' );
 
@@ -1077,6 +1092,36 @@ trait Cliconnect_Seed_I18n {
 		$traducao = (int) pll_get_post( (int) $valor, $this->lang );
 
 		return $traducao ? $traducao : $valor;
+	}
+
+	/**
+	 * Versão de um anexo do seed no idioma atual, quando ela existe.
+	 *
+	 * O anexo `midia:cs-pilar-2` vira `midia:cs-pilar-2-en` se esse arquivo foi
+	 * importado de assets/seed/. Sem a versão, devolve o próprio anexo.
+	 *
+	 * @param int $id ID do anexo em português.
+	 * @return int
+	 */
+	protected function midia_do_idioma( $id ) {
+		$slug = (string) get_post_meta( $id, self::META, true );
+
+		if ( ! str_starts_with( $slug, 'midia:' ) ) {
+			return $id;
+		}
+
+		$versao = get_posts(
+			array(
+				'post_type'      => 'attachment',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_key'       => self::META,                    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'     => $slug . '-' . $this->lang,     // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+
+		return $versao ? (int) $versao[0] : $id;
 	}
 
 	/**

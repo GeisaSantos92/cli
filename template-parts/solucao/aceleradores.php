@@ -23,6 +23,7 @@ $corpo     = cliconnect_campo_pagina( 'solucao_acel_corpo' );
 $btn_texto = cliconnect_campo_pagina( 'solucao_acel_btn_texto' );
 $btn_url   = cliconnect_campo_pagina( 'solucao_acel_btn_url' );
 $imagem_id = (int) cliconnect_campo_pagina( 'solucao_acel_imagem', 0 );
+$video     = cliconnect_video( cliconnect_campo_pagina( 'solucao_acel_video', 0 ), array( 'class' => 'sacel-acel__imagem' ) );
 
 $topicos = array_filter( array(
 	cliconnect_campo_pagina( 'solucao_acel_topico_1' ),
@@ -88,7 +89,11 @@ $bullet_url = get_theme_file_uri( '/assets/img/solucao-dif-bullet.svg' );
 			</div><!-- .sacel-acel__texto -->
 
 			<!-- Coluna de imagem -->
-			<?php if ( $imagem_id ) : ?>
+			<?php if ( $video ) : ?>
+				<div class="sacel-acel__imagem-wrap" aria-hidden="true">
+					<?php echo $video; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado com escape em cliconnect_video(). ?>
+				</div>
+			<?php elseif ( $imagem_id ) : ?>
 				<div class="sacel-acel__imagem-wrap" aria-hidden="true">
 					<?php echo wp_get_attachment_image( $imagem_id, 'large', false, array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'class'   => 'sacel-acel__imagem',

@@ -26,6 +26,7 @@ $btn1_url        = cliconnect_campo_pagina( 'solucao_hero_btn1_url' );
 $btn2_texto      = cliconnect_campo_pagina( 'solucao_hero_btn2_texto' );
 $btn2_url        = cliconnect_campo_pagina( 'solucao_hero_btn2_url' );
 $imagem_id       = cliconnect_campo_pagina( 'solucao_hero_imagem', 0 );
+$video           = cliconnect_video( cliconnect_campo_pagina( 'solucao_hero_video', 0 ), array( 'class' => 'sh-hero__imagem', 'preload' => 'auto' ) );
 $btn2_externo    = $btn2_url && str_starts_with( $btn2_url, 'http' );
 
 if ( ! $titulo && ! $titulo_destaque ) {
@@ -85,7 +86,9 @@ $titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__t
 			<div class="sh-hero__imagem-wrap" aria-hidden="true">
 				<?php echo cliconnect_imagem_tema( 'solucao-hero-grade.png', array( 'alt' => '', 'class' => 'sh-hero__grade', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-				<?php if ( $imagem_id ) : ?>
+				<?php if ( $video ) : ?>
+					<?php echo $video; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado com escape em cliconnect_video(). ?>
+				<?php elseif ( $imagem_id ) : ?>
 					<?php echo wp_get_attachment_image( $imagem_id, 'large', false, array( 'class' => 'sh-hero__imagem', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php endif; ?>
 

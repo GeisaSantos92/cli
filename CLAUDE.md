@@ -77,6 +77,13 @@ Ilustrações fechadas (com texto embutido na arte) são assets estáticos em
 cartão da Boomi, anel de canais do suporte, planeta do rodapé e os logos em SVG.
 Continuam em CSS o diagrama de departamentos e a órbita de logos do hero.
 
+**Arte por idioma:** imagem com texto embutido ganha uma cópia com o código do
+idioma antes da extensão (`cc-dashboard-en.png`, `cs-pilar-2-es.png`). Em
+`assets/img/`, `cliconnect_imagem_tema()` escolhe sozinha pelo idioma atual; em
+`assets/seed/`, o seed de tradução troca o anexo nos campos ACF de imagem/arquivo
+e na imagem destacada. Sem a cópia, vale a original em português. Animações são
+`.mp4` (campos `*_video`, `cliconnect_video()`), nunca GIF.
+
 ## Ambiente
 
 LocalWP + `WP_DEBUG` ligado. Auditoria local: Query Monitor e Show Current Template.

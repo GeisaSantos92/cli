@@ -20,7 +20,9 @@ $invertida = ! empty( $args['invertida'] );
 $eyebrow = cliconnect_campo( "midia_{$indice}_eyebrow" );
 $titulo  = cliconnect_campo( "midia_{$indice}_titulo" );
 $texto   = cliconnect_campo( "midia_{$indice}_texto" );
-$imagem  = cliconnect_campo_imagem( "midia_{$indice}_imagem", 'large' );
+// Vídeo, quando cadastrado, toma o lugar da imagem.
+$imagem  = cliconnect_video( cliconnect_campo( "midia_{$indice}_video", 0 ), array( 'aria-hidden' => 'true' ) );
+$imagem  = $imagem ? $imagem : cliconnect_campo_imagem( "midia_{$indice}_imagem", 'large' );
 
 $topicos = cliconnect_lista_numerada( "midia_{$indice}_topico_%d", 3 );
 
@@ -54,7 +56,7 @@ if ( ! $titulo ) {
 			</div>
 
 			<?php if ( $imagem ) : ?>
-				<div class="midia__imagem"><?php echo $imagem; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente via cliconnect_campo_imagem(). ?></div>
+				<div class="midia__imagem"><?php echo $imagem; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado com escape em cliconnect_video() / cliconnect_campo_imagem(). ?></div>
 			<?php endif; ?>
 
 		</div>

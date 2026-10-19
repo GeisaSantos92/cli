@@ -16,6 +16,7 @@ $eyebrow = cliconnect_campo_pagina( 'cc_np_eyebrow' );
 $titulo  = cliconnect_campo_pagina( 'cc_np_titulo' );
 $texto   = cliconnect_campo_pagina( 'cc_np_texto' );
 $imagem  = cliconnect_campo_pagina( 'cc_np_imagem' );
+$video   = cliconnect_video( cliconnect_campo_pagina( 'cc_np_video', 0 ), array( 'class' => 'cc-pratica__img', 'aria-hidden' => 'true' ) );
 
 $bullets = array();
 for ( $i = 1; $i <= 3; $i++ ) {
@@ -52,7 +53,11 @@ if ( ! $titulo ) {
 			<?php endif; ?>
 		</div>
 
-		<?php if ( $imagem ) : ?>
+		<?php if ( $video ) : ?>
+			<div class="cc-pratica__visual">
+				<?php echo $video; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- montado com escape em cliconnect_video(). ?>
+			</div>
+		<?php elseif ( $imagem ) : ?>
 			<div class="cc-pratica__visual">
 				<?php echo wp_get_attachment_image( (int) $imagem, 'large', false, array( 'class' => 'cc-pratica__img', 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente. ?>
 			</div>

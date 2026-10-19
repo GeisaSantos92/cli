@@ -88,18 +88,41 @@ function cliconnect_botao( $link, $classes = 'botao botao--primario', $icone = '
 }
 
 /**
+ * Versão de um asset do tema no idioma atual, quando ela existe.
+ *
+ * Ilustrações com texto embutido têm uma cópia por idioma ao lado da original,
+ * com o código do idioma antes da extensão: `cc-dashboard.png` →
+ * `cc-dashboard-en.png`. Sem a cópia (ou no idioma base), vale a original.
+ *
+ * @param string $relativo Caminho relativo à raiz do tema (ex.: '/assets/img/x.png').
+ * @return string Caminho relativo a usar.
+ */
+function cliconnect_asset_do_idioma( $relativo ) {
+	$lang = function_exists( 'pll_current_language' ) ? (string) pll_current_language() : '';
+
+	if ( '' === $lang || 'pt' === $lang ) {
+		return $relativo;
+	}
+
+	$traduzido = (string) preg_replace( '/(\.[a-z0-9]+)$/i', '-' . $lang . '$1', $relativo );
+
+	return file_exists( get_theme_file_path( $traduzido ) ) ? $traduzido : $relativo;
+}
+
+/**
  * Monta um <img> para um arquivo estático de assets/img/.
  *
  * Ilustrações fechadas (o planeta do rodapé, a pilha de camadas, o cartão da
  * Boomi) são assets do tema, não conteúdo editável: entram por aqui em vez de
  * virar campo do ACF. Devolve string vazia quando o arquivo não existe.
+ * Usa a versão do idioma atual quando houver (ver cliconnect_asset_do_idioma()).
  *
  * @param string $arquivo   Nome do arquivo dentro de assets/img/.
  * @param array  $atributos Atributos extras da tag (alt, width, height, class…).
  * @return string HTML da imagem, ou string vazia.
  */
 function cliconnect_imagem_tema( $arquivo, $atributos = array() ) {
-	$relativo = '/assets/img/' . ltrim( (string) $arquivo, '/' );
+	$relativo = cliconnect_asset_do_idioma( '/assets/img/' . ltrim( (string) $arquivo, '/' ) );
 
 	if ( ! file_exists( get_theme_file_path( $relativo ) ) ) {
 		return '';
@@ -256,8 +279,10 @@ function cliconnect_posts( $post_type, $limite = -1, $extra = array() ) {
 		$extra
 	);
 
-	$version   = cliconnect_posts_cache_version();
-	$cache_key = 'cliconnect_posts_v' . $version . '_' . md5( (string) wp_json_encode( $args ) );
+	$version = cliconnect_posts_cache_version();
+	// O Polylang filtra o idioma na hora da query: ele precisa entrar na chave.
+	$lang      = function_exists( 'pll_current_language' ) ? (string) pll_current_language() : '';
+	$cache_key = 'cliconnect_posts_v' . $version . '_' . md5( (string) wp_json_encode( $args ) . $lang );
 	$cached    = get_transient( $cache_key );
 
 	if ( false !== $cached ) {
@@ -314,6 +339,52 @@ function cliconnect_campo_imagem( $campo, $tamanho = 'large', $atributos = array
 	$atributos = wp_parse_args( $atributos, array( 'loading' => 'lazy' ) );
 
 	return wp_get_attachment_image( $id, $tamanho, false, $atributos );
+}
+
+/**
+ * Monta um <video> decorativo (mudo, em loop, sem controles) para um anexo .mp4.
+ *
+ * Substitui as animações que antes eram GIFs: toca sozinho, como uma imagem.
+ * Largura e altura saem dos metadados do anexo, para reservar o espaço.
+ *
+ * @param int   $id        ID do anexo de vídeo.
+ * @param array $atributos Atributos extras da tag (class, aria-hidden…).
+ * @return string HTML do vídeo, ou string vazia se o anexo não for um vídeo.
+ */
+function cliconnect_video( $id, $atributos = array() ) {
+	$id = absint( $id );
+
+	if ( ! $id || ! str_starts_with( (string) get_post_mime_type( $id ), 'video/' ) ) {
+		return '';
+	}
+
+	$url = wp_get_attachment_url( $id );
+
+	if ( ! $url ) {
+		return '';
+	}
+
+	$meta      = wp_get_attachment_metadata( $id );
+	$atributos = wp_parse_args(
+		$atributos,
+		array(
+			'width'   => $meta['width'] ?? '',
+			'height'  => $meta['height'] ?? '',
+			'preload' => 'metadata',
+		)
+	);
+
+	$html = '<video src="' . esc_url( $url ) . '" autoplay muted loop playsinline disablepictureinpicture';
+
+	foreach ( $atributos as $nome => $valor ) {
+		if ( null === $valor || '' === $valor ) {
+			continue;
+		}
+
+		$html .= ' ' . esc_attr( $nome ) . '="' . esc_attr( (string) $valor ) . '"';
+	}
+
+	return $html . '></video>';
 }
 
 /**

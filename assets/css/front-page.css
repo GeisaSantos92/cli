@@ -776,7 +776,8 @@
 	background: var(--cor-fundo-suave);
 }
 
-.midia__imagem img {
+.midia__imagem img,
+.midia__imagem video {
 	display: block;
 	width: 100%;
 	height: auto;

@@ -76,6 +76,9 @@ class Cliconnect_Seed {
 		$reset = ! empty( $assoc_args['reset'] );
 
 		if ( ! empty( $assoc_args['traducao'] ) ) {
+			// Versões de mídia por idioma (`x-en.png`) precisam estar importadas.
+			$this->importar_midia();
+
 			$this->traduzir_site(
 				$this->ids_das_paginas(),
 				$this->ids_dos_termos_solucao()
@@ -495,7 +498,7 @@ class Cliconnect_Seed {
 			}
 		);
 
-		$arquivos = glob( $dir . '/*.{png,jpg,jpeg,svg,webp}', GLOB_BRACE );
+		$arquivos = glob( $dir . '/*.{png,jpg,jpeg,svg,webp,mp4}', GLOB_BRACE );
 		$novos    = 0;
 
 		foreach ( $arquivos as $arquivo ) {
@@ -1829,6 +1832,7 @@ class Cliconnect_Seed {
 			'midia_2_topico_2'      => 'Executa fluxos sem intervenção manual',
 			'midia_2_topico_3'      => 'Mantém todo o histórico da operação',
 			'midia_2_imagem'        => $this->img( 'midia-chat' ),
+			'midia_2_video'         => $this->img( 'video-na-pratica' ),
 
 			// 8. Depoimento e cases.
 			'case_destaque'         => $cases['panasonic'] ?? 0,
@@ -3228,6 +3232,7 @@ class Cliconnect_Seed {
 			'cc_np_bullet_2'  => 'Executa fluxos sem intervenção manual',
 			'cc_np_bullet_3'  => 'Mantém todo o histórico da operação',
 			'cc_np_imagem'    => $this->img( 'cc-na-pratica' ),
+			'cc_np_video'     => $this->img( 'video-na-pratica' ),
 
 			// 7. Parceiro Oficial (Comparativo).
 			'cc_parceiro_eyebrow'   => 'ECONOMIA DE TEMPO',
@@ -7846,7 +7851,7 @@ class Cliconnect_Seed {
 			'solucao_acel_topico_4'  => 'E muito mais...',
 			'solucao_acel_btn_texto' => 'Começar agora',
 			'solucao_acel_btn_url'   => '/contato/',
-			'solucao_acel_imagem'    => $this->img( 'sap-sincronizar' ),
+			'solucao_acel_imagem'    => $this->img( 'sap-acel' ),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
@@ -14816,6 +14821,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
 			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'gemini-hero' ),
+			'solucao_hero_video'      => $this->img( 'gemini-hero-video' ),
 
 			// 3 · Pilares.
 			'solucao_pilares_titulo'   => 'Transforme Gemini em parte da operação',
@@ -14895,6 +14901,7 @@ class Cliconnect_Seed {
 			'solucao_acel_btn_texto' => 'Começar agora',
 			'solucao_acel_btn_url'   => '/contato/',
 			'solucao_acel_imagem'    => $this->img( 'gemini-mcp' ),
+			'solucao_acel_video'     => $this->img( 'gemini-mcp-video' ),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
@@ -14987,6 +14994,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
 			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'claude-hero' ),
+			'solucao_hero_video'      => $this->img( 'claude-hero-video' ),
 
 			// 3 · Pilares.
 			'solucao_pilares_titulo'    => 'Converta conhecimento em decisões',
@@ -15066,6 +15074,7 @@ class Cliconnect_Seed {
 			'solucao_acel_btn_texto' => 'Começar agora',
 			'solucao_acel_btn_url'   => '/contato/',
 			'solucao_acel_imagem'    => $this->img( 'claude-mcp' ),
+			'solucao_acel_video'     => $this->img( 'claude-mcp-video' ),
 		);
 
 		foreach ( $campos as $nome => $valor ) {
@@ -15159,6 +15168,7 @@ class Cliconnect_Seed {
 			'solucao_hero_btn2_texto' => 'Conheça nossa solução',
 			'solucao_hero_btn2_url'   => self::WHATSAPP,
 			'solucao_hero_imagem'     => $this->img( 'chatgpt-hero' ),
+			'solucao_hero_video'      => $this->img( 'chatgpt-hero-video' ),
 
 			// 3 · Pilares.
 			'solucao_pilares_titulo'    => 'Transforme IA em processos conectados',

@@ -17,17 +17,44 @@ $titulo = cliconnect_campo( 'camadas_titulo' );
 $texto  = cliconnect_campo( 'camadas_texto' );
 
 $alt_grafico = __( 'Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global', 'cli' );
-$src_desktop = esc_url( get_theme_file_uri( '/assets/img/section-camadas.png' ) );
-$src_mobile  = esc_url( get_theme_file_uri( '/assets/img/section-camadas-mobile.png' ) );
-$tem_mobile  = file_exists( get_theme_file_path( '/assets/img/section-camadas-mobile.png' ) );
+
+// A arte tem texto embutido: cada idioma tem a sua, no desktop e no mobile.
+$arq_desktop = cliconnect_asset_do_idioma( '/assets/img/section-camadas.png' );
+$arq_mobile  = cliconnect_asset_do_idioma( '/assets/img/section-camadas-mobile.png' );
+
+/*
+ * <source> da arte: a versão WebP vem antes do PNG quando existe ao lado.
+ * As dimensões saem do próprio arquivo — a arte mobile muda de proporção
+ * entre os idiomas.
+ */
+$fontes = static function ( $relativo, $media = '' ) {
+	if ( ! file_exists( get_theme_file_path( $relativo ) ) ) {
+		return '';
+	}
+
+	$tamanho = wp_getimagesize( get_theme_file_path( $relativo ) );
+	$attr    = $media ? ' media="' . esc_attr( $media ) . '"' : '';
+	$attr   .= $tamanho ? ' width="' . (int) $tamanho[0] . '" height="' . (int) $tamanho[1] . '"' : '';
+	$webp    = (string) preg_replace( '/\.png$/i', '.webp', $relativo );
+	$html    = '';
+
+	if ( file_exists( get_theme_file_path( $webp ) ) ) {
+		$html .= '<source type="image/webp"' . $attr . ' srcset="' . esc_url( get_theme_file_uri( $webp ) ) . '">';
+	}
+
+	if ( $media ) {
+		$html .= '<source' . $attr . ' srcset="' . esc_url( get_theme_file_uri( $relativo ) ) . '">';
+	}
+
+	return $html;
+};
 
 $grafico  = '<picture>';
-if ( $tem_mobile ) {
-	$grafico .= '<source media="(max-width: 780px)" srcset="' . $src_mobile . '" width="1312" height="2038">';
-}
+$grafico .= $fontes( $arq_mobile, '(max-width: 780px)' );
+$grafico .= $fontes( $arq_desktop );
 $grafico .= '<img'
 	. ' class="camadas__imagem"'
-	. ' src="' . $src_desktop . '"'
+	. ' src="' . esc_url( get_theme_file_uri( $arq_desktop ) ) . '"'
 	. ' alt="' . esc_attr( $alt_grafico ) . '"'
 	. ' width="1312"'
 	. ' height="606"'
