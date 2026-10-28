@@ -721,6 +721,8 @@ class Cliconnect_Seed {
 			array( 'Senior', 'integracao-senior', true ),
 			array( 'HubSpot', 'integracao-hubspot', true ),
 			array( 'TASY', 'integracao-tasy', true ),
+			// Só para a barra "Tecnologias Utilizadas" do case da Panasonic (issue #224).
+			array( 'SAP S/4HANA', 'integracao-sap-s4hana', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -1063,35 +1065,40 @@ class Cliconnect_Seed {
 			}
 		}
 
-		// 1. Panasonic — duas métricas.
+		// 1. Panasonic — conteúdo real do case (issue #224), duas métricas.
+		$panasonic_resumo = 'Com a CLI como parceira de integração, a Panasonic conectou o novo SAP S/4HANA aos seus sistemas satélites, levou as respostas da casa dos segundos para a dos milissegundos e liberou 40% do tempo do time de TI para inovar.';
+
 		$panasonic = $this->upsert(
 			'case:panasonic',
 			array(
 				'post_type'    => 'cli_case',
-				'post_title'   => 'Acelerou a produção de insights em 10%',
-				'post_excerpt' => $excerpt_padrao,
-				'post_content' => '<p>A Panasonic conectou ERP, e-commerce e sistemas fiscais em uma estrutura única de integrações, com eventos automáticos para sincronização de informações e atualização de processos críticos.</p>',
+				'post_title'   => 'Reduziu em 97% o tempo de resposta das integrações com o SAP S/4HANA',
+				'post_excerpt' => $panasonic_resumo,
+				'post_content' => '<p>' . $panasonic_resumo . '</p>',
 				'menu_order'   => 0,
 			)
 		);
 
+		// A barra lateral mostra só o SAP S/4HANA, e não os cinco logos genéricos.
+		$panasonic_tecnologias = array_filter( array( $this->buscar( 'integracao:' . sanitize_title( 'SAP S/4HANA' ), 'cli_integracao' ) ) );
+
 		update_field( 'logo', $this->img( 'case-logo-panasonic' ), $panasonic );
-		update_field( 'citacao', 'Com a CLI Connect, nós reestruturamos nossa governança e nossos processos financeiros.', $panasonic );
-		update_field( 'autor', 'João da Silva', $panasonic );
-		update_field( 'cargo', 'Head de operações na Panasonic', $panasonic );
-		update_field( 'retrato', $this->img( 'case-retrato' ), $panasonic );
+		update_field( 'citacao', 'Antes eu falava em segundos de resposta. Hoje eu estou falando em milissegundos.', $panasonic );
+		update_field( 'autor', 'Fabiano Queiroz', $panasonic );
+		update_field( 'cargo', 'Head of Digital and Technology na Panasonic', $panasonic );
+		update_field( 'retrato', $this->img( 'case-panasonic-capa' ), $panasonic );
 		update_field( 'video', 'https://www.youtube.com/watch?v=Ox8vbKkS29M', $panasonic );
-		update_field( 'metrica_numero', '+85%', $panasonic );
-		update_field( 'metrica_texto', 'Redução no tempo de implementação de novas integrações', $panasonic );
-		update_field( 'metrica_numero_2', '+60%', $panasonic );
-		update_field( 'metrica_texto_2', 'Menos intervenções operacionais manuais', $panasonic );
-		update_field( 'desafio_titulo', 'Sistemas desconectados dificultavam a operação', $panasonic );
-		update_field( 'desafio_texto', '<p>Com o crescimento da empresa, novas plataformas passaram a fazer parte da operação, incluindo ERP, e-commerce, CRM e sistemas logísticos. No entanto, a troca de informações entre essas aplicações dependia de integrações pontuais e processos pouco padronizados.</p><p>A equipe precisava lidar constantemente com dados inconsistentes, atualizações manuais e dificuldades para acompanhar eventos críticos do negócio em tempo real. Cada nova demanda exigia desenvolvimento adicional, aumentando a complexidade operacional e o tempo de resposta às áreas de negócio.</p>', $panasonic );
-		update_field( 'solucao_titulo', 'Uma operação conectada e preparada para evoluir', $panasonic );
-		update_field( 'solucao_texto', '<p>A CLI implementou uma arquitetura centralizada de integrações utilizando o CLI Connect, conectando os principais sistemas da operação em uma única estrutura governada.</p><p>Além das integrações, foram criados eventos automáticos para sincronização de informações, notificações operacionais e atualização de processos críticos. A empresa também passou a utilizar uma biblioteca de automações prontas, acelerando a implementação de novas demandas e reduzindo a necessidade de projetos isolados para cada integração.</p>', $panasonic );
-		update_field( 'impacto_titulo', 'Mais agilidade, previsibilidade e controle', $panasonic );
-		update_field( 'impacto_texto', '<p>Com a nova arquitetura de integrações, a Panasonic reduziu drasticamente o tempo de implementação de novos conectores e eliminou grande parte das intervenções manuais no processo operacional, ganhando visibilidade em tempo real sobre toda a cadeia de dados.</p>', $panasonic );
-		update_field( 'integracoes', $tecnologias, $panasonic );
+		update_field( 'metrica_numero', '-97%', $panasonic );
+		update_field( 'metrica_texto', 'no tempo de resposta das integrações entre o SAP S/4HANA e os sistemas satélites', $panasonic );
+		update_field( 'metrica_numero_2', '40%', $panasonic );
+		update_field( 'metrica_texto_2', 'do tempo do time de TI liberado para novas tecnologias', $panasonic );
+		update_field( 'desafio_titulo', 'Um novo SAP precisava conversar com todo o ecossistema', $panasonic );
+		update_field( 'desafio_texto', '<p>Em 2023, a Panasonic do Brasil decidiu acelerar sua transformação digital. O ponto de partida foi o SAP for Pana, programa que trouxe o SAP S/4HANA para a companhia no modelo greenfield, construído do zero e acompanhado de uma revisão completa de processos. Com foco no varejo de linha branca e linha marrom e plantas em Manaus (AM), Extrema (MG) e São José dos Campos (SP), a empresa depende de muitos sistemas satélites que trocam dados o tempo todo com o ERP e entre as unidades.</p><p>Ao reavaliar o ambiente, o time identificou os sistemas que concentravam gargalos. O desafio era integrar o novo S/4HANA a esse ecossistema sem mexer nos satélites, em uma arquitetura fora do padrão de mercado: sem integrador SAP e com uma plataforma de integração, tecnologia nova para a empresa, no papel de integrador principal. Para uma companhia japonesa, com cultura fortemente orientada a processos, a escolha precisava garantir ganho real de performance.</p>', $panasonic );
+		update_field( 'solucao_titulo', 'Quem entendeu a necessidade foi quem implementou', $panasonic );
+		update_field( 'solucao_texto', '<p>A CLI chegou à Panasonic por indicação da Salesforce e participou da avaliação da plataforma de integração: apresentou cases, mostrou o ganho que a tecnologia poderia trazer e como acelerar a implementação. A partir dessa conversa, o projeto ganhou uma arquitetura própria, com a plataforma de integração no papel de integrador principal e toda a comunicação entre o S/4HANA e os sistemas satélites feita diretamente por ela. O trabalho se concentrou no interfaceamento: cada integração foi desenhada para a necessidade do processo, sem exigir mudanças nos sistemas existentes.</p><p>O diferencial, segundo Fabiano, foi a proximidade. Com a participação direta de Bruno, sócio fundador da CLI Connect, quem mapeou a necessidade foi quem desenhou a solução e a implementou ao lado do time da Panasonic, sem passagem de bastão entre área comercial e equipe de entrega. Em quase um ano de projeto, as equipes ajustaram juntas o ritmo, reforçaram a atenção nos processos mais complexos e, depois da implementação, voltaram ao ambiente para mapear e incorporar novas oportunidades. Ao longo do caminho, a CLI capacitou o time da Panasonic para sustentar as interfaces por conta própria.</p>', $panasonic );
+		update_field( 'impacto_titulo', 'Respostas em milissegundos e uma TI mais estratégica', $panasonic );
+		update_field( 'impacto_texto', '<p>Seis meses após o go-live, com o ambiente ainda em estabilização, o tempo de resposta entre o S/4HANA e os sistemas satélites caiu 97%, e a rotina de cada profissional ganhou de 21% a 25% em performance. Os processos que circulam entre Manaus, Extrema e São José dos Campos ganharam velocidade, e o time de TI passou a ter 40% de margem de tempo, reinvestida em novas tecnologias em vez de reduzir o quadro. Com uma equipe de AMS especializada na plataforma de integração, a Panasonic sustenta as próprias interfaces, e hoje é a área de negócio que procura a TI para viabilizar novas soluções.</p>', $panasonic );
+		update_field( 'integracoes', array_values( $panasonic_tecnologias ), $panasonic );
 		$this->definir_thumb( $panasonic, 'case-panasonic' );
 
 		// 2. Moura — sem métricas.

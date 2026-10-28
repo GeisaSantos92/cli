@@ -382,10 +382,10 @@
 
 .case-metrica-single__texto {
 	font-family: var(--fonte-base);
-	font-size: var(--tam-h5); /* 28px */
+	font-size: var(--tam-h6); /* 20px */
 	font-weight: 500;
 	line-height: 1.3;
-	letter-spacing: -0.02em; /* -0.56px @ 28px */
+	letter-spacing: -0.02em; /* -0.4px @ 20px */
 	color: var(--cor-texto-suave); /* #4a5364 */
 	margin: 0;
 	flex: 1;
