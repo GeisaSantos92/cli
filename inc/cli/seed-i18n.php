@@ -291,11 +291,12 @@ trait Cliconnect_Seed_I18n {
 		WP_CLI::log( '  categorias de solução…' );
 		$termos = $this->traduzir_termos_solucao( $termos_solucao );
 
-		WP_CLI::log( '  páginas…' );
-		$this->traduzir_paginas();
-
+		// CPTs antes das páginas: os botões das páginas apontam para cases traduzidos.
 		WP_CLI::log( '  CPTs de catálogo…' );
 		$this->traduzir_cpts();
+
+		WP_CLI::log( '  páginas…' );
+		$this->traduzir_paginas();
 
 		WP_CLI::log( '  FAQ das soluções…' );
 		$this->traduzir_faq_solucoes();
@@ -338,6 +339,16 @@ trait Cliconnect_Seed_I18n {
 			$mapa[ '/' . $slug_pt . '/' ] = '/' . $this->lang . '/' . $pagina[0] . '/';
 		}
 
+		// Cases traduzidos: o slug de cada idioma vem do título, então lê o permalink.
+		foreach ( array_keys( $this->dados( 'cases' ) ) as $slug ) {
+			$origem_id   = $this->id_do_seed( 'case:' . $slug, 'cli_case' );
+			$traducao_id = $origem_id ? (int) pll_get_post( $origem_id, $this->lang ) : 0;
+
+			if ( $traducao_id ) {
+				$mapa[ $this->caminho_do_case( $slug ) ] = wp_make_link_relative( get_permalink( $traducao_id ) );
+			}
+		}
+
 		return $mapa;
 	}
 
@@ -368,6 +379,18 @@ trait Cliconnect_Seed_I18n {
 		}
 
 		WP_CLI::log( sprintf( '    páginas: %d.', $criadas ) );
+	}
+
+	/**
+	 * Caminho da página em português de um case do seed (ex.: '/cases/slug/').
+	 *
+	 * @param string $slug Chave do case no seed (ex.: 'panasonic').
+	 * @return string
+	 */
+	protected function caminho_do_case( $slug ) {
+		$id = $this->id_do_seed( 'case:' . $slug, 'cli_case' );
+
+		return $id ? wp_make_link_relative( get_permalink( $id ) ) : '/cases/';
 	}
 
 	/**

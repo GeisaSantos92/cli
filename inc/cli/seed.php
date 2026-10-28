@@ -1843,7 +1843,7 @@ class Cliconnect_Seed {
 
 			// 8. Depoimento e cases.
 			'case_destaque'         => $cases['panasonic'] ?? 0,
-			'cases_metricas'        => array_values( array_filter( array( $cases['petro'] ?? 0, $cases['moura2'] ?? 0 ) ) ),
+			'cases_metricas'        => array_values( array_filter( array( $cases['panasonic'] ?? 0, $cases['petro'] ?? 0 ) ) ),
 			'cases_botao'           => $this->link( 'Confira nossos cases', get_post_type_archive_link( 'cli_case' ) ),
 
 			// 9. Eventos.
@@ -1937,6 +1937,18 @@ class Cliconnect_Seed {
 			'url'    => (string) $url,
 			'target' => '',
 		);
+	}
+
+	/**
+	 * URL da página de um case criado pelo seed, ou da listagem se ele não existir.
+	 *
+	 * @param string $slug Chave do case no seed (ex.: 'panasonic').
+	 * @return string
+	 */
+	protected function url_do_case( $slug ) {
+		$id = $this->buscar( 'case:' . $slug, 'cli_case' );
+
+		return $id ? (string) get_permalink( $id ) : (string) get_post_type_archive_link( 'cli_case' );
 	}
 
 	/* =====================================================================
@@ -3193,11 +3205,11 @@ class Cliconnect_Seed {
 			'cc_destaque_botao'  => $this->link( 'Fale conosco no WhatsApp', '/contato/' ),
 
 			// 6. Depoimento.
-			'cc_dep_foto'  => $this->img( 'cc-dep-joao' ),
-			'cc_dep_nome'  => 'João Carvalho',
-			'cc_dep_cargo' => 'Gerente de Vendas',
-			'cc_dep_texto' => 'Com a CLI Connect, nós reestruturamos nossa governança e nossos processos financeiros.',
-			'cc_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
+			'cc_dep_foto'  => $this->img( 'case-panasonic-fabiano' ),
+			'cc_dep_nome'  => 'Fabiano Queiroz',
+			'cc_dep_cargo' => 'Head of Digital and Technology na Panasonic',
+			'cc_dep_texto' => 'Antes eu falava em segundos de resposta. Hoje eu estou falando em milissegundos.',
+			'cc_dep_botao' => $this->link( 'Confira o case', $this->url_do_case( 'panasonic' ) ),
 
 			// 8c. Diferenciais.
 			'cc_dif_eyebrow' => 'NOSSOS DIFERENCIAIS',
@@ -3564,11 +3576,11 @@ class Cliconnect_Seed {
 			'sap_rec_imagem_overlay' => $this->img( 'sap-recursos-overlay' ),
 
 			// 6. Depoimento.
-			'sap_dep_foto'  => $this->img( 'sap-depoimento-foto' ),
-			'sap_dep_nome'  => 'João Carvalho',
-			'sap_dep_cargo' => 'Gerente de Vendas',
-			'sap_dep_frase' => '“R$ 6 milhões economizados em horas de desenvolvimento ABAP”',
-			'sap_dep_botao' => $this->link( 'Confira o case', '/cases/' ),
+			'sap_dep_foto'  => $this->img( 'case-panasonic-fabiano' ),
+			'sap_dep_nome'  => 'Fabiano Queiroz',
+			'sap_dep_cargo' => 'Head of Digital and Technology na Panasonic',
+			'sap_dep_frase' => '“Antes eu falava em segundos de resposta. Hoje eu estou falando em milissegundos.”',
+			'sap_dep_botao' => $this->link( 'Confira o case', $this->url_do_case( 'panasonic' ) ),
 
 			// 7. Sistemas.
 			'sap_sis_titulo'    => "Conecte o SAP aos sistemas\nque movem sua operação",
