@@ -1,0 +1,692 @@
+/* ==========================================================================
+   CLI Connect — estilos da página "Programa de Parceiros"
+   (page-programa-de-parceiros.php).
+
+   Enfileirado só em cliconnect_e_pagina('programa-de-parceiros')
+   (inc/enqueue.php). Depende dos tokens declarados em theme.css; o FAQ usa o
+   componente global .faq de theme.css.
+   ========================================================================== */
+
+/* --- Cabeçalho de seção centralizado (parceria, como funciona, atuação) --- */
+
+.pp-cabecalho {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 40px;
+	text-align: center;
+}
+
+.pp-cabecalho__titulo {
+	font-size: var(--tam-h3);
+	line-height: 1.15;
+	text-wrap: balance;
+}
+
+.pp-cabecalho__texto {
+	max-width: 920px;
+	color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   1. HERO
+   ========================================================================== */
+
+.pp-hero {
+	position: relative;
+	overflow: hidden;
+	background: var(--cor-marca-profunda);
+	color: var(--cor-texto-clara);
+}
+
+/* A foto já vem com o lado esquerdo escuro (3600×1000). O cover corta as laterais; o foco fica à direita para o aperto de mãos não sair da tela (ele fica à direita do texto, como no layout). */
+.pp-hero__fundo img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 72% center;
+}
+
+.pp-hero__inner {
+	position: relative;
+	padding-block: 128px;
+}
+
+.pp-hero__titulo {
+	max-width: 640px;
+	margin-top: 12px;
+	font-size: var(--tam-h2);
+	line-height: 1.1;
+	color: var(--cor-texto-clara);
+}
+
+.pp-hero__texto {
+	max-width: 640px;
+	margin-top: 24px;
+	font-size: var(--tam-body-lg);
+	line-height: 1.6;
+	color: var(--cor-texto-clara-suave);
+}
+
+.pp-hero__texto strong {
+	color: var(--cor-texto-clara);
+}
+
+.pp-hero__botoes {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 60px;
+}
+
+.pp-hero__metricas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 32px clamp(24px, 5vw, 80px);
+	max-width: 760px;
+	margin: 0;
+	padding-top: 64px;
+	border-top: 1px solid rgba(39, 62, 128, 0.08);
+}
+
+/* Cada métrica não encolhe: se não couber na linha, vai para a próxima inteira. */
+.pp-hero__metrica {
+	flex-shrink: 0;
+}
+
+/* Números em Inter com tracking fechado, como no layout (não em Rajdhani). */
+.pp-hero__metrica dt {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h2);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.06em;
+	white-space: nowrap;
+	color: var(--cor-texto-clara);
+}
+
+.pp-hero__metrica dd {
+	margin: 4px 0 0;
+	color: var(--cor-texto-clara-suave);
+}
+
+/* ==========================================================================
+   2. PARCERIA
+   ========================================================================== */
+
+.pp-parceria__titulo {
+	max-width: 600px;
+}
+
+.pp-parceria__cartoes {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pp-parceria__cartao {
+	padding: 32px;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+}
+
+.pp-parceria__icone {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	background: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+}
+
+.pp-parceria__cartao-titulo {
+	margin-top: 32px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+}
+
+.pp-parceria__cartao-texto {
+	margin-top: 12px;
+	color: var(--cor-texto-alt);
+}
+
+/* ==========================================================================
+   3. LOGOS
+   ========================================================================== */
+
+/*
+ * Esteira no mesmo padrão da home e do contato (classes .clientes__* do
+ * front-page.css, que não carrega aqui). Regras redeclaradas com escopo
+ * .pp-logos; o keyframe marquee também, pelo mesmo motivo.
+ */
+.pp-logos {
+	padding-block: 72px;
+	overflow: hidden;
+}
+
+.pp-logos .clientes__pista {
+	overflow: hidden;
+	width: 100%;
+	max-width: var(--largura-conteudo);
+	margin: auto;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+	mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+.pp-logos .clientes__trilha {
+	display: flex;
+	align-items: center;
+	gap: 56px;
+	width: max-content;
+	animation: marquee 45s linear infinite;
+	will-change: transform;
+}
+
+.pp-logos .clientes__pista:hover .clientes__trilha {
+	animation-play-state: paused;
+}
+
+.pp-logos .clientes__logo {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	height: 64px;
+}
+
+.pp-logos .clientes__logo img {
+	height: 100%;
+	width: auto;
+	max-width: 140px;
+	object-fit: contain;
+}
+
+@keyframes marquee {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   4. COMO FUNCIONA
+   ========================================================================== */
+
+.pp-como__titulo {
+	margin-bottom: 56px;
+	text-align: center;
+}
+
+.pp-como__passos {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 24px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pp-como__passo {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	box-shadow: var(--sombra-card);
+}
+
+.pp-como__corpo {
+	flex: 1;
+	padding: 24px 24px 20px;
+}
+
+.pp-como__numero {
+	font-weight: 500;
+	color: var(--cor-texto-alt);
+}
+
+.pp-como__passo-titulo {
+	margin-top: 16px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+}
+
+.pp-como__passo-texto {
+	margin-top: 12px;
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-alt);
+}
+
+.pp-como__imagem img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+/* ==========================================================================
+   5. PERFIL
+   ========================================================================== */
+
+.pp-perfil__grade {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 48px 92px;
+	align-items: start;
+}
+
+.pp-perfil__titulo {
+	max-width: 520px;
+	margin-top: 12px;
+	font-size: var(--tam-h3);
+	line-height: 1.15;
+}
+
+.pp-perfil__texto {
+	max-width: 36em;
+	margin-top: 24px;
+	color: var(--cor-texto-suave);
+}
+
+.pp-perfil__lista {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pp-perfil__item {
+	padding-block: 24px;
+	border-bottom: 1px solid var(--cor-borda);
+}
+
+.pp-perfil__item:first-child {
+	padding-top: 0;
+}
+
+.pp-perfil__item-titulo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 500;
+}
+
+.pp-perfil__item-titulo svg {
+	flex-shrink: 0;
+	color: var(--cor-texto-marca);
+}
+
+.pp-perfil__item-texto {
+	margin-top: 8px;
+	color: var(--cor-texto-alt);
+}
+
+/* ==========================================================================
+   6. ESTRUTURA
+   ========================================================================== */
+
+.pp-estrutura__grade {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 48px 104px;
+	align-items: center;
+}
+
+.pp-estrutura__titulo {
+	font-size: var(--tam-h3);
+	line-height: 1.15;
+}
+
+.pp-estrutura__texto {
+	margin-top: 16px;
+	color: var(--cor-texto-alt);
+}
+
+.pp-estrutura__itens {
+	margin-top: 48px;
+}
+
+.pp-estrutura__item {
+	padding-block: 20px;
+	border-top: 1px solid var(--cor-borda);
+}
+
+.pp-estrutura__item:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.pp-estrutura__item[open] {
+	padding-bottom: 40px;
+}
+
+.pp-estrutura__item-titulo {
+	cursor: pointer;
+	list-style: none;
+	color: var(--cor-texto-suave);
+	transition: color 0.2s ease;
+}
+
+.pp-estrutura__item-titulo::-webkit-details-marker {
+	display: none;
+}
+
+.pp-estrutura__item-titulo:hover,
+.pp-estrutura__item[open] .pp-estrutura__item-titulo {
+	color: var(--cor-texto-marca-escura);
+}
+
+.pp-estrutura__item[open] .pp-estrutura__item-titulo {
+	font-size: var(--tam-h6);
+	font-weight: 500;
+}
+
+.pp-estrutura__item-texto {
+	margin-top: 8px;
+	color: var(--cor-texto-alt);
+}
+
+.pp-estrutura__imagem img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--raio-card);
+}
+
+/* ==========================================================================
+   7. ATUAÇÃO CONJUNTA
+   ========================================================================== */
+
+/* Marca da CLI em tinta quase invisível, à esquerda, atrás das colunas (como no layout). */
+.pp-atuacao {
+	position: relative;
+	overflow: hidden;
+}
+
+.pp-atuacao::before {
+	content: "";
+	position: absolute;
+	top: 35%;
+	left: 4%;
+	width: clamp(220px, 23vw, 340px);
+	aspect-ratio: 162.52 / 152.2;
+	background: url('../img/cc-dif-logo-cli-mobile.svg') center / contain no-repeat;
+	opacity: 0.06;
+	pointer-events: none;
+}
+
+.pp-atuacao > .container {
+	position: relative;
+}
+
+.pp-atuacao__texto {
+	max-width: 760px;
+}
+
+.pp-atuacao__colunas {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+	max-width: 1024px;
+	margin: 56px auto 0;
+}
+
+.pp-atuacao__coluna {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 48px 40px 40px;
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio);
+	background: var(--cor-fundo);
+}
+
+.pp-atuacao__coluna--cli {
+	border: 2px solid var(--cor-fundo-azul);
+	box-shadow: inset 0 0 0 1px var(--cor-texto-clara-suave);
+}
+
+.pp-atuacao__selo {
+	position: absolute;
+	top: -14px;
+	right: 32px;
+	padding: 6px 12px;
+	border-radius: 4px;
+	background: var(--cor-primaria-escura);
+	font-family: var(--fonte-eyebrow);
+	font-size: 0.6875rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	color: var(--cor-texto-clara);
+}
+
+.pp-atuacao__topo {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	padding-bottom: 24px;
+	border-bottom: 1px solid var(--cor-borda);
+}
+
+.pp-atuacao__rotulo {
+	display: block;
+	font-family: var(--fonte-eyebrow);
+	font-size: 0.75rem;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--cor-texto-alt);
+}
+
+.pp-atuacao__coluna--cli .pp-atuacao__rotulo {
+	font-weight: 600;
+	color: var(--cor-texto-marca);
+}
+
+.pp-atuacao__titulo {
+	margin-top: 4px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-h6);
+	font-weight: 700;
+}
+
+.pp-atuacao__tag {
+	flex-shrink: 0;
+	padding: 4px 12px;
+	border-radius: 4px;
+	background: var(--cor-fundo-suave);
+	font-size: var(--tam-caption);
+	font-weight: 600;
+	color: var(--cor-texto);
+}
+
+.pp-atuacao__coluna--cli .pp-atuacao__tag {
+	background: var(--cor-fundo-azul);
+	color: var(--cor-texto-marca);
+}
+
+.pp-atuacao__lista {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	margin: 32px 0 40px;
+	padding: 0;
+	list-style: none;
+}
+
+.pp-atuacao__item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.pp-atuacao__item .ms-icon {
+	font-size: 20px;
+	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
+	color: var(--cor-texto-marca);
+}
+
+.pp-atuacao__rodape {
+	margin-top: auto;
+	padding-top: 24px;
+	border-top: 1px solid var(--cor-borda);
+	font-size: var(--tam-caption);
+	color: var(--cor-texto-suave);
+}
+
+/* ==========================================================================
+   8. FAQ
+   ========================================================================== */
+
+/* Lista mais larga que a da home: 1000px no layout desta página. */
+.pp-faq .faq__lista {
+	max-width: 1000px;
+}
+
+/* ==========================================================================
+   9. PRÓXIMO PASSO (CTA)
+   ========================================================================== */
+
+.pp-cta {
+	padding-bottom: var(--secao-espacamento);
+}
+
+.pp-cta__caixa {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	overflow: hidden;
+	padding: 64px;
+	border-radius: var(--raio-card);
+	background: var(--cor-primaria-escura);
+	box-shadow: var(--sombra-flutuante);
+	color: var(--cor-texto-clara);
+}
+
+/* Faixa diagonal mais clara à direita, como no layout. */
+.pp-cta__caixa::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: -10%;
+	width: 45%;
+	height: 200%;
+	background: var(--cor-marca-secundaria);
+	opacity: 0.12;
+	transform: skewX(-45deg);
+	transform-origin: top right;
+	pointer-events: none;
+}
+
+.pp-cta__conteudo,
+.pp-cta__caixa .botao {
+	position: relative;
+}
+
+.pp-cta__conteudo {
+	max-width: 600px;
+}
+
+.pp-cta__eyebrow {
+	font-size: var(--tam-body);
+	color: var(--cor-texto-clara-suave);
+}
+
+.pp-cta__titulo {
+	margin-top: 4px;
+	font-size: var(--tam-h4);
+	line-height: 1.2;
+	color: var(--cor-texto-clara);
+}
+
+.pp-cta__texto {
+	margin-top: 16px;
+	font-size: var(--tam-body-sm);
+}
+
+.pp-cta__caixa .botao {
+	flex-shrink: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+	.pp-como__passos {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.pp-perfil__grade,
+	.pp-estrutura__grade {
+		grid-template-columns: 1fr;
+	}
+
+	.pp-estrutura__imagem {
+		max-width: 604px;
+	}
+}
+
+@media (max-width: 768px) {
+	.pp-hero__inner {
+		padding-block: 72px;
+	}
+
+	/* No celular a foto vira fundo: escurece para o texto continuar legível. */
+	.pp-hero__fundo img {
+		opacity: 0.35;
+	}
+
+	.pp-hero__metricas {
+		gap: 24px 40px;
+	}
+
+	.pp-parceria__cartoes,
+	.pp-atuacao__colunas {
+		grid-template-columns: 1fr;
+	}
+
+	.pp-atuacao__colunas {
+		gap: 32px;
+	}
+
+	.pp-atuacao__coluna {
+		padding: 40px 24px 32px;
+	}
+
+	.pp-logos .clientes__logo {
+		height: 48px;
+	}
+
+	.pp-logos .clientes__logo img {
+		max-width: 110px;
+	}
+
+	.pp-cta__caixa {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 40px 24px;
+	}
+}
+
+@media (max-width: 480px) {
+	.pp-como__passos {
+		grid-template-columns: 1fr;
+	}
+
+	.pp-hero__botoes .botao {
+		width: 100%;
+	}
+}

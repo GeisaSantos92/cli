@@ -27,7 +27,7 @@ $linkedin   = get_theme_mod( 'cliconnect_social_linkedin' ) ?? '';
 $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 ?>
 
-<?php if ( $cta_titulo && ! is_page_template( 'page-trabalhe-conosco.php' ) ) : ?>
+<?php if ( $cta_titulo && ! is_page_template( array( 'page-trabalhe-conosco.php', 'page-programa-de-parceiros.php' ) ) ) : ?>
 <section class="footer-cta">
 	<div class="footer-cta__inner">
 		<div class="footer-cta__caixa">

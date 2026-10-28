@@ -7,6 +7,7 @@
  * - item de 1º nível sem filhos       → link simples;
  * - filhos sem netos ("Plataforma")   → painel de cartões (título + descrição
  *   do item de menu);
+ * - filhos sem netos nem descrição   → dropdown em lista simples ("Recursos");
  * - filhos com netos ("Soluções")     → mega menu em colunas, onde cada filho é
  *   o título de uma coluna e os netos são os links. Um filho sem netos vira o
  *   link "Ver todos" no rodapé do painel.
@@ -35,6 +36,13 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 	protected $filhos = array();
 
 	/**
+	 * IDs dos itens que têm descrição preenchida.
+	 *
+	 * @var array<int,bool>
+	 */
+	protected $com_descricao = array();
+
+	/**
 	 * ID do item cujo submenu está sendo aberto.
 	 *
 	 * @var int
@@ -42,7 +50,7 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 	protected $item_atual = 0;
 
 	/**
-	 * Formato do painel do item de 1º nível em curso ('cartoes' ou 'mega').
+	 * Formato do painel do item de 1º nível em curso ('cartoes', 'lista' ou 'mega').
 	 *
 	 * @var string
 	 */
@@ -57,10 +65,15 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 	 * @return string
 	 */
 	public function walk( $elements, $max_depth, ...$args ) {
-		$this->filhos = array();
+		$this->filhos        = array();
+		$this->com_descricao = array();
 
 		foreach ( (array) $elements as $elemento ) {
 			$this->filhos[ (int) $elemento->menu_item_parent ][] = (int) $elemento->ID;
+
+			if ( '' !== trim( (string) ( $elemento->description ?? '' ) ) ) {
+				$this->com_descricao[ (int) $elemento->ID ] = true;
+			}
 		}
 
 		return parent::walk( $elements, $max_depth, ...$args );
@@ -116,7 +129,7 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$tem_filhos = ! empty( $this->filhos[ (int) $item->ID ] );
 
 		if ( 0 === $depth ) {
-			$this->painel = $this->tem_netos( $item->ID ) ? 'mega' : 'cartoes';
+			$this->painel = $this->formato_painel( $item->ID );
 		}
 
 		$classes   = array_filter( (array) $item->classes );
@@ -130,6 +143,8 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 		if ( 1 === $depth ) {
 			if ( 'cartoes' === $this->painel ) {
 				$classes[] = 'site-nav__cartao-item';
+			} elseif ( 'lista' === $this->painel ) {
+				$classes[] = 'site-nav__lista-item';
 			} else {
 				$classes[] = $tem_filhos ? 'site-nav__grupo' : 'site-nav__rodape-painel';
 			}
@@ -171,19 +186,24 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 
 	/**
-	 * Um item de 1º nível tem netos? (define mega menu × painel de cartões)
+	 * Formato do painel de um item de 1º nível, deduzido dos filhos: com netos
+	 * vira mega menu; com algum filho descrito, cartões; senão, lista simples.
 	 *
 	 * @param int $id ID do item.
-	 * @return bool
+	 * @return string 'mega', 'cartoes' ou 'lista'.
 	 */
-	protected function tem_netos( $id ) {
+	protected function formato_painel( $id ) {
+		$cartoes = false;
+
 		foreach ( $this->filhos[ (int) $id ] ?? array() as $filho ) {
 			if ( ! empty( $this->filhos[ $filho ] ) ) {
-				return true;
+				return 'mega';
 			}
+
+			$cartoes = $cartoes || ! empty( $this->com_descricao[ $filho ] );
 		}
 
-		return false;
+		return $cartoes ? 'cartoes' : 'lista';
 	}
 
 	/**
@@ -220,6 +240,11 @@ class Cliconnect_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$descricao ? '<span class="nav-cartao__texto">' . esc_html( $descricao ) . '</span>' : '',
 				cliconnect_icone( 'seta-nordeste', 20 )
 			);
+		}
+
+		// Link do dropdown em lista ("Recursos").
+		if ( 1 === $depth && 'lista' === $this->painel ) {
+			return sprintf( '<a%1$s>%2$s</a>', $atributos, esc_html( $item->title ) );
 		}
 
 		// Título de coluna do mega menu.

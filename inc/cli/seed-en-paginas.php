@@ -52,6 +52,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'trabalhe-conosco' => array( 'careers', 'Careers' ),
 			'privacidade'      => array( 'privacy-policy', 'Privacy Policy' ),
 			'termos'           => array( 'terms-of-use', 'Terms of Use' ),
+			'programa-de-parceiros' => array( 'partner-program', 'Partner Program' ),
 		);
 	}
 
@@ -770,4 +771,100 @@ trait Cliconnect_Seed_En_Paginas {
 	   UTILITÁRIOS
 	   ===================================================================== */
 
+
+	/* =====================================================================
+	   PROGRAMA DE PARCEIROS
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto da página Programa de Parceiros em inglês.
+	 *
+	 * Ícones, imagens, quantidade de logos e a lista de FAQ são copiados do
+	 * original (a FAQ já traduzida, ver traduzir_idioma()).
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_en_programa_de_parceiros() {
+		$quero_ser_parceiro = $this->link_traduzido( 'Become a partner', self::WHATSAPP, '_blank' );
+
+		return array(
+			'pp_hero_eyebrow'            => 'PARTNER PROGRAM',
+			'pp_hero_titulo'             => 'Earn 10% in recurring monthly revenue',
+			'pp_hero_texto'              => 'Refer integration, automation and data opportunities to CLI Connect, add more value for your clients and *earn 10%* of the net monthly revenue.',
+			'pp_hero_botao'              => $quero_ser_parceiro,
+			'pp_hero_botao_2'            => $this->link_traduzido( 'How it works', '#como-funciona' ),
+			'pp_hero_metrica_1_numero'   => '10%',
+			'pp_hero_metrica_1_rotulo'   => 'Monthly revenue',
+			'pp_hero_metrica_2_numero'   => '5 days',
+			'pp_hero_metrica_2_rotulo'   => 'To the first solution',
+			'pp_hero_metrica_3_numero'   => '30k+',
+			'pp_hero_metrica_3_rotulo'   => 'Ready-made integrations',
+			'pp_parceria_eyebrow'        => 'PARTNERSHIP',
+			'pp_parceria_titulo'         => 'Grow your client portfolio with new capabilities',
+			'pp_parceria_texto'          => 'Meet complex data, automation and technology demands in the accounts you already have or with new clients.',
+			'pp_parceria_1_titulo'       => 'Broaden your offering',
+			'pp_parceria_1_texto'        => 'Meet new demands from your portfolio with CLI’s solutions and technical capacity.',
+			'pp_parceria_2_titulo'       => 'Focus on what matters',
+			'pp_parceria_2_texto'        => 'There is no need to build a new specialised structure for every complementary demand.',
+			'pp_parceria_3_titulo'       => 'Create new revenue',
+			'pp_parceria_3_texto'        => 'Turn the deals sourced through the partnership into a recurring revenue stream.',
+			'pp_como_titulo'             => 'How it works',
+			'pp_como_1_titulo'           => 'Identify',
+			'pp_como_1_texto'            => 'Find a demand in your portfolio that CLI Connect can meet.',
+			'pp_como_2_titulo'           => 'Register',
+			'pp_como_2_texto'            => 'Present the opportunity to CLI Connect and register it following the program process.',
+			'pp_como_3_titulo'           => 'Develop',
+			'pp_como_3_texto'            => 'CLI Connect and the partner work the opportunity together until the client signs.',
+			'pp_como_4_titulo'           => 'Get paid',
+			'pp_como_4_texto'            => 'Once the client pays, the commission is calculated under the partnership rules.',
+			'pp_perfil_eyebrow'          => 'PARTNER PROFILE',
+			'pp_perfil_titulo'           => 'For those who want to broaden their offering',
+			'pp_perfil_texto'            => 'Add new technology fronts to your projects with CLI Connect’s technical support, adding capacity to your operation.',
+			'pp_perfil_1_titulo'         => 'Consultancies',
+			'pp_perfil_1_texto'          => 'Expand your reach with complementary technology capabilities.',
+			'pp_perfil_2_titulo'         => 'Integrators and software houses',
+			'pp_perfil_2_texto'          => 'Take on projects that require connections to external systems and environments.',
+			'pp_perfil_3_titulo'         => 'Agencies',
+			'pp_perfil_3_texto'          => 'Extend your delivery to the technical demands that arise in your clients’ operations.',
+			'pp_perfil_4_titulo'         => 'Resellers and technology companies',
+			'pp_perfil_4_texto'          => 'Add new solutions to your portfolio without having to build all the expertise in-house.',
+			'pp_estrutura_titulo'        => "You find the opportunity.\nCLI delivers the structure.",
+			'pp_estrutura_texto'         => 'Broaden what you offer your clients with a specialised structure to develop, deploy and sustain new solutions.',
+			'pp_estrutura_1_titulo'      => 'Technology',
+			'pp_estrutura_1_texto'       => 'The Boomi platform and our own capabilities to handle different integration, automation and data scenarios.',
+			'pp_estrutura_2_titulo'      => 'Specialists',
+			'pp_estrutura_2_texto'       => 'A dedicated technical team to design, build and deploy each solution together with you.',
+			'pp_estrutura_3_titulo'      => 'Operations',
+			'pp_estrutura_3_texto'       => 'Monitoring, support and ongoing maintenance of the integrations once the project goes live.',
+			'pp_estrutura_4_titulo'      => 'Governance',
+			'pp_estrutura_4_texto'       => 'Processes, documentation and access control that bring security and compliance to every delivery.',
+			'pp_atuacao_eyebrow'         => 'JOINT WORK',
+			'pp_atuacao_titulo'          => 'Focus on what you already do best',
+			'pp_atuacao_texto'           => 'Spot opportunities in your portfolio, connect CLI Connect to your clients and take part in the commercial process. We bring the capacity needed to make the solution happen.',
+			'pp_atuacao_parceiro_rotulo' => 'RESPONSIBILITIES',
+			'pp_atuacao_parceiro_titulo' => 'You',
+			'pp_atuacao_parceiro_tag'    => 'Partner',
+			'pp_atuacao_parceiro_1'      => 'Spot opportunities in your portfolio',
+			'pp_atuacao_parceiro_2'      => 'Present the opportunities to CLI Connect',
+			'pp_atuacao_parceiro_3'      => 'Take part in the commercial process',
+			'pp_atuacao_parceiro_rodape' => 'Full focus on the relationship and on sourcing the deal.',
+			'pp_atuacao_cli_selo'        => 'TECHNICAL OPERATIONS',
+			'pp_atuacao_cli_rotulo'      => 'RESPONSIBILITIES',
+			'pp_atuacao_cli_titulo'      => 'CLI Connect',
+			'pp_atuacao_cli_tag'         => 'Hub & Infra',
+			'pp_atuacao_cli_1'           => 'Assesses and approves the opportunity',
+			'pp_atuacao_cli_2'           => 'Structures the solution',
+			'pp_atuacao_cli_3'           => 'Approves the commercial proposal',
+			'pp_atuacao_cli_4'           => 'Signs and invoices the end client',
+			'pp_atuacao_cli_5'           => 'Runs the CLI Connect services',
+			'pp_atuacao_cli_6'           => 'Calculates and pays the commission',
+			'pp_atuacao_cli_rodape'      => 'Compliance, invoicing and operational support guaranteed.',
+			'pp_faq_eyebrow'             => 'FAQ',
+			'pp_faq_titulo'              => 'Frequently Asked Questions',
+			'pp_cta_eyebrow'             => 'NEXT STEP',
+			'pp_cta_titulo'              => 'Ready to turn your portfolio into recurring revenue?',
+			'pp_cta_texto'               => 'Talk to our corporate consultants and get the full partnership documentation.',
+			'pp_cta_botao'               => $quero_ser_parceiro,
+		);
+	}
 }

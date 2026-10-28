@@ -35,6 +35,7 @@ trait Cliconnect_Seed_Es_Faq {
 	 */
 	protected function faq_solucoes_es() {
 		return array_merge(
+			$this->faq_es_parceiros(),
 			$this->faq_es_bloco_1(),
 			$this->faq_es_bloco_2(),
 			$this->faq_es_bloco_3(),
@@ -1363,6 +1364,41 @@ trait Cliconnect_Seed_Es_Faq {
 			'chatgpt-executar-acoes' => array(
 				'¿Es posible hacer que ChatGPT ejecute acciones en los sistemas?',
 				'<p>Sí. Además de consultar información, ChatGPT puede ejecutar acciones — como crear un pedido en el ERP, actualizar un registro en el CRM o abrir un ticket en ServiceNow — siempre que la herramienta correspondiente esté publicada en el MCP Server y el perfil del usuario tenga permiso para esa acción. Cada ejecución queda registrada en la plataforma para auditoría.</p>',
+			),
+		);
+	}
+
+	/**
+	 * FAQ do Programa de Parceiros em espanhol (respostas em rascunho, como no
+	 * português).
+	 *
+	 * @return array<string,array{0:string,1:string}>
+	 */
+	protected function faq_es_parceiros() {
+		return array(
+			'parceiros-remuneracao'    => array(
+				'¿Cómo funciona la remuneración del Programa de Socios?',
+				'<p>El socio recibe el 10% de la facturación neta mensual de los contratos originados por su recomendación, según las reglas del programa.</p>',
+			),
+			'parceiros-recorrencia'    => array(
+				'¿La comisión es recurrente o se paga una sola vez?',
+				'<p>Es recurrente: la comisión se calcula todos los meses mientras el cliente recomendado mantenga el contrato activo con CLI Connect.</p>',
+			),
+			'parceiros-equipe-tecnica' => array(
+				'¿Necesito un equipo técnico para ser socio?',
+				'<p>No. CLI Connect estructura, implementa y opera la solución. El socio se enfoca en la relación con el cliente y en la originación de la oportunidad.</p>',
+			),
+			'parceiros-negociacao'     => array(
+				'¿Quién negocia las condiciones comerciales con el cliente?',
+				'<p>El socio participa del desarrollo comercial junto con CLI Connect, que estructura y aprueba la propuesta enviada al cliente.</p>',
+			),
+			'parceiros-contrato'       => array(
+				'¿Quién firma el contrato y factura al cliente?',
+				'<p>CLI Connect contrata y factura directamente al cliente final, y se encarga del cumplimiento y de la operación continua.</p>',
+			),
+			'parceiros-pagamento'      => array(
+				'¿Cuándo se paga la comisión?',
+				'<p>La comisión se calcula una vez recibido el pago del cliente y se paga según el calendario definido en el acuerdo de asociación.</p>',
 			),
 		);
 	}

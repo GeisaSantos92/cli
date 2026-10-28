@@ -52,6 +52,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'trabalhe-conosco' => array( 'trabaja-con-nosotros', 'Trabaja con nosotros' ),
 			'privacidade'      => array( 'politica-de-privacidad', 'Política de Privacidad' ),
 			'termos'           => array( 'terminos-de-uso', 'Términos de Uso' ),
+			'programa-de-parceiros' => array( 'programa-de-socios', 'Programa de Socios' ),
 		);
 	}
 
@@ -763,6 +764,102 @@ trait Cliconnect_Seed_Es_Paginas {
 <p>Esta política puede actualizarse en cualquier momento. La fecha de la última actualización figura en la parte superior de esta página.</p>
 <h2>11. Hable con nosotros sobre privacidad</h2>
 <p>Las dudas o solicitudes relacionadas con sus datos personales pueden enviarse a <a href="mailto:atendimento@cliconsultoria.com.br">atendimento@cliconsultoria.com.br</a>.</p>',
+		);
+	}
+
+	/* =====================================================================
+	   PROGRAMA DE PARCEIROS
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto da página Programa de Parceiros em espanhol.
+	 *
+	 * Ícones, imagens, quantidade de logos e a lista de FAQ são copiados do
+	 * original (a FAQ já traduzida, ver traduzir_idioma()).
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_es_programa_de_parceiros() {
+		$quero_ser_parceiro = $this->link_traduzido( 'Quiero ser socio', self::WHATSAPP, '_blank' );
+
+		return array(
+			'pp_hero_eyebrow'            => 'PROGRAMA DE SOCIOS',
+			'pp_hero_titulo'             => 'Gane un 10% en ingresos recurrentes mensuales',
+			'pp_hero_texto'              => 'Recomiende oportunidades de integración, automatización y datos a CLI Connect, amplíe el valor que entrega a sus clientes y *reciba el 10%* de la facturación neta mensual.',
+			'pp_hero_botao'              => $quero_ser_parceiro,
+			'pp_hero_botao_2'            => $this->link_traduzido( 'Cómo funciona', '#como-funciona' ),
+			'pp_hero_metrica_1_numero'   => '10%',
+			'pp_hero_metrica_1_rotulo'   => 'Ingresos mensuales',
+			'pp_hero_metrica_2_numero'   => '5 días',
+			'pp_hero_metrica_2_rotulo'   => 'Para la primera solución',
+			'pp_hero_metrica_3_numero'   => '+30 mil',
+			'pp_hero_metrica_3_rotulo'   => 'Integraciones listas',
+			'pp_parceria_eyebrow'        => 'ASOCIACIÓN',
+			'pp_parceria_titulo'         => 'Amplíe su cartera de clientes ofreciendo nuevas capacidades',
+			'pp_parceria_texto'          => 'Atienda demandas complejas de datos, automatización y tecnología en las cuentas que ya tiene o con nuevos clientes.',
+			'pp_parceria_1_titulo'       => 'Amplíe su oferta',
+			'pp_parceria_1_texto'        => 'Atienda nuevas demandas de su cartera con el portafolio y la capacidad técnica de CLI.',
+			'pp_parceria_2_titulo'       => 'Enfóquese en lo importante',
+			'pp_parceria_2_texto'        => 'No es necesario crear una nueva estructura especializada para cada demanda complementaria.',
+			'pp_parceria_3_titulo'       => 'Cree nuevos ingresos',
+			'pp_parceria_3_texto'        => 'Convierta los negocios originados por la asociación en una fuente de ingresos recurrentes.',
+			'pp_como_titulo'             => 'Cómo funciona',
+			'pp_como_1_titulo'           => 'Identifique',
+			'pp_como_1_texto'            => 'Encuentre en su cartera una demanda que CLI Connect pueda atender.',
+			'pp_como_2_titulo'           => 'Registre',
+			'pp_como_2_texto'            => 'Presente la oportunidad a CLI Connect y regístrela según el proceso del programa.',
+			'pp_como_3_titulo'           => 'Desarrolle',
+			'pp_como_3_texto'            => 'CLI Connect y el socio trabajan juntos la oportunidad hasta la contratación por parte del cliente.',
+			'pp_como_4_titulo'           => 'Reciba',
+			'pp_como_4_texto'            => 'Con el pago del cliente, la comisión se calcula según las reglas de la asociación.',
+			'pp_perfil_eyebrow'          => 'PERFIL DEL SOCIO',
+			'pp_perfil_titulo'           => 'Para quien quiere ampliar su oferta',
+			'pp_perfil_texto'            => 'Sume nuevos frentes tecnológicos a sus proyectos con el soporte técnico de CLI Connect y agregue capacidad a su operación.',
+			'pp_perfil_1_titulo'         => 'Consultoras',
+			'pp_perfil_1_texto'          => 'Amplíe su actuación con capacidades tecnológicas complementarias.',
+			'pp_perfil_2_titulo'         => 'Integradoras y software houses',
+			'pp_perfil_2_texto'          => 'Atienda proyectos que exigen conexiones con sistemas y entornos externos.',
+			'pp_perfil_3_titulo'         => 'Agencias',
+			'pp_perfil_3_texto'          => 'Extienda su entrega a las demandas técnicas que surgen en la operación de los clientes.',
+			'pp_perfil_4_titulo'         => 'Revendedores y empresas de tecnología',
+			'pp_perfil_4_texto'          => 'Sume nuevas soluciones a su portafolio sin tener que internalizar toda la especialización.',
+			'pp_estrutura_titulo'        => "Usted encuentra la oportunidad.\nCLI entrega la estructura.",
+			'pp_estrutura_texto'         => 'Amplíe lo que ofrece a sus clientes con una estructura especializada para desarrollar, implementar y sostener nuevas soluciones.',
+			'pp_estrutura_1_titulo'      => 'Tecnología',
+			'pp_estrutura_1_texto'       => 'La plataforma Boomi y capacidades propias para atender distintos escenarios de integración, automatización y datos.',
+			'pp_estrutura_2_titulo'      => 'Especialistas',
+			'pp_estrutura_2_texto'       => 'Un equipo técnico dedicado para diseñar, desarrollar e implementar cada solución junto con usted.',
+			'pp_estrutura_3_titulo'      => 'Operación',
+			'pp_estrutura_3_texto'       => 'Monitoreo, soporte y sostenimiento continuo de las integraciones una vez que el proyecto entra en producción.',
+			'pp_estrutura_4_titulo'      => 'Gobernanza',
+			'pp_estrutura_4_texto'       => 'Procesos, documentación y control de accesos que aportan seguridad y cumplimiento a cada entrega.',
+			'pp_atuacao_eyebrow'         => 'ACTUACIÓN CONJUNTA',
+			'pp_atuacao_titulo'          => 'Concéntrese en lo que ya hace mejor',
+			'pp_atuacao_texto'           => 'Identifique oportunidades en su cartera, conecte CLI Connect con sus clientes y participe del desarrollo comercial. Nosotros aportamos la capacidad necesaria para hacer viable la solución.',
+			'pp_atuacao_parceiro_rotulo' => 'ATRIBUCIONES',
+			'pp_atuacao_parceiro_titulo' => 'Usted',
+			'pp_atuacao_parceiro_tag'    => 'Socio',
+			'pp_atuacao_parceiro_1'      => 'Identifique oportunidades en su cartera',
+			'pp_atuacao_parceiro_2'      => 'Presente las oportunidades a CLI Connect',
+			'pp_atuacao_parceiro_3'      => 'Participe del desarrollo comercial',
+			'pp_atuacao_parceiro_rodape' => 'Foco total en la relación y en la originación del negocio.',
+			'pp_atuacao_cli_selo'        => 'OPERACIÓN TÉCNICA',
+			'pp_atuacao_cli_rotulo'      => 'ATRIBUCIONES',
+			'pp_atuacao_cli_titulo'      => 'CLI Connect',
+			'pp_atuacao_cli_tag'         => 'Hub & Infra',
+			'pp_atuacao_cli_1'           => 'Evalúa y aprueba la oportunidad',
+			'pp_atuacao_cli_2'           => 'Estructura la solución',
+			'pp_atuacao_cli_3'           => 'Aprueba la propuesta comercial',
+			'pp_atuacao_cli_4'           => 'Contrata y factura al cliente final',
+			'pp_atuacao_cli_5'           => 'Opera los servicios CLI Connect',
+			'pp_atuacao_cli_6'           => 'Calcula y paga la comisión',
+			'pp_atuacao_cli_rodape'      => 'Garantía de cumplimiento, facturación y sostenimiento operativo.',
+			'pp_faq_eyebrow'             => 'FAQ',
+			'pp_faq_titulo'              => 'Preguntas Frecuentes',
+			'pp_cta_eyebrow'             => 'PRÓXIMO PASO',
+			'pp_cta_titulo'              => '¿Listo para convertir su cartera en ingresos recurrentes?',
+			'pp_cta_texto'               => 'Conéctese con nuestros consultores corporativos y reciba la documentación completa de la asociación.',
+			'pp_cta_botao'               => $quero_ser_parceiro,
 		);
 	}
 }

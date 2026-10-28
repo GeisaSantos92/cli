@@ -35,6 +35,7 @@ trait Cliconnect_Seed_En_Faq {
 	 */
 	protected function faq_solucoes_en() {
 		return array_merge(
+			$this->faq_en_parceiros(),
 			$this->faq_en_industria(),
 			$this->faq_en_departamento(),
 			$this->faq_en_iniciativa(),
@@ -1282,6 +1283,40 @@ trait Cliconnect_Seed_En_Faq {
 			'vj-visao-360'               => array(
 				'What are the benefits of building a 360° customer view?',
 				'<p>Bringing purchases, service contacts, returns and marketing interactions into a single profile changes what the operation can do: recommendations based on real history, campaigns that do not push a product the customer already bought, service that does not ask for the same information twice, and a reliable read on repeat business and customer value over time.</p>',
+			),
+		);
+	}
+
+	/**
+	 * FAQ do Programa de Parceiros (respostas em rascunho, como no português).
+	 *
+	 * @return array<string,array{0:string,1:string}>
+	 */
+	protected function faq_en_parceiros() {
+		return array(
+			'parceiros-remuneracao'    => array(
+				'How does the Partner Program pay partners?',
+				'<p>Partners receive 10% of the net monthly revenue from the contracts that come from their referral, under the program rules.</p>',
+			),
+			'parceiros-recorrencia'    => array(
+				'Is the commission recurring or a one-off payment?',
+				'<p>It is recurring: the commission is calculated every month for as long as the referred client keeps an active contract with CLI Connect.</p>',
+			),
+			'parceiros-equipe-tecnica' => array(
+				'Do I need a technical team to become a partner?',
+				'<p>No. CLI Connect designs, deploys and runs the solution. The partner focuses on the client relationship and on sourcing the opportunity.</p>',
+			),
+			'parceiros-negociacao'     => array(
+				'Who negotiates the commercial terms with the client?',
+				'<p>The partner takes part in the commercial process together with CLI Connect, which structures and approves the proposal sent to the client.</p>',
+			),
+			'parceiros-contrato'       => array(
+				'Who signs the contract and invoices the client?',
+				'<p>CLI Connect signs and invoices the end client directly, and is responsible for compliance and ongoing operations.</p>',
+			),
+			'parceiros-pagamento'      => array(
+				'When is the commission paid?',
+				'<p>The commission is calculated once the client payment is received and paid according to the schedule set in the partnership agreement.</p>',
 			),
 		);
 	}

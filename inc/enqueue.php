@@ -132,6 +132,16 @@ function cliconnect_enqueue_assets() {
 		);
 	}
 
+	// Página Programa de Parceiros.
+	if ( cliconnect_e_pagina( 'programa-de-parceiros' ) ) {
+		wp_enqueue_style(
+			'cliconnect-programa-de-parceiros',
+			get_theme_file_uri( '/assets/css/page-programa-de-parceiros.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-programa-de-parceiros.css' )
+		);
+	}
+
 	// Página CLI Signature.
 	if ( cliconnect_e_pagina( 'cli-signature' ) ) {
 		wp_enqueue_style(

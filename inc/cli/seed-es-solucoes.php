@@ -240,10 +240,18 @@ trait Cliconnect_Seed_Es_Solucoes {
 					'url'    => $solucoes_base,
 					'filhos' => $solucoes_mega,
 				),
+				array(
+					'titulo' => 'Recursos',
+					'url'    => '#', // Sem URL, como no português: só abre o dropdown em lista.
+					'filhos' => array(
+						'Sea Socio'            => $this->url_pagina_traduzida( 'programa-de-parceiros' ),
+						'Trabaja con nosotros' => $this->url_pagina_traduzida( 'trabalhe-conosco' ),
+						'Blog'                 => $blog_url,
+						'Contacto'             => $this->url_pagina_traduzida( 'contato' ),
+					),
+				),
 				array( 'titulo' => 'Integración SAP', 'url' => $this->url_pagina_traduzida( 'integracao-sap' ) ),
 				// array( 'titulo' => 'Casos de éxito', 'url' => $cases_url ), // oculto
-				array( 'titulo' => 'Blog', 'url' => $blog_url ),
-				array( 'titulo' => 'Contacto', 'url' => $this->url_pagina_traduzida( 'contato' ) ),
 			)
 		);
 
@@ -268,6 +276,7 @@ trait Cliconnect_Seed_Es_Solucoes {
 							'url'    => $this->url_pagina_traduzida( 'contato' ),
 							'filhos' => array(
 								// 'Casos de éxito' => $cases_url, // oculto
+								'Sea Socio'             => $this->url_pagina_traduzida( 'programa-de-parceiros' ),
 								'Blog'                  => $blog_url,
 								'Trabaja con nosotros'  => $this->url_pagina_traduzida( 'trabalhe-conosco' ),
 								'Contacto'              => $this->url_pagina_traduzida( 'contato' ),

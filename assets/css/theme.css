@@ -606,6 +606,49 @@ p {
 	color: #fff;
 }
 
+/* --- Dropdown em lista ("Recursos") ---------------------------------------- */
+
+/*
+ * Ao contrário dos outros painéis, este não sangra: é uma caixa compacta
+ * ancorada no próprio item, alinhada à esquerda do rótulo.
+ */
+.site-nav__item--lista {
+	position: relative;
+}
+
+.site-nav__painel--lista {
+	top: calc(100% + 40px);
+	right: auto;
+	width: 322px;
+	border: 0;
+	border-radius: var(--raio);
+	box-shadow: var(--sombra-flutuante);
+}
+
+/* Ponte sobre os 40px entre o rótulo e a caixa. */
+.site-nav__painel--lista::before {
+	height: 40px;
+}
+
+.site-nav__painel--lista .site-nav__painel-inner {
+	padding: 12px 0;
+}
+
+.site-nav__list .site-nav__lista-item a {
+	display: flex;
+	padding: 10px 24px;
+	font-size: var(--tam-body);
+	font-weight: 400;
+	color: var(--cor-texto);
+	white-space: normal;
+}
+
+.site-nav__list .site-nav__lista-item a:hover,
+.site-nav__list .site-nav__lista-item a:focus-visible {
+	color: var(--cor-texto-marca);
+	background: var(--cor-fundo-suave);
+}
+
 /* --- Mega menu ("Soluções") ------------------------------------------------ */
 
 /*
@@ -970,6 +1013,29 @@ p {
 	.site-nav__grupo-lista a {
 		margin-left: 0;
 		padding: 8px 0;
+	}
+
+	/* No drawer o dropdown em lista volta a ser um painel como os outros. */
+	.site-nav__item--lista {
+		position: static;
+	}
+
+	.site-nav__painel--lista {
+		width: auto;
+		border-radius: 0;
+	}
+
+	.site-nav__painel--lista .site-nav__painel-inner {
+		padding: 0 0 8px 16px;
+	}
+
+	.site-nav__list .site-nav__lista-item a {
+		padding: 8px 0;
+	}
+
+	.site-nav__list .site-nav__lista-item a:hover,
+	.site-nav__list .site-nav__lista-item a:focus-visible {
+		background: none;
 	}
 
 	.site-header__acoes {

@@ -133,6 +133,9 @@ class Cliconnect_Seed {
 		WP_CLI::log( '— Preenchendo Política de Privacidade…' );
 		$this->preencher_privacidade( $paginas['privacidade'] );
 
+		WP_CLI::log( '— Preenchendo Programa de Parceiros…' );
+		$this->preencher_programa_de_parceiros( $paginas['programa-de-parceiros'] );
+
 		WP_CLI::log( '— Criando Soluções (taxonomia)…' );
 		$termos_solucao = $this->criar_solucoes();
 
@@ -665,6 +668,7 @@ class Cliconnect_Seed {
 			'trabalhe-conosco' => 'Trabalhe Conosco',
 			'privacidade'     => 'Política de Privacidade',
 			'termos'          => 'Termos de Uso',
+			'programa-de-parceiros' => 'Programa de Parceiros',
 		);
 
 		$ids = array();
@@ -2407,10 +2411,19 @@ class Cliconnect_Seed {
 					'url'    => $solucoes_base,
 					'filhos' => $solucoes_mega,
 				),
+				array(
+					// Sem URL e sem descrição nos filhos: abre o dropdown em lista (issue #223).
+					'titulo' => 'Recursos',
+					'url'    => '#',
+					'filhos' => array(
+						'Seja Parceiro'    => '/programa-de-parceiros/',
+						'Trabalhe Conosco' => '/trabalhe-conosco/',
+						'Blog'             => $blog_url,
+						'Contato'          => '/contato/',
+					),
+				),
 				array( 'titulo' => 'Integração SAP', 'url' => '/integracao-sap/' ),
 				// array( 'titulo' => 'Cases', 'url' => $cases_url ), // oculto
-				array( 'titulo' => 'Blog', 'url' => $blog_url ),
-				array( 'titulo' => 'Contato', 'url' => '/contato/' ),
 			)
 		);
 
@@ -2484,6 +2497,7 @@ class Cliconnect_Seed {
 							'url'    => '#',
 							'filhos' => array(
 								// 'Cases'         => $cases_url, // oculto
+								'Seja Parceiro'    => '/programa-de-parceiros/',
 								'Blog'             => $blog_url,
 								'Trabalhe Conosco' => '/trabalhe-conosco/',
 								'Contato'          => '/contato/',
@@ -3804,6 +3818,205 @@ class Cliconnect_Seed {
 <p>Esta política pode ser atualizada a qualquer momento. A data da última atualização fica indicada no topo desta página.</p>
 <h2>11. Fale com a gente sobre privacidade</h2>
 <p>Dúvidas, solicitações ou pedidos relacionados aos seus dados pessoais podem ser enviados para <a href="mailto:atendimento@cliconsultoria.com.br">atendimento@cliconsultoria.com.br</a>.</p>';
+	}
+
+	/**
+	 * Preenche os campos ACF da página Programa de Parceiros (issue #222).
+	 *
+	 * Texto transcrito do layout do Figma. As respostas do FAQ e os textos de
+	 * três itens da seção Estrutura não estavam no layout (itens fechados):
+	 * são rascunhos, marcados abaixo, para o cliente validar.
+	 *
+	 * @param int $pagina_id ID da página.
+	 * @return void
+	 */
+	protected function preencher_programa_de_parceiros( $pagina_id ) {
+		if ( ! $pagina_id ) {
+			return;
+		}
+
+		update_post_meta( $pagina_id, '_wp_page_template', 'page-programa-de-parceiros.php' );
+
+		$quero_ser_parceiro = array(
+			'title'  => 'Quero ser parceiro',
+			'url'    => self::WHATSAPP,
+			'target' => '_blank',
+		);
+
+		$campos = array(
+			// 1. Hero.
+			'pp_hero_eyebrow'           => 'PROGRAMA DE PARCEIROS',
+			'pp_hero_titulo'            => 'Ganhe 10% em receita recorrente mensal',
+			'pp_hero_texto'             => 'Indique oportunidades de integração, automação e dados para a CLI Connect, amplie o valor entregue aos seus clientes e *receba 10%* sobre o faturamento líquido mensal.',
+			'pp_hero_botao'             => $quero_ser_parceiro,
+			'pp_hero_botao_2'           => $this->link( 'Como funciona', '#como-funciona' ),
+			'pp_hero_imagem'            => $this->img( 'parceiros-hero' ),
+			'pp_hero_metrica_1_numero'  => '10%',
+			'pp_hero_metrica_1_rotulo'  => 'Receita mensal',
+			'pp_hero_metrica_2_numero'  => '5 dias',
+			'pp_hero_metrica_2_rotulo'  => 'Para a primeira solução',
+			'pp_hero_metrica_3_numero'  => '+30 mil',
+			'pp_hero_metrica_3_rotulo'  => 'Integrações prontas',
+
+			// 2. Parceria.
+			'pp_parceria_eyebrow'       => 'PARCERIA',
+			'pp_parceria_titulo'        => 'Expanda sua carteira de cliente oferecendo novas capacidades',
+			'pp_parceria_texto'         => 'Atenda demandas complexas de dados, automação e tecnologia nas contas que você já possui ou para novos clientes.',
+			'pp_parceria_1_icone'       => 'open_in_full',
+			'pp_parceria_1_titulo'      => 'Amplie sua oferta',
+			'pp_parceria_1_texto'       => 'Atenda novas demandas da sua carteira com o portfólio e a capacidade técnica da CLI.',
+			'pp_parceria_2_icone'       => 'center_focus_weak',
+			'pp_parceria_2_titulo'      => 'Foque no que importa',
+			'pp_parceria_2_texto'       => 'Não é necessário criar uma nova estrutura especializada para cada demanda complementar.',
+			'pp_parceria_3_icone'       => 'paid',
+			'pp_parceria_3_titulo'      => 'Crie uma nova receita',
+			'pp_parceria_3_texto'       => 'Transforme negócios originados a partir da parceria em uma fonte de receita recorrente.',
+
+			// 3. Logos.
+			'pp_logos_quantidade'       => 7,
+
+			// 4. Como funciona.
+			'pp_como_titulo'            => 'Como funciona',
+			'pp_como_1_titulo'          => 'Identifique',
+			'pp_como_1_texto'           => 'Encontre uma demanda na sua carteira que possa ser atendida pela CLI Connect.',
+			'pp_como_1_imagem'          => $this->img( 'parceiros-identifique' ),
+			'pp_como_2_titulo'          => 'Registre',
+			'pp_como_2_texto'           => 'Apresente a oportunidade à CLI Connect e faça a reserva conforme o processo do programa.',
+			'pp_como_2_imagem'          => $this->img( 'parceiros-registre' ),
+			'pp_como_3_titulo'          => 'Desenvolva',
+			'pp_como_3_texto'           => 'CLI Connect e parceiro trabalham juntos na oportunidade até a contratação pelo cliente.',
+			'pp_como_3_imagem'          => $this->img( 'parceiros-desenvolva' ),
+			'pp_como_4_titulo'          => 'Receba',
+			'pp_como_4_texto'           => 'Com o recebimento do cliente, a comissão é apurada conforme as regras da parceria',
+			'pp_como_4_imagem'          => $this->img( 'parceiros-receba' ),
+
+			// 5. Perfil do parceiro.
+			'pp_perfil_eyebrow'         => 'PERFIL DO PARCEIRO',
+			'pp_perfil_titulo'          => 'Para quem quer ampliar sua oferta',
+			'pp_perfil_texto'           => 'Adicione novas frentes tecnológicas aos seus projetos com o suporte técnico da CLI Connect, somando capacidade à sua operação.',
+			'pp_perfil_1_titulo'        => 'Consultorias',
+			'pp_perfil_1_texto'         => 'Amplie sua atuação com capacidades complementares de tecnologia.',
+			'pp_perfil_2_titulo'        => 'Integradoras e software houses',
+			'pp_perfil_2_texto'         => 'Atenda projetos que exigem conexões com sistemas e ambientes externos.',
+			'pp_perfil_3_titulo'        => 'Agências',
+			'pp_perfil_3_texto'         => 'Estenda sua entrega para demandas técnicas que surgem na operação dos clientes.',
+			'pp_perfil_4_titulo'        => 'Revendas e empresas de tecnologia',
+			'pp_perfil_4_texto'         => 'Adicione novas soluções ao portfólio sem precisar internalizar toda a especialização.',
+
+			// 6. Estrutura.
+			'pp_estrutura_titulo'       => "Você encontra a oportunidade.\nA CLI entrega a estrutura.",
+			'pp_estrutura_texto'        => 'Amplie o que você oferece aos seus clientes contando com uma estrutura especializada para desenvolver, implementar e sustentar novas soluções.',
+			'pp_estrutura_1_titulo'     => 'Tecnologia',
+			'pp_estrutura_1_texto'      => 'Plataforma Boomi e capacidades próprias para atender diferentes cenários de integração, automação e dados.',
+			'pp_estrutura_2_titulo'     => 'Especialistas',
+			// RASCUNHO — validar com o cliente.
+			'pp_estrutura_2_texto'      => 'Time técnico dedicado para desenhar, desenvolver e implantar cada solução junto com você.',
+			'pp_estrutura_3_titulo'     => 'Operação',
+			// RASCUNHO — validar com o cliente.
+			'pp_estrutura_3_texto'      => 'Monitoramento, suporte e sustentação contínua das integrações depois que o projeto entra em produção.',
+			'pp_estrutura_4_titulo'     => 'Governança',
+			// RASCUNHO — validar com o cliente.
+			'pp_estrutura_4_texto'      => 'Processos, documentação e controle de acessos que dão segurança e conformidade a cada entrega.',
+			'pp_estrutura_imagem'       => $this->img( 'parceiros-estrutura' ),
+
+			// 7. Atuação conjunta.
+			'pp_atuacao_eyebrow'        => 'ATUAÇÃO CONJUNTA',
+			'pp_atuacao_titulo'         => 'Concentre-se no que você já faz de melhor',
+			'pp_atuacao_texto'          => 'Identifique oportunidades na sua carteira, conecte a CLI Connect aos seus clientes e participe do desenvolvimento comercial. Nós entramos com a capacidade necessária para viabilizar a solução.',
+			'pp_atuacao_parceiro_rotulo' => 'ATRIBUIÇÕES',
+			'pp_atuacao_parceiro_titulo' => 'Você',
+			'pp_atuacao_parceiro_tag'   => 'Parceiro',
+			'pp_atuacao_parceiro_1'     => 'Identifique oportunidades na sua carteira',
+			'pp_atuacao_parceiro_2'     => 'Apresente as oportunidades à CLI Connect',
+			'pp_atuacao_parceiro_3'     => 'Participe do desenvolvimento comercial',
+			'pp_atuacao_parceiro_rodape' => 'Foco total no relacionamento e na originação do deal.',
+			'pp_atuacao_cli_selo'       => 'OPERAÇÃO TÉCNICA',
+			'pp_atuacao_cli_rotulo'     => 'ATRIBUIÇÕES',
+			'pp_atuacao_cli_titulo'     => 'CLI Connect',
+			'pp_atuacao_cli_tag'        => 'Hub & Infra',
+			'pp_atuacao_cli_1'          => 'Avalia e aprova a oportunidade',
+			'pp_atuacao_cli_2'          => 'Estrutura a solução',
+			'pp_atuacao_cli_3'          => 'Aprova a proposta comercial',
+			'pp_atuacao_cli_4'          => 'Contrata e fatura o cliente final',
+			'pp_atuacao_cli_5'          => 'Opera os serviços CLI Connect',
+			'pp_atuacao_cli_6'          => 'Apura e paga a comissão',
+			'pp_atuacao_cli_rodape'     => 'Garantia de conformidade, faturamento e sustentação operacional.',
+
+			// 8. FAQ.
+			'pp_faq_eyebrow'            => 'FAQ',
+			'pp_faq_titulo'             => 'Dúvidas Frequentes',
+			'pp_faq_itens'              => $this->criar_faq_programa_de_parceiros(),
+
+			// 9. Próximo passo.
+			'pp_cta_eyebrow'            => 'PRÓXIMO PASSO',
+			'pp_cta_titulo'             => 'Pronto para transformar sua carteira em receita recorrente?',
+			'pp_cta_texto'              => 'Conecte-se aos nossos consultores corporativos e receba a documentação completa de parceria.',
+			'pp_cta_botao'              => $quero_ser_parceiro,
+		);
+
+		foreach ( $campos as $nome => $valor ) {
+			update_field( $nome, $valor, $pagina_id );
+		}
+	}
+
+	/**
+	 * FAQ do Programa de Parceiros.
+	 *
+	 * As perguntas são do layout; as respostas não estavam nele (itens
+	 * fechados) e são rascunhos para o cliente validar.
+	 *
+	 * @return int[] IDs dos itens de FAQ, na ordem do layout.
+	 */
+	protected function criar_faq_programa_de_parceiros() {
+		// RASCUNHO — validar com o cliente: todas as respostas abaixo.
+		$itens = array(
+			array(
+				'faq:parceiros-remuneracao',
+				'Como funciona a remuneração do Programa de Parceiros?',
+				'<p>O parceiro recebe 10% sobre o faturamento líquido mensal dos contratos originados pela sua indicação, conforme as regras do programa.</p>',
+			),
+			array(
+				'faq:parceiros-recorrencia',
+				'A comissão é recorrente ou acontece uma única vez?',
+				'<p>É recorrente: a comissão é apurada todos os meses enquanto o cliente indicado mantiver o contrato ativo com a CLI Connect.</p>',
+			),
+			array(
+				'faq:parceiros-equipe-tecnica',
+				'Preciso ter uma equipe técnica para ser parceiro?',
+				'<p>Não. A CLI Connect estrutura, implanta e opera a solução. O parceiro foca no relacionamento com o cliente e na originação da oportunidade.</p>',
+			),
+			array(
+				'faq:parceiros-negociacao',
+				'Quem negocia as condições comerciais com o cliente?',
+				'<p>O parceiro participa do desenvolvimento comercial junto com a CLI Connect, que estrutura e aprova a proposta enviada ao cliente.</p>',
+			),
+			array(
+				'faq:parceiros-contrato',
+				'Quem assina o contrato e fatura o cliente?',
+				'<p>A CLI Connect contrata e fatura o cliente final diretamente, e fica responsável pela conformidade e pela sustentação operacional.</p>',
+			),
+			array(
+				'faq:parceiros-pagamento',
+				'Quando a comissão é paga?',
+				'<p>A comissão é apurada após o recebimento do pagamento do cliente e paga conforme o calendário definido no acordo de parceria.</p>',
+			),
+		);
+
+		$ids = array();
+
+		foreach ( $itens as $ordem => list( $slug, $pergunta, $resposta ) ) {
+			$ids[] = (int) $this->upsert(
+				$slug,
+				array(
+					'post_type'    => 'cli_faq',
+					'post_title'   => $pergunta,
+					'post_content' => $resposta,
+					'menu_order'   => $ordem,
+				)
+			);
+		}
+
+		return array_filter( $ids );
 	}
 
 	/**

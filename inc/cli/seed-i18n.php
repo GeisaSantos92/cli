@@ -291,15 +291,20 @@ trait Cliconnect_Seed_I18n {
 		WP_CLI::log( '  categorias de solução…' );
 		$termos = $this->traduzir_termos_solucao( $termos_solucao );
 
+		/*
+		 * A FAQ vem antes das páginas: a página Programa de Parceiros aponta
+		 * para itens de FAQ (relationship), e `traduzir_referencia()` só troca
+		 * o ID pelo do idioma atual se a tradução já existir.
+		 */
+		WP_CLI::log( '  FAQ das soluções…' );
+		$this->traduzir_faq_solucoes();
+
 		// CPTs antes das páginas: os botões das páginas apontam para cases traduzidos.
 		WP_CLI::log( '  CPTs de catálogo…' );
 		$this->traduzir_cpts();
 
 		WP_CLI::log( '  páginas…' );
 		$this->traduzir_paginas();
-
-		WP_CLI::log( '  FAQ das soluções…' );
-		$this->traduzir_faq_solucoes();
 
 		WP_CLI::log( '  landings de solução…' );
 		$this->traduzir_solucoes( $termos );
