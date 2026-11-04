@@ -123,32 +123,60 @@ trait Cliconnect_Seed_En_Cpts {
 					'impacto_texto'    => '<p>Six months after go-live, with the environment still stabilising, response time between S/4HANA and the satellite systems fell by 97%, and each professional\'s daily routine gained 21% to 25% in performance. Processes flowing between Manaus, Extrema and São José dos Campos became faster, and the IT team gained a 40% time margin, reinvested in new technologies instead of reducing headcount. With an AMS team specialised in the integration platform, Panasonic maintains its own interfaces, and today it is the business side that comes to IT to make new solutions happen.</p>',
 				),
 			),
-			'moura'               => array(
-				'titulo' => 'Accelerated insight production by 10%',
-				'resumo' => $resumo_padrao,
-			),
-			'petroreconcavo'      => array(
-				'titulo' => 'Accelerated insight production by 10%',
-				'resumo' => $resumo_padrao,
-				'campos' => array(
-					'metrica_numero' => '10%',
-					'metrica_texto'  => 'Less time spent on triage',
+			'moura' => array(
+				'titulo'   => 'Gets through the "Black Friday" of every month-end with no stoppages in revenue',
+				'resumo'   => 'With CLI Connect as its partner since the project was conceived, Grupo Moura connected the new Salesforce CRM to its ERP through a centralised middleware, gained traceability across all integrations and watched service tickets fall month after month.',
+				'conteudo' => '<p>With CLI Connect as its partner since the project was conceived, Grupo Moura connected the new Salesforce CRM to its ERP through a centralised middleware, gained traceability across all integrations and watched service tickets fall month after month.</p>',
+				'campos'   => array(
+					'citacao' => 'I joke that every month we have a Black Friday. Getting through it smoothly is what we look for in solutions and in partners that support us.',
+					'cargo' => 'Systems Manager at Grupo Moura',
+					'metrica_numero' => '0 stoppages',
+					'metrica_texto' => 'in revenue during the month-end volume peak',
+					'metrica_numero_2' => '~1 year',
+					'metrica_texto_2' => 'of joint development, from conception to the first go-live',
+					'desafio_titulo' => 'Fragile integrations in an operation that cannot stop',
+					'desafio_texto' => '<p>Known as Baterias Moura, Grupo Moura works with every kind of energy storage, not only car batteries. For about seven years the company has been going through a technology restructuring in search of reliable, robust systems. The most recent stage was the customer journey: with the acquisition of the Salesforce CRM, starting with the sales force, the new platform had to be connected to the ERP.</p><p>Until then, systems communicated bank to bank, by exchanging files, with manual processes and rework. When something failed, finding the root cause took time, and information that did not reach the other side left data inconsistent, including in the numbers taken to the board. The risk grew at month-end, when the distribution operation concentrates a very high volume, a monthly "Black Friday" in which any stoppage means losing revenue.</p>',
+					'solucao_titulo' => 'A single orchestrator, built together from the start',
+					'solucao_texto' => '<p>Moura was looking for an established partner, with good implementation projects and approved by Salesforce. After talking with clients of different vendors, it chose CLI Connect. The solution was a middleware acting as the single orchestrator between Salesforce and the ERP: one channel, with visibility of where each piece of information passes and logs to trace any failure. The platform, recognised worldwide, was also approved by the information security area of Grupo Moura.</p><p>CLI Connect took part in every stage, from conception to architecture, development and best practices, over about a year of building up to the first go-live, and it still follows the operation today. Support goes beyond tickets: with Bruno Martins, founding partner of CLI Connect, and architects always close by, Moura consults CLI Connect before each new integration to assess volume and the best architecture. Together with the platform vendor, the teams are already designing the architecture for the next five years of growth.</p>',
+					'impacto_titulo' => 'An operation cruising smoothly',
+					'impacto_texto' => '<p>Since the first go-live, service desk tickets, which were natural at the start with a new tool for the company and its users, have fallen steadily. With end-to-end traceability, IT started to anticipate problems instead of reacting to them, and the continuous improvement cycle gained data to run on. Logistics, finance and the sales force receive fast, complete and reliable information, and the month-end peak goes through with no stoppages in revenue. All of this with a lean internal team, supported by CLI Connect specialists, and a fixed cost that removes surprises from the budget.</p>',
 				),
 			),
-			'moura-vendas'        => array(
-				'titulo' => 'Avoided losing 15% of monthly sales',
-				'resumo' => 'Integrating CRM, ERP and the e-commerce platform removed bottlenecks from the sales process and kept the operation running even at peak demand.',
-				'campos' => array(
-					'metrica_numero' => '15%',
-					'metrica_texto'  => 'Of monthly sales preserved through real-time integration',
+			'petroreconcavo' => array(
+				'titulo'   => 'Integrated SAP into a 24/7 operation with no stoppages in almost two years',
+				'resumo'   => 'With CLI Connect by Boomi, PetroRecôncavo centralised the integrations between the new SAP S/4HANA and its satellite systems, eliminated duplicate data entry between systems and now closes production on the 3rd day of the month.',
+				'conteudo' => '<p>With CLI Connect by Boomi, PetroRecôncavo centralised the integrations between the new SAP S/4HANA and its satellite systems, eliminated duplicate data entry between systems and now closes production on the 3rd day of the month.</p>',
+				'campos'   => array(
+					'citacao' => 'With the systems integrated, in almost two years of operation we have never stopped. Production runs 24/7, and the areas stay integrated without depending on IT.',
+					'cargo' => 'Systems Coordinator at PetroRecôncavo',
+					'metrica_numero' => '0 stoppages',
+					'metrica_texto' => 'in integrations over almost two years of 24/7 operation',
+					'metrica_numero_2' => '3rd day',
+					'metrica_texto_2' => 'to close production, which used to take until the 8th day',
+					'desafio_titulo' => 'A critical operation that cannot stop',
+					'desafio_texto' => '<p>A pioneer among independent onshore oil and gas producers, PetroRecôncavo operates 57 concessions and over 2,000 wells in Bahia, Rio Grande do Norte and Sergipe, producing around 26,000 barrels a day. It is a 24/7, geographically dispersed operation in which any stoppage means barrels that are not produced. In 2022 the company began replacing its ERP and, with the Evolution project, implemented SAP S/4HANA in 2024.</p><p>SAP, however, does not work alone. Most of the satellite systems were not integrated, and the main one, IFS, used for asset management, had only simple integrations, without the robustness and control needed. Connections were point-to-point, with no orchestration or monitoring, and much data was typed into one system and re-typed into another, with back-and-forth emails and spreadsheets. Monthly closing took 10 to 11 business days, and the hybrid infrastructure, with on-premise and cloud environments, required a technology able to integrate both.</p>',
+					'solucao_titulo' => 'A central middleware and a partner alongside',
+					'solucao_texto' => '<p>CLI was alongside PetroRecôncavo from the choice of technology. During the selection for the Evolution project, it helped compare integrators until reaching Boomi, the best fit in cost-benefit, for the hybrid infrastructure and for the medium- and long-term plans. With CLI Connect by Boomi, the company gained a standard, centralised middleware, with governance, monitoring and traceability for SAP and non-SAP integrations. Ready-made connectors sped up the build, and features such as Event Streams, for messaging, and Data Hub, for master data, extend the use of the platform.</p><p>The knowledge of the CLI Connect by Boomi team and of the systems the company already used, such as IFS, was decisive in mapping the critical processes and setting the quality criteria for the deliveries. The fixed monthly cost gave predictability to the budget, both for operations and for new implementations. Throughout the project, the consultants transferred knowledge to the internal team, which also trained through Boomi Academy, and CLI remains a partner in support, with prompt service for incidents and change management.</p>',
+					'impacto_titulo' => 'Faster closings and zero rework',
+					'impacto_texto' => '<p>In almost two years of operation, the integrations never stopped, and duplicate data entry between systems came to an end, eliminating the risk of inconsistent data. Production closing, which used to reach the 8th day, now ends practically on the 3rd, and monthly closing dropped from 10 to 11 business days to the 5th business day. Travel reimbursements, production measurement, royalties, commercialisation and easements now run integrated, and the areas absorbed more volume without growing headcount. With a transport project under way and tests with Boomi AI agents, PetroRecôncavo keeps expanding its integration architecture with CLI.</p>',
+				),
+			),
+			'moura-vendas' => array(
+				'titulo'   => 'Gets through the "Black Friday" of every month-end with no stoppages in revenue',
+				'resumo'   => 'With CLI Connect as its partner since the project was conceived, Grupo Moura connected the new Salesforce CRM to its ERP through a centralised middleware, gained traceability across all integrations and watched service tickets fall month after month.',
+				'conteudo' => '<p>With CLI Connect as its partner since the project was conceived, Grupo Moura connected the new Salesforce CRM to its ERP through a centralised middleware, gained traceability across all integrations and watched service tickets fall month after month.</p>',
+				'campos'   => array(
+					'metrica_numero' => '~1 year',
+					'metrica_texto' => 'of joint development, from conception to the first go-live',
 				),
 			),
 			'petroreconcavo-dados' => array(
-				'titulo' => 'Optimised operations with unified data',
-				'resumo' => 'Unifying operational data in a single integration architecture cut rework, removed inconsistencies and sped up decision making.',
-				'campos' => array(
-					'metrica_numero' => '+40%',
-					'metrica_texto'  => 'Faster operational analysis',
+				'titulo'   => 'Integrated SAP into a 24/7 operation with no stoppages in almost two years',
+				'resumo'   => 'With CLI Connect by Boomi, PetroRecôncavo centralised the integrations between the new SAP S/4HANA and its satellite systems, eliminated duplicate data entry between systems and now closes production on the 3rd day of the month.',
+				'conteudo' => '<p>With CLI Connect by Boomi, PetroRecôncavo centralised the integrations between the new SAP S/4HANA and its satellite systems, eliminated duplicate data entry between systems and now closes production on the 3rd day of the month.</p>',
+				'campos'   => array(
+					'metrica_numero' => '0 stoppages',
+					'metrica_texto' => 'in integrations over almost two years of 24/7 operation',
 				),
 			),
 		);

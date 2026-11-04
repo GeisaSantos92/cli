@@ -727,6 +727,40 @@ class Cliconnect_Seed {
 			array( 'TASY', 'integracao-tasy', true ),
 			// Só para a barra "Tecnologias Utilizadas" do case da Panasonic (issue #224).
 			array( 'SAP S/4HANA', 'integracao-sap-s4hana', false ),
+			/*
+			 * Tecnologias dos cases PetroRecôncavo, Panasonic e Baterias Moura
+			 * (issue #228). Ficam fora da órbita do hero. Zendesk, Senior e VTEX
+			 * já existem acima e são reaproveitados; criar outro item com o mesmo
+			 * título quebraria o índice por nome do menu (cliconnect_logo_integracao).
+			 */
+			array( 'Protheus', 'integracao-protheus', false ),
+			array( 'TOTVS RM', 'integracao-totvs-rm', false ),
+			array( 'OutSystems', 'integracao-outsystems', false ),
+			array( 'Vexpenses', 'integracao-vexpenses', false ),
+			array( 'Drivin', 'integracao-drivin', false ),
+			array( '4MDG', 'integracao-4mdg', false ),
+			array( 'WeHandle', 'integracao-wehandle', false ),
+			array( 'AccessOne', 'integracao-accessone', false ),
+			array( 'Azure', 'integracao-azure', false ),
+			array( 'Oracle', 'integracao-oracle', false ),
+			array( 'Datadog', 'integracao-datadog', false ),
+			array( 'Segura', 'integracao-segura', false ),
+			array( 'SharePoint', 'integracao-sharepoint', false ),
+			array( 'Salesforce Sales Cloud', 'integracao-salesforce-sales-cloud', false ),
+			array( 'Salesforce Marketing Cloud', 'integracao-salesforce-marketing-cloud', false ),
+			array( 'Lemontech', 'integracao-lemontech', false ),
+			array( 'Mercado Eletrônico', 'integracao-mercado-eletronico', false ),
+			array( 'Microsoft Dynamics 365', 'integracao-dynamics-365', false ),
+			array( 'Neogrid', 'integracao-neogrid', false ),
+			array( 'Thomson Reuters TAX One', 'integracao-thomson-reuters-tax-one', false ),
+			array( 'Oracle Hyperion', 'integracao-oracle-hyperion', false ),
+			array( 'RabbitMQ', 'integracao-rabbitmq', false ),
+			array( 'Sunshine Conversations', 'integracao-sunshine-conversations', false ),
+			array( 'Vitrio', 'integracao-vitrio', false ),
+			array( 'Salesforce Commerce Cloud', 'integracao-salesforce-commerce-cloud', false ),
+			array( 'AnypointMQ', 'integracao-anypointmq', false ),
+			array( 'Azure DevOps', 'integracao-azure-devops', false ),
+			array( 'Azure Service Bus', 'integracao-azure-service-bus', false ),
 		);
 
 		foreach ( $itens as $ordem => $item ) {
@@ -1055,20 +1089,6 @@ class Cliconnect_Seed {
 	protected function criar_cases() {
 		$excerpt_padrao = 'A implementação do CLI Connect permitiu integrar sistemas, automatizar eventos e aumentar a visibilidade sobre toda a operação.';
 
-		/*
-		 * Barra lateral "Tecnologias Utilizadas" do case: cinco boxes de logo,
-		 * como no frame. Depende de criar_integracoes(), que roda antes.
-		 */
-		$tecnologias = array();
-
-		foreach ( array( 'SAP', 'TOTVS', 'Senior', 'Sankhya', 'MV' ) as $sistema ) {
-			$integracao_id = $this->buscar( 'integracao:' . sanitize_title( $sistema ), 'cli_integracao' );
-
-			if ( $integracao_id ) {
-				$tecnologias[] = $integracao_id;
-			}
-		}
-
 		// 1. Panasonic — conteúdo real do case (issue #224), duas métricas.
 		$panasonic_resumo = 'Com a CLI como parceira de integração, a Panasonic conectou o novo SAP S/4HANA aos seus sistemas satélites, levou as respostas da casa dos segundos para a dos milissegundos e liberou 40% do tempo do time de TI para inovar.';
 
@@ -1102,71 +1122,138 @@ class Cliconnect_Seed {
 		update_field( 'solucao_texto', '<p>A CLI chegou à Panasonic por indicação da Salesforce e participou da avaliação da plataforma de integração: apresentou cases, mostrou o ganho que a tecnologia poderia trazer e como acelerar a implementação. A partir dessa conversa, o projeto ganhou uma arquitetura própria, com a plataforma de integração no papel de integrador principal e toda a comunicação entre o S/4HANA e os sistemas satélites feita diretamente por ela. O trabalho se concentrou no interfaceamento: cada integração foi desenhada para a necessidade do processo, sem exigir mudanças nos sistemas existentes.</p><p>O diferencial, segundo Fabiano, foi a proximidade. Com a participação direta de Bruno, sócio fundador da CLI Connect, quem mapeou a necessidade foi quem desenhou a solução e a implementou ao lado do time da Panasonic, sem passagem de bastão entre área comercial e equipe de entrega. Em quase um ano de projeto, as equipes ajustaram juntas o ritmo, reforçaram a atenção nos processos mais complexos e, depois da implementação, voltaram ao ambiente para mapear e incorporar novas oportunidades. Ao longo do caminho, a CLI capacitou o time da Panasonic para sustentar as interfaces por conta própria.</p>', $panasonic );
 		update_field( 'impacto_titulo', 'Respostas em milissegundos e uma TI mais estratégica', $panasonic );
 		update_field( 'impacto_texto', '<p>Seis meses após o go-live, com o ambiente ainda em estabilização, o tempo de resposta entre o S/4HANA e os sistemas satélites caiu 97%, e a rotina de cada profissional ganhou de 21% a 25% em performance. Os processos que circulam entre Manaus, Extrema e São José dos Campos ganharam velocidade, e o time de TI passou a ter 40% de margem de tempo, reinvestida em novas tecnologias em vez de reduzir o quadro. Com uma equipe de AMS especializada na plataforma de integração, a Panasonic sustenta as próprias interfaces, e hoje é a área de negócio que procura a TI para viabilizar novas soluções.</p>', $panasonic );
-		update_field( 'integracoes', array_values( $panasonic_tecnologias ), $panasonic );
+		// SAP S/4HANA (issue #224) + tecnologias da issue #228, na ordem do pedido.
+		$panasonic_tecnologias = array_merge(
+			array_values( $panasonic_tecnologias ),
+			$this->ids_por_titulo(
+				'cli_integracao',
+				array( 'Salesforce Sales Cloud', 'Salesforce Marketing Cloud', 'Lemontech', 'Mercado Eletrônico', 'Microsoft Dynamics 365', 'Neogrid', 'Thomson Reuters TAX One', 'Oracle Hyperion', 'RabbitMQ', 'Senior', 'Sunshine Conversations', 'Vitrio', 'VTEX', 'Zendesk' )
+			)
+		);
+		update_field( 'integracoes', $panasonic_tecnologias, $panasonic );
 		$this->definir_thumb( $panasonic, 'case-panasonic' );
 
-		// 2. Moura — sem métricas.
+		// 2. Moura — conteúdo real do case (issue #226), sem métricas na listagem principal.
+		$moura_resumo = 'Com a CLI Connect como parceira desde a concepção do projeto, o Grupo Moura conectou o novo CRM Salesforce ao seu ERP por meio de um middleware centralizado, ganhou rastreabilidade em todas as integrações e viu os casos caírem mês a mês.';
+
 		$moura = $this->upsert(
 			'case:moura',
 			array(
 				'post_type'    => 'cli_case',
-				'post_title'   => 'Acelerou a produção de insights em 10%',
-				'post_excerpt' => $excerpt_padrao,
+				'post_title'   => 'Atravessa a "Black Friday" de todo fim de mês sem paradas no faturamento',
+				'post_excerpt' => $moura_resumo,
+				'post_content' => '<p>' . $moura_resumo . '</p>',
 				'menu_order'   => 1,
 			)
 		);
 
 		update_field( 'logo', $this->img( 'case-logo-moura' ), $moura );
-		update_field( 'integracoes', $tecnologias, $moura );
+		update_field( 'citacao', 'Eu brinco que todo mês a gente tem uma Black Friday. Passar por ela com fluidez é o que a gente busca em soluções e em parceiros que nos apoiam.', $moura );
+		update_field( 'autor', 'Péricles Henrique', $moura );
+		update_field( 'cargo', 'Gerente de Sistemas do Grupo Moura', $moura );
+		update_field( 'retrato', $this->img( 'case-moura-capa' ), $moura );
+		update_field( 'desafio_titulo', 'Integrações frágeis em uma operação que não pode parar', $moura );
+		update_field( 'desafio_texto', '<p>Conhecido como Baterias Moura, o Grupo Moura atua com todo tipo de acumulação de energia, não apenas baterias automotivas. Há cerca de sete anos, a empresa passa por uma reestruturação tecnológica em busca de sistemas confiáveis e robustos. A etapa mais recente foi a jornada do cliente: com a aquisição do CRM Salesforce, começando pela força de vendas, era preciso conectar a nova plataforma ao ERP.</p><p>Até então, a comunicação entre sistemas era feita banco a banco, por troca de arquivos, com processos manuais e retrabalho. Quando algo falhava, encontrar a causa raiz era demorado, e uma informação que não chegava ao outro lado deixava dados inconsistentes, inclusive nos números levados à diretoria. O risco crescia no fim do mês, quando a operação de distribuição concentra um volume altíssimo, uma "Black Friday" mensal em que qualquer parada significa deixar de faturar.</p>', $moura );
+		update_field( 'solucao_titulo', 'Um orquestrador único, construído junto desde o início', $moura );
+		update_field( 'solucao_texto', '<p>A Moura buscava um parceiro consolidado, com bons projetos de implantação e homologado pela Salesforce. Depois de conversar com clientes de diferentes fornecedores, escolheu a CLI Connect. A solução foi um middleware como orquestrador único entre o Salesforce e o ERP: um só canal, com visibilidade de por onde cada informação passa e logs para rastrear qualquer falha. A plataforma, reconhecida mundialmente, também foi homologada pela área de segurança da informação da Moura.</p><p>A CLI Connect participou de todas as etapas, da concepção à arquitetura, ao desenvolvimento e às boas práticas, em cerca de um ano de construção até o primeiro go-live, e hoje acompanha a operação. O atendimento vai além dos casos: com Bruno Martins, sócio fundador da CLI Connect, e arquitetos sempre por perto, a Moura consulta a CLI Connect antes de cada nova integração para avaliar volumetria e melhor arquitetura. Junto ao fabricante da plataforma, as equipes já desenham a arquitetura para os próximos cinco anos de crescimento.</p>', $moura );
+		update_field( 'impacto_titulo', 'Uma operação em voo de cruzeiro', $moura );
+		update_field( 'impacto_texto', '<p>Desde o primeiro go-live, os casos de service desk, naturais no começo com uma ferramenta nova para a empresa e os usuários, caíram de forma contínua. Com rastreabilidade de ponta a ponta, a TI passou a antecipar problemas em vez de reagir a eles, e o ciclo de melhoria contínua ganhou dados para rodar. Logística, financeiro e força de vendas recebem informações rápidas, completas e confiáveis, e o pico de fim de mês passa sem paradas no faturamento. Tudo isso com uma equipe interna enxuta, apoiada pelos especialistas da CLI Connect, e um custo fixo que tira as surpresas do orçamento.</p>', $moura );
+		update_field( 'metrica_numero', '0 paradas', $moura );
+		update_field( 'metrica_texto', 'no faturamento durante o pico de volume de fim de mês', $moura );
+		update_field( 'metrica_numero_2', '~1 ano', $moura );
+		update_field( 'metrica_texto_2', 'de construção conjunta, da concepção ao primeiro go-live', $moura );
+		// Salesforce (issue #226) + tecnologias da issue #228, na ordem do pedido.
+		$moura_tecnologias = array_merge(
+			array_values( array_filter( array( $this->buscar( 'integracao:' . sanitize_title( 'Salesforce' ), 'cli_integracao' ) ) ) ),
+			$this->ids_por_titulo(
+				'cli_integracao',
+				array( 'Microsoft Dynamics 365', 'Salesforce Commerce Cloud', 'AnypointMQ', 'Azure DevOps', 'Azure Service Bus' )
+			)
+		);
+		update_field( 'integracoes', $moura_tecnologias, $moura );
+		update_field( 'imagem_meio', $this->img( 'case-moura-meio' ), $moura );
 		$this->definir_thumb( $moura, 'case-moura' );
 
-		// 3. PetroRecôncavo — uma métrica.
+		// 3. PetroRecôncavo — conteúdo real do case (issue #225), duas métricas.
+		$petro_resumo = 'Com a CLI Connect by Boomi, a PetroRecôncavo centralizou as integrações entre o novo SAP S/4HANA e seus sistemas satélites, eliminou a digitação duplicada entre sistemas e passou a fechar a produção no 3º dia do mês.';
+
 		$petro = $this->upsert(
 			'case:petroreconcavo',
 			array(
 				'post_type'    => 'cli_case',
-				'post_title'   => 'Acelerou a produção de insights em 10%',
-				'post_excerpt' => $excerpt_padrao,
+				'post_title'   => 'Integrou o SAP a uma operação 24/7 sem nenhuma parada em quase dois anos',
+				'post_excerpt' => $petro_resumo,
+				'post_content' => '<p>' . $petro_resumo . '</p>',
 				'menu_order'   => 2,
 			)
 		);
 
-		update_field( 'logo', $this->img( 'case-logo-petroreconcavo' ), $petro );
-		update_field( 'metrica_numero', '10%', $petro );
-		update_field( 'metrica_texto', 'Redução de tempo gasto na triagem', $petro );
-		update_field( 'integracoes', $tecnologias, $petro );
+		// Tecnologias do case: SAP S/4HANA e IFS, como no layout da issue.
+		$petro_tecnologias = array_filter(
+			array(
+				$this->buscar( 'integracao:' . sanitize_title( 'SAP S/4HANA' ), 'cli_integracao' ),
+				$this->buscar( 'integracao:' . sanitize_title( 'IFS' ), 'cli_integracao' ),
+			)
+		);
+
+		update_field( 'logo', $this->img( 'case-logo-petroreconcavo-novo' ), $petro );
+		update_field( 'citacao', 'Com os sistemas integrados, em quase dois anos de operação a gente nunca parou. A produção funciona 24 por 7, e as áreas seguem integradas, sem depender da TI.', $petro );
+		update_field( 'autor', 'Eliana Lana', $petro );
+		update_field( 'cargo', 'Coordenadora de Sistemas na PetroRecôncavo', $petro );
+		update_field( 'retrato', $this->img( 'case-petroreconcavo-capa' ), $petro );
+		update_field( 'metrica_numero', '0 paradas', $petro );
+		update_field( 'metrica_texto', 'nas integrações em quase dois anos de operação 24/7', $petro );
+		update_field( 'metrica_numero_2', '3º dia', $petro );
+		update_field( 'metrica_texto_2', 'para fechar a produção, que antes chegava ao 8º dia', $petro );
+		update_field( 'desafio_titulo', 'Uma operação crítica que não pode parar', $petro );
+		update_field( 'desafio_texto', '<p>Pioneira entre os produtores independentes de petróleo e gás em terra, a PetroRecôncavo opera 57 concessões e mais de 2 mil poços na Bahia, no Rio Grande do Norte e em Sergipe, com produção em torno de 26 mil barris por dia. É uma operação 24/7 e geograficamente dispersa, em que qualquer parada significa barris que deixam de ser produzidos. Em 2022, a empresa iniciou a troca do seu ERP e, com o projeto Evolution, implementou o SAP S/4HANA em 2024.</p><p>O SAP, porém, não funciona sozinho. A maioria dos sistemas satélites não era integrada, e o principal deles, o IFS, usado na gestão de ativos, tinha apenas integrações simples, sem a robustez e o controle necessários. As conexões eram ponto a ponto, sem orquestração nem monitoramento, e muitos dados eram digitados em um sistema e redigitados em outro, com idas e vindas de e-mails e planilhas. O fechamento mensal levava de 10 a 11 dias úteis, e a infraestrutura híbrida, com ambientes on-premise e em nuvem, exigia uma tecnologia capaz de integrar os dois.</p>', $petro );
+		update_field( 'solucao_titulo', 'Um middleware central e um parceiro ao lado', $petro );
+		update_field( 'solucao_texto', '<p>A CLI acompanhou a PetroRecôncavo desde a escolha da tecnologia. No processo de seleção do projeto Evolution, ajudou a comparar integradores até chegar à Boomi, mais aderente em custo-benefício, à infraestrutura híbrida e aos planos de médio e longo prazo. Com a CLI Connect by Boomi, a empresa ganhou um middleware padrão e centralizado, com governança, monitoramento e rastreabilidade das integrações SAP e não SAP. Conectores prontos aceleraram a construção, e recursos como Event Streams, para mensageria, e Data Hub, para dados mestres, ampliam o uso da plataforma.</p><p>O conhecimento da equipe da CLI Connect by Boomi e em sistemas que a empresa já usava, como o IFS, foi decisivo para mapear os processos críticos e definir os critérios de qualidade das entregas. O custo fixo mensal deu previsibilidade ao orçamento, tanto da operação quanto das novas implementações. Ao longo do projeto, os consultores transferiram conhecimento ao time interno, que também se capacitou pela Boomi Academy, e a CLI segue como parceira na sustentação, com pronto atendimento para incidentes e gestão de mudanças.</p>', $petro );
+		update_field( 'impacto_titulo', 'Fechamentos mais rápidos e zero retrabalho', $petro );
+		update_field( 'impacto_texto', '<p>Em quase dois anos de operação, as integrações nunca pararam, e a digitação duplicada entre sistemas acabou, eliminando o risco de dados inconsistentes. O fechamento da produção, que chegava ao 8º dia, hoje termina praticamente no 3º, e o fechamento mensal caiu de 10 a 11 dias úteis para o 5º dia útil. Reembolsos de viagem, medição de produção, royalties, comercialização e servidão passaram a rodar integrados, e as áreas absorveram mais volume sem aumentar o quadro. Com um projeto de transportes em andamento e testes com agentes de IA da Boomi, a PetroRecôncavo segue ampliando sua arquitetura de integrações com a CLI.</p>', $petro );
+		// SAP S/4HANA e IFS (issue #225) + tecnologias da issue #228, na ordem do pedido.
+		$petro_tecnologias = array_merge(
+			array_values( $petro_tecnologias ),
+			$this->ids_por_titulo(
+				'cli_integracao',
+				array( 'Protheus', 'TOTVS RM', 'OutSystems', 'Vexpenses', 'Drivin', '4MDG', 'WeHandle', 'AccessOne', 'Azure', 'Oracle', 'Datadog', 'Segura', 'SharePoint' )
+			)
+		);
+		update_field( 'integracoes', $petro_tecnologias, $petro );
+		update_field( 'imagem_meio', $this->img( 'case-petroreconcavo-meio' ), $petro );
+		update_field( 'logo_colorido', 0, $petro ); // O logo novo (issue #228) é branco: usa o filtro padrão do topo.
 		$this->definir_thumb( $petro, 'case-petroreconcavo' );
 
-		// 4. Moura clone — "Evitou perda de 15% das vendas mensais".
+		// 4. Moura clone — mesmo case, só para o card de métrica da home (issue #226).
 		$moura2 = $this->upsert(
 			'case:moura-vendas',
 			array(
 				'post_type'    => 'cli_case',
-				'post_title'   => 'Evitou perda de 15% das vendas mensais',
-				'post_excerpt' => 'A integração entre CRM, ERP e plataforma de e-commerce eliminou gargalos no processo de vendas e garantiu continuidade operacional mesmo em picos de demanda.',
+				'post_title'   => 'Atravessa a "Black Friday" de todo fim de mês sem paradas no faturamento',
+				'post_excerpt' => $moura_resumo,
 				'menu_order'   => 3,
 			)
 		);
 
 		update_field( 'logo', $this->img( 'case-logo-moura' ), $moura2 );
-		update_field( 'metrica_numero', '15%', $moura2 );
-		update_field( 'metrica_texto', 'De vendas mensais preservadas com integração em tempo real', $moura2 );
+		update_field( 'metrica_numero', '~1 ano', $moura2 );
+		update_field( 'metrica_texto', 'de construção conjunta, da concepção ao primeiro go-live', $moura2 );
 		$this->definir_thumb( $moura2, 'case-moura' );
 
-		// 5. PetroRecôncavo clone — "Otimizou operações com dados unificados".
+		// 5. PetroRecôncavo clone — mesmo case, só para o card de métrica da home (issue #225).
 		$petro2 = $this->upsert(
 			'case:petroreconcavo-dados',
 			array(
 				'post_type'    => 'cli_case',
-				'post_title'   => 'Otimizou operações com dados unificados',
-				'post_excerpt' => 'A unificação dos dados operacionais em uma única arquitetura de integrações reduziu retrabalho, eliminou inconsistências e acelerou a tomada de decisão.',
+				'post_title'   => 'Integrou o SAP a uma operação 24/7 sem nenhuma parada em quase dois anos',
+				'post_excerpt' => $petro_resumo,
 				'menu_order'   => 4,
 			)
 		);
 
-		update_field( 'logo', $this->img( 'case-logo-petroreconcavo' ), $petro2 );
-		update_field( 'metrica_numero', '+40%', $petro2 );
-		update_field( 'metrica_texto', 'De ganho em velocidade de análise operacional', $petro2 );
+		update_field( 'logo', $this->img( 'case-logo-petroreconcavo-cor' ), $petro2 );
+		update_field( 'metrica_numero', '0 paradas', $petro2 );
+		update_field( 'metrica_texto', 'nas integrações em quase dois anos de operação 24/7', $petro2 );
 		$this->definir_thumb( $petro2, 'case-petroreconcavo' );
 
 		/*
@@ -1180,7 +1267,7 @@ class Cliconnect_Seed {
 		// 6 a 8. Cases em andamento — só logo e rótulo na listagem.
 		$andamento = array(
 			'brz'     => array( 'BRZ Empreendimentos', 'cliente-brz' ),
-			'legrand' => array( 'Legrand', 'cliente-legrand' ),
+			'legrand' => array( 'Legrand', 'case-andamento-legrand' ),
 			'sbc'     => array( 'Sociedade Brasileira de Cardiologia', 'cliente-sbc' ),
 		);
 

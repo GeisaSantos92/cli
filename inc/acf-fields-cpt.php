@@ -239,6 +239,14 @@ function cliconnect_acf_fields_cpt() {
 					'instructions' => 'Logo exibido sobre o card azul e no card de métrica.',
 				),
 				array(
+					'key'          => 'field_case_logo_colorido',
+					'label'        => 'Logo em cor',
+					'name'         => 'logo_colorido',
+					'type'         => 'true_false',
+					'ui'           => 1,
+					'instructions' => 'Marque para mostrar o logo com as cores originais, sem o filtro branco do topo do case. Use em logos coloridos.',
+				),
+				array(
 					'key'          => 'field_case_citacao',
 					'label'        => 'Citação',
 					'name'         => 'citacao',
@@ -353,6 +361,15 @@ function cliconnect_acf_fields_cpt() {
 					'tabs'         => 'all',
 					'toolbar'      => 'full',
 					'media_upload' => 0,
+				),
+				array(
+					'key'           => 'field_case_imagem_meio',
+					'label'         => 'Imagem entre Solução e Impacto',
+					'name'          => 'imagem_meio',
+					'type'          => 'image',
+					'return_format' => 'id',
+					'preview_size'  => 'medium',
+					'instructions'  => 'Opcional. Imagem 16:9 exibida depois da Solução. Deixe vazio para não mostrar.',
 				),
 				array(
 					'key'          => 'field_case_impacto_titulo',

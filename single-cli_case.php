@@ -30,6 +30,8 @@ while ( have_posts() ) :
 	$excerpt         = get_the_excerpt();
 	$retrato_id      = absint( get_field( 'retrato' ) ?? 0 );
 	$logo_id         = absint( get_field( 'logo' ) ?? 0 );
+	$logo_colorido   = (bool) ( get_field( 'logo_colorido' ) ?? 0 );
+	$imagem_meio_id  = absint( get_field( 'imagem_meio' ) ?? 0 );
 	$video_url       = get_field( 'video' ) ?? '';
 	$citacao         = get_field( 'citacao' ) ?? '';
 	$autor           = get_field( 'autor' ) ?? '';
@@ -91,7 +93,10 @@ while ( have_posts() ) :
 							$logo_id,
 							'large',
 							false,
-							array( 'class' => 'case-intro__logo', 'alt' => esc_attr( $titulo ) )
+							array(
+								'class' => $logo_colorido ? 'case-intro__logo case-intro__logo--colorido' : 'case-intro__logo',
+								'alt'   => esc_attr( $titulo ),
+							)
 						);
 						?>
 					</div>
@@ -131,7 +136,8 @@ while ( have_posts() ) :
 								<?php foreach ( $integracoes as $integracao_id ) : ?>
 									<?php $logo_id = get_post_thumbnail_id( $integracao_id ); ?>
 									<?php if ( $logo_id ) : ?>
-										<div class="case-topicos__logo-box">
+										<?php // O nome da marca vira tooltip no hover/foco (CSS: ::after com attr(data-nome)). ?>
+										<div class="case-topicos__logo-box" data-nome="<?php echo esc_attr( get_the_title( $integracao_id ) ); ?>" tabindex="0">
 											<?php
 											/*
 											 * 'full' evita o hard-crop 150×150 do tamanho 'thumbnail'
@@ -178,7 +184,8 @@ while ( have_posts() ) :
 				<div class="case-body__content" data-scroll-spy-parent>
 
 					<!-- Vídeo ----------------------------------------------- -->
-					<?php if ( $video_url ) : ?>
+					<?php // Sem URL de vídeo, a capa aparece sozinha, sem o botão de play. ?>
+					<?php if ( $video_url || $retrato_id ) : ?>
 						<div class="case-video">
 							<?php if ( $retrato_id ) : ?>
 								<?php
@@ -200,6 +207,10 @@ while ( have_posts() ) :
 								>
 									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
 								</a>
+							<?php else : ?>
+								<span class="case-video__play" aria-hidden="true">
+									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
+								</span>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
@@ -257,6 +268,20 @@ while ( have_posts() ) :
 								</div>
 							<?php endif; ?>
 						</section>
+					<?php endif; ?>
+
+					<!-- Imagem entre Solução e Impacto (opcional, 16:9) --------- -->
+					<?php if ( $imagem_meio_id ) : ?>
+						<figure class="case-imagem">
+							<?php
+							echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
+								$imagem_meio_id,
+								'large',
+								false,
+								array( 'class' => 'case-imagem__img', 'alt' => esc_attr( $titulo ) )
+							);
+							?>
+						</figure>
 					<?php endif; ?>
 
 					<!-- Impacto --------------------------------------------- -->
