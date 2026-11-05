@@ -150,7 +150,7 @@ trait Cliconnect_Seed_Es_Cpts {
 					'cargo' => 'Coordinadora de Sistemas en PetroRecôncavo',
 					'metrica_numero' => '0 paradas',
 					'metrica_texto' => 'en las integraciones durante casi dos años de operación 24/7',
-					'metrica_numero_2' => '3.er día',
+					'metrica_numero_2' => '3 días',
 					'metrica_texto_2' => 'para cerrar la producción, que antes llegaba al 8.º día',
 					'desafio_titulo' => 'Una operación crítica que no puede parar',
 					'desafio_texto' => '<p>Pionera entre los productores independientes de petróleo y gas en tierra, PetroRecôncavo opera 57 concesiones y más de 2 mil pozos en Bahía, Río Grande del Norte y Sergipe, con una producción de alrededor de 26 mil barriles por día. Es una operación 24/7 y geográficamente dispersa, en la que cualquier parada significa barriles que dejan de producirse. En 2022, la empresa inició el cambio de su ERP y, con el proyecto Evolution, implementó SAP S/4HANA en 2024.</p><p>Sin embargo, SAP no funciona solo. La mayoría de los sistemas satélite no estaba integrada, y el principal, IFS, usado en la gestión de activos, solo tenía integraciones simples, sin la robustez y el control necesarios. Las conexiones eran punto a punto, sin orquestación ni monitoreo, y muchos datos se digitaban en un sistema y se volvían a digitar en otro, con idas y vueltas de correos y hojas de cálculo. El cierre mensual tomaba de 10 a 11 días hábiles, y la infraestructura híbrida, con entornos on-premise y en la nube, exigía una tecnología capaz de integrar ambos.</p>',

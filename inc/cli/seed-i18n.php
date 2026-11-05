@@ -455,6 +455,8 @@ trait Cliconnect_Seed_I18n {
 				'cli_case',
 				array(
 					'post_title'   => $item['titulo'],
+					// Slug simples (issue #230). O Polylang gratuito não repete slug entre idiomas, então leva o código do idioma.
+					'post_name'    => $slug . '-' . $this->lang,
 					'post_excerpt' => $item['resumo'],
 					'post_content' => $item['conteudo'] ?? '',
 				),

@@ -239,6 +239,15 @@ function cliconnect_acf_fields_cpt() {
 					'instructions' => 'Logo exibido sobre o card azul e no card de métrica.',
 				),
 				array(
+					'key'           => 'field_case_logo_interno',
+					'label'         => 'Logo da página interna',
+					'name'          => 'logo_interno',
+					'type'          => 'image',
+					'return_format' => 'id',
+					'preview_size'  => 'medium',
+					'instructions'  => 'Opcional. Logo exibido na capa azul da página do case (use a versão toda branca). Sem ele, vale o "Logo do cliente" com o filtro branco.',
+				),
+				array(
 					'key'          => 'field_case_logo_colorido',
 					'label'        => 'Logo em cor',
 					'name'         => 'logo_colorido',

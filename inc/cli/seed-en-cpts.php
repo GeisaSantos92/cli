@@ -151,7 +151,7 @@ trait Cliconnect_Seed_En_Cpts {
 					'cargo' => 'Systems Coordinator at PetroRecôncavo',
 					'metrica_numero' => '0 stoppages',
 					'metrica_texto' => 'in integrations over almost two years of 24/7 operation',
-					'metrica_numero_2' => '3rd day',
+					'metrica_numero_2' => '3 days',
 					'metrica_texto_2' => 'to close production, which used to take until the 8th day',
 					'desafio_titulo' => 'A critical operation that cannot stop',
 					'desafio_texto' => '<p>A pioneer among independent onshore oil and gas producers, PetroRecôncavo operates 57 concessions and over 2,000 wells in Bahia, Rio Grande do Norte and Sergipe, producing around 26,000 barrels a day. It is a 24/7, geographically dispersed operation in which any stoppage means barrels that are not produced. In 2022 the company began replacing its ERP and, with the Evolution project, implemented SAP S/4HANA in 2024.</p><p>SAP, however, does not work alone. Most of the satellite systems were not integrated, and the main one, IFS, used for asset management, had only simple integrations, without the robustness and control needed. Connections were point-to-point, with no orchestration or monitoring, and much data was typed into one system and re-typed into another, with back-and-forth emails and spreadsheets. Monthly closing took 10 to 11 business days, and the hybrid infrastructure, with on-premise and cloud environments, required a technology able to integrate both.</p>',

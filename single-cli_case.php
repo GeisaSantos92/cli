@@ -30,6 +30,7 @@ while ( have_posts() ) :
 	$excerpt         = get_the_excerpt();
 	$retrato_id      = absint( get_field( 'retrato' ) ?? 0 );
 	$logo_id         = absint( get_field( 'logo' ) ?? 0 );
+	$logo_interno_id = absint( get_field( 'logo_interno' ) ?? 0 );
 	$logo_colorido   = (bool) ( get_field( 'logo_colorido' ) ?? 0 );
 	$imagem_meio_id  = absint( get_field( 'imagem_meio' ) ?? 0 );
 	$video_url       = get_field( 'video' ) ?? '';
@@ -86,15 +87,23 @@ while ( have_posts() ) :
 		<div class="container">
 			<div class="case-intro__grid">
 
-				<?php if ( $logo_id ) : ?>
+				<?php
+				/*
+				 * Capa azul: se o case tem um logo próprio para ela (já todo branco),
+				 * ele entra sem filtro; senão vale o logo do cliente com o filtro branco.
+				 */
+				$capa_logo_id    = $logo_interno_id ? $logo_interno_id : $logo_id;
+				$capa_sem_filtro = $logo_interno_id || $logo_colorido;
+				?>
+				<?php if ( $capa_logo_id ) : ?>
 					<div class="case-intro__imagem">
 						<?php
 						echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
-							$logo_id,
+							$capa_logo_id,
 							'large',
 							false,
 							array(
-								'class' => $logo_colorido ? 'case-intro__logo case-intro__logo--colorido' : 'case-intro__logo',
+								'class' => $capa_sem_filtro ? 'case-intro__logo case-intro__logo--colorido' : 'case-intro__logo',
 								'alt'   => esc_attr( $titulo ),
 							)
 						);

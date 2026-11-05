@@ -1096,6 +1096,7 @@ class Cliconnect_Seed {
 			'case:panasonic',
 			array(
 				'post_type'    => 'cli_case',
+				'post_name'    => 'panasonic',
 				'post_title'   => 'Reduziu em 97% o tempo de resposta das integrações com o SAP S/4HANA',
 				'post_excerpt' => $panasonic_resumo,
 				'post_content' => '<p>' . $panasonic_resumo . '</p>',
@@ -1140,6 +1141,7 @@ class Cliconnect_Seed {
 			'case:moura',
 			array(
 				'post_type'    => 'cli_case',
+				'post_name'    => 'moura',
 				'post_title'   => 'Atravessa a "Black Friday" de todo fim de mês sem paradas no faturamento',
 				'post_excerpt' => $moura_resumo,
 				'post_content' => '<p>' . $moura_resumo . '</p>',
@@ -1181,6 +1183,7 @@ class Cliconnect_Seed {
 			'case:petroreconcavo',
 			array(
 				'post_type'    => 'cli_case',
+				'post_name'    => 'petroreconcavo',
 				'post_title'   => 'Integrou o SAP a uma operação 24/7 sem nenhuma parada em quase dois anos',
 				'post_excerpt' => $petro_resumo,
 				'post_content' => '<p>' . $petro_resumo . '</p>',
@@ -1196,14 +1199,16 @@ class Cliconnect_Seed {
 			)
 		);
 
-		update_field( 'logo', $this->img( 'case-logo-petroreconcavo-novo' ), $petro );
+		// Listagem e cards (fundo claro): logo colorido. Capa da página interna (fundo azul): logo branco (issue #230).
+		update_field( 'logo', $this->img( 'case-logo-petroreconcavo-cor' ), $petro );
+		update_field( 'logo_interno', $this->img( 'case-logo-petroreconcavo-novo' ), $petro );
 		update_field( 'citacao', 'Com os sistemas integrados, em quase dois anos de operação a gente nunca parou. A produção funciona 24 por 7, e as áreas seguem integradas, sem depender da TI.', $petro );
 		update_field( 'autor', 'Eliana Lana', $petro );
 		update_field( 'cargo', 'Coordenadora de Sistemas na PetroRecôncavo', $petro );
 		update_field( 'retrato', $this->img( 'case-petroreconcavo-capa' ), $petro );
 		update_field( 'metrica_numero', '0 paradas', $petro );
 		update_field( 'metrica_texto', 'nas integrações em quase dois anos de operação 24/7', $petro );
-		update_field( 'metrica_numero_2', '3º dia', $petro );
+		update_field( 'metrica_numero_2', '3 dias', $petro ); // A fonte do número não tem o caractere "º" (issue #230).
 		update_field( 'metrica_texto_2', 'para fechar a produção, que antes chegava ao 8º dia', $petro );
 		update_field( 'desafio_titulo', 'Uma operação crítica que não pode parar', $petro );
 		update_field( 'desafio_texto', '<p>Pioneira entre os produtores independentes de petróleo e gás em terra, a PetroRecôncavo opera 57 concessões e mais de 2 mil poços na Bahia, no Rio Grande do Norte e em Sergipe, com produção em torno de 26 mil barris por dia. É uma operação 24/7 e geograficamente dispersa, em que qualquer parada significa barris que deixam de ser produzidos. Em 2022, a empresa iniciou a troca do seu ERP e, com o projeto Evolution, implementou o SAP S/4HANA em 2024.</p><p>O SAP, porém, não funciona sozinho. A maioria dos sistemas satélites não era integrada, e o principal deles, o IFS, usado na gestão de ativos, tinha apenas integrações simples, sem a robustez e o controle necessários. As conexões eram ponto a ponto, sem orquestração nem monitoramento, e muitos dados eram digitados em um sistema e redigitados em outro, com idas e vindas de e-mails e planilhas. O fechamento mensal levava de 10 a 11 dias úteis, e a infraestrutura híbrida, com ambientes on-premise e em nuvem, exigia uma tecnologia capaz de integrar os dois.</p>', $petro );
@@ -1229,6 +1234,7 @@ class Cliconnect_Seed {
 			'case:moura-vendas',
 			array(
 				'post_type'    => 'cli_case',
+				'post_name'    => 'moura-vendas',
 				'post_title'   => 'Atravessa a "Black Friday" de todo fim de mês sem paradas no faturamento',
 				'post_excerpt' => $moura_resumo,
 				'menu_order'   => 3,
@@ -1245,6 +1251,7 @@ class Cliconnect_Seed {
 			'case:petroreconcavo-dados',
 			array(
 				'post_type'    => 'cli_case',
+				'post_name'    => 'petroreconcavo-dados',
 				'post_title'   => 'Integrou o SAP a uma operação 24/7 sem nenhuma parada em quase dois anos',
 				'post_excerpt' => $petro_resumo,
 				'menu_order'   => 4,
