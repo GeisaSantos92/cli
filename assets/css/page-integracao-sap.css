@@ -1635,3 +1635,46 @@
 		text-align: center;
 	}
 }
+
+/* --- "Otimize seu tempo": mobile ------------------------------------------- *
+ * Mesmo comportamento do componente equivalente da CLI Connect (.cc-impl):
+ * as barras viram colunas de etapas empilhadas e as colunas vazias somem.
+ */
+@media (max-width: 768px) {
+	.sap-velocidade__titulo {
+		font-size: clamp(28px, 4.5vw, 36px);
+	}
+
+	.sap-vel-card {
+		padding: 24px;
+	}
+
+	.sap-vel-row__label,
+	.sap-vel-row__tempo {
+		font-size: 10px;
+	}
+
+	.sap-vel-barra {
+		flex-direction: column;
+		height: auto;
+		min-height: 0;
+		border-radius: 12px;
+	}
+
+	.sap-vel-etapa--cinza,
+	.sap-vel-etapa--ativa {
+		min-height: 44px;
+		font-size: 11px;
+	}
+
+	/* Na coluna, a etapa azul não precisa das pontas arredondadas da barra horizontal. */
+	.sap-vel-etapa--ativa:first-child,
+	.sap-vel-etapa--ativa:last-child,
+	.sap-vel-etapa--ativa:has(+ .sap-vel-etapa--vazia) {
+		border-radius: 0;
+	}
+
+	.sap-vel-etapa--vazia {
+		display: none;
+	}
+}

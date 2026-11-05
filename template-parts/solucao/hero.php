@@ -37,7 +37,8 @@ if ( ! $titulo && ! $titulo_destaque ) {
 // já implica esse modo; sem ela, quem decide é o campo próprio.
 $titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__titulo--fluido' : 'sh-hero__titulo';
 ?>
-<section class="sh-hero" aria-label="<?php esc_attr_e( 'Apresentação', 'cli' ); ?>">
+<?php // Hero com vídeo (Claude, Gemini, ChatGPT): sem o sinal animado e com o respiro maior. ?>
+<section class="<?php echo $video ? 'sh-hero sh-hero--video' : 'sh-hero'; ?>" aria-label="<?php esc_attr_e( 'Apresentação', 'cli' ); ?>">
 	<div class="container">
 		<div class="sh-hero__inner">
 
@@ -92,9 +93,11 @@ $titulo_classe = ( $titulo_fim || $titulo_fluido ) ? 'sh-hero__titulo sh-hero__t
 					<?php echo wp_get_attachment_image( $imagem_id, 'large', false, array( 'class' => 'sh-hero__imagem', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php endif; ?>
 
-				<div class="sh-hero__sinal">
-					<?php echo cliconnect_imagem_tema( 'solucao-hero-sinal.svg', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				</div>
+				<?php if ( ! $video ) : ?>
+					<div class="sh-hero__sinal">
+						<?php echo cliconnect_imagem_tema( 'solucao-hero-sinal.svg', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
+				<?php endif; ?>
 			</div><!-- .sh-hero__imagem-wrap -->
 
 		</div><!-- .sh-hero__inner -->

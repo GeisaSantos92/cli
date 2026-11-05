@@ -213,11 +213,11 @@ a.ct-card__valor:focus-visible {
 	align-items: center;
 	justify-content: center;
 	width: clamp(150px, 14vw, 200px);
-	height: 40px;
+	height: 64px;
 }
 
 .ct-clientes .clientes__logo img {
-	max-height: 34px;
+	max-height: 64px;
 	max-width: 80%;
 	width: auto;
 	object-fit: contain;

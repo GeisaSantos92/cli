@@ -360,14 +360,6 @@
 	overflow: hidden;
 }
 
-.tc-depoimento__foto::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(to bottom, #87afff, rgba(135, 175, 255, 0));
-	pointer-events: none;
-}
-
 .tc-depoimento__foto img {
 	width: 124px;
 	height: 124px;

@@ -8,8 +8,13 @@
 /* --- 1. Seção Hero --------------------------------------------------------- */
 
 .sh-hero {
-	padding-block: 80px;
+	padding-block: 40px;
 	background: var(--cor-fundo-suave);
+}
+
+/* Claude, Gemini e ChatGPT (hero com vídeo) mantêm o respiro de 80px. */
+.sh-hero--video {
+	padding-block: 80px;
 }
 
 .sh-hero__inner {
