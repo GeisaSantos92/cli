@@ -93,7 +93,6 @@ cliconnect_require( '/inc/smtp.php' );
 
 // Conteúdo do projeto: CPTs e campos ACF (locais, via código).
 cliconnect_require( '/inc/cpt.php' );
-cliconnect_require( '/inc/cases-privados.php' );
 cliconnect_require( '/inc/acf-fields-cpt.php' );
 cliconnect_require( '/inc/acf-fields-home.php' );
 cliconnect_require( '/inc/acf-fields-trabalhe-conosco.php' );

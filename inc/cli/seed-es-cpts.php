@@ -178,6 +178,21 @@ trait Cliconnect_Seed_Es_Cpts {
 					'metrica_texto' => 'en las integraciones durante casi dos años de operación 24/7',
 				),
 			),
+			'andamento-brz'     => array(
+				'titulo'  => 'BRZ Empreendimentos',
+				'resumo'  => '',
+				'campos'  => array(),
+			),
+			'andamento-legrand' => array(
+				'titulo'  => 'Legrand',
+				'resumo'  => '',
+				'campos'  => array(),
+			),
+			'andamento-sbc'     => array(
+				'titulo'  => 'Sociedad Brasileña de Cardiología',
+				'resumo'  => '',
+				'campos'  => array(),
+			),
 		);
 	}
 
