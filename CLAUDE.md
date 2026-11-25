@@ -53,6 +53,11 @@ Prioridades: **performance**, **segurança** e **baixa dependência** de plugins
   Customizer; rodapé em colunas pelo menu `rodape` sobre o planeta, faixa da
   agência (`template-parts/rodape-agencia.php`), CTA azul, botão de voltar ao
   topo e botão flutuante de WhatsApp.
+- **Leads (Salesforce Web-to-Lead):** um só formulário (`template-parts/form-lead.php`),
+  na página Contato e no popup do botão flutuante de WhatsApp (que, enviado,
+  segue para a conversa). Todo CTA de conversão leva ao Contato — nunca ao
+  WhatsApp. UTMs pelo `assets/js/utm-web-to-lead.js`, carregado em todo o site.
+  Config no Customizer; detalhes em `docs/lead-salesforce.md`.
 - **Design system:** tokens do Figma em `assets/css/theme.css`; seções da home em
   `assets/css/front-page.css` (enfileirado só em `is_front_page()`).
 - **Seed:** `./bin/wp cliconnect seed [--reset]` (`inc/cli/seed.php`) importa os 49

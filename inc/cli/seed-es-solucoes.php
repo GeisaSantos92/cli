@@ -213,7 +213,9 @@ trait Cliconnect_Seed_Es_Solucoes {
 			),
 		);
 
-		$descricao_produto = 'Integre todos sus sistemas y ponga agentes de IA personalizados a trabajar en sus procesos.';
+		$descricao_produto    = 'Integre todos sus sistemas y ponga agentes de IA personalizados a trabajar en sus procesos.';
+		$descricao_flow       = 'Cree portales, registros y aprobaciones ya integrados a sus sistemas, sin código y sin planillas.';
+		$descricao_signature  = 'Una experiencia dedicada para empresas que conducen proyectos críticos y exigen un nivel superior de acompañamiento, gobernanza y soporte.';
 
 		$this->montar_menu_traduzido(
 			'principal',
@@ -229,9 +231,14 @@ trait Cliconnect_Seed_Es_Solucoes {
 							'descricao' => $descricao_produto,
 						),
 						array(
+							'titulo'    => 'CLI Flow',
+							'url'       => $this->url_pagina_traduzida( 'cli-flow' ),
+							'descricao' => $descricao_flow,
+						),
+						array(
 							'titulo'    => 'CLI Signature',
 							'url'       => $this->url_pagina_traduzida( 'cli-signature' ),
-							'descricao' => $descricao_produto,
+							'descricao' => $descricao_signature,
 						),
 					),
 				),
@@ -265,9 +272,10 @@ trait Cliconnect_Seed_Es_Solucoes {
 					'filhos' => array(
 						array(
 							'titulo' => 'Plataforma',
-							'url'    => '#', // Sem URL: só agrupa CLI Connect e CLI Signature.
+							'url'    => '#', // Sem URL: só agrupa CLI Connect, CLI Flow e CLI Signature.
 							'filhos' => array(
 								'CLI Connect'   => $this->url_pagina_traduzida( 'cli-connect' ),
+								'CLI Flow'      => $this->url_pagina_traduzida( 'cli-flow' ),
 								'CLI Signature' => $this->url_pagina_traduzida( 'cli-signature' ),
 							),
 						),
@@ -403,7 +411,7 @@ trait Cliconnect_Seed_Es_Solucoes {
 			'solucao_hero_btn1_texto' => 'Solicite una demostración',
 			'solucao_hero_btn1_url'   => '/es/contacto/',
 			'solucao_hero_btn2_texto' => 'Conozca nuestra solución',
-			'solucao_hero_btn2_url'   => self::WHATSAPP, // Figma: CTA para o WhatsApp comercial.
+			'solucao_hero_btn2_url'   => '/es/contacto/',
 			'solucao_pilares_eyebrow' => 'Pilares',
 			'solucao_casos_eyebrow'   => 'casos de uso',
 			'solucao_casos_cta_texto' => 'Solicite una demostración',

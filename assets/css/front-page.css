@@ -132,6 +132,18 @@
 	color: var(--cor-texto-alt);
 }
 
+/*
+ * Com a órbita na tela, as bolhas 4 (SAP) e 10 (MV) ficam na altura do
+ * subtítulo, a ~12,7% e ~14,4% das bordas. Abaixo de ~1500px os 938px do
+ * Figma alcançavam as bolhas; aqui o texto para 16px antes delas
+ * (2 × (35,6% − 37px − 16px) ≈ 71vw − 106px).
+ */
+@media (min-width: 801px) {
+	.hero__subtitulo {
+		max-width: min(938px, calc(71vw - 106px));
+	}
+}
+
 .hero__acoes {
 	display: flex;
 	flex-wrap: wrap;

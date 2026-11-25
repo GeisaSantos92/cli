@@ -56,6 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?>
 
 			<div class="site-nav__acoes-mobile">
+				<?php cliconnect_seletor_idiomas( 'lista' ); ?>
 				<?php cliconnect_header_acoes(); ?>
 			</div>
 		</nav>

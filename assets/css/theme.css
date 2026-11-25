@@ -535,7 +535,7 @@ p {
 
 .site-nav__painel--cartoes .sub-menu {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	gap: 24px;
 }
 
@@ -589,21 +589,35 @@ p {
 	opacity: 1;
 }
 
-/* Cartões pares invertem a paleta, como no Figma (CLI Connect × CLI Signature). */
-.site-nav__cartao-item:nth-child(even) .nav-cartao {
-	background: linear-gradient(to left, #001233, transparent), var(--cor-texto-marca-escura);
+/*
+ * Cartões escuros (issue #231): o 2º (CLI Flow) em #0041BA e o 3º
+ * (CLI Signature) em #002057, os dois com um degradê de #ACC9FF da esquerda
+ * para a direita a 20% de opacidade por cima. A descrição do CLI Flow é
+ * #D4E1FF. O 1º (CLI Connect) mantém o claro.
+ */
+.site-nav__cartao-item:nth-child(n+2) .nav-cartao {
+	background:
+		linear-gradient(90deg, rgba(172, 201, 255, 0) 0%, rgba(172, 201, 255, 0.2) 100%),
+		var(--cor-primaria-escura);
 }
 
-.site-nav__cartao-item:nth-child(even) .nav-cartao__titulo {
+.site-nav__cartao-item:nth-child(n+3) .nav-cartao {
+	background:
+		linear-gradient(90deg, rgba(172, 201, 255, 0) 0%, rgba(172, 201, 255, 0.2) 100%),
+		var(--cor-marca-profunda);
+}
+
+.site-nav__cartao-item:nth-child(n+2) .nav-cartao__titulo,
+.site-nav__cartao-item:nth-child(n+2) .nav-cartao__seta {
 	color: #fff;
 }
 
-.site-nav__cartao-item:nth-child(even) .nav-cartao__texto {
+.site-nav__cartao-item:nth-child(n+2) .nav-cartao__texto {
 	color: var(--cor-texto-clara-suave);
 }
 
-.site-nav__cartao-item:nth-child(even) .nav-cartao__seta {
-	color: #fff;
+.site-nav__cartao-item:nth-child(2) .nav-cartao__texto {
+	color: #d4e1ff; /* Descrição do CLI Flow, cor da issue #231 (não tokenizada). */
 }
 
 /* --- Dropdown em lista ("Recursos") ---------------------------------------- */
@@ -913,8 +927,9 @@ p {
 
 /* --- Header responsivo ------------------------------------------------------ */
 
+/* Só sai da barra do desktop; no drawer mobile o Portal do Cliente continua. */
 @media (max-width: 1180px) {
-	.site-header__link-cliente {
+	.site-header__acoes .site-header__link-cliente {
 		display: none;
 	}
 }
@@ -1049,6 +1064,27 @@ p {
 		margin-top: 16px;
 		padding-top: 16px;
 		border-top: 1px solid var(--cor-borda);
+	}
+
+	/* Idiomas abertos no drawer, lado a lado, sem dropdown. */
+	.site-nav__idiomas {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 16px;
+		margin: 0 0 8px;
+		padding: 0;
+		list-style: none;
+	}
+
+	.site-nav__idiomas .site-header__idioma {
+		padding: 8px 0;
+		font-size: var(--tam-body);
+	}
+
+	.site-nav__acoes-mobile .site-header__link-cliente {
+		justify-content: center;
+		padding: 12px 16px;
+		font-size: var(--tam-body);
 	}
 }
 
@@ -1424,6 +1460,240 @@ p {
 	height: 32px;
 }
 
+/* --- Formulário de lead (Salesforce Web-to-Lead) --------------------------- */
+
+/*
+ * Componente global: aparece na página Contato e no popup do WhatsApp
+ * (template-parts/form-lead.php). Visual herdado do antigo formulário CF7.
+ */
+.form-lead {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.form-lead[hidden] {
+	display: none;
+}
+
+.form-lead__campo {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.form-lead__campo label {
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto);
+}
+
+.form-lead__campo input,
+.form-lead__campo textarea {
+	width: 100%;
+	background: #f8faff;
+	border: 1px solid var(--cor-borda);
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto);
+	line-height: 1.6;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-lead__campo input::placeholder,
+.form-lead__campo textarea::placeholder {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+.form-lead__campo input:focus,
+.form-lead__campo textarea:focus {
+	outline: none;
+	border-color: var(--cor-primaria);
+	box-shadow: 0 0 0 3px rgba(53, 81, 242, 0.1);
+}
+
+.form-lead__campo textarea {
+	height: 140px;
+	resize: vertical;
+}
+
+/* Armadilha anti-robô: fora da tela, mas presente no DOM. */
+.form-lead__armadilha {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.form-lead__aceite {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 4px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-caption);
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--cor-texto-suave);
+	cursor: pointer;
+}
+
+.form-lead__aceite input {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+	accent-color: var(--cor-primaria);
+	cursor: pointer;
+}
+
+.form-lead__enviar {
+	width: 100%;
+	height: 52px;
+	margin-top: 16px;
+	background: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+	border: none;
+	border-radius: var(--raio);
+	font-family: var(--fonte-botao);
+	font-size: var(--tam-h6);
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.form-lead__enviar:hover,
+.form-lead__enviar:focus-visible {
+	background: var(--cor-primaria-escura);
+}
+
+.form-lead__enviar:disabled {
+	opacity: 0.6;
+	cursor: progress;
+}
+
+.form-lead__sucesso {
+	padding: 24px;
+	border: 1px solid var(--cor-positivo);
+	border-radius: var(--raio);
+	background: rgba(2, 84, 45, 0.06);
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	color: var(--cor-texto);
+}
+
+.form-lead__sucesso p {
+	margin: 0;
+}
+
+.form-lead__sucesso-titulo {
+	margin-bottom: 8px !important;
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h5);
+	font-weight: 600;
+	color: var(--cor-positivo);
+}
+
+/* --- Popup de lead (botão flutuante de WhatsApp) --------------------------- */
+
+.lead-popup {
+	width: min(480px, calc(100vw - 32px));
+	max-height: calc(100dvh - 32px);
+	padding: 0;
+	border: none;
+	border-radius: var(--raio);
+	background: var(--cor-fundo);
+	box-shadow: var(--sombra-flutuante);
+	overflow: auto;
+}
+
+.lead-popup::backdrop {
+	background: rgba(4, 12, 40, 0.6);
+}
+
+html.lead-popup-aberto {
+	overflow: hidden;
+}
+
+.lead-popup__caixa {
+	position: relative;
+	padding: 32px;
+}
+
+.lead-popup__fechar {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: none;
+	border-radius: var(--raio-pill);
+	background: transparent;
+	color: var(--cor-texto-suave);
+	cursor: pointer;
+}
+
+.lead-popup__fechar:hover,
+.lead-popup__fechar:focus-visible {
+	background: var(--cor-fundo-suave);
+	color: var(--cor-texto);
+}
+
+.lead-popup__cabecalho {
+	margin-bottom: 20px;
+	padding-right: 32px;
+}
+
+.lead-popup__icone {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	margin-bottom: 12px;
+	border-radius: var(--raio-pill);
+	background: #25d366;
+	color: #fff;
+}
+
+.lead-popup__titulo {
+	margin: 0 0 4px;
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h5);
+	font-weight: 600;
+	line-height: 1.2;
+	color: var(--cor-texto);
+}
+
+.lead-popup__texto {
+	margin: 0;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-sm);
+	color: var(--cor-texto-suave);
+}
+
+/* O botão de envio do popup segue a cor do WhatsApp. */
+.lead-popup .form-lead__enviar {
+	background: #1da851;
+}
+
+.lead-popup .form-lead__enviar:hover,
+.lead-popup .form-lead__enviar:focus-visible {
+	background: #168a42;
+}
+
+@media (max-width: 640px) {
+	.lead-popup__caixa {
+		padding: 24px 20px;
+	}
+}
+
 /* --- Banner de cookies ----------------------------------------------------- */
 
 /*
@@ -1477,17 +1747,45 @@ p {
 	}
 }
 
+/*
+ * No celular o cartão flutuante cobria o CTA do hero na primeira visita. Vira
+ * uma faixa baixa colada no rodapé da tela (texto e botão na mesma linha), e
+ * os botões flutuantes sobem a altura dela enquanto o aviso estiver aberto —
+ * o theme.js mede a faixa e grava em --altura-aviso-cookies.
+ */
 @media (max-width: 600px) {
 	.cookie-banner {
-		left: 16px;
-		right: 16px;
-		/* Sobe acima do WhatsApp flutuante (64px de altura + 20px de margem). */
-		bottom: 96px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		flex-direction: row;
+		align-items: center;
+		gap: 12px;
 		width: auto;
+		padding: 12px 16px;
+		border-width: 1px 0 0;
+		border-radius: var(--raio-card) var(--raio-card) 0 0;
+	}
+
+	.cookie-banner__texto {
+		font-size: 13px;
+		line-height: 1.4;
 	}
 
 	.cookie-banner__botao {
-		align-self: stretch;
+		align-self: center;
+		flex-shrink: 0;
+		min-height: 40px;
+		padding: 8px 16px;
+		font-size: var(--tam-body-sm);
+	}
+
+	.tem-aviso-cookies .whatsapp-flutuante {
+		bottom: calc(var(--altura-aviso-cookies, 0px) + 12px);
+	}
+
+	.tem-aviso-cookies .voltar-ao-topo {
+		bottom: calc(var(--altura-aviso-cookies, 0px) + 88px);
 	}
 }
 

@@ -231,7 +231,9 @@ trait Cliconnect_Seed_En_Solucoes {
 			),
 		);
 
-		$descricao_produto = 'Integrate all of your systems and put custom AI agents to work across your processes.';
+		$descricao_produto    = 'Integrate all of your systems and put custom AI agents to work across your processes.';
+		$descricao_flow       = 'Build portals, registrations and approvals already integrated into your systems, no code and no spreadsheets.';
+		$descricao_signature  = 'A dedicated experience for companies running critical projects that demand a higher level of oversight, governance and support.';
 
 		$this->montar_menu_traduzido(
 			'principal',
@@ -247,9 +249,14 @@ trait Cliconnect_Seed_En_Solucoes {
 							'descricao' => $descricao_produto,
 						),
 						array(
+							'titulo'    => 'CLI Flow',
+							'url'       => $this->url_pagina_traduzida( 'cli-flow' ),
+							'descricao' => $descricao_flow,
+						),
+						array(
 							'titulo'    => 'CLI Signature',
 							'url'       => $this->url_pagina_traduzida( 'cli-signature' ),
-							'descricao' => $descricao_produto,
+							'descricao' => $descricao_signature,
 						),
 					),
 				),
@@ -283,9 +290,10 @@ trait Cliconnect_Seed_En_Solucoes {
 					'filhos' => array(
 						array(
 							'titulo' => 'Platform',
-							'url'    => '#', // Sem URL: só agrupa CLI Connect e CLI Signature.
+							'url'    => '#', // Sem URL: só agrupa CLI Connect, CLI Flow e CLI Signature.
 							'filhos' => array(
 								'CLI Connect'   => $this->url_pagina_traduzida( 'cli-connect' ),
+								'CLI Flow'      => $this->url_pagina_traduzida( 'cli-flow' ),
 								'CLI Signature' => $this->url_pagina_traduzida( 'cli-signature' ),
 							),
 						),
@@ -420,10 +428,10 @@ trait Cliconnect_Seed_En_Solucoes {
 		return array(
 			'solucao_hero_btn1_texto' => 'Book a demo',
 			'solucao_hero_btn1_url'   => '/en/contact/',
-			// Figma: o segundo CTA do hero leva ao WhatsApp comercial. As landings de
+			// O segundo CTA do hero leva ao Contato (antes, WhatsApp). As landings de
 			// indústria/departamento sobrescrevem com "Explore the platform".
 			'solucao_hero_btn2_texto' => 'Discover our solution',
-			'solucao_hero_btn2_url'   => self::WHATSAPP,
+			'solucao_hero_btn2_url'   => '/en/contact/',
 			'solucao_pilares_eyebrow' => 'Pillars',
 			'solucao_casos_eyebrow'   => 'Use cases',
 			'solucao_casos_cta_texto' => 'Book a demo',

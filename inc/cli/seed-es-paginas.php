@@ -45,6 +45,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'contato'          => array( 'contacto', 'Contacto' ),
 			'plataforma'       => array( 'plataforma-de-integracion', 'Plataforma' ),
 			'cli-connect'      => array( 'cli-connect-plataforma', 'CLI Connect' ),
+			'cli-flow'         => array( 'cli-flow-plataforma', 'CLI Flow' ),
 			'cli-signature'    => array( 'cli-signature-servicio', 'CLI Signature' ),
 			'solucoes'         => array( 'soluciones', 'Soluciones' ),
 			'integracao-sap'   => array( 'integracion-sap', 'Integración SAP' ),
@@ -126,7 +127,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'Portal do Cliente'                                       => 'Portal del Cliente',
 			'Acessar Plataforma'                                      => 'Acceder a la Plataforma',
 			"Planeje a evolução\ndas suas integrações"                 => "Planifique la evolución\nde sus integraciones",
-			'Fale conosco no WhatsApp'                                 => 'Hable con nosotros por WhatsApp',
+			'Fale conosco'                                 => 'Hable con nosotros',
 			'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa' => 'Usamos cookies para mejorar su experiencia. Al continuar navegando, acepta nuestra',
 			'política de privacidade'                                  => 'política de privacidad',
 			'Concordar'                                                => 'Aceptar',
@@ -153,7 +154,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'agentes_legenda'      => 'Más de 30.000 integraciones listas para usar',
 			'camadas_titulo'       => "Todo lo que necesita.\nCon un costo previsible.",
 			'camadas_texto'        => "Pague una tarifa fija y use nuestro servicio de integración sin límites.\nCuanto más crece su operación, más se beneficia.",
-			'camadas_botao'        => $this->link_traduzido( 'Vea qué está incluido', self::WHATSAPP, '_blank' ),
+			'camadas_botao'        => $this->link_traduzido( 'Vea qué está incluido', '/contato/' ),
 			'boomi_eyebrow'        => 'Plataforma global',
 			'boomi_titulo'         => 'Tecnología de clase mundial con soporte para el mercado latinoamericano',
 			'boomi_texto'          => '<p>Acceda a la misma plataforma que las grandes empresas globales usan para integrar sus sistemas, con la ventaja de un <strong>soporte especializado</strong>, un precio accesible y el servicio gestionado incluido.</p>',
@@ -201,7 +202,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'suporte_eyebrow'      => 'Atención cuando la necesite',
 			'suporte_titulo'       => 'Nunca se queda solo.',
 			'suporte_texto'        => '<p>Ofrecemos <strong>soporte humano</strong> para cuando más lo necesita. Nuestro equipo monitorea, mantiene y evoluciona sus integraciones. Si algo falla, ya lo estamos resolviendo antes de que usted lo note.</p>',
-			'suporte_botao'        => $this->link_traduzido( 'Ver canales de atención', '/contato/' ),
+			'suporte_botao'        => $this->link_traduzido( 'Acceder al Portal del Cliente', 'https://cliconsultoria.my.site.com/cliente', '_blank' ),
 			'blog_titulo'          => 'Lo último de nuestro blog',
 			'blog_link'            => $this->link_traduzido( 'Ver todas las publicaciones', '/blog/' ),
 			'faq_eyebrow'          => 'FAQ',
@@ -645,8 +646,8 @@ trait Cliconnect_Seed_Es_Paginas {
 	/**
 	 * Campos de texto da página Contato em espanhol.
 	 *
-	 * E-mail, telefone, redes sociais e o ID do formulário CF7 não são texto
-	 * traduzível — só o formulário ganha uma cópia própria.
+	 * E-mail, telefone e redes sociais não são texto traduzível — ficam de
+	 * fora e são copiados do original.
 	 *
 	 * @return array<string,mixed>
 	 */
@@ -657,65 +658,7 @@ trait Cliconnect_Seed_Es_Paginas {
 			'ct_form_texto'         => 'Resuelva sus dudas, evalúe posibilidades y descubra cómo CLI puede apoyar su operación con integración, automatización e IA corporativa.',
 		);
 
-		$formulario = $this->criar_form_cf7_es();
-
-		if ( $formulario ) {
-			$campos['ct_form_cf7_id'] = (string) $formulario;
-		}
-
 		return $campos;
-	}
-
-	/**
-	 * Formulário do Contact Form 7 em espanhol.
-	 *
-	 * @return int ID do formulário, 0 em caso de falha.
-	 */
-	protected function criar_form_cf7_es() {
-		return $this->criar_form_cf7_traduzido(
-			'contacto-cli',
-			'Contacto CLI',
-			'<label>Nombre
-[text* ct-nome placeholder "Nombre"]</label>
-
-<label>Teléfono
-[tel* ct-telefone placeholder "+55 (00) 00000-0000"]</label>
-
-<label>Correo electrónico
-[email* ct-email placeholder "Correo electrónico"]</label>
-
-<label>Mensaje
-[textarea* ct-mensagem placeholder "Escriba su mensaje"]</label>
-
-[acceptance ct-aceite] Al enviar, acepto recibir comunicaciones de CLI[/acceptance]
-
-[submit "Enviar"]',
-			array(
-				'mail_sent_ok'               => 'Mensaje enviado. Nos pondremos en contacto en breve.',
-				'mail_sent_ng'               => 'Ocurrió un error. Inténtelo de nuevo.',
-				'validation_error'           => 'Complete los campos obligatorios antes de enviar.',
-				'spam'                       => 'Parece que hay un problema con el envío.',
-				'accept_terms'               => 'Debe aceptar los términos para continuar.',
-				'invalid_required'           => 'Este campo es obligatorio.',
-				'invalid_too_long'           => 'El texto es demasiado largo.',
-				'invalid_too_short'          => 'El texto es demasiado corto.',
-				'invalid_date'               => 'Fecha no válida.',
-				'date_too_early'             => 'La fecha es demasiado temprana.',
-				'date_too_late'              => 'La fecha es demasiado tardía.',
-				'invalid_number'             => 'Número no válido.',
-				'number_too_small'           => 'El número es demasiado pequeño.',
-				'number_too_large'           => 'El número es demasiado grande.',
-				'invalid_email'              => 'Correo electrónico no válido.',
-				'invalid_url'                => 'URL no válida.',
-				'invalid_tel'                => 'Teléfono no válido.',
-				'upload_failed'              => 'Error al subir el archivo.',
-				'upload_file_type_invalid'   => 'Tipo de archivo no válido.',
-				'upload_file_too_large'      => 'El archivo es demasiado grande.',
-				'upload_failed_php_error'    => 'Hubo un error al subir el archivo.',
-				'upload_file_count_exceeded' => 'Demasiados archivos.',
-				'quiz_answer_not_correct'    => 'La respuesta no es correcta.',
-			)
-		);
 	}
 
 	/* =====================================================================
@@ -780,7 +723,7 @@ trait Cliconnect_Seed_Es_Paginas {
 	 * @return array<string,mixed>
 	 */
 	protected function texto_es_programa_de_parceiros() {
-		$quero_ser_parceiro = $this->link_traduzido( 'Quiero ser socio', self::WHATSAPP, '_blank' );
+		$quero_ser_parceiro = $this->link_traduzido( 'Quiero ser socio', '/contato/' );
 
 		return array(
 			'pp_hero_eyebrow'            => 'PROGRAMA DE SOCIOS',
@@ -860,6 +803,218 @@ trait Cliconnect_Seed_Es_Paginas {
 			'pp_cta_titulo'              => '¿Listo para convertir su cartera en ingresos recurrentes?',
 			'pp_cta_texto'               => 'Conéctese con nuestros consultores corporativos y reciba la documentación completa de la asociación.',
 			'pp_cta_botao'               => $quero_ser_parceiro,
+		);
+	}
+
+	/* =====================================================================
+	   CLI FLOW
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto de la página CLI Flow en español.
+	 *
+	 * Los datos de los mockups (valores, códigos, nombres de clientes) siguen
+	 * los del portugués.
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_es_cli_flow() {
+		$demo = $this->link_traduzido( 'Agende una demostración', '/contato/' );
+
+		return array(
+			// 1. Hero.
+			'cf_hero_eyebrow'           => 'CLI Flow - powered by Boomi',
+			'cf_hero_titulo'            => 'Cree las pantallas que le faltan a su flujo',
+			'cf_hero_titulo_destaque'   => 'ya integradas con sus sistemas',
+			'cf_hero_texto'             => '<strong>Deje el correo y las planillas:</strong> arme portales, registros y aprobaciones sin código. Y, si lo prefiere, CLI los diseña con usted.',
+			'cf_hero_botao_1'           => $demo,
+			'cf_hero_botao_2'           => array(
+				'title'  => 'Vea cómo funciona',
+				'url'    => '#como-funciona',
+				'target' => '',
+			),
+			'cf_hero_logos_label'       => 'Integrado con sus sistemas',
+
+			// 2. Mockup.
+			'cf_mockup_legenda'         => 'Ejemplos más solicitados',
+			'cf_mockup_1_label'         => 'Portal del Cliente',
+			'cf_mockup_2_label'         => 'Portal del Proveedor',
+			'cf_mockup_3_label'         => 'Registro de Producto',
+
+			// 4. Dores.
+			'cf_dores_titulo'           => '¿Cuál de estos está frenando a su área?',
+			'cf_dores_1_citacao'        => 'Un pedido detenido en una aprobación que nadie sabe dónde está.',
+			'cf_dores_1_departamento'   => 'Compras',
+			'cf_dores_2_citacao'        => 'Una factura que no coincide con el pedido y una multa por atraso.',
+			'cf_dores_2_departamento'   => 'Finanzas',
+			'cf_dores_3_citacao'        => 'Una venta que se enfría esperando la aprobación de crédito.',
+			'cf_dores_3_departamento'   => 'Comercial',
+			'cf_dores_4_citacao'        => 'Documentos en cinco lugares y un colaborador que llega sin acceso.',
+			'cf_dores_4_departamento'   => 'Personas',
+			'cf_dores_5_citacao'        => 'Un alta de proveedor que tarda semanas y vuelve con errores.',
+			'cf_dores_5_departamento'   => 'Suministros',
+			'cf_dores_6_citacao'        => 'Rechazos fiscales resueltos uno por uno, en una planilla.',
+			'cf_dores_6_departamento'   => 'Fiscal',
+
+			// 6. Casos de uso.
+			'cf_casos_titulo'           => 'Empiece con un proceso listo.',
+			'cf_casos_titulo_destaque'  => 'O diseñe el suyo.',
+			'cf_casos_selo_texto'       => 'Integrado con SAP',
+			'cf_casos_1_departamento'   => 'Compras y Finanzas',
+			'cf_casos_1_1_nome'         => 'Solicitud de compra',
+			'cf_casos_1_2_nome'         => 'Cuentas por pagar',
+			'cf_casos_1_3_nome'         => 'Cuentas por cobrar y cobranza',
+			'cf_casos_1_4_nome'         => 'Aviso de pago',
+			'cf_casos_1_5_nome'         => 'Reembolso de gastos',
+			'cf_casos_1_6_nome'         => 'Viajes corporativos',
+			'cf_casos_2_departamento'   => 'Comercial',
+			'cf_casos_2_1_nome'         => 'Aprobación de crédito',
+			'cf_casos_2_2_nome'         => 'Onboarding de clientes',
+			'cf_casos_2_3_nome'         => 'Calificación de leads',
+			'cf_casos_2_4_nome'         => 'Encuesta de satisfacción (NPS)',
+			'cf_casos_3_departamento'   => 'Suministros y Fiscal',
+			'cf_casos_3_1_nome'         => 'Homologación de proveedores',
+			'cf_casos_3_2_nome'         => 'Emisión de factura individual',
+			'cf_casos_3_3_nome'         => 'Corrección de factura rechazada',
+			'cf_casos_4_departamento'   => 'Personas',
+			'cf_casos_4_1_nome'         => 'Reclutamiento y contratación',
+			'cf_casos_4_2_nome'         => 'Solicitudes de RR. HH.',
+			'cf_casos_4_3_nome'         => 'Desvinculación',
+			'cf_casos_5_departamento'   => 'TI',
+			'cf_casos_5_1_nome'         => 'Solicitud de accesos y equipos',
+			'cf_casos_5_2_nome'         => 'Tickets de soporte',
+			'cf_casos_6_departamento'   => 'Jurídico',
+			'cf_casos_6_1_nome'         => 'Aprobación de contratos',
+			'cf_casos_6_2_nome'         => 'Citaciones y plazos',
+
+			// 7. CTA "Não achou o seu?".
+			'cf_ia_titulo'              => '¿No encontró el suyo? Traiga el problema.',
+			'cf_ia_titulo_destaque'     => 'CLI diseña la solución con usted.',
+			'cf_ia_botao'               => $this->link_traduzido( 'Mapear mi proceso', '/contato/' ),
+
+			// 8. Cards.
+			'cf_cards_1_titulo'         => 'Un flujo con sus reglas',
+			'cf_cards_1_texto'          => 'Defina etapas, plazos y niveles de aprobación como su empresa decida.',
+			'cf_cards_2_titulo'         => 'Una pantalla que reúne varios sistemas',
+			'cf_cards_2_texto'          => 'Dé al vendedor precios y contratos de Protheus y negocios de HubSpot en la misma pantalla.',
+			'cf_cards_3_titulo'         => 'Un portal para clientes y proveedores',
+			'cf_cards_3_texto'          => 'Reciba datos y certificados directo del proveedor; el registro ya nace en el ERP.',
+			'cf_cards_4_titulo'         => 'Un panel con datos vivos',
+			'cf_cards_4_texto'          => 'Siga indicadores leídos directo de sus sistemas, sin planillas de por medio.',
+
+			// 9. SAP.
+			'cf_sap_eyebrow'            => 'Facilitando su proceso',
+			'cf_sap_titulo'             => 'Del pedido a SAP sin',
+			'cf_sap_titulo_destaque'    => 'que nadie vuelva a digitar.',
+			'cf_sap_1_titulo'           => 'Pida en una pantalla hecha para su proceso',
+			'cf_sap_1_texto'            => 'Saldos, registros e historial de sus sistemas ya aparecen en pantalla.',
+			'cf_sap_2_titulo'           => 'Apruebe con un clic, por correo o en Teams',
+			'cf_sap_2_texto'            => 'El agente de IA revisa antes y entrega su opinión. La IA recomienda; usted decide.',
+			'cf_sap_3_titulo'           => 'Listo: el pedido ya está en SAP',
+			'cf_sap_3_texto'            => 'Cuando aprueba el último nivel, la orden de compra nace en SAP y todo queda en el historial para auditoría.',
+			'cf_sap_botao'              => $this->link_traduzido( 'Solicitar demostración', '/contato/' ),
+			'cf_sap_card_titulo'        => 'Solicitud de compra',
+			'cf_sap_card_subtitulo'     => 'RC-0148 · R$ 18.450,00',
+			'cf_sap_card_selo'          => 'Integrado con SAP',
+			'cf_sap_card_agente'        => 'Preanálisis del Agente de Compras · 40 s',
+			'cf_sap_check_1_selo'       => 'OK',
+			'cf_sap_check_1_titulo'     => 'Saldo del centro de costo 4102',
+			'cf_sap_check_1_texto'      => 'R$ 62.300 disponibles en SAP; después de la compra quedan R$ 43.850.',
+			'cf_sap_check_2_selo'       => 'OK',
+			'cf_sap_check_2_titulo'     => 'Proveedor homologado',
+			'cf_sap_check_2_texto'      => 'Rolamentos Brasil Ltda. activo en el registro, sin pendientes fiscales.',
+			'cf_sap_check_3_selo'       => 'Atención',
+			'cf_sap_check_3_titulo'     => 'Precio del kit de sellado 6% más alto',
+			'cf_sap_check_3_texto'      => 'Promedio de las 3 últimas compras: R$ 1.180,00. Diferencia total: R$ 840,00.',
+			'cf_sap_check_4_selo'       => 'Atención',
+			'cf_sap_check_4_titulo'     => '2 cotizaciones adjuntas',
+			'cf_sap_check_4_texto'      => 'La política de compras pide 3 cotizaciones por encima de R$ 15 mil.',
+			'cf_sap_check_5_selo'       => 'OK',
+			'cf_sap_check_5_titulo'     => 'Sin pedido duplicado',
+			'cf_sap_check_5_texto'      => 'Ningún pedido igual para el mismo centro de costo en los últimos 60 días.',
+			'cf_sap_card_resumo_titulo' => 'Resumen para el aprobador',
+			'cf_sap_card_resumo_texto'  => 'Compra dentro del presupuesto y con proveedor regular. Sugiero aprobar pidiendo una 3.ª cotización del kit de sellado o la justificación del precio.',
+			'cf_sap_card_botao_1'       => 'Aprobar con salvedad',
+			'cf_sap_card_botao_2'       => 'Pedir 3.ª cotización',
+			'cf_sap_card_botao_3'       => 'Rechazar',
+
+			// 10. Integrações.
+			'cf_int_titulo'             => 'A su manera.',
+			'cf_int_titulo_destaque'    => 'Integrado con sus grandes sistemas.',
+			'cf_int_selo_antes'         => 'Hasta',
+			'cf_int_selo_depois'        => 'menos licencias',
+			'cf_int_janela_titulo'      => 'Consulta de servicios',
+			'cf_int_janela_fontes'      => 'Datos en vivo de',
+			'cf_int_busca_label'        => 'Buscar servicio',
+			'cf_int_busca_valor'        => 'Soporte',
+			'cf_int_col_1'              => 'Código',
+			'cf_int_col_2'              => 'Servicio',
+			'cf_int_col_3'              => 'Precio',
+			'cf_int_col_4'              => 'Contratos activos',
+			'cf_int_col_5'              => 'Negocios abiertos',
+			'cf_int_linha_1'            => 'SV-101 | Soporte técnico mensual | R$ 2.400,00 / mes | 38 | 4 negocios · R$ 115 mil',
+			'cf_int_linha_2'            => 'SV-205 | Implementación de sistema | R$ 18.000,00 | 12 | 2 negocios · R$ 36 mil',
+			'cf_int_linha_3'            => 'SV-310 | Mantenimiento preventivo | R$ 950,00 / visita | 54 | 1 negocio · R$ 11 mil',
+			'cf_int_linha_4'            => 'SV-412 | Capacitación in company | R$ 3.200,00 / grupo | 6 | —',
+			'cf_int_detalhe_sub'        => 'SV-101 · R$ 2.400,00 / mes',
+			'cf_int_detalhe_titulo'     => 'Soporte técnico mensual',
+			'cf_int_bloco_1_titulo'     => 'Contratos activos por sucursal',
+			'cf_int_bloco_1_linhas'     => "Uberlândia | 20 contratos\nBelo Horizonte | 12 contratos\nSão Paulo | 6 contratos",
+			'cf_int_bloco_2_titulo'     => 'Negocios en HubSpot',
+			'cf_int_bloco_2_linhas'     => "Grupo Andrade | 12 meses · Propuesta\nClínica Vida | 24 meses · Negociación\nEscola Horizonte | 12 meses · Calificado",
+			'cf_int_botao_1'            => 'Crear propuesta',
+			'cf_int_botao_2'            => 'Abrir orden de servicio',
+			'cf_int_legenda'            => 'El vendedor consulta precios y contratos de Protheus y los negocios de HubSpot en la misma pantalla — <strong>sin licencia de Protheus.</strong>',
+
+			// 11. Benefícios.
+			'cf_ben_1_titulo'           => 'Usuarios ilimitados',
+			'cf_ben_2_titulo'           => 'Procesos ilimitados',
+			'cf_ben_3_titulo'           => 'Costo fijo mensual',
+
+			// 12. Como funciona.
+			'cf_dash_eyebrow'           => 'Cómo funciona',
+			'cf_dash_titulo'            => 'Cualquier pantalla, dashboard o proceso.',
+			'cf_dash_titulo_destaque'   => 'Totalmente integrado con sus sistemas.',
+			'cf_dash_texto'             => 'La persona completa y aprueba en CLI Flow. CLI Connect lleva los datos a cada sistema, sin que nadie vuelva a digitar y reduciendo el volumen de licencias de los sistemas.',
+			'cf_dash_card_titulo'       => 'Solicitud de compra',
+			'cf_dash_etapa_1_texto'     => 'pantallas y decisiones',
+			'cf_dash_etapa_2_texto'     => 'integración operada por CLI',
+			'cf_dash_etapa_3_destaque'  => 'Sus sistemas',
+
+			// 13. Economia.
+			'cf_eco_titulo'             => 'Hasta 80% menos licencias',
+			'cf_eco_titulo_destaque'    => 'en sus grandes sistemas',
+			'cf_eco_texto'              => 'Quien solo solicita, aprueba o consulta no necesita una licencia completa en el sistema. Esas personas usan CLI Flow, con la información de esos sistemas directo en su pantalla.',
+			'cf_eco_card_titulo'        => 'Empresa con 100 usuarios',
+			'cf_eco_sem_label'          => 'Sin CLI Flow',
+			'cf_eco_sem_valor'          => '100 licencias completas',
+			'cf_eco_com_label'          => 'Con CLI Flow',
+			'cf_eco_com_valor'          => '20 licencias completas',
+			'cf_eco_com_barra'          => '80 usuarios en CLI Flow',
+
+			// 15. Preço.
+			'cf_preco_titulo'           => 'Todo incluido.',
+			'cf_preco_titulo_destaque'  => 'Con costo previsible.',
+			'cf_preco_texto'            => 'Integración, plataforma y soporte en un solo contrato, sin cobro por usuario y sin límite de procesos.',
+			'cf_preco_1_titulo'         => 'Integración incluida',
+			'cf_preco_1_texto'          => 'Cada proceso ya nace conectado a sus sistemas de gestión, CRM y fiscal — más de 30 mil integraciones listas detrás.',
+			'cf_preco_2_titulo'         => 'Funciona donde usted lo necesita',
+			'cf_preco_2_texto'          => 'Nube, CLI Connect Hosted con IP fija, o dentro de su red para sistemas on-premise.',
+			'cf_preco_3_titulo'         => 'Seguro por defecto',
+			'cf_preco_3_texto'          => 'Inicio de sesión corporativo, permisos por etapa y registro de quién decidió qué.',
+
+			// 15b. Selos.
+			'cf_selos_titulo'           => 'Lideramos el mercado en cumplimiento y seguridad',
+
+			// 15c. FAQ.
+			'cf_faq_titulo'             => 'Preguntas Frecuentes',
+
+			// 17. CTA final.
+			'cf_cta_eyebrow'            => 'Próximo paso',
+			'cf_cta_titulo'             => 'Muéstrenos su proceso.',
+			'cf_cta_titulo_destaque'    => 'En 30 minutos queda mapeado.',
+			'cf_cta_texto'              => 'Traiga el proceso que más frena a su área, de compras a la contratación. Usted sale de la conversación con el proceso mapeado, los sistemas que toca y los próximos pasos.',
+			'cf_cta_botao'              => $demo,
 		);
 	}
 }

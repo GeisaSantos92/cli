@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-25T12:15:51+00:00\n"
+"POT-Creation-Date: 2026-11-24T11:03:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: cli\n"
@@ -52,30 +52,31 @@ msgstr ""
 msgid "Voltar para a home"
 msgstr ""
 
-#: archive-cli_case.php:48
+#: archive-cli_case.php:53
 msgid "Conheça os resultados alcançados por nossos clientes"
 msgstr ""
 
-#: archive-cli_case.php:51
+#: archive-cli_case.php:56
 msgid "Explore projetos que ajudaram empresas a ganhar eficiência, previsibilidade e capacidade de evolução."
 msgstr ""
 
-#: archive-cli_case.php:173
+#: archive-cli_case.php:178
 msgid "Case em andamento"
 msgstr ""
 
 #: archive-cli_solucao.php:24
-#: taxonomy-cli_categoria_solucao.php:28
+#: taxonomy-cli_categoria_solucao.php:167
+#: taxonomy-cli_categoria_solucao.php:269
 msgid "Filtrar por categoria"
 msgstr ""
 
 #: archive-cli_solucao.php:25
-#: taxonomy-cli_categoria_solucao.php:29
+#: taxonomy-cli_categoria_solucao.php:168
+#: taxonomy-cli_categoria_solucao.php:270
 msgid "Categorias"
 msgstr ""
 
 #: archive-cli_solucao.php:30
-#: taxonomy-cli_categoria_solucao.php:34
 msgid "Ver todos"
 msgstr ""
 
@@ -91,26 +92,27 @@ msgstr ""
 msgid "Hero da página"
 msgstr ""
 
-#: footer.php:77
-#: inc/customizer.php:32
-msgid "LinkedIn"
-msgstr ""
-
-#: footer.php:88
-#: inc/customizer.php:30
-#: template-parts/contato/formulario.php:106
-msgid "Instagram"
-msgstr ""
-
-#: footer.php:100
+#: footer.php:67
 msgid "Links do rodapé"
 msgstr ""
 
-#: footer.php:126
+#: footer.php:99
+#: inc/customizer.php:32
+#: template-parts/contato/formulario.php:94
+msgid "LinkedIn"
+msgstr ""
+
+#: footer.php:110
+#: inc/customizer.php:30
+#: template-parts/contato/formulario.php:103
+msgid "Instagram"
+msgstr ""
+
+#: footer.php:130
 msgid "Voltar ao topo"
 msgstr ""
 
-#: footer.php:137
+#: footer.php:144
 msgid "Falar no WhatsApp"
 msgstr ""
 
@@ -134,7 +136,7 @@ msgstr ""
 msgid "Menu principal"
 msgstr ""
 
-#: header.php:73
+#: header.php:74
 msgid "Abrir menu"
 msgstr ""
 
@@ -142,8 +144,11 @@ msgstr ""
 msgid "Seções do tema"
 msgstr ""
 
+#: inc/cpt.php:326
+msgid "Acesso restrito. É necessário estar autenticado."
+msgstr ""
+
 #: inc/customizer.php:31
-#: template-parts/contato/formulario.php:97
 msgid "Facebook"
 msgstr ""
 
@@ -186,7 +191,8 @@ msgid "URL do perfil no %s"
 msgstr ""
 
 #: inc/customizer.php:146
-#: template-parts/contato/formulario.php:80
+#: template-parts/contato/formulario.php:75
+#: template-parts/form-lead.php:66
 msgid "Telefone"
 msgstr ""
 
@@ -202,25 +208,59 @@ msgstr ""
 msgid "E-mail de contato geral"
 msgstr ""
 
-#: inc/customizer.php:221
+#: inc/customizer.php:224
 #: inc/polylang.php:39
 msgid "Rodapé — título do CTA"
 msgstr ""
 
-#: inc/customizer.php:222
+#: inc/customizer.php:225
 msgid "Bloco azul acima do rodapé. Use quebras de linha para separar as linhas do título."
 msgstr ""
 
-#: inc/customizer.php:245
+#: inc/customizer.php:248
 msgid "Tag Google Analytics / GTM"
 msgstr ""
 
-#: inc/customizer.php:246
+#: inc/customizer.php:249
 msgid "Cole aqui o snippet completo de Google Analytics ou Google Tag Manager. Só é impresso em produção (WP_DEBUG desligado) e para visitantes não logados."
 msgstr ""
 
+#: inc/customizer.php:262
+msgid "Salesforce — Web-to-Lead"
+msgstr ""
+
+#: inc/customizer.php:263
+msgid "Formulário de lead da página Contato e do botão flutuante de WhatsApp. Guia: docs/lead-salesforce.md."
+msgstr ""
+
+#: inc/customizer.php:280
+msgid "ID da organização (oid)"
+msgstr ""
+
+#: inc/customizer.php:281
+msgid "Começa com 00D. Está no HTML gerado em Configuração › Web-to-Lead."
+msgstr ""
+
+#. translators: %s: nome do parâmetro, ex.: UTM Source.
+#: inc/customizer.php:302
+#, php-format
+msgid "ID do campo — %s"
+msgstr ""
+
+#: inc/customizer.php:303
+msgid "ID 00N... do campo personalizado no Lead. Vazio = vai só no fim da Descrição."
+msgstr ""
+
+#: inc/login.php:165
+msgid "Muitas tentativas de login malsucedidas. Tente novamente em 15 minutos."
+msgstr ""
+
+#: inc/login.php:196
+msgid "Nome de usuário ou senha inválidos."
+msgstr ""
+
 #. translators: %s: nome do item de menu
-#: inc/menu-walker.php:148
+#: inc/menu-walker.php:163
 #, php-format
 msgid "Abrir submenu de %s"
 msgstr ""
@@ -249,15 +289,40 @@ msgstr ""
 msgid "Rodapé — texto do botão do CTA"
 msgstr ""
 
-#: inc/polylang.php:200
+#: inc/polylang.php:41
+msgid "Cookies — texto do banner"
+msgstr ""
+
+#: inc/polylang.php:42
+msgid "Cookies — rótulo do link"
+msgstr ""
+
+#: inc/polylang.php:43
+msgid "Cookies — texto do botão"
+msgstr ""
+
+#: inc/polylang.php:203
+#: inc/seo.php:476
+#: template-parts/single/breadcrumb-solucao.php:68
+#: template-parts/single/breadcrumb-solucao.php:71
 msgid "Soluções"
 msgstr ""
 
-#: inc/polylang.php:201
+#: inc/polylang.php:204
+#: inc/seo.php:458
+#: template-parts/single/breadcrumb-case.php:33
+#: template-parts/single/breadcrumb-case.php:36
 msgid "Cases"
 msgstr ""
 
-#: inc/template-tags.php:176
+#: inc/seo.php:443
+#: template-parts/blog/destaque.php:45
+#: template-parts/single/breadcrumb.php:38
+msgid "Blog"
+msgstr ""
+
+#: inc/template-tags.php:175
+#: inc/template-tags.php:201
 msgid "Mudar o idioma"
 msgstr ""
 
@@ -274,6 +339,14 @@ msgid "Integração SAP"
 msgstr ""
 
 #. Template Name of the theme
+msgid "Política de Privacidade"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Programa de Parceiros"
+msgstr ""
+
+#. Template Name of the theme
 msgid "Landing Page (canvas)"
 msgstr ""
 
@@ -287,68 +360,88 @@ msgstr ""
 msgid "Resultados para: %s"
 msgstr ""
 
-#: single-cli_case.php:121
+#: single-cli_case.php:142
 msgid "Tecnologias Utilizadas"
 msgstr ""
 
-#: single-cli_case.php:150
+#: single-cli_case.php:172
 msgid "Tópicos do case"
 msgstr ""
 
-#: single-cli_case.php:153
-#: single-cli_case.php:205
+#: single-cli_case.php:175
+#: single-cli_case.php:232
 msgid "Desafio"
 msgstr ""
 
-#: single-cli_case.php:158
+#: single-cli_case.php:180
 msgid "Solução"
 msgstr ""
 
-#: single-cli_case.php:163
+#: single-cli_case.php:185
 msgid "Impacto"
 msgstr ""
 
-#: single-cli_case.php:192
+#: single-cli_case.php:215
 msgid "Assistir ao vídeo"
 msgstr ""
 
-#: single-cli_case.php:242
+#: single-cli_case.php:269
 msgid "A solução"
 msgstr ""
 
-#: single-cli_case.php:261
+#: single-cli_case.php:302
 msgid "O impacto"
 msgstr ""
 
-#: single-cli_case.php:310
+#: single-cli_case.php:351
 msgid "Confira outros cases de sucesso"
 msgstr ""
 
-#: single-cli_case.php:336
+#: single-cli_case.php:377
 msgid "Ver case"
 msgstr ""
 
-#: single-cli_case.php:345
+#: single-cli_case.php:386
 msgid "Confira nossos cases"
 msgstr ""
 
-#: taxonomy-cli_categoria_solucao.php:122
+#: taxonomy-cli_categoria_solucao.php:131
+msgid ""
+"Integre todos os sistemas da sua empresa e automatize seus fluxos de trabalho de ponta a ponta.\n"
+"Clique na ferramenta desejada abaixo para ver os detalhes, vantagens e casos de uso de cada integração."
+msgstr ""
+
+#: taxonomy-cli_categoria_solucao.php:143
+#: taxonomy-cli_categoria_solucao.php:158
+msgid "Pesquisar por alguma tecnologia"
+msgstr ""
+
+#: taxonomy-cli_categoria_solucao.php:238
+msgid "Nenhuma tecnologia encontrada."
+msgstr ""
+
+#: taxonomy-cli_categoria_solucao.php:243
+msgid "Nenhuma tecnologia encontrada nesta categoria."
+msgstr ""
+
+#: taxonomy-cli_categoria_solucao.php:322
 msgid "Nenhuma solução encontrada nesta categoria."
 msgstr ""
 
-#: template-parts/blog/destaque.php:38
+#: template-parts/blog/destaque.php:35
+#: template-parts/single/breadcrumb-case.php:18
+#: template-parts/single/breadcrumb-pagina.php:18
+#: template-parts/single/breadcrumb-solucao.php:53
 #: template-parts/single/breadcrumb.php:21
 msgid "Localização"
 msgstr ""
 
-#: template-parts/blog/destaque.php:42
+#: template-parts/blog/destaque.php:39
+#: template-parts/single/breadcrumb-case.php:24
+#: template-parts/single/breadcrumb-pagina.php:24
+#: template-parts/single/breadcrumb-solucao.php:59
 #: template-parts/single/breadcrumb.php:27
 msgid "Início"
-msgstr ""
-
-#: template-parts/blog/destaque.php:48
-#: template-parts/single/breadcrumb.php:38
-msgid "Blog"
 msgstr ""
 
 #: template-parts/blog/newsletter.php:19
@@ -375,7 +468,7 @@ msgstr ""
 msgid "Ao enviar este formulário, você concorda com nossa Política de Privacidade."
 msgstr ""
 
-#: template-parts/cli-connect/boomi.php:27
+#: template-parts/cli-connect/boomi.php:33
 #: template-parts/home/boomi.php:24
 msgid "Powered by Boomi — a única com 11 certificações globais do AICPA"
 msgstr ""
@@ -384,15 +477,15 @@ msgstr ""
 msgid "Screenshot do portal CLI Connect — visão geral de projetos e solicitações"
 msgstr ""
 
-#: template-parts/cli-connect/diferenciais.php:73
+#: template-parts/cli-connect/diferenciais.php:79
 msgid "Sim"
 msgstr ""
 
-#: template-parts/cli-connect/diferenciais.php:83
+#: template-parts/cli-connect/diferenciais.php:89
 msgid "Outras plataformas"
 msgstr ""
 
-#: template-parts/cli-connect/diferenciais.php:87
+#: template-parts/cli-connect/diferenciais.php:93
 msgid "Não"
 msgstr ""
 
@@ -401,28 +494,34 @@ msgid "Ilustração de operações críticas protegidas pela CLI Connect"
 msgstr ""
 
 #: template-parts/contato/clientes.php:25
-#: template-parts/home/clientes.php:19
+#: template-parts/home/clientes.php:26
 msgid "Clientes que confiam na CLI Connect"
 msgstr ""
 
-#: template-parts/contato/formulario.php:68
+#: template-parts/contato/formulario.php:63
 msgid "Entre em contato"
 msgstr ""
 
-#: template-parts/contato/formulario.php:72
+#: template-parts/contato/formulario.php:67
+#: template-parts/form-lead.php:71
+#: template-parts/form-lead.php:72
 msgid "E-mail"
 msgstr ""
 
-#: template-parts/contato/formulario.php:90
+#: template-parts/contato/formulario.php:87
 msgid "Nossas redes"
 msgstr ""
 
-#: template-parts/contato/formulario.php:115
+#: template-parts/contato/formulario.php:113
 msgid "WhatsApp"
 msgstr ""
 
-#: template-parts/contato/formulario.php:134
-msgid "Formulário não configurado. Insira o ID do formulário CF7 no painel ACF."
+#: template-parts/contato/formulario.php:130
+msgid "Mensagem enviada!"
+msgstr ""
+
+#: template-parts/contato/formulario.php:131
+msgid "Recebemos seus dados. Em breve nossa equipe entrará em contato."
 msgstr ""
 
 #: template-parts/content-none.php:14
@@ -437,11 +536,46 @@ msgstr ""
 msgid "Ainda não há conteúdo publicado aqui."
 msgstr ""
 
+#: template-parts/cookie-banner.php:34
+msgid "Aviso de cookies"
+msgstr ""
+
+#: template-parts/form-lead.php:36
+msgid "Enviar"
+msgstr ""
+
+#: template-parts/form-lead.php:61
+#: template-parts/form-lead.php:62
+msgid "Nome"
+msgstr ""
+
+#: template-parts/form-lead.php:67
+msgid "(00) 00000-0000"
+msgstr ""
+
+#: template-parts/form-lead.php:76
+#: template-parts/form-lead.php:77
+msgid "Empresa"
+msgstr ""
+
+#: template-parts/form-lead.php:81
+msgid "Mensagem"
+msgstr ""
+
+#: template-parts/form-lead.php:82
+msgid "Digite sua mensagem"
+msgstr ""
+
+#: template-parts/form-lead.php:93
+msgid "Ao enviar, concordo em receber comunicações da CLI"
+msgstr ""
+
 #: template-parts/home/agentes.php:55
+#: template-parts/solucao/integracoes.php:28
 msgid "Integrações"
 msgstr ""
 
-#: template-parts/home/camadas.php:23
+#: template-parts/home/camadas.php:19
 msgid "Camadas da plataforma: biblioteca de integrações, serviço incluso e plataforma global"
 msgstr ""
 
@@ -463,35 +597,92 @@ msgstr ""
 msgid "Diagrama de integração SAP com CLI Connect"
 msgstr ""
 
+#: template-parts/lead-popup.php:29
+msgid "Fechar"
+msgstr ""
+
+#: template-parts/lead-popup.php:37
+msgid "Fale com a gente no WhatsApp"
+msgstr ""
+
+#: template-parts/lead-popup.php:38
+msgid "Preencha seus dados para iniciar a conversa com o nosso time."
+msgstr ""
+
+#: template-parts/lead-popup.php:49
+msgid "Continuar no WhatsApp"
+msgstr ""
+
+#: template-parts/lead-popup.php:56
+msgid "Tudo certo!"
+msgstr ""
+
+#: template-parts/lead-popup.php:57
+msgid "Abrimos a conversa no WhatsApp em uma nova aba."
+msgstr ""
+
+#: template-parts/programa-de-parceiros/logos.php:23
+msgid "Clientes"
+msgstr ""
+
 #. translators: 1: nome do site, 2: ano atual.
 #: template-parts/rodape-agencia.php:20
 #, php-format
 msgid "© %1$s %2$s. Todos os direitos reservados."
 msgstr ""
 
-#: template-parts/rodape-agencia.php:34
-msgid "Links legais"
-msgstr ""
-
-#: template-parts/rodape-agencia.php:52
+#: template-parts/rodape-agencia.php:37
 msgid "Design e desenvolvimento"
 msgstr ""
 
-#: template-parts/rodape-agencia.php:54
+#: template-parts/rodape-agencia.php:39
 msgid "Logo Agência R8"
 msgstr ""
 
+#: template-parts/single/compartilhar.php:21
+msgid "Compartilhar no LinkedIn"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:26
+msgid "Compartilhar no WhatsApp"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:31
+msgid "Compartilhar no X"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:36
+msgid "Compartilhar no Facebook"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:41
+msgid "Enviar por e-mail"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:50
+msgid "Compartilhar"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:76
+msgid "Link copiado"
+msgstr ""
+
+#: template-parts/single/compartilhar.php:77
+#: template-parts/single/compartilhar.php:78
+msgid "Copiar link"
+msgstr ""
+
 #. translators: %s: data de publicação
-#: template-parts/single/materia.php:43
+#: template-parts/single/materia.php:49
 #, php-format
 msgid "Publicado em: %s"
 msgstr ""
 
-#: template-parts/single/materia.php:69
+#: template-parts/single/materia.php:75
 msgid "Assuntos"
 msgstr ""
 
-#: template-parts/solucao/aceleradores.php:40
+#: template-parts/solucao/aceleradores.php:41
 msgid "Aceleradores de Integração"
 msgstr ""
 
@@ -515,7 +706,7 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: template-parts/solucao/hero.php:38
+#: template-parts/solucao/hero.php:43
 msgid "Apresentação"
 msgstr ""
 
@@ -621,40 +812,4 @@ msgstr ""
 #: blocks/stats/block.json
 msgctxt "block description"
 msgid "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks."
-msgstr ""
-
-#: template-parts/cookie-banner.php
-msgid "Aviso de cookies"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Compartilhar"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Compartilhar no LinkedIn"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Compartilhar no WhatsApp"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Compartilhar no X"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Compartilhar no Facebook"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Enviar por e-mail"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Copiar link"
-msgstr ""
-
-#: template-parts/single/compartilhar.php
-msgid "Link copiado"
 msgstr ""

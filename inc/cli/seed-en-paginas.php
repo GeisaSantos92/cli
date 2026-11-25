@@ -45,6 +45,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'contato'          => array( 'contact', 'Contact' ),
 			'plataforma'       => array( 'platform', 'Platform' ),
 			'cli-connect'      => array( 'cli-connect-platform', 'CLI Connect' ),
+			'cli-flow'         => array( 'cli-flow-platform', 'CLI Flow' ),
 			'cli-signature'    => array( 'cli-signature-service', 'CLI Signature' ),
 			'solucoes'         => array( 'solutions', 'Solutions' ),
 			'integracao-sap'   => array( 'sap-integration', 'SAP Integration' ),
@@ -75,7 +76,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'agentes_legenda'       => '30,000+ integrations ready to use',
 			'camadas_titulo'        => "Everything you need.\nAt a predictable cost.",
 			'camadas_texto'         => "Pay a flat fee and use our integration service as much as you want.\nThe more your operation grows, the more you gain.",
-			'camadas_botao'         => $this->link_traduzido( 'See what is included', self::WHATSAPP, '_blank' ),
+			'camadas_botao'         => $this->link_traduzido( 'See what is included', '/contato/' ),
 			'boomi_eyebrow'         => 'Global platform',
 			'boomi_titulo'          => 'World-class technology with support built for the Brazilian market',
 			'boomi_texto'           => '<p>Get the same platform that large global companies use to integrate their systems, with the added advantage of <strong>specialised support for the Brazilian market</strong>, affordable pricing and managed service included.</p>',
@@ -123,7 +124,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'suporte_eyebrow'       => 'Support whenever you need it',
 			'suporte_titulo'        => 'You are never on your own.',
 			'suporte_texto'         => '<p>We offer <strong>human support</strong> for the moments you need it most. Our team monitors, maintains and evolves your integrations. If something goes wrong, we are already fixing it before you notice.</p>',
-			'suporte_botao'         => $this->link_traduzido( 'See our support channels', '/contato/' ),
+			'suporte_botao'         => $this->link_traduzido( 'Go to the Client Portal', 'https://cliconsultoria.my.site.com/cliente', '_blank' ),
 			'blog_titulo'           => 'The latest from our blog',
 			'blog_link'             => $this->link_traduzido( 'See all posts', '/blog/' ),
 			'faq_eyebrow'           => 'FAQ',
@@ -138,8 +139,8 @@ trait Cliconnect_Seed_En_Paginas {
 	/**
 	 * Campos de texto da página Contato em inglês.
 	 *
-	 * E-mail, telefone, redes sociais e o ID do formulário CF7 não são texto
-	 * traduzível — ficam de fora e são copiados do original.
+	 * E-mail, telefone e redes sociais não são texto traduzível — ficam de
+	 * fora e são copiados do original.
 	 *
 	 * @return array<string,mixed>
 	 */
@@ -150,70 +151,12 @@ trait Cliconnect_Seed_En_Paginas {
 			'ct_form_texto'         => 'Ask questions, explore what is possible and find out how CLI can support your operation with integration, automation and enterprise AI.',
 		);
 
-		$formulario = $this->criar_form_cf7_en();
-
-		if ( $formulario ) {
-			$campos['ct_form_cf7_id'] = (string) $formulario;
-		}
-
 		return $campos;
 	}
 
 	/* =====================================================================
 	   TRABALHE CONOSCO
 	   ===================================================================== */
-
-	/**
-	 * Formulário do Contact Form 7 em inglês.
-	 *
-	 * @return int ID do formulário, 0 em caso de falha.
-	 */
-	protected function criar_form_cf7_en() {
-		return $this->criar_form_cf7_traduzido(
-			'contact-cli',
-			'Contact CLI',
-			'<label>Name
-[text* ct-nome placeholder "Name"]</label>
-
-<label>Phone
-[tel* ct-telefone placeholder "+55 (00) 00000-0000"]</label>
-
-<label>Email
-[email* ct-email placeholder "Email"]</label>
-
-<label>Message
-[textarea* ct-mensagem placeholder "Type your message"]</label>
-
-[acceptance ct-aceite] By submitting, I agree to receive communications from CLI[/acceptance]
-
-[submit "Send"]',
-			array(
-				'mail_sent_ok'               => 'Message sent. We will be in touch shortly.',
-				'mail_sent_ng'               => 'Something went wrong. Please try again.',
-				'validation_error'           => 'Please fill in the required fields before sending.',
-				'spam'                       => 'There seems to be a problem with the submission.',
-				'accept_terms'               => 'You need to accept the terms to continue.',
-				'invalid_required'           => 'This field is required.',
-				'invalid_too_long'           => 'This text is too long.',
-				'invalid_too_short'          => 'This text is too short.',
-				'invalid_date'               => 'Invalid date.',
-				'date_too_early'             => 'That date is too early.',
-				'date_too_late'              => 'That date is too late.',
-				'invalid_number'             => 'Invalid number.',
-				'number_too_small'           => 'That number is too small.',
-				'number_too_large'           => 'That number is too large.',
-				'invalid_email'              => 'Invalid email address.',
-				'invalid_url'                => 'Invalid URL.',
-				'invalid_tel'                => 'Invalid phone number.',
-				'upload_failed'              => 'Upload failed.',
-				'upload_file_type_invalid'   => 'Invalid file type.',
-				'upload_file_too_large'      => 'That file is too large.',
-				'upload_failed_php_error'    => 'There was an error uploading the file.',
-				'upload_file_count_exceeded' => 'Too many files.',
-				'quiz_answer_not_correct'    => 'That answer is not correct.',
-			)
-		);
-	}
 
 	/**
 	 * Title e meta description das páginas, em inglês.
@@ -285,7 +228,7 @@ trait Cliconnect_Seed_En_Paginas {
 			'Portal do Cliente'                                       => 'Client Portal',
 			'Acessar Plataforma'                                      => 'Access Platform',
 			"Planeje a evolução\ndas suas integrações"                 => "Plan the evolution\nof your integrations",
-			'Fale conosco no WhatsApp'                                 => 'Talk to us on WhatsApp',
+			'Fale conosco'                                 => 'Talk to us',
 			'Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com a nossa' => 'We use cookies to improve your experience. By continuing to browse, you agree to our',
 			'política de privacidade'                                  => 'privacy policy',
 			'Concordar'                                                => 'Agree',
@@ -785,7 +728,7 @@ trait Cliconnect_Seed_En_Paginas {
 	 * @return array<string,mixed>
 	 */
 	protected function texto_en_programa_de_parceiros() {
-		$quero_ser_parceiro = $this->link_traduzido( 'Become a partner', self::WHATSAPP, '_blank' );
+		$quero_ser_parceiro = $this->link_traduzido( 'Become a partner', '/contato/' );
 
 		return array(
 			'pp_hero_eyebrow'            => 'PARTNER PROGRAM',
@@ -865,6 +808,218 @@ trait Cliconnect_Seed_En_Paginas {
 			'pp_cta_titulo'              => 'Ready to turn your portfolio into recurring revenue?',
 			'pp_cta_texto'               => 'Talk to our corporate consultants and get the full partnership documentation.',
 			'pp_cta_botao'               => $quero_ser_parceiro,
+		);
+	}
+
+	/* =====================================================================
+	   CLI FLOW
+	   ===================================================================== */
+
+	/**
+	 * Campos de texto da página CLI Flow em inglês.
+	 *
+	 * Os dados dos mockups (valores, códigos, nomes de clientes) seguem os do
+	 * português, só com a formatação de número do inglês.
+	 *
+	 * @return array<string,mixed>
+	 */
+	protected function texto_en_cli_flow() {
+		$demo = $this->link_traduzido( 'Book a demo', '/contato/' );
+
+		return array(
+			// 1. Hero.
+			'cf_hero_eyebrow'           => 'CLI Flow - powered by Boomi',
+			'cf_hero_titulo'            => 'Build the screens your flow is missing',
+			'cf_hero_titulo_destaque'   => 'already integrated with your systems',
+			'cf_hero_texto'             => '<strong>Leave email and spreadsheets behind:</strong> build portals, registrations and approvals with no code. And, if you prefer, CLI designs them with you.',
+			'cf_hero_botao_1'           => $demo,
+			'cf_hero_botao_2'           => array(
+				'title'  => 'See how it works',
+				'url'    => '#como-funciona',
+				'target' => '',
+			),
+			'cf_hero_logos_label'       => 'Integrated with your systems',
+
+			// 2. Mockup.
+			'cf_mockup_legenda'         => 'Most requested examples',
+			'cf_mockup_1_label'         => 'Customer Portal',
+			'cf_mockup_2_label'         => 'Supplier Portal',
+			'cf_mockup_3_label'         => 'Product Registration',
+
+			// 4. Dores.
+			'cf_dores_titulo'           => 'Which of these is holding your team back?',
+			'cf_dores_1_citacao'        => 'An order stuck in an approval level nobody can find.',
+			'cf_dores_1_departamento'   => 'Procurement',
+			'cf_dores_2_citacao'        => 'An invoice that does not match the order, and a late-payment fine.',
+			'cf_dores_2_departamento'   => 'Finance',
+			'cf_dores_3_citacao'        => 'A sale going cold while it waits for credit approval.',
+			'cf_dores_3_departamento'   => 'Sales',
+			'cf_dores_4_citacao'        => 'Documents in five places and a new hire who starts without access.',
+			'cf_dores_4_departamento'   => 'People',
+			'cf_dores_5_citacao'        => 'Supplier onboarding that takes weeks and comes back with errors.',
+			'cf_dores_5_departamento'   => 'Supply',
+			'cf_dores_6_citacao'        => 'Tax authority rejections fixed one by one, in a spreadsheet.',
+			'cf_dores_6_departamento'   => 'Tax',
+
+			// 6. Casos de uso.
+			'cf_casos_titulo'           => 'Start with a ready-made process.',
+			'cf_casos_titulo_destaque'  => 'Or design your own.',
+			'cf_casos_selo_texto'       => 'Integrated with SAP',
+			'cf_casos_1_departamento'   => 'Procurement and Finance',
+			'cf_casos_1_1_nome'         => 'Purchase requisition',
+			'cf_casos_1_2_nome'         => 'Accounts payable',
+			'cf_casos_1_3_nome'         => 'Accounts receivable and collections',
+			'cf_casos_1_4_nome'         => 'Payment notification',
+			'cf_casos_1_5_nome'         => 'Expense reimbursement',
+			'cf_casos_1_6_nome'         => 'Corporate travel',
+			'cf_casos_2_departamento'   => 'Sales',
+			'cf_casos_2_1_nome'         => 'Credit approval',
+			'cf_casos_2_2_nome'         => 'Customer onboarding',
+			'cf_casos_2_3_nome'         => 'Lead qualification',
+			'cf_casos_2_4_nome'         => 'Satisfaction survey (NPS)',
+			'cf_casos_3_departamento'   => 'Supply and Tax',
+			'cf_casos_3_1_nome'         => 'Supplier qualification',
+			'cf_casos_3_2_nome'         => 'Stand-alone invoice issuing',
+			'cf_casos_3_3_nome'         => 'Rejected invoice correction',
+			'cf_casos_4_departamento'   => 'People',
+			'cf_casos_4_1_nome'         => 'Recruiting and hiring',
+			'cf_casos_4_2_nome'         => 'HR requests',
+			'cf_casos_4_3_nome'         => 'Offboarding',
+			'cf_casos_5_departamento'   => 'IT',
+			'cf_casos_5_1_nome'         => 'Access and equipment requests',
+			'cf_casos_5_2_nome'         => 'Support tickets',
+			'cf_casos_6_departamento'   => 'Legal',
+			'cf_casos_6_1_nome'         => 'Contract approval',
+			'cf_casos_6_2_nome'         => 'Summons and deadlines',
+
+			// 7. CTA "Não achou o seu?".
+			'cf_ia_titulo'              => 'Can’t find yours? Bring us the problem.',
+			'cf_ia_titulo_destaque'     => 'CLI designs the solution with you.',
+			'cf_ia_botao'               => $this->link_traduzido( 'Map my process', '/contato/' ),
+
+			// 8. Cards.
+			'cf_cards_1_titulo'         => 'A flow with your rules',
+			'cf_cards_1_texto'          => 'Set steps, deadlines and approval levels the way your company decides.',
+			'cf_cards_2_titulo'         => 'One screen that brings several systems together',
+			'cf_cards_2_texto'          => 'Give your sales rep Protheus prices and contracts and HubSpot deals on the same screen.',
+			'cf_cards_3_titulo'         => 'A portal for customers and suppliers',
+			'cf_cards_3_texto'          => 'Receive data and certificates straight from the supplier; the record is born in the ERP.',
+			'cf_cards_4_titulo'         => 'A dashboard with live data',
+			'cf_cards_4_texto'          => 'Track indicators read straight from your systems, with no spreadsheet in between.',
+
+			// 9. SAP.
+			'cf_sap_eyebrow'            => 'Making your process easier',
+			'cf_sap_titulo'             => 'From request to SAP',
+			'cf_sap_titulo_destaque'    => 'with no retyping.',
+			'cf_sap_1_titulo'           => 'Request on a screen built for your process',
+			'cf_sap_1_texto'            => 'Balances, records and history from your systems are already on screen.',
+			'cf_sap_2_titulo'           => 'Approve in one click, by email or in Teams',
+			'cf_sap_2_texto'            => 'The AI agent checks first and delivers its opinion. AI recommends; you decide.',
+			'cf_sap_3_titulo'           => 'Done: the order is already in SAP',
+			'cf_sap_3_texto'            => 'When the last approval level signs off, the purchase order is created in SAP and everything stays in the history for auditing.',
+			'cf_sap_botao'              => $this->link_traduzido( 'Request a demo', '/contato/' ),
+			'cf_sap_card_titulo'        => 'Purchase requisition',
+			'cf_sap_card_subtitulo'     => 'RC-0148 · R$ 18,450.00',
+			'cf_sap_card_selo'          => 'Integrated with SAP',
+			'cf_sap_card_agente'        => 'Procurement Agent pre-check · 40 s',
+			'cf_sap_check_1_selo'       => 'OK',
+			'cf_sap_check_1_titulo'     => 'Cost center 4102 balance',
+			'cf_sap_check_1_texto'      => 'R$ 62,300 available in SAP; R$ 43,850 left after this purchase.',
+			'cf_sap_check_2_selo'       => 'OK',
+			'cf_sap_check_2_titulo'     => 'Qualified supplier',
+			'cf_sap_check_2_texto'      => 'Rolamentos Brasil Ltda. active in the records, with no tax issues on file.',
+			'cf_sap_check_3_selo'       => 'Warning',
+			'cf_sap_check_3_titulo'     => 'Seal kit price 6% higher',
+			'cf_sap_check_3_texto'      => 'Average of the last 3 purchases: R$ 1,180.00. Total difference: R$ 840.00.',
+			'cf_sap_check_4_selo'       => 'Warning',
+			'cf_sap_check_4_titulo'     => '2 quotes attached',
+			'cf_sap_check_4_texto'      => 'The procurement policy requires 3 quotes above R$ 15k.',
+			'cf_sap_check_5_selo'       => 'OK',
+			'cf_sap_check_5_titulo'     => 'No duplicate order',
+			'cf_sap_check_5_texto'      => 'No identical order for the same cost center in the last 60 days.',
+			'cf_sap_card_resumo_titulo' => 'Summary for the approver',
+			'cf_sap_card_resumo_texto'  => 'Purchase within budget and from a compliant supplier. I suggest approving while asking for a 3rd quote for the seal kit or a justification for the price.',
+			'cf_sap_card_botao_1'       => 'Approve with caveat',
+			'cf_sap_card_botao_2'       => 'Ask for a 3rd quote',
+			'cf_sap_card_botao_3'       => 'Reject',
+
+			// 10. Integrações.
+			'cf_int_titulo'             => 'Your way.',
+			'cf_int_titulo_destaque'    => 'Integrated with your core systems.',
+			'cf_int_selo_antes'         => 'Up to',
+			'cf_int_selo_depois'        => 'fewer licenses',
+			'cf_int_janela_titulo'      => 'Service lookup',
+			'cf_int_janela_fontes'      => 'Live data from',
+			'cf_int_busca_label'        => 'Search service',
+			'cf_int_busca_valor'        => 'Support',
+			'cf_int_col_1'              => 'Code',
+			'cf_int_col_2'              => 'Service',
+			'cf_int_col_3'              => 'Price',
+			'cf_int_col_4'              => 'Active contracts',
+			'cf_int_col_5'              => 'Open deals',
+			'cf_int_linha_1'            => 'SV-101 | Monthly technical support | R$ 2,400.00 / month | 38 | 4 deals · R$ 115k',
+			'cf_int_linha_2'            => 'SV-205 | System implementation | R$ 18,000.00 | 12 | 2 deals · R$ 36k',
+			'cf_int_linha_3'            => 'SV-310 | Preventive maintenance | R$ 950.00 / visit | 54 | 1 deal · R$ 11k',
+			'cf_int_linha_4'            => 'SV-412 | In-company training | R$ 3,200.00 / class | 6 | —',
+			'cf_int_detalhe_sub'        => 'SV-101 · R$ 2,400.00 / month',
+			'cf_int_detalhe_titulo'     => 'Monthly technical support',
+			'cf_int_bloco_1_titulo'     => 'Active contracts by branch',
+			'cf_int_bloco_1_linhas'     => "Uberlândia | 20 contracts\nBelo Horizonte | 12 contracts\nSão Paulo | 6 contracts",
+			'cf_int_bloco_2_titulo'     => 'Deals in HubSpot',
+			'cf_int_bloco_2_linhas'     => "Grupo Andrade | 12 months · Proposal\nClínica Vida | 24 months · Negotiation\nEscola Horizonte | 12 months · Qualified",
+			'cf_int_botao_1'            => 'Create proposal',
+			'cf_int_botao_2'            => 'Open service order',
+			'cf_int_legenda'            => 'Sales reps look up Protheus prices and contracts and HubSpot deals on the same screen — <strong>with no Protheus license.</strong>',
+
+			// 11. Benefícios.
+			'cf_ben_1_titulo'           => 'Unlimited users',
+			'cf_ben_2_titulo'           => 'Unlimited processes',
+			'cf_ben_3_titulo'           => 'Fixed monthly cost',
+
+			// 12. Como funciona.
+			'cf_dash_eyebrow'           => 'How it works',
+			'cf_dash_titulo'            => 'Any screen, dashboard or process.',
+			'cf_dash_titulo_destaque'   => 'Fully integrated with your systems.',
+			'cf_dash_texto'             => 'People fill in and approve in CLI Flow. CLI Connect takes the data to each system, with no retyping and fewer licenses needed in those systems.',
+			'cf_dash_card_titulo'       => 'Purchase requisition',
+			'cf_dash_etapa_1_texto'     => 'screens and decisions',
+			'cf_dash_etapa_2_texto'     => 'integration run by CLI',
+			'cf_dash_etapa_3_destaque'  => 'Your systems',
+
+			// 13. Economia.
+			'cf_eco_titulo'             => 'Up to 80% fewer licenses',
+			'cf_eco_titulo_destaque'    => 'in your core systems',
+			'cf_eco_texto'              => 'People who only request, approve or look things up don’t need a full license in the system. They use CLI Flow, with the information from those systems right on their screen.',
+			'cf_eco_card_titulo'        => 'Company with 100 users',
+			'cf_eco_sem_label'          => 'Without CLI Flow',
+			'cf_eco_sem_valor'          => '100 full licenses',
+			'cf_eco_com_label'          => 'With CLI Flow',
+			'cf_eco_com_valor'          => '20 full licenses',
+			'cf_eco_com_barra'          => '80 users on CLI Flow',
+
+			// 15. Preço.
+			'cf_preco_titulo'           => 'Everything included.',
+			'cf_preco_titulo_destaque'  => 'At a predictable cost.',
+			'cf_preco_texto'            => 'Integration, platform and support in a single contract, with no per-user fees and no process limit.',
+			'cf_preco_1_titulo'         => 'Integration included',
+			'cf_preco_1_texto'          => 'Every process is born connected to your ERP, CRM and tax systems — 30,000+ ready-made integrations behind it.',
+			'cf_preco_2_titulo'         => 'Runs where you need it',
+			'cf_preco_2_texto'          => 'Cloud, CLI Connect Hosted with a fixed IP, or inside your network for on-premise systems.',
+			'cf_preco_3_titulo'         => 'Secure by default',
+			'cf_preco_3_texto'          => 'Corporate login, permissions per step and a record of who decided what.',
+
+			// 15b. Selos.
+			'cf_selos_titulo'           => 'We lead the market in compliance and security',
+
+			// 15c. FAQ.
+			'cf_faq_titulo'             => 'Frequently Asked Questions',
+
+			// 17. CTA final.
+			'cf_cta_eyebrow'            => 'Next step',
+			'cf_cta_titulo'             => 'Show us your process.',
+			'cf_cta_titulo_destaque'    => 'In 30 minutes it is mapped.',
+			'cf_cta_texto'              => 'Bring the process that holds your team back the most, from procurement to hiring. You leave the call with the process mapped, the systems it touches and the next steps.',
+			'cf_cta_botao'              => $demo,
 		);
 	}
 }

@@ -90,6 +90,8 @@ cliconnect_require( '/inc/blog-filters.php' );
 cliconnect_require( '/inc/login.php' );
 cliconnect_require( '/inc/spam.php' );
 cliconnect_require( '/inc/smtp.php' );
+cliconnect_require( '/inc/lead.php' );
+cliconnect_require( '/inc/lead-migracao.php' );
 
 // Conteúdo do projeto: CPTs e campos ACF (locais, via código).
 cliconnect_require( '/inc/cpt.php' );
@@ -97,6 +99,7 @@ cliconnect_require( '/inc/acf-fields-cpt.php' );
 cliconnect_require( '/inc/acf-fields-home.php' );
 cliconnect_require( '/inc/acf-fields-trabalhe-conosco.php' );
 cliconnect_require( '/inc/acf-fields-cli-connect.php' );
+cliconnect_require( '/inc/acf-fields-cli-flow.php' );
 cliconnect_require( '/inc/acf-fields-cli-signature.php' );
 cliconnect_require( '/inc/acf-fields-contato.php' );
 cliconnect_require( '/inc/acf-fields-integracao-sap.php' );
@@ -124,4 +127,5 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	cliconnect_require( '/inc/cli/seed-es-faq.php' );
 
 	cliconnect_require( '/inc/cli/seed.php' );
+	cliconnect_require( '/inc/cli/migrar-whatsapp.php' );
 }

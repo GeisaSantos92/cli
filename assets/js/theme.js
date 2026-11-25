@@ -24,6 +24,9 @@
 		initCaseScrollSpy();
 		initFooterCta();
 		initCookieBanner();
+		initLeadPopup();
+		initFormLead();
+		initMascaraTelefone();
 	});
 
 	/* ----- Seletor de idiomas (globo do header) ---------------------------- */
@@ -337,6 +340,20 @@
 
 		banner.hidden = false;
 
+		/*
+		 * No celular o aviso é uma faixa no rodapé da tela: a altura dela sobe
+		 * o WhatsApp e o "voltar ao topo" (CSS em .tem-aviso-cookies).
+		 */
+		var raiz = document.documentElement;
+
+		function medir() {
+			raiz.style.setProperty('--altura-aviso-cookies', banner.offsetHeight + 'px');
+		}
+
+		document.body.classList.add('tem-aviso-cookies');
+		medir();
+		window.addEventListener('resize', medir);
+
 		var botao = banner.querySelector('[data-cookie-aceitar]');
 		if (!botao) return;
 
@@ -348,6 +365,8 @@
 			}
 
 			banner.hidden = true;
+			document.body.classList.remove('tem-aviso-cookies');
+			window.removeEventListener('resize', medir);
 		});
 	}
 
@@ -368,6 +387,168 @@
 		cta.style.backgroundImage =
 			'linear-gradient(180deg, ' + cor + ' 0%, ' + cor + ' 50%, ' +
 			'var(--cor-marca-profunda) 50%, var(--cor-marca-profunda) 100%)';
+	}
+
+	/* ----- Popup de lead (botão flutuante de WhatsApp) -------------------- */
+
+	/*
+	 * Todo elemento com [data-lead-popup] abre o <dialog> do formulário em vez
+	 * de seguir o link. O formulário devolve o visitante para o WhatsApp
+	 * depois do envio (retURL). Sem suporte a <dialog>, o link segue normal.
+	 */
+	function initLeadPopup() {
+		var dialogo = document.querySelector('[data-lead-dialog]');
+		if (!dialogo || typeof dialogo.showModal !== 'function') return;
+
+		var gatilho = null;
+
+		document.addEventListener('click', function (ev) {
+			var alvo = ev.target.closest ? ev.target.closest('[data-lead-popup]') : null;
+			if (!alvo) return;
+
+			ev.preventDefault();
+			gatilho = alvo;
+			dialogo.showModal();
+			document.documentElement.classList.add('lead-popup-aberto');
+
+			var primeiro = dialogo.querySelector('input:not([type="hidden"]):not([tabindex="-1"])');
+			if (primeiro) primeiro.focus();
+		});
+
+		dialogo.addEventListener('click', function (ev) {
+			// Clique no fundo (fora da caixa) ou no botão de fechar.
+			if (ev.target === dialogo || (ev.target.closest && ev.target.closest('[data-lead-fechar]'))) {
+				dialogo.close();
+			}
+		});
+
+		dialogo.addEventListener('close', function () {
+			document.documentElement.classList.remove('lead-popup-aberto');
+			if (gatilho) gatilho.focus();
+		});
+	}
+
+	/* ----- Formulário de lead: anti-robô e estado de envio ---------------- */
+
+	/*
+	 * O POST vai direto para o Salesforce, então a defesa contra robôs fica
+	 * aqui: a armadilha [data-lead-armadilha] é invisível para pessoas. Se vier
+	 * preenchida, o envio é barrado; se não, ela é desativada para não ir no POST.
+	 */
+	function initFormLead() {
+		var forms = document.querySelectorAll('.form-lead');
+		if (!forms.length) return;
+
+		Array.prototype.forEach.call(forms, function (form) {
+			form.addEventListener('submit', function (ev) {
+				var armadilha = form.querySelector('[data-lead-armadilha]');
+
+				if (armadilha && armadilha.value) {
+					ev.preventDefault();
+					return;
+				}
+
+				if (armadilha) armadilha.disabled = true;
+
+				var botao = form.querySelector('[type="submit"]');
+				if (botao) {
+					botao.disabled = true;
+					botao.setAttribute('aria-busy', 'true');
+				}
+
+				// Envio em nova aba (popup do WhatsApp): esta aba continua no site.
+				if (form.target === '_blank') {
+					setTimeout(function () { concluirNovaAba(form); }, 0);
+				}
+			});
+		});
+
+		/*
+		 * O POST já saiu na aba nova: mostra a confirmação no lugar do
+		 * formulário e o deixa limpo para um próximo envio (inclusive o bloco
+		 * de origem das UTMs, marcado em data-utm).
+		 */
+		function concluirNovaAba(form) {
+			var sucesso = form.parentNode.querySelector('[data-lead-sucesso]');
+
+			form.reset();
+			var descricao = form.querySelector('[name="description"]');
+			if (descricao) delete descricao.dataset.utm;
+			reativar(form);
+
+			if (sucesso) {
+				form.hidden = true;
+				sucesso.hidden = false;
+			}
+
+			var dialogo = form.closest('[data-lead-dialog]');
+			if (dialogo && sucesso) {
+				dialogo.addEventListener('close', function () {
+					form.hidden = false;
+					sucesso.hidden = true;
+				}, { once: true });
+			}
+		}
+
+		function reativar(form) {
+			var botao = form.querySelector('[type="submit"]');
+			if (botao) {
+				botao.disabled = false;
+				botao.removeAttribute('aria-busy');
+			}
+			var armadilha = form.querySelector('[data-lead-armadilha]');
+			if (armadilha) armadilha.disabled = false;
+		}
+
+		// Voltar pelo histórico (bfcache) devolve o botão desativado: reabilita.
+		window.addEventListener('pageshow', function () {
+			Array.prototype.forEach.call(forms, reativar);
+		});
+	}
+
+	/* ----- Máscara do telefone no formulário de lead ---------------------- */
+
+	/*
+	 * Formata enquanto se digita, no padrão brasileiro: (00) 0000-0000 para
+	 * fixo e (00) 00000-0000 a partir do nono dígito.
+	 *
+	 * Só entra em cena no site em português. Nas versões EN/ES o visitante
+	 * costuma digitar número internacional, e uma máscara BR atrapalharia — lá
+	 * o campo fica livre, com o placeholder indicando o formato.
+	 */
+	function initMascaraTelefone() {
+		var idioma = document.documentElement.getAttribute('lang') || '';
+		if (idioma.toLowerCase().indexOf('pt') !== 0) return;
+
+		var campos = document.querySelectorAll('.form-lead input[type="tel"]');
+		if (!campos.length) return;
+
+		Array.prototype.forEach.call(campos, function (campo) {
+			campo.setAttribute('inputmode', 'tel');
+
+			campo.addEventListener('input', function () {
+				var digitos = campo.value.replace(/\D/g, '').slice(0, 11);
+
+				if (!digitos) {
+					campo.value = '';
+					return;
+				}
+
+				var texto = '(' + digitos.slice(0, 2);
+
+				if (digitos.length > 2) {
+					// Celular (9 dígitos) quebra depois do quinto; fixo, do quarto.
+					var corte = digitos.length > 10 ? 7 : 6;
+					texto += ') ' + digitos.slice(2, corte);
+
+					if (digitos.length > corte) {
+						texto += '-' + digitos.slice(corte);
+					}
+				}
+
+				campo.value = texto;
+			});
+		});
 	}
 
 })();

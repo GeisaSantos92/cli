@@ -130,9 +130,13 @@ function cliconnect_header_acoes() {
  * o tema nunca depende do plugin para renderizar. O idioma atual fica de fora
  * da lista: o dropdown oferece só para onde dá para ir.
  *
+ * No menu mobile (variante 'lista') não há dropdown: os idiomas aparecem
+ * abertos, como links com bandeira, dentro do drawer.
+ *
+ * @param string $variante 'dropdown' (header desktop) ou 'lista' (drawer mobile).
  * @return void
  */
-function cliconnect_seletor_idiomas() {
+function cliconnect_seletor_idiomas( $variante = 'dropdown' ) {
 	if ( ! function_exists( 'pll_the_languages' ) ) {
 		return;
 	}
@@ -163,6 +167,27 @@ function cliconnect_seletor_idiomas() {
 	);
 
 	if ( ! $outros ) {
+		return;
+	}
+
+	if ( 'lista' === $variante ) {
+		?>
+		<ul class="site-nav__idiomas" aria-label="<?php esc_attr_e( 'Mudar o idioma', 'cli' ); ?>">
+			<?php foreach ( $outros as $idioma ) : ?>
+				<li>
+					<a
+						class="site-header__idioma"
+						href="<?php echo esc_url( $idioma['url'] ?? '' ); ?>"
+						lang="<?php echo esc_attr( $idioma['locale'] ?? '' ); ?>"
+						hreflang="<?php echo esc_attr( $idioma['locale'] ?? '' ); ?>"
+					>
+						<?php echo cliconnect_bandeira( $idioma ); // phpcs:ignore WordPress.Security.EscapeOutput -- filtrado em cliconnect_bandeira(). ?>
+						<?php echo esc_html( $idioma['name'] ?? $idioma['slug'] ?? '' ); ?>
+					</a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<?php
 		return;
 	}
 

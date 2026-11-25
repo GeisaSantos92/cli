@@ -36,6 +36,7 @@ trait Cliconnect_Seed_En_Faq {
 	protected function faq_solucoes_en() {
 		return array_merge(
 			$this->faq_en_parceiros(),
+			$this->faq_en_cli_flow(),
 			$this->faq_en_industria(),
 			$this->faq_en_departamento(),
 			$this->faq_en_iniciativa(),
@@ -1317,6 +1318,40 @@ trait Cliconnect_Seed_En_Faq {
 			'parceiros-pagamento'      => array(
 				'When is the commission paid?',
 				'<p>The commission is calculated once the client payment is received and paid according to the schedule set in the partnership agreement.</p>',
+			),
+		);
+	}
+
+	/**
+	 * FAQ da página CLI Flow (a pergunta sobre Fluig segue o rascunho do português).
+	 *
+	 * @return array<string,array{0:string,1:string}>
+	 */
+	protected function faq_en_cli_flow() {
+		return array(
+			'cli-flow-prazo' => array(
+				'How long until the first process goes live?',
+				'<p>5 days after mapping.</p>',
+			),
+			'cli-flow-licenca' => array(
+				'Do users need an ERP license?',
+				'<p>It depends on the contract with each vendor. In some cases, people who only look things up or approve no longer need a full license; in others, such as SAP Digital Access, the vendor charges for the documents created by the integration. Ask for an assessment before changing any license: we show you what applies to your contract.</p>',
+			),
+			'cli-flow-criar-processos' => array(
+				'Can I create and change my own processes?',
+				'<p>Yes. Create and change steps, deadlines, approval levels and screens in the visual editor, with no coding. If you prefer, leave it to CLI.</p>',
+			),
+			'cli-flow-on-premise' => array(
+				'Does it work with on-premise SAP or Protheus?',
+				'<p>Yes. CLI Connect reaches your system through the cloud, a VPN or a runtime inside your network.</p>',
+			),
+			'cli-flow-fluig' => array(
+				'I already use Fluig or Power Automate. Why CLI Flow?',
+				'<p>The contract is signed directly between CLI and the end customer. The customer also pays CLI directly; the partner does not need to invoice the CLI solution to the customer.</p>',
+			),
+			'cli-flow-dados' => array(
+				'Where does the process data come from?',
+				'<p>From the systems themselves — ERP, CRM, payroll, banks and the tax authority — through CLI Connect integrations. Nobody retypes data or updates statuses by hand.</p>',
 			),
 		);
 	}

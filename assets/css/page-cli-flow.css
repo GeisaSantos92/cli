@@ -1,0 +1,2492 @@
+/*
+ * CLI Flow — estilos específicos da página.
+ * Depende de: theme.css (tokens, reset, componentes globais).
+ * Enfileirado só em cliconnect_e_pagina('cli-flow') (inc/enqueue.php).
+ *
+ * Seções:
+ *   1.  Hero
+ *   2.  Mockup (carousel de telas)
+ *   3.  Logos (marquee de clientes)
+ *   4.  Dores
+ *   6.  Casos de Uso
+ *   7.  CTA IA
+ *   8.  Cards
+ *   9.  SAP
+ *  10.  Integrações
+ *  10b. Sistemas (grade de logos)
+ *  11.  Benefícios
+ *  12.  Como funciona (dashboard)
+ *  13.  Economia
+ *  15.  Preço
+ *  15b. Selos
+ *  15c. FAQ
+ *  17.  CTA Final
+ */
+
+/* ==========================================================================
+   0. COMPONENTES COMPARTILHADOS
+   ========================================================================== */
+
+/* Ícone em quadrado azul degradê (Dores, Cards). */
+.cf-icone {
+	align-items: center;
+	background: linear-gradient(180deg, var(--cor-primaria) 0%, var(--cor-marca-secundaria) 100%);
+	border-radius: 4px;
+	color: #fff;
+	display: inline-flex;
+	flex-shrink: 0;
+	height: 40px;
+	justify-content: center;
+	width: 40px;
+}
+
+/* Traço vazado, como no Figma (o utilitário global usa FILL 1). */
+.cf-icone .ms-icon {
+	font-size: 26px;
+	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ==========================================================================
+   1. HERO
+   ========================================================================== */
+
+/*
+ * O degradê continua atrás do mockup (ver .cf-mockup__viewport::before):
+ * o hero termina em --cf-azul-meio e o mockup parte dessa mesma cor.
+ */
+.cf-hero {
+	--cf-azul-meio: #e3eeff;
+	background: linear-gradient(180deg, #eff6ff 0%, #e8f2ff 60%, var(--cf-azul-meio) 100%);
+	overflow: hidden;
+	padding: 80px 0 64px;
+	text-align: center;
+}
+
+/* Largura que mantém o título em uma linha, como no Figma. */
+.cf-hero__conteudo {
+	margin: 0 auto;
+	max-width: 1000px;
+}
+
+/* Eyebrow — pill outline (não preenchido). */
+.cf-hero__eyebrow {
+	background: rgba(255, 255, 255, 0.4);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-pill);
+	color: var(--cor-texto-marca-escura);
+	display: inline-block;
+	font-family: var(--fonte-eyebrow);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	margin-bottom: 24px;
+	padding: 6px 16px;
+	text-transform: uppercase;
+}
+
+.cf-hero__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h2);
+	font-weight: 600;
+	letter-spacing: -0.04em;
+	line-height: 1.15;
+	margin-bottom: 16px;
+}
+
+.cf-hero__titulo-destaque {
+	color: var(--cor-texto-marca);
+	display: block;
+}
+
+/* Texto de apoio — permite <strong> para peso misto. */
+.cf-hero__texto {
+	color: var(--cor-texto-alt);
+	font-size: var(--tam-body-lg);
+	font-weight: 400;
+	line-height: 1.6;
+	margin: 0 auto;
+	max-width: 726px;
+}
+
+.cf-hero__texto strong {
+	font-weight: 600;
+}
+
+/* Botões — border-radius 8px (não pill). */
+.cf-hero__acoes {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	margin: 0 auto;
+	max-width: 561px;
+	padding-top: 40px;
+}
+
+.cf-hero__botao {
+	border-radius: var(--raio);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 0;
+	font-family: var(--fonte-botao);
+	font-size: var(--tam-body-lg);
+	font-weight: 600;
+	height: 60px;
+	padding: 16px 20px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.cf-hero__botao--primario {
+	background: var(--cor-primaria);
+	color: #fff;
+}
+
+.cf-hero__botao--primario:hover {
+	background: var(--cor-primaria-escura);
+}
+
+.cf-hero__botao--secundario {
+	background: #fff;
+	border: 1px solid var(--cor-borda);
+	color: var(--cor-texto-marca);
+}
+
+.cf-hero__botao--secundario:hover {
+	border-color: var(--cor-primaria);
+}
+
+/* Logos dos sistemas — caixinhas brancas. */
+.cf-hero__logos {
+	margin-top: 40px;
+}
+
+.cf-hero__logos-label {
+	color: var(--cor-texto-suave);
+	font-family: var(--fonte-base);
+	font-size: 12px;
+	font-weight: 500;
+	margin-bottom: 8px;
+}
+
+.cf-hero__logos-grid {
+	align-items: center;
+	display: flex;
+	gap: 4px;
+	justify-content: center;
+}
+
+.cf-hero__logo-card {
+	align-items: center;
+	background: #fff;
+	border-radius: 4px;
+	display: flex;
+	height: 51px;
+	justify-content: center;
+	padding: 8px 12px;
+	width: 84px;
+}
+
+/* Teto de 28px de altura: deixa os logos no tamanho ótico do Figma. */
+.cf-hero__logo-card img {
+	display: block;
+	height: auto;
+	max-height: 28px;
+	max-width: 100%;
+	object-fit: contain;
+	width: auto;
+}
+
+@media (max-width: 768px) {
+	.cf-hero {
+		padding: 40px 0;
+	}
+
+	.cf-hero__acoes {
+		flex-direction: column;
+		max-width: 100%;
+	}
+
+	.cf-hero__botao {
+		width: 100%;
+	}
+
+	.cf-hero__logos-grid {
+		flex-wrap: wrap;
+	}
+}
+
+/* ==========================================================================
+   2. MOCKUP
+   ========================================================================== */
+
+.cf-mockup {
+	isolation: isolate;
+	overflow: hidden;
+}
+
+.cf-mockup__viewport {
+	margin: 0 auto;
+	max-width: 1316px;
+	position: relative;
+}
+
+/*
+ * Continuação do fundo do hero, em largura total: degradê azul com corte
+ * seco para o branco a 62% da altura da moldura (no Figma, 428 de 691px).
+ * O elemento vai 400px além da moldura, por isso o corte é
+ * calc(62% - 248px) = (100% - 400px) × 0,62.
+ */
+.cf-mockup__viewport::before {
+	--cf-corte: calc(62% - 248px);
+	background:
+		linear-gradient(180deg, transparent var(--cf-corte), #fff var(--cf-corte)),
+		linear-gradient(180deg, #e3eeff 0, #d1e3ff var(--cf-corte));
+	bottom: -400px;
+	content: "";
+	left: 50%;
+	position: absolute;
+	top: 0;
+	transform: translateX(-50%);
+	width: 100vw;
+	z-index: -1;
+}
+
+/* Textura do Figma (listras verticais), com a base apoiada na divisa. */
+.cf-mockup__viewport::after {
+	background: url("../img/cf-hero-textura.png") center bottom / auto 100% repeat-x;
+	content: "";
+	height: min(371px, 62%);
+	left: 50%;
+	pointer-events: none;
+	position: absolute;
+	top: calc(62% - min(371px, 62%));
+	transform: translateX(-50%);
+	width: 100vw;
+	z-index: -1;
+}
+
+/* Recorte da tela na proporção do Figma + desbotado da base para o branco. */
+.cf-mockup__moldura {
+	aspect-ratio: 1316 / 691;
+	min-height: 0; /* Sem isto o aspect-ratio cede à altura da tela. */
+	overflow: hidden; /* Recorte seco: a tela vizinha do slider não pode vazar. */
+	position: relative;
+}
+
+.cf-mockup__moldura::after {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 56%, #fff 92.5%);
+	bottom: -12px;
+	content: "";
+	left: -12px;
+	pointer-events: none;
+	position: absolute;
+	right: -12px;
+	top: 0;
+}
+
+/* Slider: telas lado a lado; o JS desloca o trilho com --cf-slide. */
+.cf-mockup__trilho {
+	display: flex;
+	transform: translateX(calc(var(--cf-slide, 0) * -100%));
+	transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cf-mockup__painel {
+	flex: 0 0 100%;
+	min-width: 0;
+}
+
+/* As telas já vêm com a moldura translúcida e a sombra na própria arte. */
+.cf-mockup__img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+	width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cf-mockup__trilho {
+		transition: none;
+	}
+}
+
+/* Seletor flutuante — dark bar sobre a imagem. */
+.cf-mockup__seletor {
+	align-items: center;
+	bottom: 47px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+	z-index: 2;
+}
+
+.cf-mockup__seletor-bar {
+	backdrop-filter: blur(2.5px);
+	background: rgba(0, 32, 87, 0.7);
+	border-radius: var(--raio-pill);
+	box-shadow: 0 5px 15px rgba(32, 66, 135, 0.25);
+	display: flex;
+	gap: 10px;
+	padding: 8px;
+}
+
+.cf-mockup__tab {
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: var(--raio-pill);
+	color: #fff;
+	cursor: pointer;
+	font-family: var(--fonte-base);
+	font-size: 14.5px;
+	font-weight: 600;
+	min-width: 197px;
+	padding: 15px 36px;
+	transition: all 0.2s ease;
+	white-space: nowrap;
+}
+
+.cf-mockup__tab:hover {
+	background: rgba(255, 255, 255, 0.15);
+}
+
+.cf-mockup__tab.ativo {
+	background: var(--cor-fundo-suave);
+	border-color: transparent;
+	color: #000;
+}
+
+.cf-mockup__legenda {
+	color: var(--cor-texto-suave);
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body);
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+	/* As três abas não cabem numa barra flutuante de 390px: o seletor sai de
+	   cima da tela e vira uma grade de 3 colunas logo abaixo dela. */
+	.cf-mockup__seletor {
+		bottom: auto;
+		left: auto;
+		margin-top: 16px;
+		position: relative;
+		transform: none;
+	}
+
+	.cf-mockup__seletor-bar {
+		border-radius: 20px;
+		display: grid;
+		gap: 4px;
+		grid-template-columns: repeat(3, 1fr);
+		padding: 4px;
+		width: 100%;
+	}
+
+	.cf-mockup__tab {
+		border-radius: 16px;
+		font-size: 12px;
+		line-height: 1.25;
+		min-width: 0;
+		padding: 8px 6px;
+		white-space: normal;
+	}
+}
+
+/* ==========================================================================
+   3. LOGOS (marquee)
+   ========================================================================== */
+
+.cf-logos {
+	padding: 80px 0 var(--secao-espacamento);
+}
+
+.cf-logos__titulo {
+	color: var(--cor-texto-suave);
+	font-size: var(--tam-body-sm);
+	margin-bottom: 24px;
+	text-align: center;
+}
+
+.cf-logos__pista {
+	mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+	overflow: hidden;
+}
+
+.cf-logos__trilha {
+	animation: cf-logos-scroll 40s linear infinite;
+	display: flex;
+	gap: 25px;
+	width: max-content;
+}
+
+.cf-logos__logo {
+	align-items: center;
+	display: inline-flex;
+	flex-shrink: 0;
+}
+
+/* Logos coloridos, na caixa padrão 644×360 dos clientes. */
+.cf-logos__logo img {
+	display: block;
+	height: 90px;
+	object-fit: contain;
+	width: auto;
+}
+
+@media (max-width: 768px) {
+	.cf-logos {
+		padding-top: 48px;
+	}
+
+	.cf-logos__logo img {
+		height: 64px;
+	}
+}
+
+@keyframes cf-logos-scroll {
+	to { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   4. DORES
+   ========================================================================== */
+
+.cf-dores {
+	padding: var(--secao-espacamento) 0;
+}
+
+.cf-dores__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h4);
+	font-weight: 600;
+	line-height: 1.2;
+	margin-bottom: 56px;
+	text-align: center;
+}
+
+.cf-dores__grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+/* Citação no topo, departamento preso à base do card. */
+.cf-dores__card {
+	background: var(--cor-fundo);
+	border: 1px solid var(--cor-borda);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	justify-content: space-between;
+	min-height: 280px;
+	padding: 32px;
+}
+
+.cf-dores__citacao {
+	color: var(--cor-texto-marca-escura);
+	font-family: var(--fonte-base);
+	font-size: 1.5rem;
+	font-weight: 500;
+	line-height: 1.6;
+	margin: 0;
+	quotes: "\201C" "\201D";
+}
+
+.cf-dores__citacao p::before {
+	content: open-quote;
+}
+
+.cf-dores__citacao p::after {
+	content: close-quote;
+}
+
+.cf-dores__departamento {
+	align-items: center;
+	color: var(--cor-texto-marca);
+	display: flex;
+	font-family: var(--fonte-base);
+	font-size: 1.25rem;
+	font-weight: 400;
+	gap: 12px;
+	margin: 0;
+}
+
+@media (max-width: 1024px) {
+	.cf-dores__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-dores__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-dores__card {
+		min-height: 0;
+		padding: 24px;
+	}
+
+	.cf-dores__citacao {
+		font-size: 1.25rem;
+	}
+
+	.cf-dores__departamento {
+		font-size: 1.125rem;
+	}
+}
+
+/* ==========================================================================
+   6. CASOS DE USO ("Comece por um processo pronto")
+   ========================================================================== */
+
+.cf-casos {
+	padding: 80px 0 var(--secao-espacamento);
+}
+
+.cf-casos__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	margin-bottom: 56px;
+}
+
+.cf-casos__titulo-linha {
+	display: block;
+}
+
+.cf-casos__titulo-linha--destaque {
+	color: var(--cor-texto-marca);
+}
+
+.cf-casos__nav {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 40px;
+}
+
+.cf-casos__tab {
+	background: var(--cor-fundo);
+	border: 1px solid var(--cor-borda);
+	border-radius: var(--raio-pill);
+	color: var(--cor-texto);
+	cursor: pointer;
+	font-family: var(--fonte-base);
+	font-size: 0.875rem;
+	font-weight: 500;
+	height: 41px;
+	padding: 0 16px;
+	transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cf-casos__tab:hover {
+	border-color: var(--cor-primaria);
+	color: var(--cor-primaria);
+}
+
+.cf-casos__tab.ativo {
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+}
+
+/* Lista de processos à esquerda, player único à direita. */
+.cf-casos__corpo {
+	align-items: start;
+	display: grid;
+	gap: 40px;
+	grid-template-columns: 318px 1fr;
+}
+
+.cf-casos__painel:not(.ativo) {
+	display: none;
+}
+
+/* Player 16:10 (proporção dos vídeos): reserva o espaço antes do vídeo. */
+.cf-casos__player {
+	aspect-ratio: 16 / 10;
+	background: #f1f4f9; /* Cor não tokenizada no Figma. */
+	border: 1px solid #dde2ea; /* Cor não tokenizada no Figma. */
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(6, 47, 76, 0.06);
+	overflow: hidden;
+	position: relative;
+}
+
+.cf-casos__video {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.cf-casos__player .cf-casos__janela {
+	display: none;
+}
+
+/* Processo sem vídeo: a janela em HTML ocupa o player. */
+.cf-casos__player.sem-video .cf-casos__video {
+	display: none;
+}
+
+.cf-casos__player.sem-video .cf-casos__janela {
+	display: flex;
+	inset: 0;
+	position: absolute;
+}
+
+/* Lista de processos. */
+.cf-casos__lista {
+	display: flex;
+	flex-direction: column;
+	gap: 17px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cf-casos__item {
+	background: transparent;
+	border: 0;
+	border-radius: 6px;
+	color: var(--cor-texto);
+	cursor: pointer;
+	display: block;
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	font-weight: 400;
+	height: 45px;
+	padding: 0 13px;
+	text-align: left;
+	transition: background-color 0.2s ease, color 0.2s ease;
+	width: 100%;
+}
+
+.cf-casos__item:hover {
+	color: var(--cor-primaria);
+}
+
+.cf-casos__item.ativo {
+	background: var(--cor-fundo-azul);
+	color: var(--cor-primaria);
+	font-weight: 500;
+}
+
+/* Janela do CLI Flow (reserva para processo sem vídeo). */
+.cf-casos__janela {
+	flex-direction: column;
+}
+
+.cf-casos__janela-topo {
+	align-items: center;
+	background: #fafbfc; /* Cor não tokenizada no Figma. */
+	border-bottom: 1px solid var(--cor-borda-sutil);
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr auto 1fr;
+	height: 66px;
+	padding: 0 18px 0 26px;
+}
+
+.cf-casos__janela-marca {
+	align-items: center;
+	display: inline-flex;
+	gap: 8px;
+}
+
+.cf-casos__janela-simbolo {
+	display: block;
+	height: 21px;
+	width: auto;
+}
+
+.cf-casos__janela-marca-texto {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.cf-casos__janela-titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-base);
+	font-size: 1.1875rem;
+	font-weight: 600;
+	margin: 0;
+	text-align: center;
+}
+
+.cf-casos__selo {
+	align-items: center;
+	background: var(--cor-fundo-azul);
+	border-radius: var(--raio-pill);
+	color: var(--cor-texto-marca-escura);
+	display: inline-flex;
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	gap: 8px;
+	height: 36px;
+	justify-self: end;
+	padding: 0 22px 0 22px;
+	white-space: nowrap;
+}
+
+.cf-casos__selo-logo {
+	display: block;
+	height: 16px;
+	width: auto;
+}
+
+.cf-casos__janela-corpo {
+	background: #f1f4f9; /* Cor não tokenizada no Figma. */
+	flex: 1;
+}
+
+@media (max-width: 1024px) {
+	.cf-casos__corpo {
+		grid-template-columns: 240px 1fr;
+		gap: 24px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cf-casos {
+		padding-top: 56px;
+	}
+
+	.cf-casos__titulo {
+		margin-bottom: 32px;
+	}
+
+	.cf-casos__corpo {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-casos__lista {
+		gap: 4px;
+	}
+
+	.cf-casos__janela-topo {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		height: auto;
+		justify-content: space-between;
+		padding: 12px 16px;
+	}
+
+	.cf-casos__selo {
+		font-size: 0.8125rem;
+		height: 30px;
+		padding: 0 12px;
+	}
+
+	.cf-casos__janela-titulo {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   7. CTA "NÃO ACHOU O SEU?"
+   ========================================================================== */
+
+.cf-ia-cta {
+	padding: 0;
+}
+
+.cf-ia-cta__faixa {
+	align-items: center;
+	background: linear-gradient(90deg, #0a3a9e 0%, var(--cor-marca-profunda) 100%); /* Início do degradê não tokenizado no Figma. */
+	border-radius: 10px;
+	display: flex;
+	gap: 32px;
+	justify-content: space-between;
+	min-height: 151px;
+	padding: 32px 41px;
+}
+
+.cf-ia-cta__titulo {
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-base);
+	font-size: 1.84rem;
+	font-weight: 400;
+	line-height: 1.22;
+	margin: 0;
+}
+
+.cf-ia-cta__titulo-linha {
+	display: block;
+}
+
+.cf-ia-cta__titulo-linha--destaque {
+	font-weight: 700;
+}
+
+.cf-ia-cta__botao {
+	flex-shrink: 0;
+	font-weight: 600;
+	min-width: 279px;
+}
+
+@media (max-width: 768px) {
+	.cf-ia-cta__faixa {
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 32px 24px;
+	}
+
+	.cf-ia-cta__titulo {
+		font-size: 1.375rem;
+	}
+
+	.cf-ia-cta__botao {
+		min-width: 0;
+		width: 100%;
+	}
+}
+
+/* ==========================================================================
+   8. CARDS
+   ========================================================================== */
+
+.cf-cards {
+	padding: 40px 0 var(--secao-espacamento);
+}
+
+.cf-cards__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	margin-bottom: 40px;
+}
+
+.cf-cards__grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(4, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cf-cards__card {
+	background: var(--cor-fundo);
+	border: 1px solid var(--cor-borda);
+	border-radius: 10px;
+	min-height: 294px;
+	padding: 32px;
+}
+
+.cf-cards__card .cf-icone {
+	margin-bottom: 24px;
+}
+
+.cf-cards__card-titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-base);
+	font-size: 1.34rem;
+	font-weight: 500;
+	line-height: 1.35;
+	margin: 0 0 10px;
+}
+
+.cf-cards__card-texto {
+	color: var(--cor-texto-alt);
+	font-family: var(--fonte-base);
+	font-size: 1rem;
+	line-height: 1.6;
+	margin: 0;
+}
+
+@media (max-width: 1024px) {
+	.cf-cards__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.cf-cards__card {
+		min-height: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-cards__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-cards__card {
+		padding: 24px;
+	}
+}
+
+/* ==========================================================================
+   9. SAP ("Do pedido ao SAP sem ninguém redigitar")
+   ========================================================================== */
+
+.cf-sap {
+	background:
+		radial-gradient(ellipse 60% 70% at 0% 100%, rgba(15, 75, 210, 0.55) 0%, rgba(15, 75, 210, 0) 100%),
+		var(--cor-marca-profunda);
+	color: var(--cor-texto-clara);
+	padding: 100px 0;
+}
+
+.cf-sap__inner {
+	align-items: center;
+	display: grid;
+	gap: 64px;
+	grid-template-columns: minmax(0, 1fr) 604px;
+}
+
+.cf-sap__eyebrow {
+	color: var(--cor-texto-clara-suave);
+	font-family: var(--fonte-base);
+	font-size: 0.875rem;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	margin: 0 0 12px;
+	text-transform: uppercase;
+}
+
+.cf-sap__titulo {
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.09;
+	margin: 0 0 48px;
+}
+
+.cf-sap__titulo-linha {
+	display: block;
+}
+
+.cf-sap__passos {
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
+	list-style: none;
+	margin: 0 0 48px;
+	max-width: 570px;
+	padding: 0;
+}
+
+.cf-sap__passo {
+	display: grid;
+	grid-template-columns: 41px 1fr;
+}
+
+.cf-sap__passo-numero {
+	color: var(--cor-texto-clara-suave);
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	font-weight: 700;
+	line-height: 1.6;
+}
+
+.cf-sap__passo-titulo {
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-base);
+	font-size: 1.125rem;
+	font-weight: 500;
+	letter-spacing: normal;
+	line-height: 1.45;
+	margin: 0 0 8px;
+}
+
+.cf-sap__passo-texto {
+	color: #b3c3e8; /* Azul acinzentado não tokenizado no Figma. */
+	font-family: var(--fonte-base);
+	font-size: 1rem;
+	line-height: 1.6;
+	margin: 0;
+}
+
+.cf-sap__botao {
+	font-weight: 600;
+	min-width: 257px;
+}
+
+/* Cartão ilustrativo da requisição. */
+.cf-sap__card {
+	background: var(--cor-fundo);
+	border-radius: 10px;
+	box-shadow: 0 24px 48px rgba(0, 10, 40, 0.35);
+	color: var(--cor-texto);
+	font-family: var(--fonte-base);
+	overflow: hidden;
+}
+
+.cf-sap__card p {
+	margin: 0;
+}
+
+.cf-sap__card-topo {
+	align-items: flex-start;
+	border-bottom: 1px solid var(--cor-borda-sutil);
+	display: flex;
+	gap: 16px;
+	justify-content: space-between;
+	padding: 24px 28px 22px;
+}
+
+.cf-sap__card-titulo {
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.cf-sap__card-subtitulo {
+	color: var(--cor-texto-alt);
+	font-size: 0.875rem;
+	margin-top: 4px !important;
+}
+
+.cf-sap__selo {
+	align-items: center;
+	background: var(--cor-fundo-azul);
+	border-radius: var(--raio-pill);
+	color: var(--cor-texto-marca-escura);
+	display: inline-flex;
+	flex-shrink: 0;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	gap: 8px;
+	height: 26px;
+	padding: 0 14px 0 12px;
+	white-space: nowrap;
+}
+
+.cf-sap__selo-logo {
+	display: block;
+	height: 12px;
+	width: auto;
+}
+
+.cf-sap__card-corpo {
+	padding: 30px 28px 28px;
+}
+
+.cf-sap__agente {
+	align-items: center;
+	color: var(--cor-texto-marca);
+	display: flex;
+	font-size: 0.75rem;
+	font-weight: 600;
+	gap: 6px;
+	margin-bottom: 18px !important;
+}
+
+.cf-sap__agente .ms-icon {
+	font-size: 16px;
+}
+
+.cf-sap__checks {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	list-style: none;
+	margin: 0 0 30px;
+	padding: 0;
+}
+
+.cf-sap__check {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: 58px 1fr;
+}
+
+.cf-sap__check-selo {
+	align-items: center;
+	border-radius: 3px;
+	display: inline-flex;
+	font-size: 0.5625rem;
+	font-weight: 700;
+	height: 19px;
+	justify-content: center;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+.cf-sap__check-selo--ok {
+	background: #e3f3e8; /* Cor não tokenizada no Figma. */
+	color: var(--cor-positivo);
+}
+
+.cf-sap__check-selo--atencao {
+	background: #fdf0d5; /* Cor não tokenizada no Figma. */
+	color: #9a5b00; /* Cor não tokenizada no Figma. */
+}
+
+.cf-sap__check-titulo {
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+.cf-sap__check-texto {
+	color: var(--cor-texto-suave);
+	font-size: 0.75rem;
+	line-height: 1.6;
+	margin-top: 2px !important;
+}
+
+.cf-sap__resumo {
+	background: var(--cor-fundo-suave);
+	border-radius: 8px;
+	margin-bottom: 34px;
+	padding: 14px;
+}
+
+.cf-sap__resumo-titulo {
+	color: var(--cor-texto-marca);
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	margin-bottom: 8px !important;
+	text-transform: uppercase;
+}
+
+.cf-sap__resumo-texto {
+	color: var(--cor-texto-suave);
+	font-size: 0.75rem;
+	line-height: 1.65;
+}
+
+.cf-sap__decisao {
+	display: grid;
+	gap: 9px;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.cf-sap__decisao-botao {
+	align-items: center;
+	border: 1px solid var(--cor-borda);
+	border-radius: 4px;
+	color: var(--cor-texto);
+	display: inline-flex;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	height: 41px;
+	justify-content: center;
+	padding: 0 8px;
+	text-align: center;
+}
+
+.cf-sap__decisao-botao--1 {
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+}
+
+.cf-sap__decisao-botao--3 {
+	border-color: rgba(200, 40, 40, 0.3); /* Vermelho não tokenizado no Figma. */
+	color: #c62828; /* Vermelho não tokenizado no Figma. */
+}
+
+@media (max-width: 1200px) {
+	.cf-sap__inner {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-sap__card {
+		max-width: 604px;
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-sap {
+		padding: 64px 0;
+	}
+
+	.cf-sap__card-topo {
+		flex-direction: column;
+		padding: 20px;
+	}
+
+	.cf-sap__card-corpo {
+		padding: 20px;
+	}
+
+	.cf-sap__decisao {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-sap__botao {
+		min-width: 0;
+		width: 100%;
+	}
+}
+
+/* ==========================================================================
+   10. INTEGRAÇÕES ("Do seu jeito. Integrado aos seus grandes sistemas.")
+   ========================================================================== */
+
+.cf-int {
+	padding: 0 0 64px;
+}
+
+.cf-int__topo {
+	align-items: flex-start;
+	display: flex;
+	gap: 32px;
+	justify-content: space-between;
+	margin-bottom: 54px;
+	padding-top: 80px;
+}
+
+.cf-int__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.13;
+	margin: 43px 0 0;
+	max-width: 380px;
+}
+
+.cf-int__titulo-linha {
+	display: block;
+}
+
+.cf-int__titulo-linha--destaque {
+	color: var(--cor-texto-marca);
+}
+
+/* Selo pendurado por dois fios que sobem até o topo da seção. */
+.cf-int__selo {
+	background: linear-gradient(135deg, #0a3a9e 0%, var(--cor-marca-profunda) 100%); /* Início do degradê não tokenizado no Figma. */
+	border-radius: 6px;
+	box-shadow: 0 16px 32px rgba(0, 32, 87, 0.25);
+	color: var(--cor-texto-clara);
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	font-family: var(--fonte-base);
+	justify-content: center;
+	margin: 0;
+	min-height: 186px;
+	padding: 24px 46px;
+	position: relative;
+	width: 265px;
+}
+
+.cf-int__selo::before,
+.cf-int__selo::after {
+	background: #c9d3e8; /* Cor não tokenizada no Figma. */
+	bottom: 100%;
+	content: "";
+	height: 80px;
+	position: absolute;
+	width: 1px;
+}
+
+.cf-int__selo::before {
+	left: 23%;
+}
+
+.cf-int__selo::after {
+	left: 79%;
+}
+
+.cf-int__selo-antes {
+	font-size: 1.0625rem;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.cf-int__selo-numero {
+	font-size: 5.375rem;
+	font-weight: 600;
+	letter-spacing: -0.04em;
+	line-height: 1;
+}
+
+.cf-int__selo-depois {
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.3;
+	margin-top: 4px;
+}
+
+/* Janela ilustrativa. */
+.cf-int__janela {
+	background: var(--cor-fundo);
+	border: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	border-radius: 14px;
+	box-shadow: 0 24px 60px rgba(53, 81, 242, 0.1);
+	font-family: var(--fonte-base);
+	overflow: hidden;
+}
+
+.cf-int__janela p {
+	margin: 0;
+}
+
+.cf-int__janela-topo {
+	align-items: center;
+	border-bottom: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	display: grid;
+	gap: 16px;
+	grid-template-columns: 1fr auto 1fr;
+	height: 62px;
+	padding: 0 20px;
+}
+
+.cf-int__janela-marca {
+	align-items: center;
+	display: inline-flex;
+	gap: 8px;
+}
+
+.cf-int__janela-simbolo {
+	display: block;
+	height: 19px;
+	width: auto;
+}
+
+.cf-int__janela-marca-texto {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.cf-int__janela-titulo {
+	color: var(--cor-texto);
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.cf-int__fontes {
+	align-items: center;
+	color: var(--cor-texto-alt);
+	display: flex;
+	font-size: 0.75rem;
+	gap: 6px;
+	justify-content: flex-end;
+}
+
+.cf-int__pilula {
+	align-items: center;
+	border-radius: var(--raio-pill);
+	display: inline-flex;
+	font-size: 0.75rem;
+	font-weight: 600;
+	gap: 4px;
+	height: 22px;
+	padding: 0 9px;
+}
+
+.cf-int__pilula--1 {
+	background: var(--cor-fundo-azul);
+	color: var(--cor-texto-marca-escura);
+}
+
+.cf-int__pilula--2 {
+	background: #fdece6; /* Laranja HubSpot claro, não tokenizado no Figma. */
+	color: #b8461f; /* Laranja HubSpot escuro, não tokenizado no Figma. */
+}
+
+.cf-int__fonte-icone {
+	display: inline-block;
+	height: 12px;
+	vertical-align: -1px;
+	width: 12px;
+}
+
+.cf-int__janela-corpo {
+	display: grid;
+	grid-template-columns: 1fr 376px;
+}
+
+.cf-int__consulta {
+	padding: 26px 20px 40px;
+}
+
+.cf-int__busca-label {
+	color: var(--cor-texto);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	margin-bottom: 8px !important;
+}
+
+.cf-int__busca {
+	align-items: center;
+	border: 1px solid #d5ddec; /* Cor não tokenizada no Figma. */
+	border-radius: 6px;
+	color: var(--cor-texto);
+	display: flex;
+	font-size: 0.9375rem;
+	height: 46px;
+	margin-bottom: 16px !important;
+	padding: 0 14px;
+}
+
+.cf-int__tabela {
+	border: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	border-collapse: separate;
+	border-radius: 8px;
+	border-spacing: 0;
+	font-size: 0.875rem;
+	overflow: hidden;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.cf-int__tabela th,
+.cf-int__tabela td {
+	padding: 0 16px;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.cf-int__tabela th {
+	background: var(--cor-fundo-suave);
+	color: var(--cor-texto-alt);
+	font-size: 0.75rem;
+	font-weight: 500;
+	height: 40px;
+}
+
+.cf-int__tabela th .cf-int__fonte-icone {
+	margin-left: 4px;
+}
+
+.cf-int__tabela td {
+	border-top: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	color: var(--cor-texto);
+	height: 48px;
+}
+
+.cf-int__tabela th:nth-child(1) { width: 10%; }
+.cf-int__tabela th:nth-child(2) { width: 24.5%; }
+.cf-int__tabela th:nth-child(3) { width: 20.5%; }
+.cf-int__tabela th:nth-child(4) { width: 18%; }
+
+.cf-int__tabela td:nth-child(1) {
+	font-weight: 700;
+}
+
+.cf-int__tabela td:nth-child(4) {
+	color: var(--cor-positivo);
+	font-weight: 700;
+}
+
+.cf-int__tabela tr.ativo td {
+	background: #e9f0ff; /* Cor não tokenizada no Figma. */
+}
+
+/* Painel de detalhe. */
+.cf-int__detalhe {
+	background: var(--cor-fundo-suave);
+	border-left: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	display: flex;
+	flex-direction: column;
+	padding: 28px 24px 26px;
+}
+
+.cf-int__detalhe-sub {
+	color: var(--cor-texto-alt);
+	font-size: 0.75rem;
+}
+
+.cf-int__detalhe-titulo {
+	color: var(--cor-texto);
+	font-size: 1rem;
+	font-weight: 700;
+	margin-top: 6px !important;
+}
+
+.cf-int__bloco {
+	margin-top: 28px;
+}
+
+.cf-int__bloco + .cf-int__bloco {
+	margin-top: 24px;
+}
+
+.cf-int__bloco-titulo {
+	align-items: center;
+	color: var(--cor-texto-suave);
+	display: flex;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	gap: 8px;
+	letter-spacing: 0.02em;
+	margin-bottom: 4px !important;
+	text-transform: uppercase;
+}
+
+.cf-int__bloco-lista {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cf-int__bloco-lista li {
+	color: var(--cor-texto);
+	font-size: 0.875rem;
+	line-height: 1.85;
+}
+
+.cf-int__bloco--valores li {
+	display: flex;
+	justify-content: space-between;
+}
+
+.cf-int__bloco--valores .cf-int__bloco-valor {
+	font-weight: 700;
+}
+
+.cf-int__bloco--negocios .cf-int__bloco-rotulo {
+	font-weight: 700;
+}
+
+.cf-int__bloco--negocios .cf-int__bloco-valor {
+	color: var(--cor-texto-suave);
+}
+
+.cf-int__acoes {
+	display: flex;
+	flex-direction: column;
+	gap: 9px;
+	margin-top: auto;
+	padding-top: 28px;
+}
+
+.cf-int__acao {
+	align-items: center;
+	border: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	border-radius: 6px;
+	color: var(--cor-texto-marca);
+	display: flex;
+	font-size: 0.875rem;
+	font-weight: 600;
+	height: 37px;
+	justify-content: center;
+}
+
+.cf-int__acao--1 {
+	background: var(--cor-primaria);
+	border-color: var(--cor-primaria);
+	color: var(--cor-texto-clara);
+}
+
+.cf-int__acao--2 {
+	background: var(--cor-fundo);
+}
+
+.cf-int__legenda {
+	color: var(--cor-texto-suave);
+	font-family: var(--fonte-base);
+	font-size: 0.875rem;
+	margin: 24px 0 0;
+	text-align: center;
+}
+
+.cf-int__legenda strong {
+	color: var(--cor-texto);
+	font-weight: 700;
+}
+
+@media (max-width: 1200px) {
+	.cf-int__janela-corpo {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-int__detalhe {
+		border-left: 0;
+		border-top: 1px solid #e1e7f3; /* Cor não tokenizada no Figma. */
+	}
+
+	.cf-int__consulta {
+		overflow-x: auto;
+	}
+}
+
+@media (max-width: 768px) {
+	.cf-int__topo {
+		flex-direction: column;
+		padding-top: 56px;
+	}
+
+	.cf-int__titulo {
+		margin-top: 0;
+	}
+
+	.cf-int__selo::before,
+	.cf-int__selo::after {
+		display: none;
+	}
+
+	.cf-int__janela-topo {
+		grid-template-columns: 1fr;
+		height: auto;
+		padding: 14px 16px;
+	}
+
+	.cf-int__fontes {
+		justify-content: flex-start;
+	}
+
+	/* No celular a tabela fica com Código, Serviço e Contratos ativos: as
+	   cinco colunas não cabem e a rolagem lateral parecia tabela cortada. */
+	.cf-int__tabela {
+		table-layout: auto;
+	}
+
+	.cf-int__tabela th,
+	.cf-int__tabela td {
+		padding: 0 10px;
+		white-space: normal;
+	}
+
+	.cf-int__tabela th:nth-child(n) {
+		width: auto;
+	}
+
+	.cf-int__tabela td:nth-child(1) {
+		white-space: nowrap;
+	}
+
+	.cf-int__tabela th:nth-child(3),
+	.cf-int__tabela td:nth-child(3),
+	.cf-int__tabela th:nth-child(5),
+	.cf-int__tabela td:nth-child(5) {
+		display: none;
+	}
+
+	.cf-int__consulta {
+		overflow-x: visible;
+		padding: 20px 16px 24px;
+	}
+
+	.cf-int__detalhe {
+		padding: 24px 16px;
+	}
+}
+
+/* ==========================================================================
+   10b. SISTEMAS (grade de logos)
+   ========================================================================== */
+
+.cf-sistemas {
+	padding: 0 0 var(--secao-espacamento);
+}
+
+.cf-sistemas__grade {
+	display: grid;
+	gap: 12px;
+	grid-template-columns: repeat(8, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cf-sistemas__item {
+	align-items: center;
+	background: var(--cor-fundo);
+	border: 1px solid #e6eaf2; /* Cor não tokenizada no Figma. */
+	border-radius: 10px;
+	display: flex;
+	height: 86px;
+	justify-content: center;
+}
+
+/* Teto proporcional à caixa, como no Figma (~68% da largura, ~52% da altura). */
+.cf-sistemas__logo {
+	display: block;
+	height: auto;
+	max-height: 52%;
+	max-width: 68%;
+	object-fit: contain;
+	width: auto;
+}
+
+@media (max-width: 1024px) {
+	.cf-sistemas__grade {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-sistemas__grade {
+		gap: 8px;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.cf-sistemas__item {
+		height: 64px;
+	}
+
+	.cf-sistemas__logo {
+		max-height: 60%;
+		max-width: 82%;
+	}
+}
+
+/* ==========================================================================
+   11. BENEFÍCIOS
+   ========================================================================== */
+
+.cf-beneficios {
+	padding: 0 0 var(--secao-espacamento);
+}
+
+/* Azul-marinho com faixas diagonais mais claras, como no Figma. */
+.cf-beneficios__faixa {
+	align-items: center;
+	background:
+		linear-gradient(
+			115deg,
+			#00297a 0%,      /* Azul das faixas claras, não tokenizado no Figma. */
+			var(--cor-marca-profunda) 22%,
+			#00297a 48%,
+			var(--cor-marca-profunda) 74%,
+			#00297a 100%
+		);
+	border-radius: 14px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	list-style: none;
+	margin: 0;
+	min-height: 227px;
+	padding: 0 18px;
+}
+
+.cf-beneficios__item {
+	color: var(--cor-texto-clara);
+	display: flex;
+	font-family: var(--fonte-titulo);
+	font-size: 2.625rem;
+	font-weight: 700;
+	justify-content: center;
+	line-height: 0.9;
+	position: relative;
+	text-align: center;
+}
+
+.cf-beneficios__item span {
+	max-width: 230px;
+}
+
+/* Fios verticais entre as colunas. */
+.cf-beneficios__item + .cf-beneficios__item::before {
+	background: rgba(255, 255, 255, 0.15);
+	content: "";
+	height: 98px;
+	left: 0;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1px;
+}
+
+@media (max-width: 768px) {
+	.cf-beneficios__faixa {
+		gap: 24px;
+		grid-template-columns: 1fr;
+		padding: 40px 24px;
+	}
+
+	.cf-beneficios__item {
+		font-size: 1.75rem;
+	}
+
+	.cf-beneficios__item span {
+		max-width: none;
+	}
+
+	.cf-beneficios__item + .cf-beneficios__item::before {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   12. COMO FUNCIONA ("Qualquer tela, dashboard ou processo")
+   ========================================================================== */
+
+.cf-dashboard {
+	padding: 0 0 calc(var(--secao-espacamento) + 26px); /* 26px: metade das pílulas que saem do painel. */
+}
+
+.cf-dashboard__header {
+	margin: 0 auto 44px;
+	max-width: 760px;
+	text-align: center;
+}
+
+.cf-dashboard__eyebrow {
+	color: var(--cor-texto-marca);
+	font-family: var(--fonte-base);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	margin: 0 0 10px;
+	text-transform: uppercase;
+}
+
+.cf-dashboard__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.14;
+	margin: 0 0 20px;
+}
+
+.cf-dashboard__titulo-linha {
+	display: block;
+}
+
+.cf-dashboard__titulo-linha--destaque {
+	color: var(--cor-texto-marca);
+}
+
+.cf-dashboard__texto {
+	color: var(--cor-texto-alt);
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	line-height: 1.8;
+	margin: 0 auto;
+	max-width: 620px;
+}
+
+/* Painel da demonstração. */
+.cf-dashboard__painel {
+	align-items: flex-start;
+	background: var(--cor-fundo-azul);
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	min-height: 737px;
+	position: relative;
+}
+
+.cf-dashboard__midia {
+	border-radius: 10px;
+	display: block;
+	height: 100%;
+	inset: 0;
+	object-fit: cover;
+	position: absolute;
+	width: 100%;
+}
+
+/* Com vídeo, o painel assume a proporção dele (16:9, o quadro do Figma). */
+.cf-dashboard__painel--video {
+	aspect-ratio: 16 / 9;
+	min-height: 0;
+}
+
+/* Quadro sem mídia: cartão de tela esmaecido + cursor. */
+.cf-dashboard__tela {
+	background: rgba(255, 255, 255, 0.85);
+	border-radius: 10px;
+	height: 454px;
+	margin-top: 141px;
+	padding: 24px 22px;
+	width: 606px;
+}
+
+.cf-dashboard__tela-titulo {
+	color: #d6dbe4; /* Cinza esmaecido não tokenizado no Figma. */
+	font-family: var(--fonte-base);
+	font-size: 1.125rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+.cf-dashboard__cursor {
+	color: #1f242d;
+	left: 58.6%;
+	position: absolute;
+	top: 634px;
+}
+
+.cf-dashboard__cursor svg {
+	display: block;
+	filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* Pílulas conectadas, metade para fora da borda de baixo. */
+.cf-dashboard__etapas {
+	align-items: center;
+	bottom: -26px;
+	display: flex;
+	gap: 26px;
+	left: 50%;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	transform: translateX(-50%);
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.cf-dashboard__etapa {
+	align-items: center;
+	background: var(--cor-primaria);
+	border-radius: var(--raio-pill);
+	color: var(--cor-texto-clara);
+	display: flex;
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	gap: 6px;
+	height: 53px;
+	justify-content: center;
+	min-width: 268px;
+	padding: 0 40px;
+	position: relative;
+}
+
+.cf-dashboard__etapa strong {
+	font-weight: 700;
+}
+
+/* Elo entre uma pílula e a seguinte. */
+.cf-dashboard__etapa + .cf-dashboard__etapa::before {
+	background: var(--cor-primaria);
+	content: "";
+	height: 14px;
+	position: absolute;
+	right: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 30px;
+}
+
+@media (max-width: 1024px) {
+	.cf-dashboard__painel:not(.cf-dashboard__painel--video) {
+		min-height: 520px;
+	}
+
+	.cf-dashboard__tela {
+		height: 320px;
+		margin-top: 80px;
+		width: min(606px, 80%);
+	}
+
+	.cf-dashboard__cursor {
+		top: 440px;
+	}
+}
+
+@media (max-width: 900px) {
+	.cf-dashboard {
+		padding-bottom: var(--secao-espacamento);
+	}
+
+	.cf-dashboard__painel {
+		flex-direction: column;
+		padding-bottom: 24px;
+	}
+
+	/* No celular o vídeo ocupa o próprio espaço e as pílulas vêm abaixo. */
+	.cf-dashboard__painel--video {
+		aspect-ratio: auto;
+		padding: 0 0 24px;
+	}
+
+	.cf-dashboard__painel--video .cf-dashboard__midia {
+		aspect-ratio: 16 / 9;
+		border-radius: 10px 10px 0 0;
+		height: auto;
+		position: relative;
+	}
+
+	.cf-dashboard__tela {
+		margin: 40px auto 0;
+	}
+
+	.cf-dashboard__cursor {
+		display: none;
+	}
+
+	.cf-dashboard__etapas {
+		align-items: stretch;
+		bottom: auto;
+		flex-direction: column;
+		gap: 12px;
+		left: auto;
+		margin: 32px auto 0;
+		position: relative;
+		transform: none;
+		white-space: normal;
+	}
+
+	/* Texto corrido e centralizado: em flex, o negrito e o complemento viravam
+	   duas colunas quebradas ("CLI / Connect"). */
+	.cf-dashboard__etapa {
+		display: block;
+		height: auto;
+		min-width: 0;
+		padding: 14px 20px;
+		text-align: center;
+	}
+
+	.cf-dashboard__etapa + .cf-dashboard__etapa::before {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   13. ECONOMIA ("Até 80% menos licenças nos seus grandes sistemas")
+   ========================================================================== */
+
+.cf-economia {
+	padding: 0 0 var(--secao-espacamento);
+}
+
+.cf-economia__header {
+	margin: 0 auto 45px;
+	max-width: 760px;
+	text-align: center;
+}
+
+.cf-economia__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: var(--tam-h3);
+	font-weight: 600;
+	line-height: 1.1;
+	margin: 0 0 18px;
+}
+
+.cf-economia__titulo-linha {
+	display: block;
+}
+
+.cf-economia__titulo-linha--destaque {
+	color: var(--cor-texto-marca);
+}
+
+.cf-economia__texto {
+	color: var(--cor-texto-alt);
+	font-family: var(--fonte-base);
+	font-size: 1rem;
+	line-height: 1.5;
+	margin: 0 auto;
+	max-width: 680px;
+}
+
+/* Cartão de comparação. */
+.cf-economia__card {
+	background: var(--cor-fundo);
+	border: 1px solid #e6eaf2; /* Cor não tokenizada no Figma. */
+	border-radius: 10px;
+	font-family: var(--fonte-base);
+	padding: 32px 32px 32px;
+}
+
+.cf-economia__card-titulo {
+	border-bottom: 1px solid #e6eaf2; /* Cor não tokenizada no Figma. */
+	color: var(--cor-texto);
+	font-family: var(--fonte-base);
+	font-size: 1.25rem;
+	font-weight: 600;
+	letter-spacing: normal;
+	line-height: 1.3;
+	margin: 0 0 30px;
+	padding-bottom: 15px;
+}
+
+.cf-economia__linha + .cf-economia__linha {
+	margin-top: 32px;
+}
+
+.cf-economia__rotulos {
+	align-items: baseline;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 0 10px;
+}
+
+.cf-economia__rotulo {
+	color: var(--cor-texto);
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.cf-economia__valor {
+	color: var(--cor-texto-suave);
+	font-size: 0.75rem;
+	font-weight: 600;
+}
+
+.cf-economia__barra {
+	border-radius: var(--raio-pill);
+	height: 53px;
+	overflow: hidden;
+	position: relative;
+}
+
+.cf-economia__barra--cheia {
+	background: linear-gradient(90deg, var(--cor-primaria) 0%, #7b8ffb 100%); /* Fim do degradê não tokenizado no Figma. */
+}
+
+.cf-economia__barra--parcial {
+	align-items: center;
+	background: #e8edf7; /* Cor não tokenizada no Figma. */
+	display: flex;
+}
+
+.cf-economia__barra-preenchida {
+	background: var(--cor-primaria);
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: var(--cf-preenchido, 20%);
+}
+
+/* Texto centralizado no trecho que não é licença. */
+.cf-economia__barra-texto {
+	color: var(--cor-primaria-escura);
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-left: var(--cf-preenchido, 20%);
+	position: relative;
+	text-align: center;
+	width: calc(100% - var(--cf-preenchido, 20%));
+}
+
+@media (max-width: 600px) {
+	.cf-economia__card {
+		padding: 24px 20px;
+	}
+
+	.cf-economia__barra {
+		height: 44px;
+	}
+
+	.cf-economia__barra-texto {
+		font-size: 0.75rem;
+	}
+}
+
+/* ==========================================================================
+   15. PREÇO ("Tudo incluso. Com custo previsível.")
+   ========================================================================== */
+
+.cf-preco {
+	background: var(--cor-fundo-suave);
+	padding: 80px 0 105px;
+}
+
+.cf-preco__header {
+	margin: 0 auto 45px;
+	max-width: 760px;
+	text-align: center;
+}
+
+.cf-preco__titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-titulo);
+	font-size: 3.5rem;
+	font-weight: 600;
+	line-height: 1.09;
+	margin: 0 0 24px;
+}
+
+.cf-preco__titulo-linha {
+	display: block;
+}
+
+.cf-preco__titulo-linha--destaque {
+	color: var(--cor-texto-marca);
+}
+
+.cf-preco__texto {
+	color: var(--cor-texto-suave);
+	font-family: var(--fonte-base);
+	font-size: 0.9375rem;
+	line-height: 1.75;
+	margin: 0 auto;
+	max-width: 560px;
+}
+
+.cf-preco__grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(3, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cf-preco__card {
+	background: var(--cor-fundo);
+	border: 1px solid #e6eaf2; /* Cor não tokenizada no Figma. */
+	border-radius: 8px;
+	font-family: var(--fonte-base);
+	min-height: 228px;
+	padding: 34px 32px 32px;
+}
+
+.cf-preco__numero {
+	color: var(--cor-texto-marca);
+	display: block;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin-bottom: 26px;
+}
+
+.cf-preco__card-titulo {
+	color: var(--cor-texto);
+	font-family: var(--fonte-base);
+	font-size: 1.25rem;
+	font-weight: 500;
+	letter-spacing: normal;
+	line-height: 1.3;
+	margin: 0 0 14px;
+}
+
+.cf-preco__card-texto {
+	color: var(--cor-texto-alt);
+	font-size: 0.9375rem;
+	line-height: 1.75;
+	margin: 0;
+}
+
+@media (max-width: 900px) {
+	.cf-preco__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.cf-preco__card {
+		min-height: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-preco {
+		padding: 56px 0 64px;
+	}
+
+	.cf-preco__titulo {
+		font-size: var(--tam-h3);
+	}
+
+	.cf-preco__card {
+		padding: 24px;
+	}
+}
+
+/* ==========================================================================
+   15b. SELOS (compliance e segurança)
+   ========================================================================== */
+
+.cf-selos {
+	background:
+		radial-gradient(ellipse 55% 60% at 50% 100%, rgba(30, 90, 230, 0.6) 0%, rgba(30, 90, 230, 0) 100%),
+		var(--cor-marca-profunda);
+	padding: 84px 0 110px;
+}
+
+.cf-selos__titulo {
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-base);
+	font-size: 1.25rem;
+	font-weight: 600;
+	letter-spacing: normal;
+	line-height: 1.3;
+	margin: 0 0 24px;
+	text-align: center;
+}
+
+.cf-selos__cartao {
+	background: var(--cor-fundo);
+	border-radius: 13px;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	list-style: none;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.cf-selos__item {
+	align-items: center;
+	border-right: 1px solid #e6eaf2; /* Cor não tokenizada no Figma. */
+	display: flex;
+	height: 126px;
+	justify-content: center;
+	padding: 0 12px;
+}
+
+.cf-selos__item:last-child {
+	border-right: 0;
+}
+
+.cf-selos__img {
+	display: block;
+	height: auto;
+	max-height: 72px;
+	max-width: 100%;
+	object-fit: contain;
+	width: auto;
+}
+
+/* Os fios ficam por conta de um `gap` de 1px sobre o fundo cinza do cartão:
+   não dependem de nth-child, então não quebram quando muda o nº de colunas. */
+@media (max-width: 1024px) {
+	.cf-selos__cartao {
+		background: #e6eaf2; /* Cor dos fios, não tokenizada no Figma. */
+		gap: 1px;
+		grid-template-columns: repeat(5, 1fr);
+	}
+
+	.cf-selos__item {
+		background: var(--cor-fundo);
+		border-right: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.cf-selos__cartao {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.cf-selos__item {
+		height: 100px;
+	}
+}
+
+/* ==========================================================================
+   15c. FAQ (acordeão global .faq, com os ajustes do Figma do CLI Flow)
+   ========================================================================== */
+
+.cf-faq .faq__lista {
+	max-width: 1024px;
+}
+
+.cf-faq .faq__gatilho {
+	color: var(--cor-texto-marca);
+	padding: 32px 0 14px;
+}
+
+.cf-faq .faq__gatilho:hover,
+.cf-faq .faq__gatilho[aria-expanded="true"] {
+	color: var(--cor-texto-marca);
+}
+
+.cf-faq .faq__resposta {
+	color: var(--cor-texto-alt);
+	font-size: 1rem;
+	line-height: 1.85;
+	max-width: none;
+	padding: 0 40px 32px 0;
+}
+
+.cf-faq .faq__item:first-child .faq__gatilho {
+	padding-top: 0;
+}
+
+/* ==========================================================================
+   17. CTA FINAL ("Próximo passo")
+   ========================================================================== */
+
+.cf-cta-final {
+	padding: 0 0 80px;
+}
+
+/* Azul com recortes diagonais à direita: faixa clara + canto escuro. */
+.cf-cta-final__cartao {
+	align-items: center;
+	background:
+		linear-gradient(135deg, transparent 0 88%, rgba(0, 20, 90, 0.28) 88% 100%),
+		linear-gradient(125deg, transparent 0 62%, rgba(255, 255, 255, 0.07) 62% 100%),
+		linear-gradient(90deg, #0a49c8 0%, #0040b8 100%); /* Azuis do Figma, não tokenizados. */
+	border-radius: 12px;
+	display: flex;
+	gap: 40px;
+	justify-content: space-between;
+	min-height: 297px;
+	padding: 56px 65px;
+}
+
+.cf-cta-final__conteudo {
+	max-width: 620px;
+}
+
+.cf-cta-final__eyebrow {
+	color: var(--cor-texto-clara-suave);
+	font-family: var(--fonte-base);
+	font-size: 0.875rem;
+	font-weight: 500;
+	letter-spacing: 0.14em;
+	margin: 0 0 8px;
+	text-transform: uppercase;
+}
+
+.cf-cta-final__titulo {
+	color: var(--cor-texto-clara);
+	font-family: var(--fonte-titulo);
+	font-size: 2.5rem;
+	font-weight: 600;
+	line-height: 1.15;
+	margin: 0 0 4px;
+}
+
+.cf-cta-final__titulo-linha {
+	display: block;
+}
+
+.cf-cta-final__texto {
+	color: rgba(255, 255, 255, 0.9);
+	font-family: var(--fonte-base);
+	font-size: 0.875rem;
+	line-height: 1.5;
+	margin: 0;
+	max-width: 490px;
+}
+
+.cf-cta-final__botao {
+	border-radius: 6px;
+	flex-shrink: 0;
+	font-weight: 600;
+	min-height: 58px;
+	min-width: 332px;
+}
+
+@media (max-width: 900px) {
+	.cf-cta-final__cartao {
+		align-items: flex-start;
+		flex-direction: column;
+		padding: 40px 28px;
+	}
+
+	.cf-cta-final__titulo {
+		font-size: 2rem;
+	}
+
+	.cf-cta-final__botao {
+		font-size: 1rem;
+		min-width: 0;
+		padding: 16px 20px;
+		text-align: center;
+		width: 100%;
+	}
+}

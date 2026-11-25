@@ -177,14 +177,6 @@ function cliconnect_enqueue_assets() {
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/page-contato.css' )
 		);
-		// Máscara do telefone no formulário.
-		wp_enqueue_script(
-			'cliconnect-contato',
-			get_theme_file_uri( '/assets/js/page-contato.js' ),
-			array(),
-			cliconnect_asset_version( '/assets/js/page-contato.js' ),
-			true
-		);
 	}
 
 	// Página Política de Privacidade.
@@ -194,6 +186,23 @@ function cliconnect_enqueue_assets() {
 			get_theme_file_uri( '/assets/css/page-privacidade.css' ),
 			array( 'cliconnect-theme' ),
 			cliconnect_asset_version( '/assets/css/page-privacidade.css' )
+		);
+	}
+
+	// Página CLI Flow.
+	if ( cliconnect_e_pagina( 'cli-flow' ) ) {
+		wp_enqueue_style(
+			'cliconnect-cli-flow',
+			get_theme_file_uri( '/assets/css/page-cli-flow.css' ),
+			array( 'cliconnect-theme' ),
+			cliconnect_asset_version( '/assets/css/page-cli-flow.css' )
+		);
+		wp_enqueue_script(
+			'cliconnect-cli-flow',
+			get_theme_file_uri( '/assets/js/page-cli-flow.js' ),
+			array(),
+			cliconnect_asset_version( '/assets/js/page-cli-flow.js' ),
+			true
 		);
 	}
 
@@ -248,7 +257,25 @@ function cliconnect_enqueue_assets() {
 		}
 	}
 
-	// Comportamentos vanilla (menu, submenus, acordeão do FAQ).
+	/*
+	 * UTMs -> Salesforce Web-to-Lead (inc/lead.php). Em TODAS as páginas: as
+	 * UTMs só existem na URL da página de entrada do anúncio, e o script
+	 * precisa lê-las ali, antes de o visitante navegar até o formulário.
+	 */
+	wp_enqueue_script(
+		'cliconnect-utm-lead',
+		get_theme_file_uri( '/assets/js/utm-web-to-lead.js' ),
+		array(),
+		cliconnect_asset_version( '/assets/js/utm-web-to-lead.js' ),
+		true
+	);
+	wp_add_inline_script(
+		'cliconnect-utm-lead',
+		'window.cliconnectLead = ' . wp_json_encode( cliconnect_lead_config_js() ) . ';',
+		'before'
+	);
+
+	// Comportamentos vanilla (menu, submenus, acordeão do FAQ, popup de lead).
 	wp_enqueue_script(
 		'cliconnect-theme',
 		get_theme_file_uri( '/assets/js/theme.js' ),

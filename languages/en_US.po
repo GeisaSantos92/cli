@@ -658,3 +658,48 @@ msgstr "Copy link"
 #: template-parts/single/compartilhar.php
 msgid "Link copiado"
 msgstr "Link copied"
+
+msgid "Nome"
+msgstr "Name"
+
+msgid "Empresa"
+msgstr "Company"
+
+msgid "Mensagem"
+msgstr "Message"
+
+msgid "(00) 00000-0000"
+msgstr "+55 (00) 00000-0000"
+
+msgid "Digite sua mensagem"
+msgstr "Type your message"
+
+msgid "Ao enviar, concordo em receber comunicações da CLI"
+msgstr "By submitting, I agree to receive communications from CLI"
+
+msgid "Enviar"
+msgstr "Send"
+
+msgid "Mensagem enviada!"
+msgstr "Message sent!"
+
+msgid "Recebemos seus dados. Em breve nossa equipe entrará em contato."
+msgstr "We have received your details. Our team will be in touch shortly."
+
+msgid "Fechar"
+msgstr "Close"
+
+msgid "Fale com a gente no WhatsApp"
+msgstr "Talk to us on WhatsApp"
+
+msgid "Preencha seus dados para iniciar a conversa com o nosso time."
+msgstr "Fill in your details to start the conversation with our team."
+
+msgid "Continuar no WhatsApp"
+msgstr "Continue on WhatsApp"
+
+msgid "Tudo certo!"
+msgstr "All set!"
+
+msgid "Abrimos a conversa no WhatsApp em uma nova aba."
+msgstr "We opened the WhatsApp chat in a new tab."

@@ -4,12 +4,15 @@
  *
  * Estrutura (fiel ao Figma):
  * - Bloco CTA azul, sobreposto à transição para o rodapé escuro (Customizer).
+ *   Não aparece nas páginas que fecham com o próprio CTA (Trabalhe Conosco,
+ *   Programa de Parceiros e CLI Flow).
  * - Faixa branca da agência (template-parts/rodape-agencia.php), com o
  *   copyright do cliente e os links legais.
  * - Rodapé escuro: colunas de links (menu "rodape", onde cada item de 1º
  *   nível é o título de uma coluna) e, abaixo delas, a barra com logo +
  *   "powered by boomi" à esquerda e ícones sociais à direita (Customizer).
- * - Botões flutuantes: voltar ao topo e WhatsApp (Customizer).
+ * - Botões flutuantes: voltar ao topo e WhatsApp (Customizer). O WhatsApp
+ *   abre o popup de lead antes de seguir para a conversa (inc/lead.php).
  * - Banner de cookies, flutuante à esquerda (template-parts/cookie-banner.php).
  *
  * @package Cliconnect
@@ -22,12 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 $cta_titulo = cliconnect_mod_traduzido( 'cliconnect_cta_titulo' );
 $cta_texto  = cliconnect_mod_traduzido( 'cliconnect_cta_botao_texto' );
 $cta_url    = get_theme_mod( 'cliconnect_cta_botao_url' ) ?? '';
+$cta_url    = $cta_url ? $cta_url : cliconnect_url_contato();
 $whatsapp   = get_theme_mod( 'cliconnect_whatsapp_url' ) ?? '';
 $linkedin   = get_theme_mod( 'cliconnect_social_linkedin' ) ?? '';
 $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 ?>
 
-<?php if ( $cta_titulo && ! is_page_template( array( 'page-trabalhe-conosco.php', 'page-programa-de-parceiros.php' ) ) ) : ?>
+<?php if ( $cta_titulo && ! is_page_template( array( 'page-trabalhe-conosco.php', 'page-programa-de-parceiros.php', 'page-cli-flow.php' ) ) ) : ?>
 <section class="footer-cta">
 	<div class="footer-cta__inner">
 		<div class="footer-cta__caixa">
@@ -35,8 +39,8 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 
 			<?php if ( $cta_texto && $cta_url ) : ?>
 				<a class="botao botao--branco" href="<?php echo esc_url( $cta_url ); ?>">
-					<?php echo cliconnect_icone( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 					<?php echo esc_html( $cta_texto ); ?>
+					<?php echo cliconnect_icone( 'seta-direita' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 				</a>
 			<?php endif; ?>
 		</div>
@@ -131,15 +135,19 @@ $instagram  = get_theme_mod( 'cliconnect_social_instagram' ) ?? '';
 </button>
 
 <?php if ( $whatsapp ) : ?>
+<?php // O link é o fallback sem JS; com JS, o theme.js abre o popup de lead (template-parts/lead-popup.php). ?>
 <a
 	class="whatsapp-flutuante"
 	href="<?php echo esc_url( $whatsapp ); ?>"
 	target="_blank"
 	rel="noopener noreferrer"
+	data-lead-popup
+	aria-haspopup="dialog"
 	aria-label="<?php esc_attr_e( 'Falar no WhatsApp', 'cli' ); ?>"
 >
 	<?php echo cliconnect_icone( 'whatsapp', 32 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_icone retorna SVG estático do tema. ?>
 </a>
+<?php get_template_part( 'template-parts/lead-popup', null, array( 'whatsapp' => $whatsapp ) ); ?>
 <?php endif; ?>
 
 <?php get_template_part( 'template-parts/cookie-banner' ); ?>

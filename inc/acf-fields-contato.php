@@ -69,13 +69,14 @@ function cliconnect_acf_fields_contato() {
 	$fields[] = $ct_text( 'form_telefone', 'Telefone', 'ct_form_telefone' );
 	$fields[] = $ct_text( 'form_linkedin_url', 'URL — LinkedIn', 'ct_form_linkedin_url' );
 	$fields[] = $ct_text( 'form_instagram_url', 'URL — Instagram', 'ct_form_instagram_url' );
-	$fields[] = $ct_text( 'form_whatsapp_url', 'URL — WhatsApp', 'ct_form_whatsapp_url' );
 	$fields[] = array_merge(
-		$ct_text( 'form_cf7_id', 'ID do formulário CF7', 'ct_form_cf7_id' ),
+		$ct_text( 'form_whatsapp_url', 'URL — WhatsApp', 'ct_form_whatsapp_url' ),
 		array(
-			'instructions' => 'Insira o ID numérico do formulário criado no Contact Form 7.',
+			'instructions' => 'O ícone abre o formulário de lead e, depois do envio, segue para o WhatsApp do botão flutuante (Customizer).',
 		)
 	);
+	// O formulário é o Web-to-Lead do Salesforce (template-parts/form-lead.php),
+	// configurado no Customizer em "Salesforce — Web-to-Lead".
 
 	acf_add_local_field_group(
 		array(

@@ -177,9 +177,9 @@ function cliconnect_customize_register( $wp_customize ) {
 		'cliconnect_portal_url'       => array( 'Cabeçalho — URL do link secundário', '', 'url' ),
 		'cliconnect_header_cta_texto' => array( 'Cabeçalho — texto do botão principal', 'Ex.: Acessar Plataforma', 'text' ),
 		'cliconnect_header_cta_url'   => array( 'Cabeçalho — URL do botão principal', '', 'url' ),
-		'cliconnect_cta_botao_texto'  => array( 'Rodapé — texto do botão do CTA', 'Ex.: Fale conosco no WhatsApp', 'text' ),
-		'cliconnect_cta_botao_url'    => array( 'Rodapé — URL do botão do CTA', '', 'url' ),
-		'cliconnect_whatsapp_url'     => array( 'URL do botão flutuante de WhatsApp', 'Deixe vazio para não exibir o botão.', 'url' ),
+		'cliconnect_cta_botao_texto'  => array( 'Rodapé — texto do botão do CTA', 'Ex.: Fale conosco', 'text' ),
+		'cliconnect_cta_botao_url'    => array( 'Rodapé — URL do botão do CTA', 'Deixe vazio para levar à página Contato no idioma atual.', 'url' ),
+		'cliconnect_whatsapp_url'     => array( 'URL do botão flutuante de WhatsApp', 'O botão abre o formulário de lead e, depois do envio, leva para esta conversa. Deixe vazio para não exibir o botão.', 'url' ),
 		'cliconnect_cookies_texto'      => array( 'Cookies — texto do banner', 'Deixe vazio para não exibir o banner.', 'text' ),
 		'cliconnect_cookies_link_texto' => array( 'Cookies — rótulo do link', 'Ex.: política de privacidade', 'text' ),
 		'cliconnect_cookies_botao'      => array( 'Cookies — texto do botão', 'Ex.: Concordar', 'text' ),
@@ -251,6 +251,61 @@ function cliconnect_customize_register( $wp_customize ) {
 			'type'        => 'textarea',
 		)
 	);
+
+	/*
+	 * --- SALESFORCE: WEB-TO-LEAD ---
+	 * Consumido por inc/lead.php (formulário e script de UTMs).
+	 */
+	$wp_customize->add_section(
+		'cliconnect_salesforce',
+		array(
+			'title'       => __( 'Salesforce — Web-to-Lead', 'cli' ),
+			'description' => __( 'Formulário de lead da página Contato e do botão flutuante de WhatsApp. Guia: docs/lead-salesforce.md.', 'cli' ),
+			'priority'    => 161,
+		)
+	);
+
+	$wp_customize->add_setting(
+		'cliconnect_sf_org_id',
+		array(
+			'type'              => 'theme_mod',
+			'default'           => CLICONNECT_SF_ORG_ID,
+			'sanitize_callback' => 'cliconnect_sanitizar_id_salesforce',
+		)
+	);
+
+	$wp_customize->add_control(
+		'cliconnect_sf_org_id',
+		array(
+			'label'       => __( 'ID da organização (oid)', 'cli' ),
+			'description' => __( 'Começa com 00D. Está no HTML gerado em Configuração › Web-to-Lead.', 'cli' ),
+			'section'     => 'cliconnect_salesforce',
+			'type'        => 'text',
+		)
+	);
+
+	foreach ( cliconnect_lead_parametros() as $cliconnect_parametro => $cliconnect_rotulo ) {
+		$cliconnect_id = 'cliconnect_sf_campo_' . $cliconnect_parametro;
+
+		$wp_customize->add_setting(
+			$cliconnect_id,
+			array(
+				'type'              => 'theme_mod',
+				'sanitize_callback' => 'cliconnect_sanitizar_id_salesforce',
+			)
+		);
+
+		$wp_customize->add_control(
+			$cliconnect_id,
+			array(
+				/* translators: %s: nome do parâmetro, ex.: UTM Source. */
+				'label'       => sprintf( __( 'ID do campo — %s', 'cli' ), $cliconnect_rotulo ),
+				'description' => __( 'ID 00N... do campo personalizado no Lead. Vazio = vai só no fim da Descrição.', 'cli' ),
+				'section'     => 'cliconnect_salesforce',
+				'type'        => 'text',
+			)
+		);
+	}
 }
 add_action( 'customize_register', 'cliconnect_customize_register' );
 

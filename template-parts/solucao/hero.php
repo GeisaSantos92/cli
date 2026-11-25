@@ -27,7 +27,9 @@ $btn2_texto      = cliconnect_campo_pagina( 'solucao_hero_btn2_texto' );
 $btn2_url        = cliconnect_campo_pagina( 'solucao_hero_btn2_url' );
 $imagem_id       = cliconnect_campo_pagina( 'solucao_hero_imagem', 0 );
 $video           = cliconnect_video( cliconnect_campo_pagina( 'solucao_hero_video', 0 ), array( 'class' => 'sh-hero__imagem', 'preload' => 'auto' ) );
-$btn2_externo    = $btn2_url && str_starts_with( $btn2_url, 'http' );
+// Nova aba só para outro domínio: a URL absoluta do próprio site (ex.: Contato) abre na mesma aba.
+$btn2_host       = $btn2_url ? (string) wp_parse_url( $btn2_url, PHP_URL_HOST ) : '';
+$btn2_externo    = $btn2_host && wp_parse_url( home_url(), PHP_URL_HOST ) !== $btn2_host;
 
 if ( ! $titulo && ! $titulo_destaque ) {
 	return;
