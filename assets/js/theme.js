@@ -27,6 +27,7 @@
 		initLeadPopup();
 		initFormLead();
 		initMascaraTelefone();
+		initVideoOverlay();
 	});
 
 	/* ----- Seletor de idiomas (globo do header) ---------------------------- */
@@ -425,6 +426,70 @@
 		dialogo.addEventListener('close', function () {
 			document.documentElement.classList.remove('lead-popup-aberto');
 			if (gatilho) gatilho.focus();
+		});
+	}
+
+	/* ----- Overlay de vídeo (cases, issue #232) ----------------------------- */
+
+	/*
+	 * Um link com [data-video-overlay="<url de embed>"] abre o vídeo num
+	 * <dialog> sobre a página, como no hero da Ploomes. O iframe só é criado
+	 * no clique (nada de YouTube carregando à toa) e é destruído ao fechar,
+	 * o que também para o vídeo. ESC, clique fora e o botão fecham.
+	 * Sem JS, o link abre o vídeo em outra aba.
+	 */
+	function initVideoOverlay() {
+		var dialogo = null;
+		var player = null;
+		var fechar = null;
+		var gatilho = null;
+
+		function montar() {
+			dialogo = document.createElement('dialog');
+			dialogo.className = 'video-overlay';
+			dialogo.innerHTML =
+				'<div class="video-overlay__caixa">' +
+				'<button type="button" class="video-overlay__fechar" data-video-overlay-fechar>' +
+				'<span aria-hidden="true">&times;</span></button>' +
+				'<div class="video-overlay__player"></div>' +
+				'</div>';
+			document.body.appendChild(dialogo);
+			player = dialogo.querySelector('.video-overlay__player');
+			fechar = dialogo.querySelector('[data-video-overlay-fechar]');
+
+			dialogo.addEventListener('click', function (ev) {
+				if (ev.target === dialogo || (ev.target.closest && ev.target.closest('[data-video-overlay-fechar]'))) {
+					dialogo.close();
+				}
+			});
+
+			dialogo.addEventListener('close', function () {
+				player.innerHTML = '';
+				document.documentElement.classList.remove('video-overlay-aberto');
+				if (gatilho) gatilho.focus();
+			});
+		}
+
+		document.addEventListener('click', function (ev) {
+			var alvo = ev.target.closest ? ev.target.closest('[data-video-overlay]') : null;
+			if (!alvo) return;
+
+			if (!dialogo) montar();
+			if (typeof dialogo.showModal !== 'function') return; // Navegador sem <dialog>: segue o link.
+
+			ev.preventDefault();
+			gatilho = alvo;
+			fechar.setAttribute('aria-label', alvo.getAttribute('data-video-fechar') || '');
+
+			var iframe = document.createElement('iframe');
+			iframe.src = alvo.getAttribute('data-video-overlay');
+			iframe.title = alvo.getAttribute('aria-label') || '';
+			iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+			iframe.setAttribute('allowfullscreen', '');
+			player.appendChild(iframe);
+
+			dialogo.showModal();
+			document.documentElement.classList.add('video-overlay-aberto');
 		});
 	}
 

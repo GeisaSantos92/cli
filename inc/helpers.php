@@ -342,6 +342,35 @@ function cliconnect_campo_imagem( $campo, $tamanho = 'large', $atributos = array
 }
 
 /**
+ * Converte a URL de um vídeo do YouTube ou do Vimeo no endereço de embed
+ * usado pelo overlay de vídeo (já com autoplay).
+ *
+ * YouTube vai pelo domínio youtube-nocookie (sem cookies até o play).
+ * Aceita youtu.be/ID, youtube.com/watch?v=ID, /embed/ID, /shorts/ID e
+ * vimeo.com/ID.
+ *
+ * @param string $url URL do vídeo.
+ * @return string URL de embed, ou string vazia se não reconhecer o serviço.
+ */
+function cliconnect_youtube_embed( $url ) {
+	$url = trim( (string) $url );
+
+	if ( '' === $url ) {
+		return '';
+	}
+
+	if ( preg_match( '~(?:youtu\.be/|youtube(?:-nocookie)?\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/|live/))([A-Za-z0-9_-]{11})~', $url, $m ) ) {
+		return 'https://www.youtube-nocookie.com/embed/' . $m[1] . '?autoplay=1&rel=0&playsinline=1';
+	}
+
+	if ( preg_match( '~vimeo\.com/(?:video/)?(\d+)~', $url, $m ) ) {
+		return 'https://player.vimeo.com/video/' . $m[1] . '?autoplay=1';
+	}
+
+	return '';
+}
+
+/**
  * Monta um <video> decorativo (mudo, em loop, sem controles) para um anexo .mp4.
  *
  * Substitui as animações que antes eram GIFs: toca sozinho, como uma imagem.

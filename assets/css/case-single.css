@@ -322,6 +322,24 @@
 	display: block;
 }
 
+/* Vídeo de entrevista + legenda "Nome - Cargo" (issue #232). */
+.case-video-bloco {
+	margin: 0;
+}
+
+.case-video__legenda {
+	margin-top: 16px;
+	font-family: var(--fonte-base);
+	font-size: var(--tam-body-lg); /* 18px */
+	line-height: 1.4;
+	color: var(--cor-texto-suave);
+}
+
+.case-video__legenda strong {
+	font-weight: 600;
+	color: var(--cor-texto);
+}
+
 /* ==========================================================================
    4. SEÇÃO (Desafio / Solução / Impacto)
    ========================================================================== */
@@ -467,10 +485,10 @@
 
 .case-metrica-single__numero {
 	font-family: var(--fonte-titulo);
-	font-size: var(--tam-h1); /* 80px */
+	font-size: var(--tam-h2); /* 60px (issue #232) */
 	font-weight: 500;
 	line-height: 1.1;
-	letter-spacing: -0.03em; /* -2.4px @ 80px */
+	letter-spacing: -0.03em; /* -1.8px @ 60px */
 	color: var(--cor-primaria); /* #3551f2 */
 	margin: 0 0 24px;
 }

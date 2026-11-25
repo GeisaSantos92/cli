@@ -33,6 +33,58 @@ function cliconnect_icones_agente() {
 }
 
 /**
+ * Campos dos 3 vídeos de entrevista do case (issue #232).
+ *
+ * Cada vídeo: URL do YouTube, capa, nome e cargo de quem fala (legenda
+ * "Nome - Cargo" embaixo do vídeo). O vídeo abre num overlay na página.
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function cliconnect_case_campos_videos() {
+	$posicoes = array(
+		1 => 'antes do Desafio',
+		2 => 'entre Desafio e Solução',
+		3 => 'entre Solução e Impacto (no lugar da imagem)',
+	);
+	$campos   = array();
+
+	foreach ( $posicoes as $n => $onde ) {
+		$campos[] = array(
+			'key'          => "field_case_video_{$n}_url",
+			'label'        => "Vídeo {$n} — URL do YouTube ({$onde})",
+			'name'         => "video_{$n}_url",
+			'type'         => 'url',
+			'instructions' => 'Abre num overlay na própria página.',
+		);
+		$campos[] = array(
+			'key'           => "field_case_video_{$n}_capa",
+			'label'         => "Vídeo {$n} — capa",
+			'name'          => "video_{$n}_capa",
+			'type'          => 'image',
+			'return_format' => 'id',
+			'preview_size'  => 'medium',
+			'wrapper'       => array( 'width' => '34' ),
+		);
+		$campos[] = array(
+			'key'     => "field_case_video_{$n}_nome",
+			'label'   => "Vídeo {$n} — nome",
+			'name'    => "video_{$n}_nome",
+			'type'    => 'text',
+			'wrapper' => array( 'width' => '33' ),
+		);
+		$campos[] = array(
+			'key'     => "field_case_video_{$n}_cargo",
+			'label'   => "Vídeo {$n} — cargo",
+			'name'    => "video_{$n}_cargo",
+			'type'    => 'text',
+			'wrapper' => array( 'width' => '33' ),
+		);
+	}
+
+	return $campos;
+}
+
+/**
  * Registra os grupos de campos dos CPTs.
  *
  * @return void
@@ -289,8 +341,11 @@ function cliconnect_acf_fields_cpt() {
 					'label'        => 'URL do vídeo',
 					'name'         => 'video',
 					'type'         => 'url',
-					'instructions' => 'YouTube ou Vimeo. Se preenchido, exibe o botão de play.',
+					'instructions' => 'YouTube ou Vimeo. Se preenchido, exibe o botão de play. Usado só quando o "Vídeo 1" abaixo está vazio.',
 				),
+				// Vídeos de entrevista (issue #232): 1 antes do Desafio, 2 entre
+				// Desafio e Solução, 3 entre Solução e Impacto (no lugar da imagem).
+				...cliconnect_case_campos_videos(),
 				array(
 					'key'   => 'field_case_tab_metrica',
 					'label' => 'Métrica',

@@ -732,7 +732,7 @@ class Cliconnect_Seed {
 			// Só para a barra "Tecnologias Utilizadas" do case da Panasonic (issue #224).
 			array( 'SAP S/4HANA', 'integracao-sap-s4hana', false ),
 			/*
-			 * Tecnologias dos cases PetroRecôncavo, Panasonic e Baterias Moura
+			 * Tecnologias dos cases PetroReconcavo, Panasonic e Baterias Moura
 			 * (issue #228). Ficam fora da órbita do hero. Zendesk, Senior e VTEX
 			 * já existem acima e são reaproveitados; criar outro item com o mesmo
 			 * título quebraria o índice por nome do menu (cliconnect_logo_integracao).
@@ -1180,8 +1180,8 @@ class Cliconnect_Seed {
 		update_field( 'imagem_meio', $this->img( 'case-moura-meio' ), $moura );
 		$this->definir_thumb( $moura, 'case-moura' );
 
-		// 3. PetroRecôncavo — conteúdo real do case (issue #225), duas métricas.
-		$petro_resumo = 'Com a CLI Connect by Boomi, a PetroRecôncavo centralizou as integrações entre o novo SAP S/4HANA e seus sistemas satélites, eliminou a digitação duplicada entre sistemas e passou a fechar a produção no 3º dia do mês.';
+		// 3. PetroReconcavo — conteúdo real do case (issue #225), duas métricas.
+		$petro_resumo = 'Com a CLI Connect by Boomi, a PetroReconcavo centralizou as integrações entre o novo SAP S/4HANA e seus sistemas satélites, eliminou a digitação duplicada entre sistemas e passou a fechar a produção no 3º dia do mês.';
 
 		$petro = $this->upsert(
 			'case:petroreconcavo',
@@ -1207,19 +1207,19 @@ class Cliconnect_Seed {
 		update_field( 'logo', $this->img( 'case-logo-petroreconcavo-cor' ), $petro );
 		update_field( 'logo_interno', $this->img( 'case-logo-petroreconcavo-novo' ), $petro );
 		update_field( 'citacao', 'Com os sistemas integrados, em quase dois anos de operação a gente nunca parou. A produção funciona 24 por 7, e as áreas seguem integradas, sem depender da TI.', $petro );
-		update_field( 'autor', 'Eliana Lana', $petro );
-		update_field( 'cargo', 'Coordenadora de Sistemas na PetroRecôncavo', $petro );
+		update_field( 'autor', 'Eliana Lanna', $petro );
+		update_field( 'cargo', 'Coordenadora de Sistemas na PetroReconcavo', $petro );
 		update_field( 'retrato', $this->img( 'case-petroreconcavo-capa' ), $petro );
 		update_field( 'metrica_numero', '0 paradas', $petro );
 		update_field( 'metrica_texto', 'nas integrações em quase dois anos de operação 24/7', $petro );
 		update_field( 'metrica_numero_2', '3 dias', $petro ); // A fonte do número não tem o caractere "º" (issue #230).
 		update_field( 'metrica_texto_2', 'para fechar a produção, que antes chegava ao 8º dia', $petro );
 		update_field( 'desafio_titulo', 'Uma operação crítica que não pode parar', $petro );
-		update_field( 'desafio_texto', '<p>Pioneira entre os produtores independentes de petróleo e gás em terra, a PetroRecôncavo opera 57 concessões e mais de 2 mil poços na Bahia, no Rio Grande do Norte e em Sergipe, com produção em torno de 26 mil barris por dia. É uma operação 24/7 e geograficamente dispersa, em que qualquer parada significa barris que deixam de ser produzidos. Em 2022, a empresa iniciou a troca do seu ERP e, com o projeto Evolution, implementou o SAP S/4HANA em 2024.</p><p>O SAP, porém, não funciona sozinho. A maioria dos sistemas satélites não era integrada, e o principal deles, o IFS, usado na gestão de ativos, tinha apenas integrações simples, sem a robustez e o controle necessários. As conexões eram ponto a ponto, sem orquestração nem monitoramento, e muitos dados eram digitados em um sistema e redigitados em outro, com idas e vindas de e-mails e planilhas. O fechamento mensal levava de 10 a 11 dias úteis, e a infraestrutura híbrida, com ambientes on-premise e em nuvem, exigia uma tecnologia capaz de integrar os dois.</p>', $petro );
+		update_field( 'desafio_texto', '<p>Pioneira entre os produtores independentes de petróleo e gás em terra, a PetroReconcavo opera 57 concessões e mais de 2 mil poços na Bahia, no Rio Grande do Norte e em Sergipe, com produção em torno de 26 mil barris por dia. É uma operação 24/7 e geograficamente dispersa, em que qualquer parada significa barris que deixam de ser produzidos. Em 2022, a empresa iniciou a troca do seu ERP e, com o projeto Evolution, implementou o SAP S/4HANA em 2024.</p><p>O SAP, porém, não funciona sozinho. A maioria dos sistemas satélites não era integrada, e o principal deles, o IFS, usado na gestão de ativos, tinha apenas integrações simples, sem a robustez e o controle necessários. As conexões eram ponto a ponto, sem orquestração nem monitoramento, e muitos dados eram digitados em um sistema e redigitados em outro, com idas e vindas de e-mails e planilhas. O fechamento mensal levava de 10 a 11 dias úteis, e a infraestrutura híbrida, com ambientes on-premise e em nuvem, exigia uma tecnologia capaz de integrar os dois.</p>', $petro );
 		update_field( 'solucao_titulo', 'Um middleware central e um parceiro ao lado', $petro );
-		update_field( 'solucao_texto', '<p>A CLI acompanhou a PetroRecôncavo desde a escolha da tecnologia. No processo de seleção do projeto Evolution, ajudou a comparar integradores até chegar à Boomi, mais aderente em custo-benefício, à infraestrutura híbrida e aos planos de médio e longo prazo. Com a CLI Connect by Boomi, a empresa ganhou um middleware padrão e centralizado, com governança, monitoramento e rastreabilidade das integrações SAP e não SAP. Conectores prontos aceleraram a construção, e recursos como Event Streams, para mensageria, e Data Hub, para dados mestres, ampliam o uso da plataforma.</p><p>O conhecimento da equipe da CLI Connect by Boomi e em sistemas que a empresa já usava, como o IFS, foi decisivo para mapear os processos críticos e definir os critérios de qualidade das entregas. O custo fixo mensal deu previsibilidade ao orçamento, tanto da operação quanto das novas implementações. Ao longo do projeto, os consultores transferiram conhecimento ao time interno, que também se capacitou pela Boomi Academy, e a CLI segue como parceira na sustentação, com pronto atendimento para incidentes e gestão de mudanças.</p>', $petro );
+		update_field( 'solucao_texto', '<p>A CLI acompanhou a PetroReconcavo desde a escolha da tecnologia. No processo de seleção do projeto Evolution, ajudou a comparar integradores até chegar à Boomi, mais aderente em custo-benefício, à infraestrutura híbrida e aos planos de médio e longo prazo. Com a CLI Connect by Boomi, a empresa ganhou um middleware padrão e centralizado, com governança, monitoramento e rastreabilidade das integrações SAP e não SAP. Conectores prontos aceleraram a construção, e recursos como Event Streams, para mensageria, e Data Hub, para dados mestres, ampliam o uso da plataforma.</p><p>O conhecimento da equipe da CLI Connect by Boomi e em sistemas que a empresa já usava, como o IFS, foi decisivo para mapear os processos críticos e definir os critérios de qualidade das entregas. O custo fixo mensal deu previsibilidade ao orçamento, tanto da operação quanto das novas implementações. Ao longo do projeto, os consultores transferiram conhecimento ao time interno, que também se capacitou pela Boomi Academy, e a CLI segue como parceira na sustentação, com pronto atendimento para incidentes e gestão de mudanças.</p>', $petro );
 		update_field( 'impacto_titulo', 'Fechamentos mais rápidos e zero retrabalho', $petro );
-		update_field( 'impacto_texto', '<p>Em quase dois anos de operação, as integrações nunca pararam, e a digitação duplicada entre sistemas acabou, eliminando o risco de dados inconsistentes. O fechamento da produção, que chegava ao 8º dia, hoje termina praticamente no 3º, e o fechamento mensal caiu de 10 a 11 dias úteis para o 5º dia útil. Reembolsos de viagem, medição de produção, royalties, comercialização e servidão passaram a rodar integrados, e as áreas absorveram mais volume sem aumentar o quadro. Com um projeto de transportes em andamento e testes com agentes de IA da Boomi, a PetroRecôncavo segue ampliando sua arquitetura de integrações com a CLI.</p>', $petro );
+		update_field( 'impacto_texto', '<p>Em quase dois anos de operação, as integrações nunca pararam, e a digitação duplicada entre sistemas acabou, eliminando o risco de dados inconsistentes. O fechamento da produção, que chegava ao 8º dia, hoje termina praticamente no 3º, e o fechamento mensal caiu de 10 a 11 dias úteis para o 5º dia útil. Reembolsos de viagem, medição de produção, royalties, comercialização e servidão passaram a rodar integrados, e as áreas absorveram mais volume sem aumentar o quadro. Com um projeto de transportes em andamento e testes com agentes de IA da Boomi, a PetroReconcavo segue ampliando sua arquitetura de integrações com a CLI.</p>', $petro );
 		// SAP S/4HANA e IFS (issue #225) + tecnologias da issue #228, na ordem do pedido.
 		$petro_tecnologias = array_merge(
 			array_values( $petro_tecnologias ),
@@ -1229,7 +1229,20 @@ class Cliconnect_Seed {
 			)
 		);
 		update_field( 'integracoes', $petro_tecnologias, $petro );
-		update_field( 'imagem_meio', $this->img( 'case-petroreconcavo-meio' ), $petro );
+		// Três vídeos de entrevista, cada um com capa e legenda (issue #232); o 3º
+		// entra no lugar da imagem do corpo.
+		update_field( 'video_1_url', 'https://youtu.be/7pm8AJUdBRY', $petro );
+		update_field( 'video_1_capa', $this->img( 'case-petroreconcavo-video-1' ), $petro );
+		update_field( 'video_1_nome', 'Paulo Corcino', $petro );
+		update_field( 'video_1_cargo', 'Gerente de Tecnologia e Inovação', $petro );
+		update_field( 'video_2_url', 'https://youtu.be/v_dQKh9l3mo', $petro );
+		update_field( 'video_2_capa', $this->img( 'case-petroreconcavo-video-2' ), $petro );
+		update_field( 'video_2_nome', 'Eliana Lanna', $petro );
+		update_field( 'video_2_cargo', 'Coordenadora de Sistemas', $petro );
+		update_field( 'video_3_url', 'https://youtu.be/ldme5h8_Tx4', $petro );
+		update_field( 'video_3_capa', $this->img( 'case-petroreconcavo-video-3' ), $petro );
+		update_field( 'video_3_nome', 'Samuel Lopes', $petro );
+		update_field( 'video_3_cargo', 'Líder Técnico', $petro );
 		update_field( 'logo_colorido', 0, $petro ); // O logo novo (issue #228) é branco: usa o filtro padrão do topo.
 		$this->definir_thumb( $petro, 'case-petroreconcavo' );
 
@@ -1250,7 +1263,7 @@ class Cliconnect_Seed {
 		update_field( 'metrica_texto', 'de construção conjunta, da concepção ao primeiro go-live', $moura2 );
 		$this->definir_thumb( $moura2, 'case-moura' );
 
-		// 5. PetroRecôncavo clone — mesmo case, só para o card de métrica da home (issue #225).
+		// 5. PetroReconcavo clone — mesmo case, só para o card de métrica da home (issue #225).
 		$petro2 = $this->upsert(
 			'case:petroreconcavo-dados',
 			array(

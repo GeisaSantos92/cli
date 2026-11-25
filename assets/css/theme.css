@@ -1617,6 +1617,70 @@ html.lead-popup-aberto {
 	overflow: hidden;
 }
 
+/* --- Overlay de vídeo (cases, issue #232; montado por theme.js) ------------ */
+
+.video-overlay {
+	background: transparent;
+	border: 0;
+	max-height: none;
+	max-width: none;
+	overflow: visible;
+	padding: 0;
+	width: min(1100px, 92vw, calc((100vh - 120px) * 16 / 9));
+}
+
+.video-overlay::backdrop {
+	backdrop-filter: blur(4px);
+	background: rgba(4, 12, 40, 0.85);
+}
+
+html.video-overlay-aberto {
+	overflow: hidden;
+}
+
+.video-overlay__caixa {
+	position: relative;
+}
+
+.video-overlay__player {
+	aspect-ratio: 16 / 9;
+	background: #000;
+	border-radius: var(--raio-card);
+	box-shadow: var(--sombra-flutuante);
+	overflow: hidden;
+}
+
+.video-overlay__player iframe {
+	border: 0;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.video-overlay__fechar {
+	align-items: center;
+	background: var(--cor-fundo);
+	border: 0;
+	border-radius: 50%;
+	color: var(--cor-texto);
+	cursor: pointer;
+	display: flex;
+	font-size: 1.75rem;
+	height: 44px;
+	justify-content: center;
+	line-height: 1;
+	position: absolute;
+	right: 0;
+	top: -56px;
+	transition: transform 0.2s ease;
+	width: 44px;
+}
+
+.video-overlay__fechar:hover,
+.video-overlay__fechar:focus-visible {
+	transform: scale(1.08);
+}
+
 .lead-popup__caixa {
 	position: relative;
 	padding: 32px;

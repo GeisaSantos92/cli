@@ -50,6 +50,26 @@ while ( have_posts() ) :
 	$impacto_texto   = get_field( 'impacto_texto' ) ?? '';
 	$tem_metricas    = $metrica_1_num || $metrica_2_num;
 
+	/*
+	 * Vídeos de entrevista (issue #232): 1 antes do Desafio, 2 entre
+	 * Desafio e Solução, 3 entre Solução e Impacto. O vídeo 1 herda os
+	 * campos antigos (`video` + `retrato`) quando os novos estão vazios.
+	 */
+	$videos = array();
+	for ( $n = 1; $n <= 3; $n++ ) {
+		$videos[ $n ] = array(
+			'url'   => (string) ( get_field( "video_{$n}_url" ) ?? '' ),
+			'capa'  => absint( get_field( "video_{$n}_capa" ) ?? 0 ),
+			'nome'  => (string) ( get_field( "video_{$n}_nome" ) ?? '' ),
+			'cargo' => (string) ( get_field( "video_{$n}_cargo" ) ?? '' ),
+		);
+	}
+	if ( ! $videos[1]['url'] && ! $videos[1]['capa'] ) {
+		$videos[1]['url']  = (string) $video_url;
+		$videos[1]['capa'] = $retrato_id;
+	}
+	$tem_video_3 = $videos[3]['url'] || $videos[3]['capa'];
+
 	/* Até 3 outros cases publicados (excluindo o atual). */
 	$outros_cases = cliconnect_posts(
 		'cli_case',
@@ -192,37 +212,8 @@ while ( have_posts() ) :
 				<!-- Conteúdo ------------------------------------------------ -->
 				<div class="case-body__content" data-scroll-spy-parent>
 
-					<!-- Vídeo ----------------------------------------------- -->
-					<?php // Sem URL de vídeo, a capa aparece sozinha, sem o botão de play. ?>
-					<?php if ( $video_url || $retrato_id ) : ?>
-						<div class="case-video">
-							<?php if ( $retrato_id ) : ?>
-								<?php
-								echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
-									$retrato_id,
-									'full',
-									false,
-									array( 'class' => 'case-video__thumb', 'alt' => '' )
-								);
-								?>
-							<?php endif; ?>
-							<?php if ( $video_url ) : ?>
-								<a
-									class="case-video__play"
-									href="<?php echo esc_url( $video_url ); ?>"
-									target="_blank"
-									rel="noopener noreferrer"
-									aria-label="<?php esc_attr_e( 'Assistir ao vídeo', 'cli' ); ?>"
-								>
-									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
-								</a>
-							<?php else : ?>
-								<span class="case-video__play" aria-hidden="true">
-									<?php echo cliconnect_imagem_tema( 'play-circle.svg', array( 'alt' => '', 'class' => 'case-video__play-icon' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- cliconnect_imagem_tema retorna HTML seguro do tema. ?>
-								</span>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
+					<!-- Vídeo 1 --------------------------------------------- -->
+					<?php get_template_part( 'template-parts/single/case-video', null, $videos[1] ); ?>
 
 					<!-- Desafio --------------------------------------------- -->
 					<?php if ( $desafio_titulo ) : ?>
@@ -261,6 +252,9 @@ while ( have_posts() ) :
 						</section>
 					<?php endif; ?>
 
+					<!-- Vídeo 2 --------------------------------------------- -->
+					<?php get_template_part( 'template-parts/single/case-video', null, $videos[2] ); ?>
+
 					<!-- Solução --------------------------------------------- -->
 					<?php if ( $solucao_titulo ) : ?>
 						<section class="case-secao" id="solucao" data-scroll-spy-section>
@@ -279,8 +273,10 @@ while ( have_posts() ) :
 						</section>
 					<?php endif; ?>
 
-					<!-- Imagem entre Solução e Impacto (opcional, 16:9) --------- -->
-					<?php if ( $imagem_meio_id ) : ?>
+					<!-- Vídeo 3 ou imagem entre Solução e Impacto (16:9) ------- -->
+					<?php if ( $tem_video_3 ) : ?>
+						<?php get_template_part( 'template-parts/single/case-video', null, $videos[3] ); ?>
+					<?php elseif ( $imagem_meio_id ) : ?>
 						<figure class="case-imagem">
 							<?php
 							echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image escapa internamente.
