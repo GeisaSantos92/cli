@@ -11,10 +11,11 @@
  *
  * O envio é o POST nativo do formulário para o Salesforce — sem backend nem
  * plugin. O script assets/js/utm-web-to-lead.js (carregado em todo o site)
- * guarda as UTMs da página de entrada e as soma ao envio.
+ * guarda as UTMs da página de entrada e preenche com elas os campos ocultos
+ * `00N...` do formulário (campos de UTM do Lead).
  *
- * Configuração no Customizer, seção "Salesforce — Web-to-Lead": ID da org e,
- * quando existirem no Lead, os IDs `00N...` dos campos de UTM.
+ * Configuração no Customizer, seção "Salesforce — Web-to-Lead": ID da org e
+ * os IDs `00N...` dos campos de UTM (vazio = IDs padrão do tema).
  *
  * Guia completo: docs/lead-salesforce.md.
  *
@@ -67,18 +68,41 @@ function cliconnect_lead_org_id() {
 }
 
 /**
+ * IDs `00N...` dos campos de UTM do Lead (valor inicial do Customizer).
+ *
+ * Tirados do Web-to-Lead gerado pelo Salesforce em 25/11/2026. Os IDs
+ * diferenciam maiúsculas de minúsculas (`...2Ka` e `...2KZ` são campos
+ * diferentes). Os mesmos IDs estão fixos em assets/js/utm-web-to-lead.js:
+ * se o Salesforce recriar um campo, atualize os dois.
+ *
+ * @return array<string,string>
+ */
+function cliconnect_lead_campos_padrao() {
+	return array(
+		'utm_source'   => '00NbJ00000db2Kc',
+		'utm_medium'   => '00NbJ00000db2Kb',
+		'utm_campaign' => '00NbJ00000db2KZ',
+		'utm_term'     => '00NbJ00000db2Kd',
+		'utm_content'  => '00NbJ00000db2Ka',
+		'gclid'        => '00NbJ00000db2KY',
+		'fbclid'       => '00NbJ00000db2KX',
+	);
+}
+
+/**
  * Mapa parâmetro => ID `00N...` do campo personalizado no Lead.
  *
- * Campo vazio no Customizer = o parâmetro não vai como campo próprio, só no
- * bloco "Origem do lead" acrescentado à Descrição.
+ * Campo vazio no Customizer = vale o ID padrão (cliconnect_lead_campos_padrao()).
  *
  * @return array<string,string>
  */
 function cliconnect_lead_campos_sf() {
+	$padrao = cliconnect_lead_campos_padrao();
 	$campos = array();
 
 	foreach ( array_keys( cliconnect_lead_parametros() ) as $parametro ) {
-		$campos[ $parametro ] = (string) ( get_theme_mod( 'cliconnect_sf_campo_' . $parametro ) ?? '' );
+		$id                   = (string) ( get_theme_mod( 'cliconnect_sf_campo_' . $parametro ) ?? '' );
+		$campos[ $parametro ] = '' !== $id ? $id : ( $padrao[ $parametro ] ?? '' );
 	}
 
 	return $campos;
@@ -159,7 +183,6 @@ function cliconnect_lead_enviado() {
 function cliconnect_lead_config_js() {
 	return array(
 		'campos'     => cliconnect_lead_campos_sf(),
-		'descricao'  => true,
 		'expiraDias' => 90,
 	);
 }

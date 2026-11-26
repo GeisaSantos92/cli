@@ -703,3 +703,7 @@ msgstr "¡Listo!"
 
 msgid "Abrimos a conversa no WhatsApp em uma nova aba."
 msgstr "Abrimos la conversación de WhatsApp en una nueva pestaña."
+
+#: template-parts/form-lead.php:71
+msgid "E-Mail Corporativo"
+msgstr "Correo Corporativo"

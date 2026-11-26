@@ -3,17 +3,19 @@
  * Formulário de lead — Web-to-Lead do Salesforce.
  *
  * Mesmo formulário na página Contato e no popup do botão flutuante de
- * WhatsApp. O envio é o POST nativo para o Salesforce; as UTMs entram pelo
- * script assets/js/utm-web-to-lead.js, que identifica o formulário pelo
- * `action` (WebToLead). Ver inc/lead.php e docs/lead-salesforce.md.
+ * WhatsApp. O envio é o POST nativo para o Salesforce; as UTMs entram nos
+ * campos ocultos `00N...` pelo script assets/js/utm-web-to-lead.js, que
+ * identifica o formulário pelo `action` (WebToLead). Ver inc/lead.php e
+ * docs/lead-salesforce.md.
  *
- * Campos do Salesforce: last_name, phone, email, company, description e o
- * oculto lead_source. `last_name` é o único nome obrigatório do Lead, então o
- * nome completo vai nele.
+ * Campos do Salesforce: last_name, phone, email, company, os ocultos
+ * lead_source e os 7 campos de UTM (`00N...`). Sem campo de mensagem
+ * (description), a pedido do cliente. `last_name` é o único nome obrigatório
+ * do Lead, então o nome completo vai nele.
  *
  * Argumentos (get_template_part( ..., null, $args )):
  *   retorno — URL absoluta para onde o Salesforce devolve o visitante (retURL).
- *   origem  — rótulo gravado no bloco "Origem do lead" da Descrição.
+ *   origem  — rótulo do formulário (data-lead-origem), para depuração.
  *   prefixo — prefixo dos IDs dos campos (único por formulário na página).
  *   botao   — texto do botão de envio.
  *   nova_aba — envia em nova aba (o Salesforce redireciona ESSA aba para o
@@ -68,8 +70,8 @@ $cliconnect_id      = static function ( $campo ) use ( $cliconnect_prefixo ) {
 	</div>
 
 	<div class="form-lead__campo">
-		<label for="<?php echo esc_attr( $cliconnect_id( 'email' ) ); ?>"><?php esc_html_e( 'E-mail', 'cli' ); ?></label>
-		<input id="<?php echo esc_attr( $cliconnect_id( 'email' ) ); ?>" name="email" type="email" maxlength="80" autocomplete="email" required placeholder="<?php esc_attr_e( 'E-mail', 'cli' ); ?>">
+		<label for="<?php echo esc_attr( $cliconnect_id( 'email' ) ); ?>"><?php esc_html_e( 'E-Mail Corporativo', 'cli' ); ?></label>
+		<input id="<?php echo esc_attr( $cliconnect_id( 'email' ) ); ?>" name="email" type="email" maxlength="80" autocomplete="email" required placeholder="<?php esc_attr_e( 'E-Mail Corporativo', 'cli' ); ?>">
 	</div>
 
 	<div class="form-lead__campo">
@@ -77,10 +79,10 @@ $cliconnect_id      = static function ( $campo ) use ( $cliconnect_prefixo ) {
 		<input id="<?php echo esc_attr( $cliconnect_id( 'empresa' ) ); ?>" name="company" type="text" maxlength="40" autocomplete="organization" required placeholder="<?php esc_attr_e( 'Empresa', 'cli' ); ?>">
 	</div>
 
-	<div class="form-lead__campo">
-		<label for="<?php echo esc_attr( $cliconnect_id( 'mensagem' ) ); ?>"><?php esc_html_e( 'Mensagem', 'cli' ); ?></label>
-		<textarea id="<?php echo esc_attr( $cliconnect_id( 'mensagem' ) ); ?>" name="description" rows="4" placeholder="<?php esc_attr_e( 'Digite sua mensagem', 'cli' ); ?>"></textarea>
-	</div>
+	<?php // Campos de UTM do Lead: ocultos, preenchidos pelo utm-web-to-lead.js. Não remover nem renomear. ?>
+	<?php foreach ( cliconnect_lead_campos_sf() as $cliconnect_campo_sf ) : ?>
+		<input type="hidden" name="<?php echo esc_attr( $cliconnect_campo_sf ); ?>" value="">
+	<?php endforeach; ?>
 
 	<?php // Armadilha para robôs: invisível para pessoas; o theme.js barra o envio se vier preenchida e a desativa antes do POST. ?>
 	<div class="form-lead__armadilha" aria-hidden="true">

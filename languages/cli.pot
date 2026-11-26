@@ -248,7 +248,7 @@ msgid "ID do campo — %s"
 msgstr ""
 
 #: inc/customizer.php:303
-msgid "ID 00N... do campo personalizado no Lead. Vazio = vai só no fim da Descrição."
+msgid "ID 00N... do campo personalizado no Lead. Vazio = usa o ID padrão do tema."
 msgstr ""
 
 #: inc/login.php:165
@@ -812,4 +812,8 @@ msgstr ""
 #: blocks/stats/block.json
 msgctxt "block description"
 msgid "Faixa com badge, título e grade de indicadores (número + rótulo). Exemplo do padrão pai/filho com InnerBlocks."
+msgstr ""
+
+#: template-parts/form-lead.php:71
+msgid "E-Mail Corporativo"
 msgstr ""

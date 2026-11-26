@@ -291,6 +291,7 @@ function cliconnect_customize_register( $wp_customize ) {
 			$cliconnect_id,
 			array(
 				'type'              => 'theme_mod',
+				'default'           => cliconnect_lead_campos_padrao()[ $cliconnect_parametro ] ?? '',
 				'sanitize_callback' => 'cliconnect_sanitizar_id_salesforce',
 			)
 		);
@@ -300,7 +301,7 @@ function cliconnect_customize_register( $wp_customize ) {
 			array(
 				/* translators: %s: nome do parâmetro, ex.: UTM Source. */
 				'label'       => sprintf( __( 'ID do campo — %s', 'cli' ), $cliconnect_rotulo ),
-				'description' => __( 'ID 00N... do campo personalizado no Lead. Vazio = vai só no fim da Descrição.', 'cli' ),
+				'description' => __( 'ID 00N... do campo personalizado no Lead. Vazio = usa o ID padrão do tema.', 'cli' ),
 				'section'     => 'cliconnect_salesforce',
 				'type'        => 'text',
 			)

@@ -530,15 +530,13 @@
 
 		/*
 		 * O POST já saiu na aba nova: mostra a confirmação no lugar do
-		 * formulário e o deixa limpo para um próximo envio (inclusive o bloco
-		 * de origem das UTMs, marcado em data-utm).
+		 * formulário e o deixa limpo para um próximo envio (o reset não apaga
+		 * os campos ocultos de UTM).
 		 */
 		function concluirNovaAba(form) {
 			var sucesso = form.parentNode.querySelector('[data-lead-sucesso]');
 
 			form.reset();
-			var descricao = form.querySelector('[name="description"]');
-			if (descricao) delete descricao.dataset.utm;
 			reativar(form);
 
 			if (sucesso) {

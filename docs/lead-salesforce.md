@@ -21,58 +21,80 @@ Os dois usam o mesmo markup: `template-parts/form-lead.php`.
 - `?enviado=1` serve de gatilho de conversão no Google Ads / Meta Ads (URL
   contém `enviado=1`) e recebe `noindex`.
 
-Campos enviados: `last_name` (nome completo), `phone`, `email`, `company`,
-`description`, ocultos `oid`, `retURL`, `lead_source=Web`. Há uma armadilha
-anti-robô (`website`) que o `theme.js` barra e desativa antes do POST.
+Campos enviados: `last_name` (nome completo), `phone`, `email` (e-mail
+corporativo), `company`, ocultos `oid`, `retURL`, `lead_source=Web` e os 7
+campos de UTM `00N...`. **Não há campo de mensagem** (`description`), a pedido
+do cliente. Há uma armadilha anti-robô (`website`) que o `theme.js` barra e
+desativa antes do POST — ela não chega ao Salesforce.
 
-## UTMs
+## UTMs (v3, 26/11/2026)
 
 `assets/js/utm-web-to-lead.js` é carregado em **todas** as páginas
 (`inc/enqueue.php`), porque as UTMs só existem na URL da página de entrada.
 
-1. No carregamento lê `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`,
-   `utm_content`, `gclid`, `fbclid` e guarda no `localStorage` (`cli_utms`,
-   90 dias, último clique vence).
-2. No envio de `form[action*="WebToLead"]`, cria os campos ocultos `00N...`
-   configurados e acrescenta à Descrição:
+1. Na chegada a qualquer página, lê `utm_source`, `utm_medium`,
+   `utm_campaign`, `utm_term`, `utm_content`, `gclid`, `fbclid` e guarda no
+   `localStorage` (`cli_utms`, 90 dias, último clique em anúncio vence).
+2. Preenche os campos ocultos `00N...` de todo `form[action*="WebToLead"]`:
+   no carregamento, quando um formulário aparece depois (popup) e no envio.
+   Se algum input faltar no HTML, o script o cria.
 
-```
---- Origem do lead ---
-utm_source: google
-utm_medium: cpc
-utm_campaign: sap brasil
-formulario: whatsapp
-pagina: /solucao/integracao-sap/
-```
+As UTMs vão **só para os campos do Lead**; nada é escrito na Descrição.
 
-Sem UTM, o bloco diz `Sem UTM (orgânico/direto)`.
+### Mapeamento dos campos
+
+IDs tirados do Web-to-Lead gerado pelo Salesforce em 25/11/2026. Diferenciam
+maiúsculas de minúsculas (`...2Ka` ≠ `...2KZ`).
+
+| Parâmetro na URL | Campo no Lead | ID no Web-to-Lead |
+|---|---|---|
+| `utm_source` | UTM Source | `00NbJ00000db2Kc` |
+| `utm_medium` | UTM Medium | `00NbJ00000db2Kb` |
+| `utm_campaign` | UTM Campaign | `00NbJ00000db2KZ` |
+| `utm_term` | UTM Term | `00NbJ00000db2Kd` |
+| `utm_content` | UTM Content | `00NbJ00000db2Ka` |
+| `gclid` | GCLID | `00NbJ00000db2KY` |
+| `fbclid` | FBCLID | `00NbJ00000db2KX` |
+
+Os IDs estão em dois lugares, que mudam juntos se o Salesforce recriar um
+campo:
+
+- `assets/js/utm-web-to-lead.js` (`SF_FIELDS`, fixos no script);
+- `inc/lead.php` (`cliconnect_lead_campos_padrao()`), que gera os inputs
+  ocultos do `form-lead.php` e o `window.cliconnectLead` do enqueue.
 
 ## Configuração (Customizer › Salesforce — Web-to-Lead)
 
 - **ID da organização**: já vem com `00Das000004fL2z`.
-- **ID do campo — UTM Source…FBCLID**: os IDs `00N...` dos campos
-  personalizados do Lead. Vazio = o valor vai só na Descrição.
+- **ID do campo — UTM Source…FBCLID**: já vêm com os IDs da tabela acima.
+  Vazio = vale o ID padrão. O script só troca um ID quando o valor vem
+  preenchido, então um ID vazio nunca apaga o correto.
 
-Para ter as UTMs em campos próprios no Salesforce:
-
-1. Criar no Lead os campos de texto (255) `UTM_Source__c`, `UTM_Medium__c`,
-   `UTM_Campaign__c`, `UTM_Term__c`, `UTM_Content__c` (e `GCLID__c`,
-   `FBCLID__c`, se quiser).
-2. Em Configuração › Web-to-Lead, gerar o formulário marcando esses campos e
-   copiar o `name="00N..."` de cada um para o Customizer.
-3. Mapear os campos em Lead › Campos › Mapear campos de lead (senão as UTMs se
-   perdem na conversão).
+No Salesforce, os campos precisam estar mapeados em Lead › Campos › Mapear
+campos de lead, senão as UTMs se perdem na conversão.
 
 ## Testes
 
-1. Aba anônima em `/?utm_source=teste&utm_medium=cpc&utm_campaign=teste`;
-   no console, `JSON.parse(localStorage.getItem('cli_utms'))` mostra as UTMs.
-2. Navegar pelo menu, abrir o botão de WhatsApp e enviar. No DevTools ›
-   Network (filtro `WebToLead`) o payload traz a Descrição com o bloco de
-   origem (e os `00N...`, se configurados). Depois do envio, cai no WhatsApp.
-3. Enviar pela página Contato: volta para `/contato/?enviado=1` com a mensagem.
-4. Depurar do lado do Salesforce: adicionar temporariamente ao formulário
-   `debug=1` e `debugEmail` (ver `webtolead-salesforce.html` original).
+1. Aba anônima em
+   `/?utm_source=teste&utm_medium=cpc&utm_campaign=teste-v3&utm_content=criativo-1&utm_term=termo-1`.
+2. No console, `CLIUtm.utms` mostra as 5 UTMs e `CLIUtm.fields` os 7 IDs
+   `00NbJ...`, nenhum vazio.
+3. Navegar pelo menu (URL sem UTM), abrir o botão flutuante e, antes de
+   enviar, inspecionar o formulário: os inputs `00NbJ...` já têm os valores.
+4. Enviar. No DevTools › Network (filtro `WebToLead`) o payload traz os 7
+   IDs, sem `description`. Depois do envio, cai no WhatsApp.
+5. No Salesforce, o lead tem UTM Source, Medium, Campaign, Term e Content
+   preenchidos.
+6. Teste orgânico: aba anônima nova em `/` sem UTM; o lead entra com os
+   campos de UTM vazios.
+7. Enviar pela página Contato: volta para `/contato/?enviado=1` com a mensagem.
+
+Depurar do lado do Salesforce: adicionar temporariamente ao formulário os
+ocultos `debug=1` e `debugEmail`; o Salesforce manda por e-mail os campos
+recebidos. Remover antes de publicar e apagar os leads de teste.
+
+Depois do deploy, limpar o cache do site (plugin de cache e CDN) para
+ninguém continuar recebendo o script antigo.
 
 Limite do Web-to-Lead: 500 leads/dia por org (o excedente fica em fila).
 
